@@ -1,0 +1,181 @@
+@import '../../../_mixins.scss';
+
+$linesColor: #f8f8f8;
+$tablePadding: 30px;
+
+.mt-container {
+    padding-bottom: 10px;
+    position:relative;
+
+    .mt-header {
+        width: 100%;
+        padding: 25px $tablePadding;
+
+        .mt-search {
+            display: flex;
+            width: 0;
+            position: absolute;
+            left: $tablePadding;
+            font-size: 22px;
+            border: 0 solid transparent;
+            transition: all 0.3s ease;
+
+            .search-value {
+                display: inline-block;
+                width: 0;
+                height: auto;
+                align-items: center;
+                padding: 0 10px;
+                transition: all 0.3s ease;
+                background:transparent;
+            }
+        }
+
+        .mt-search-focus {
+            display: flex;
+            width: 100%;
+            position: absolute;
+            left: $tablePadding;
+            font-size: 22px;
+            border-bottom: 1px solid #bfbfbf;
+            transition: all 0.3s ease;
+
+            .search-value {
+                display: inline-block;
+                visibility: visible;
+                width: 80%;
+                height: auto;
+                align-items: center;
+                padding: 0 10px;
+                transition: all 0.3s ease;
+            }
+        }
+
+        .mt-columns-filter {
+            position: absolute;
+            right: $tablePadding;
+            font-size: 22px;
+        }
+
+        .mt-title {
+            width: 100%;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: 20px;
+        }
+    }
+    @media all and (max-width: 600px) {
+        .mt-header {
+            padding: 0 0 50px 0;
+
+            .mt-search {
+                margin-top: 35px;
+                left: 16px;
+            }
+            .mt-search-focus {
+                width: 100%;
+                margin-top: 35px;
+                left: 16px;
+            }
+            .mt-columns-filter {
+                margin-top: 35px;
+            }
+        }
+    }
+
+    .mt-table {
+        padding: 0 $tablePadding;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            border-top: 2px solid $linesColor;
+            border-bottom: 2px solid $linesColor;
+
+            .mt-action-value {
+                justify-content: center;
+                text-align: center;
+                width: auto;
+            }
+
+            .mt-column {
+                @include clickable();
+                display: flex;
+                align-items: center;
+                min-height: 20px;
+                max-height: 20px;
+                width: auto;
+
+                md-icon {
+                    max-height: 20px;
+                    margin-right: -24px;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                border-bottom: 2px solid $linesColor;
+            }
+
+            .mt-action-value {
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        tr {
+            th {
+                text-align: left;
+                text-transform: uppercase;
+                font-weight: bold;
+                font-size: 16px;
+                padding: 25px 0;
+            }
+
+            td {
+                padding: 27px 0;
+                text-align: left;
+                font-size: 16px;
+            }
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 25px 0;
+        }
+
+        .plus-button-out-table {
+            float: right;
+            position: relative;
+            right: -83px;
+            top: -70px;
+        }
+
+        .plus-button-in-table {
+            float: right;
+            position: relative;
+            right: 2%;
+            top: 5px;
+        }
+
+        .plus-button-floating {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+    }
+    @media all and (max-width: 600px) {
+        .mt-table {
+            padding: 0;
+        }
+    }
+
+    md-icon {
+        @include clickable();
+    }
+}

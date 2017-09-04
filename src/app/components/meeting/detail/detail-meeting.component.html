@@ -1,0 +1,20 @@
+<div *ngIf="!loading">
+  <md-tab-group>
+    <md-tab *ngIf="!week.completed && (user.role==USER_ROLE.SCHOOL_OVERSEER || user.role==USER_ROLE.PRESIDENT)">
+      <ng-template md-tab-label>
+        AGGIORNAMENTO PUNTI
+      </ng-template>
+      <week-study-number-update fromHome="false" [week]="week"></week-study-number-update>
+    </md-tab>
+    <md-tab>
+      <ng-template md-tab-label>
+        DETTAGLIO
+      </ng-template>
+      <week [edit]="false" [week]="week"></week>
+    </md-tab>
+  </md-tab-group>
+
+
+
+</div>
+<loader *ngIf="loading"></loader>

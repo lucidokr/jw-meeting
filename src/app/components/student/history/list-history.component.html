@@ -1,0 +1,14 @@
+<h2>History</h2>
+<div>
+  <material-table
+    [data]="model" [columnsToHide]="['id']" [rowAction]="showDetail" actionColumn="details" [actionSelector]="detailIconSelector"
+    [filterFunction]="filter"
+    noRowsAlert="Nessun record"
+    [columnsToShow]="{ xs : ['name', 'surname', 'details'],
+                      sm: ['name', 'surname', 'lastDate', 'details'],
+                      md: ['name', 'surname', 'lastDate', 'details'],
+                      lg: ['name', 'surname', 'lastDate', 'details'] }"
+  >
+
+  </material-table>
+</div>

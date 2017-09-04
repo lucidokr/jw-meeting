@@ -1,0 +1,124 @@
+@import '../../../_mixins.scss';
+
+md-card-title  {
+  span{
+     font-size: 20px;
+     text-transform: uppercase;
+     font-weight:bold;
+   }
+}
+md-card-content{
+  width:100%;
+  .weekPreview{
+    width:100%;
+    div{
+      width:100%;
+
+    }
+
+    .meetingWorkbook{
+      i{
+        font-size:17px;
+        cursor:pointer;
+        margin-left:5px;
+      }
+      h3{
+        width:100%;
+        text-align:center;
+        color:white;
+        font-weight: 200;
+        padding: 5px 0;
+        margin: 0 0 10px 0 ;
+      }
+      .treasures{
+        h3{
+          background-color:$treasuresColor;
+        }
+      }
+      .effective{
+        text-align: center;
+        .descriptionPart{
+          text-align:left;
+        }
+        h3{
+          background-color:$effectiveColor;
+        }
+      }
+      .living{
+        h3{
+          background-color:$christianLifeColor;
+        }
+      }
+      .busy0{
+        @keyframes busy0 {
+          0% {background-color:white;}
+          50% {background-color:#FF4c4c; color:white;}
+          100% {background-color:white;}
+        }
+        animation: busy0 3s infinite;
+      }
+      .busy1{
+        @keyframes busy1 {
+          0% {background-color:white;}
+          50% {background-color:#cc4c4c; color:white;}
+          100% {background-color:white;}
+        }
+        animation: busy1 3s infinite;
+        //background-color:#cc4c4c;
+      }
+      .busy2{
+        @keyframes busy2 {
+          0% {background-color:white;}
+          50% {background-color:#e53333; color:white;}
+          100% {background-color:white;}
+        }
+        animation: busy2 3s infinite;
+        //background-color:#e53333;
+      }
+      .busy3{
+        @keyframes busy3 {
+          0% {background-color:white;}
+          50% {background-color:#cc1919; color:white;}
+          100% {background-color:white;}
+        }
+        animation: busy3 3s infinite;
+        //background-color:#cc1919;
+      }
+      .busy4{
+        @keyframes busy4 {
+          0% {background-color:white;}
+          50% {background-color:#993333; color:white;}
+          100% {background-color:white;}
+        }
+        animation: busy4 3s infinite;
+        //background-color:#993333;
+      }
+      .busy5{
+        @keyframes busy5 {
+          0% {background-color:white;}
+          50% {background-color:#660000; color:white;}
+          100% {background-color:white;}
+        }
+        animation: busy5 3s infinite;
+        //background-color:#660000;
+      }
+      .busy6{
+        @keyframes busy6 {
+          0% {background-color:white;}
+          50% {background-color:#661919; color:white;}
+          100% {background-color:white;}
+        }
+        animation: busy6 3s infinite;
+        //background-color:#661919;
+      }
+
+
+      .assistant{
+        color:red;
+      }
+
+    }
+  }
+}
+
+

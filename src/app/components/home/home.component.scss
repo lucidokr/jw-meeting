@@ -1,0 +1,24 @@
+.counter{
+  padding: 10px;
+  font-size:20px;
+  h3{width:100%; text-align:center; margin:5px 0;}
+  .counter-container{
+    display:inline-block;
+    width:100%;
+    .counter{
+      display:inline-block;
+      text-align:center;
+      margin-bottom:5px;
+      .category{
+        font-weight:bold;
+        width:100%
+      }
+      .number{
+        width:100%;
+        font-size:30px;
+        font-weight:bold;
+      }
+    }
+  }
+
+}

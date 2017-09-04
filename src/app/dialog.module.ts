@@ -1,0 +1,72 @@
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import {MdButtonModule, MdInputModule, MdDatepickerModule, MdCheckboxModule, MdRadioModule, MdSidenavModule, MdSelectModule, MdCardModule, MdAutocompleteModule, MdTabsModule} from '@angular/material';
+
+import {NewPrayerDialog} from "./components/prayer/new/new-prayer";
+import {NewServantDialog} from "./components/servant/new/new-servant";
+import {NewElderDialog} from "./components/elder/new/new-elder";
+import {NewStudentDialog} from "./components/student/new/new-student.component";
+
+import {DialogService} from "./services/dialog.service";
+import {FlexLayoutModule} from "@angular/flex-layout";
+import {BrowserModule} from "@angular/platform-browser";
+import {ConfirmDialog} from "./shared/components/confirm.component";
+import {FilterPipe} from "./pipes/filter.pipe";
+import {ErrorDialog} from "./shared/components/error.component";
+import {NewBrotherDialog} from "./components/brother/new/new-brother";
+import {NewReaderDialog} from "./components/reader/new/new-reader";
+import {DownloadWeeksDialog} from "./shared/components/downloadWeeks.component";
+import {ChangeNumberDialog} from "./shared/components/changeNumber.component";
+
+@NgModule({
+  declarations: [
+    NewPrayerDialog,
+    NewServantDialog,
+    NewElderDialog,
+    NewStudentDialog,
+    NewBrotherDialog,
+    NewReaderDialog,
+    ConfirmDialog,
+    ErrorDialog,
+    DownloadWeeksDialog,
+    ChangeNumberDialog,
+
+    FilterPipe
+  ],
+  imports: [
+    BrowserModule,
+    MdButtonModule, MdInputModule, MdDatepickerModule, MdCheckboxModule, MdRadioModule, MdSidenavModule, MdSelectModule, MdCardModule, MdAutocompleteModule, MdTabsModule,
+    FormsModule,
+    FlexLayoutModule
+  ],
+  exports: [
+    NewPrayerDialog,
+    NewServantDialog,
+    NewElderDialog,
+    NewStudentDialog,
+    NewBrotherDialog,
+    NewReaderDialog,
+    ConfirmDialog,
+    ErrorDialog,
+    DownloadWeeksDialog,
+    ChangeNumberDialog,
+
+    FilterPipe
+  ],
+  providers: [
+    DialogService,
+  ],
+  entryComponents: [
+    NewPrayerDialog,
+    NewServantDialog,
+    NewElderDialog,
+    NewStudentDialog,
+    NewBrotherDialog,
+    NewReaderDialog,
+    ConfirmDialog,
+    ErrorDialog,
+    DownloadWeeksDialog,
+    ChangeNumberDialog
+  ]
+})
+export class DialogModule { }

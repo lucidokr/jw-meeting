@@ -1,0 +1,53 @@
+{ "_id" : { "$oid" : "59491f623545c51678fbac8c" }, "number" : 1, "title" : "Leggere accuratamente", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac8d" }, "number" : 2, "title" : "Dizione", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac8e" }, "number" : 3, "title" : "Pronuncia", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac8f" }, "number" : 4, "title" : "Scorrevolezza", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac90" }, "number" : 5, "title" : "Pause", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac91" }, "number" : 6, "title" : "Enfasi orale", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac92" }, "number" : 7, "title" : "Idee principlai messe in risalto", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac93" }, "number" : 8, "title" : "Volume", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac94" }, "number" : 9, "title" : "Modulazione", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac95" }, "number" : 10, "title" : "Modulazione", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac96" }, "number" : 11, "title" : "Calore e sentimento", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac97" }, "number" : 12, "title" : "Gesti ed espressioni facciali", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac98" }, "number" : 13, "title" : "Contatto visivo", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac99" }, "number" : 14, "title" : "Naturalezza", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac9a" }, "number" : 15, "title" : "Aspetto personale", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac9b" }, "number" : 16, "title" : "Equilibrio", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac9c" }, "number" : 17, "title" : "Uso del microfono", "forBibleReading" : true }
+{ "_id" : { "$oid" : "59491f623545c51678fbac9d" }, "number" : 18, "title" : "Uso della bibbia per rispondere", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbac9e" }, "number" : 19, "title" : "Uditorio incoraggiato a usare la Bibbia", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbac9f" }, "number" : 20, "title" : "Scritture dovutamente introdotte", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbaca0" }, "number" : 21, "title" : "Scritture lette con la giusta enfasi", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbaca1" }, "number" : 22, "title" : "Scritture correttamente applicate", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbaca2" }, "number" : 23, "title" : "Valore pratico messo in risalto", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbaca3" }, "number" : 24, "title" : "Scelta delle parole", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbaca4" }, "number" : 25, "title" : "Uso dello schema", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbaca5" }, "number" : 26, "title" : "Sviluppo logico del materiale", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbaca6" }, "number" : 27, "title" : "Discorso estemporaneo", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbaca7" }, "number" : 28, "title" : "Stile di conversazione", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbaca8" }, "number" : 29, "title" : "Qualità della voce", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbaca9" }, "number" : 30, "title" : "Interesse per gli altri", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacaa" }, "number" : 31, "title" : "Rispetto per gli altri", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacab" }, "number" : 32, "title" : "Esprimersi con convinzione", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacac" }, "number" : 33, "title" : "Tatto e fermezza", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacad" }, "number" : 34, "title" : "Edificanti e positivi", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacae" }, "number" : 35, "title" : "Ripetizione usata per dare enfasi", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacaf" }, "number" : 36, "title" : "Sviluppato il tema", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacb0" }, "number" : 37, "title" : "Punti principali messi in risalto", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacb1" }, "number" : 38, "title" : "Introduzione che suscita interesse", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacb2" }, "number" : 39, "title" : "Conclusione", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacb3" }, "number" : 40, "title" : "Accuratezza delle affermazioni", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacb4" }, "number" : 41, "title" : "Comprensibile", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacb5" }, "number" : 42, "title" : "Informativo per l'uditorio", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacb6" }, "number" : 43, "title" : "Uso del materiale assegnato", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacb7" }, "number" : 44, "title" : "Uso di domande", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacb8" }, "number" : 45, "title" : "Illustrazioni ed esempi istruttivi", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacb9" }, "number" : 46, "title" : "Illustrazioni tratte da situazioni note", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacba" }, "number" : 47, "title" : "Uso di ausili visivi", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacbb" }, "number" : 48, "title" : "Ragionevolezza", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacbc" }, "number" : 49, "title" : "Argomenti convincenti", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacbd" }, "number" : 50, "title" : "Toccare il cuore", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacbe" }, "number" : 51, "title" : "Tempo ben calcolato e ben ripartito", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacbf" }, "number" : 52, "title" : "Esortare con efficacia", "forBibleReading" : false }
+{ "_id" : { "$oid" : "59491f623545c51678fbacc0" }, "number" : 53, "title" : "Uditorio incoraggiato e rafforzato", "forBibleReading" : false }

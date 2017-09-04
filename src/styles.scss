@@ -1,0 +1,325 @@
+// Override bootstrap sass variables here(above import)
+$icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
+@import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+@import '~@swimlane/ngx-datatable/release/index.css';
+@import '~@swimlane/ngx-datatable/release/themes/material.css';
+@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+
+@import '~@angular/material/theming';
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+@import './_mixins.scss';
+
+$bluJW: #a8291f;
+
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue.
+$candy-app-primary: mat-palette($mat-red, 800, 400, 900);
+$candy-app-accent:  mat-palette($mat-orange, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$candy-app-warn:    mat-palette($mat-green);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($candy-app-theme);
+
+
+
+body{
+  background: #F7F7F7;
+  color: #212121;
+}
+
+h1{
+  font-size: 40px;
+}
+
+header{
+  position:relative;
+}
+
+input {
+  outline:none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+label{
+  font-weight: normal;
+}
+
+.mat-button, .mat-icon-button, .mat-raised-button {
+  color: white !important;
+  background: $bluJW;
+  margin: 10px !important;
+  cursor:pointer;
+  &:hover{
+    background: lighten($bluJW, 20%);
+    cursor: pointer;
+  }
+}
+
+new-student-dialog{
+  md-input-container { margin:0 10px; }
+  .new-student-container > div {margin:10px 0}
+  .mat-tab-body-wrapper{padding:20px;}
+}
+.qualityOratoryContainer{
+  width:100%;
+  max-width:300px;
+  .qualityOratory{
+    width:100%;
+    max-width:300px;
+  }
+}
+
+.amcharts-chart-div{
+  a{
+    display:none !important;
+  }
+}
+
+md-card{
+  width: 100%;
+  margin:10px 0;
+}
+
+ng2-smart-table{
+  font-size: 18px !important;
+  .ng2-smart-actions{
+    color:black;
+    width: 120px;
+    padding: 10px 0px !important;
+    a{
+      float:left;
+      padding:10px;
+      color:black;
+      &:hover{
+        text-decoration:none;
+        color:#7E7E7E;
+      }
+      @media screen and (max-width:640px){
+        padding:0 2px;
+      }
+
+    }
+  }
+  tr{
+    border-top: 1px solid #EEEEEE;
+    cursor:pointer;
+    td, th{
+      padding: 8px 0px 8px 14px !important;
+    }
+    &:hover{
+      background:#EEEEEE;
+    }
+  }
+  .ng2-smart-titles, .ng2-smart-filters{
+    border:none;
+    cursor: auto;
+    a{
+      color:#212121;
+      text-decoration:none;
+      &:hover{
+        text-decoration: none;
+      }
+      &.asc, &.desc{
+        &::after{
+          content: '\E5DB' !important;
+          font-family: 'Material Icons';
+          border:none !important;
+        }
+      }
+      &.desc{
+        &::after{
+          -webkit-transform: none !important;
+          transform: none !important;
+          margin-bottom: -2px;
+          content: '\E5D8' !important;
+          font-family: 'Material Icons';
+          border:none !important;
+        }
+      }
+    }
+    &:hover{
+      background: transparent
+    }
+  }
+  .ng2-smart-pagination-nav{
+    text-align:center;
+    .ng2-smart-page-link{
+      color: $bluJW;
+      &:hover{
+        cursor: pointer;
+        color: $bluJW;
+      }
+    }
+    .active{
+      .ng2-smart-page-link{
+        color:white;
+        background-color: $bluJW;
+        border-color: $bluJW;
+        &:hover{
+          cursor: pointer;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.table-wrapper{
+  width:auto;
+  overflow:scroll;
+  @media screen and (max-width:640px){
+    //border-width: 3px 16px 0px 0px;
+    //border-style: solid;
+    //-webkit-border-image: -webkit-gradient(linear, 100% 0, 0 0, from(black), to(rgba(0, 0, 0, 0))) 1 100%;
+    //-webkit-border-image: -webkit-linear-gradient(left, black, rgba(0, 0, 0, 0)) 1 100%;
+    //-moz-border-image: -moz-linear-gradient(left, black, rgba(0, 0, 0, 0)) 1 100%;
+    //-o-border-image: -o-linear-gradient(left, black, rgba(0, 0, 0, 0)) 1 100%;
+    //border-image: linear-gradient(to left, black, rgba(0, 0, 0, 0)) 1 100%;
+    //background: linear-gradient(white, white), linear-gradient(white, white) right, radial-gradient(at 0 50%, rgba(0, 0, 0, .5), transparent 70%), radial-gradient(at 100% 50%, rgba(0, 0, 0, .5), transparent 70%) right;
+    //background-size: 20px 100%;
+    //background-repeat: no-repeat;
+    //background-attachment: local, local, scroll, scroll;
+    //overflow: auto;
+    background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 1%, rgba(0,0,0,0.3) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 1%,rgba(0,0,0,0.3) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0) 1%,rgba(0,0,0,0.3) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=1 ); /* IE6-9 */
+    background-size: 20px 100%;
+    background-repeat: no-repeat;
+    background-position: right;
+
+  }
+  .table-container{
+    width:100%;
+    @media screen and (max-width:640px){
+      width:700px
+
+    }
+  }
+}
+
+.ng2-smart-pagination-nav{
+  height: 72px;
+  padding-left: 89px;
+  .ng2-smart-pagination{
+    @media screen and (max-width:640px){
+      display:block !important;
+      margin-bottom:20px;
+    }
+  }
+}
+
+
+.add-button{
+  position: fixed;
+  cursor:pointer;
+  background: $bluJW;
+  top: 110px;
+  border-radius: 50%;
+  width: 56px;
+  right: 40px;
+  height: 56px;
+  color: white;
+  box-shadow: 0px 7px 20px 3px rgba(0,0,0,.3);
+  i{
+    position:absolute;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+    font-size: 24px;
+  }
+  @media screen and (max-width:640px){
+    bottom: 20px;
+    right: 20px;
+    top: auto;
+  }
+}
+
+.new-student-container{
+  max-height: 651px;
+}
+
+.card-table{
+  padding:0 !important;
+  .search-container{
+    width: 100%;
+    padding: 20px 100px 0px 50px;
+    &::after{
+      content: '\E8B6';
+      font-family: 'Material Icons';
+      position: absolute;
+      left: 20px;
+      top: 37px;
+      font-size: 22px;
+    }
+  }
+
+}
+
+.brother-autocomplete{
+  width:400px;
+  @media screen and (max-width:640px){
+    width:100%;
+  }
+}
+
+md-option{
+  &.busy{
+    color:red !important;
+  }
+  &.elder{
+    color:blue;
+  }
+}
+
+.error{
+  color:red !important;
+}
+
+.meetingWorkbook{
+  h3{
+    width:100%;
+    text-align:center;
+    color:white;
+    font-weight: 200;
+    padding: 5px 0;
+    margin: 0 0 10px 0 ;
+  }
+  .treasures{
+    h3{
+      background-color:$treasuresColor;
+    }
+  }
+  .effective{
+    h3{
+      background-color:$effectiveColor;
+    }
+  }
+  .living{
+    h3{
+      background-color:$christianLifeColor;
+    }
+  }
+}
+
+.separator{
+  width:100%;
+  margin:0 auto;
+  background-color: rgba(0,0,0,.2);
+  height:1px;
+}
+

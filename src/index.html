@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="it-IT">
+<head>
+  <meta charset="utf-8">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="assets/images/safari-pinned-tab.svg" color="#a8291f">
+  <meta name="apple-mobile-web-app-title" content="JW Meeting">
+  <meta name="application-name" content="JW Meeting">
+  <meta name="theme-color" content="#a8291f">
+
+  <title>JW Meeting</title>
+
+
+
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="assets/lib/material-icons/icon.css" rel="stylesheet">
+  <link href="assets/lib/material-icons/css.css" rel="stylesheet">
+  <script  src="assets/lib/amcharts/amcharts.js"></script>
+  <script async src="assets/lib/amcharts/pie.js"></script>
+  <script async src="assets/lib/amcharts/serial.js"></script>
+  <script async src="assets/lib/amcharts/light.js"></script>
+
+  <script async src="assets/lib/xlsx.full.min.js"></script>
+
+  <!--<script defer>-->
+    <!--if (navigator.serviceWorker) {-->
+      <!--navigator.serviceWorker.register('service-worker.js').then(function() {-->
+        <!--console.log('Service worker installed')-->
+      <!--}, function(err) {-->
+        <!--console.error('Service worker error:', err);-->
+      <!--});-->
+    <!--}-->
+  <!--</script>-->
+
+  <noscript>Your browser does not support JavaScript!</noscript>
+
+</head>
+<body>
+
+  <app>
+    <div class="lds-css ng-scope">
+      <div style="width:100%;height:100%" class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+      <style type="text/css">@keyframes lds-ripple {
+                               0% {
+                                 top: 96px;
+                                 left: 96px;
+                                 width: 0;
+                                 height: 0;
+                                 opacity: 1;
+                               }
+                               100% {
+                                 top: 18px;
+                                 left: 18px;
+                                 width: 156px;
+                                 height: 156px;
+                                 opacity: 0;
+                               }
+                             }
+      @-webkit-keyframes lds-ripple {
+        0% {
+          top: 96px;
+          left: 96px;
+          width: 0;
+          height: 0;
+          opacity: 1;
+        }
+        100% {
+          top: 18px;
+          left: 18px;
+          width: 156px;
+          height: 156px;
+          opacity: 0;
+        }
+      }
+      .lds-ripple {
+        position: relative;
+      }
+      .lds-ripple div {
+        box-sizing: content-box;
+        position: absolute;
+        border-width: 4px;
+        border-style: solid;
+        opacity: 1;
+        border-radius: 50%;
+        -webkit-animation: lds-ripple 1.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+        animation: lds-ripple 1.5s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+      }
+      .lds-ripple div:nth-child(1) {
+        border-color: #000203;
+      }
+      .lds-ripple div:nth-child(2) {
+        border-color: #e74545;
+        -webkit-animation-delay: -0.75s;
+        animation-delay: -0.75s;
+      }
+      .lds-ripple {
+        width: 100px !important;
+        height: 100px !important;
+        -webkit-transform: translate(-50px, -50px) scale(0.5) translate(50px, 50px);
+        transform: translate(-50px, -50px) scale(0.5) translate(50px, 50px);
+      }
+      .lds-css{
+        left:50%;
+        top:50%;
+        position:absolute;
+        transform: translate(-50%, -50%)
+      }
+      </style></div>
+
+  </app>
+</body>
+</html>

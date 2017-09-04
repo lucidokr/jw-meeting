@@ -1,0 +1,84 @@
+<form #configForm="ngForm">
+  <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center">
+    <!--<span fxFlex>Scegli il numero di settimane per il programma:</span>-->
+    <!--<md-select fxFlex placeholder="Settimane" [(ngModel)]="weekNumber" (ngModelChange)="newArray($event)" name="weekNumber">-->
+      <!--<md-option [value]="4">4 settimane</md-option>-->
+      <!--<md-option [value]="5">5 settimane</md-option>-->
+    <!--</md-select>-->
+    <h3>Configurazione programma</h3>
+    <md-select fxFlex fxLayoutGap="20px" placeholder="Seleziona mese" [(ngModel)]="month" (ngModelChange)="findWeeks($event)" name="month">
+      <md-option *ngFor="let m of arrMonths" [value]="m" >{{m.month}} {{m.year}}</md-option>
+    </md-select>
+  </div>
+  <loader *ngIf="loadingMeetingWorkbooks"></loader>
+
+  <div class="flex-container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start" *ngIf="weeks.length>0 && !loadingMeetingWorkbooks">
+
+    <md-card *ngFor="let week of weeks; let i = index" class="weekConfigContainer" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start start" fxLayoutAlign.xs="start"  >
+      <md-card-header fxLayout="row" fxLayoutAlign="start start">
+        <md-card-title>
+          <span>{{week.date.format('dddd D MMMM YYYY')}}</span>
+          <md-checkbox name="supervisor{{i}}"  [(ngModel)]="week.supervisor" (ngModelChange)="changeDate(week)">Visita del sorvegliante</md-checkbox>
+        </md-card-title>
+      </md-card-header>
+      <md-card-content fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" *ngIf="!week.supervisor">
+        <md-radio-group name="weekType{{i}}" class="radio-group" fxLayout.xs="column" fxLayout.sm="column"  fxLayoutGap="10px" [(ngModel)]="week.type">
+          <md-radio-button *ngFor="let keys of weekType | keys" [value]="keys.v" [hidden]="week.supervisor && !keys.v.withSupervisor">{{keys.v.label}}</md-radio-button>
+        </md-radio-group>
+
+        <div class="weekConfig" fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" *ngIf="week.type.meeting " >
+          <div fxFlex="100%" width="100%" fxLayout="row" fxLayoutAlign="center center" *ngIf="week.type.disableSchool">
+            <div class="meetingWorkbook" fxFlex="100%" fxFlex fxLayout="column">
+              <div class="effective" fxLayout="column" fxFlex="100%" fxLayoutGap="10px">
+                <h3 >EFFICACI NEL MINISTERO</h3>
+                <div fxFlex="100%" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px"  fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
+                  <div fxFlex="50%" [innerHTML]="week.presentationExercise.label | safeHtml"></div>
+                  <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                    <md-input-container fxFlex class="brother-autocomplete">
+                      <input name="presentationExerciseBrother" type="text" mdInput [mdAutocomplete]="presentationExercise" [(ngModel)]="week.presentationExercise.brother" (ngModelChange)="filterPresentationExercise($event)" [value]="(week.presentationExercise.brother && week.presentationExercise.brother.name && week.presentationExercise.brother.surname ? week.presentationExercise.brother.name + ' '+week.presentationExercise.brother.surname: '')" name="brother" placeholder="Seleziona fratello" required>
+                    </md-input-container>
+                    <md-autocomplete  #presentationExercise="mdAutocomplete" name="brotherAutocomplete" placeholder="Seleziona fratello">
+                      <md-option *ngFor="let b of presentationExerciseList" [value]="b" (onSelectionChange)="resetFilterPresentationExercise()">
+                        {{b.surname}} {{b.name}}
+                      </md-option>
+                    </md-autocomplete>
+                  </div>
+                  <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div fxFlex="100%" width="100%" fxLayout="row" fxLayoutAlign="center center">
+            <div class="meetingWorkbook" fxFlex="100%" fxLayout="column">
+              <div class="living" fxLayout="column" fxFlex="100%" fxLayoutGap="10px">
+                <h3 >VITA CRISTIANA</h3>
+                <div *ngFor="let part of week.christianLivingPart; let j = index" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px" fxFlex="100%" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
+                  <div fxFlex="50%" [innerHTML]="part.label | safeHtml"></div>
+                  <div fxFlex="25%" fxLayout="column">
+                    <md-input-container fxFlex class="brother-autocomplete">
+                      <input name="christianLivingPart{{i}}{{j}}" type="text" mdInput [mdAutocomplete]="auto" [(ngModel)]="part.brother" (ngModelChange)="filterBrother($event)" [value]="(part.brother && part.brother.name && part.brother.surname ? part.brother.name + ' '+part.brother.surname: '')" name="brother" placeholder="Seleziona fratello" required>
+                    </md-input-container>
+                    <md-autocomplete  #auto="mdAutocomplete" name="brotherAutocomplete" placeholder="Seleziona fratello">
+                      <md-option *ngFor="let b of christianLivingPartBrotherFiltered" [value]="b" (onSelectionChange)="resetFilter()">
+                        {{b.surname}} {{b.name}}
+                      </md-option>
+                    </md-autocomplete>
+                  </div>
+                  <div fxFlex="25%" fxLayout="column"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+
+        </div>
+      </md-card-content>
+    </md-card>
+    <button type="button" md-raised-button [disabled]="!configForm.form.valid" (click)="confirm()">Conferma</button>
+  </div>
+</form>

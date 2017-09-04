@@ -1,0 +1,44 @@
+$bluJW: #a8291f;
+#regionSiteLogo{
+    #siteLogoPrint{
+      background:$bluJW;
+      position:absolute;
+      left: 50px;
+    }
+}
+#regionHeader{
+  h2{
+    margin: 0px 0px 0 140px;
+    padding-top: 10px;
+    padding-bottom: 9px;
+  }
+}
+#regionPrimaryNav{
+  background:#373433;
+  ul{
+    padding:10px 0 10px 128px;
+    li{
+      list-style-type: none;
+      list-style-image: none;
+      margin-top: 0;
+      float: left;
+      color: white;
+
+      a{
+        text-decoration: none;
+        padding: 10px 20px 10px 20px;
+        color: white;
+        &.selected{
+          background-color:$bluJW;
+        }
+        &:hover{
+          color:$bluJW;
+          background-color:black;
+        }
+
+      }
+    }
+  }
+}
+
+

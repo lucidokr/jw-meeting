@@ -1,0 +1,153 @@
+<md-card class="weekConfigContainer" fxLayout="column"  fxLayoutAlign="start start">
+  <md-card-header fxLayout="row" fxLayoutAlign="start start">
+    <md-card-title>
+      <span>{{week.date.format('dddd D MMMM YYYY')}} - {{week.type.label}}</span>
+      <h3  class="flex-item" *ngIf="week.supervisor">Visita del sorvegliante</h3>
+    </md-card-title>
+  </md-card-header>
+  <md-card-content fxLayout="column" fxLayoutAlign="center center">
+    <div class="weekPreview" fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" *ngIf="week.type.meeting && !week.supervisor" >
+      <div fxFlex="100%" width="100%" fxLayout="row" fxLayoutAlign="center center"  >
+        <div class="meetingWorkbook flex-item" fxFlex="100%" fxFlex fxLayout="column" fxLayoutGap="10px">
+          <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutAlign="center center">
+            <div class="{{edit ? checkBusyWeek(week, 'president') : ''}}" fxFlex="50%" ><strong>Presidente</strong>: {{week.president.name}} {{week.president.surname}} <i *ngIf="edit" class="material-icons" (click)="change(week, 'president', null, null)">mode_edit</i></div>
+            <div class="flex-item" fxFlex="50%"><span [innerHTML]="week.initialSong | safeHtml"></span> iniziale:
+              <span class="{{edit ? checkBusyWeek(week, 'initialPrayer') : ''}}">{{week.initialPrayer.name}} {{week.initialPrayer.surname}} <i *ngIf="edit" class="material-icons" (click)="change(week, 'initialPrayer', null, null)">mode_edit</i></span>
+            </div>
+          </div>
+          <div class="treasures" fxLayout="column" fxFlex="100%" fxLayoutGap="10px">
+            <h3 >TESORI DELLA PAROLA DI DIO</h3>
+            <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutGap="10px" fxLayoutAlign="center center">
+              <div fxFlex="50%" [innerHTML]="week.talk.label | safeHtml"></div>
+              <div fxFlex="25%" fxLayoutAlign="center center"class="{{edit ? checkBusyWeek(week, 'talk', 'brother') : ''}}" >
+                {{week.talk.brother.name}} {{week.talk.brother.surname}}
+                <i *ngIf="edit" class="material-icons" (click)="change(week, 'talk', null, 'brother')">mode_edit</i>
+              </div>
+              <div fxHide.xs fxHide.sm fxFlex="25%" fxLayoutAlign="center center" ></div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutGap="10px" fxLayoutAlign="center center">
+              <div fxFlex="50%" [innerHTML]="week.gems.label | safeHtml"></div>
+              <div fxFlex="25%" fxLayoutAlign="center center" class="{{edit ? checkBusyWeek(week, 'gems', 'brother') : ''}}" >
+                {{week.gems.brother.name}} {{week.gems.brother.surname}}
+                <i *ngIf="edit" class="material-icons" (click)="change(week, 'gems', null, 'brother')">mode_edit</i>
+              </div>
+              <div fxHide.xs fxHide.sm fxFlex="25%" fxLayoutAlign="center center" ></div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutGap="5px" fxLayoutAlign="center center">
+              <div fxFlex="50%" [innerHTML]="week.bibleReading.label | safeHtml"></div>
+              <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center" class="{{edit ? checkBusyWeek(week, 'bibleReading', 'primarySchool', 'student') : ''}}">
+                <span fxFlex fxHide.gt-sm fxLayoutAlign="center center">Prima scuola</span>
+                <span fxFlex fxLayout="row" fxLayoutAlign="center center">
+                  <div fxFlex fxLayoutAlign="center center">
+                    {{week.bibleReading.primarySchool.student.name}} {{week.bibleReading.primarySchool.student.surname}}&nbsp;
+                    <span *ngIf="edit && !week.bibleReading.primarySchool.pointChanged">{{week.bibleReading.primarySchool.student.student.bibleReadingStudyNumber.number}}</span>
+                      <span *ngIf="edit && week.bibleReading.primarySchool.pointChanged">{{week.bibleReading.primarySchool.student.student.bibleReadingPendingStudyNumber.number}}</span>
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, 'bibleReading', 'primarySchool', 'student')">mode_edit</i>
+                      <i *ngIf="edit" class="fa fa-list-ol" aria-hidden="true" (click)="changeNumber(week, 'bibleReading', 'primarySchool', 'student')"></i>
+                  </div>
+                </span>
+              </div>
+              <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center" class="{{edit ? checkBusyWeek(week, 'bibleReading', 'secondarySchool', 'student') : ''}}">
+                  <span fxFlex *ngIf="week.secondarySchool" fxHide.gt-sm fxLayoutAlign="center center">Seconda scuola</span>
+                  <span fxFlex fxLayout="row" *ngIf="week.secondarySchool" fxLayoutAlign="center center">
+                    <div fxFlex fxLayoutAlign="center center">
+                      {{week.bibleReading.secondarySchool.student.name}} {{week.bibleReading.secondarySchool.student.surname}}&nbsp;
+                      <span *ngIf="edit && !week.bibleReading.secondarySchool.pointChanged">{{week.bibleReading.secondarySchool.student.student.bibleReadingStudyNumber.number}}</span>
+                      <span *ngIf="edit && week.bibleReading.secondarySchool.pointChanged">{{week.bibleReading.secondarySchool.student.student.bibleReadingPendingStudyNumber.number}}</span>
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, 'bibleReading', 'secondarySchool', 'student')">mode_edit</i>
+                      <i *ngIf="edit" class="fa fa-list-ol" aria-hidden="true" (click)="changeNumber(week, 'bibleReading', 'primarySchool', 'student')"></i>
+                    </div>
+                  </span>
+              </div>
+            </div>
+          </div>
+          <div class="effective" fxLayout="column" fxFlex="100%" fxLayoutGap="10px">
+            <h3>EFFICACI NEL MINISTERO</h3>
+            <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%"  fxLayoutGap="5px" fxLayoutAlign="center center" *ngIf="week.presentationExercise.enabled">
+              <div fxFlex="50%" class="descriptionPart" [innerHTML]="week.presentationExercise.label | safeHtml"></div>
+              <div fxFlex="25%" >{{week.presentationExercise.brother.name}} {{week.presentationExercise.brother.surname}} </div>
+              <div fxFlex="25%" ></div>
+            </div>
+            <div *ngIf="!week.presentationExercise.enabled" fxLayout="column" fxFlex="100%" fxLayoutGap="10px">
+              <div *ngFor="let partType of PART_TYPE" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center" >
+                <div fxFlex="50%" class="descriptionPart" [innerHTML]="week[partType].label | safeHtml"></div>
+                <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center" >
+                  <span fxFlex fxHide.gt-sm >Prima scuola</span>
+                  <div fxFlex  fxLayout="column" fxlayoutAlign="center center">
+                    <div fxFlex class="{{edit ? checkBusyWeek(week, partType, 'primarySchool', 'student') : ''}}">
+                      {{week[partType].primarySchool.student.name}} {{week[partType].primarySchool.student.surname}}
+                      <span *ngIf="edit && !week[partType].primarySchool.pointChanged">{{week[partType].primarySchool.student.student.studyNumber.number}}</span>
+                      <span *ngIf="edit && week[partType].primarySchool.pointChanged">{{week[partType].primarySchool.student.student.pendingStudyNumber.number}}</span>
+
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, partType, 'primarySchool', 'student')">mode_edit</i>
+                      <i *ngIf="edit" class="fa fa-list-ol" aria-hidden="true" (click)="changeNumber(week, partType, 'primarySchool', 'student')"></i>
+                    </div>
+
+                    <div fxFlex class="assistant {{edit ? checkBusyWeek(week, partType, 'primarySchool', 'assistant') : ''}}"  *ngIf="!week[partType].primarySchool.isTalk">
+                      Ass.: {{week[partType].primarySchool.assistant.name}} {{week[partType].primarySchool.assistant.surname}}
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, partType, 'primarySchool', 'assistant')">mode_edit</i>
+                    </div>
+
+                  </div>
+
+                </div>
+                <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center"  >
+                  <span fxFlex *ngIf="week.secondarySchool" fxHide.gt-sm>Seconda scuola</span>
+                  <div fxFlex *ngIf="week.secondarySchool" fxLayout="column" fxLayoutAlign="center center"  >
+                    <div fxFlex class="{{edit ? checkBusyWeek(week, partType, 'secondarySchool', 'student') : ''}}">
+                      {{week[partType].secondarySchool.student.name}} {{week[partType].secondarySchool.student.surname}}
+                      <span *ngIf="edit && !week[partType].secondarySchool.pointChanged">{{week[partType].secondarySchool.student.student.studyNumber.number}}</span>
+                      <span *ngIf="edit && week[partType].secondarySchool.pointChanged">{{week[partType].secondarySchool.student.student.pendingStudyNumber.number}}</span>
+
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, partType, 'secondarySchool', 'student')">mode_edit</i>
+                      <i *ngIf="edit" class="fa fa-list-ol" aria-hidden="true" (click)="changeNumber(week, partType, 'secondarySchool', 'student')"></i>
+                    </div>
+
+                    <div fxFlex class="assistant {{edit ? checkBusyWeek(week, partType, 'secondarySchool', 'assistant') : ''}}" *ngIf="week.secondarySchool && !week[partType].primarySchool.isTalk" >
+                      Ass.: {{week[partType].secondarySchool.assistant.name}} {{week[partType].secondarySchool.assistant.surname}}
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, partType, 'secondarySchool', 'assistant')">mode_edit</i>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="living" fxLayout="column" fxFlex="100%" fxLayoutGap="10px">
+            <h3 >VITA CRISTIANA</h3>
+            <div class="descriptionPart" [innerHTML]="week.intervalSong | safeHtml"></div>
+            <div *ngFor="let part of week.christianLivingPart" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column"  fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
+              <div class="flex-item" fxFlex="50%" [innerHTML]="part.label | safeHtml"></div>
+              <div fxFlex="25%" fxLayout="column">
+                {{part.brother.name}} {{part.brother.surname}}
+              </div>
+              <div fxFlex="25%" fxLayout="column"></div>
+            </div>
+            <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
+              <div class="flex-item" fxFlex="50%" [innerHTML]="week.congregationBibleStudy.label | safeHtml"></div>
+              <div fxFlex="25%" fxLayout="column" class="{{edit ? checkBusyWeek(week, 'congregationBibleStudy', 'brother') : ''}}">
+                <strong>Conduttore:</strong>
+                <span>{{week.congregationBibleStudy.brother.name}} {{week.congregationBibleStudy.brother.surname}} <i *ngIf="edit" class="material-icons" (click)="change(week, 'congregationBibleStudy', null, 'brother')">mode_edit</i></span>
+              </div>
+              <div fxFlex="25%" fxLayout="column" class="{{edit ? checkBusyWeek(week, 'congregationBibleStudy', 'reader') : ''}}">
+                <strong>Lettore:</strong>
+                <span>{{week.congregationBibleStudy.reader.name}} {{week.congregationBibleStudy.reader.surname}} <i *ngIf="edit" class="material-icons" (click)="change(week, 'congregationBibleStudy', null, 'reader')">mode_edit</i></span>
+              </div>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutAlign="center center">
+            <div fxFlex="50%"></div>
+            <div fxFlex="50%"><span [innerHTML]="week.finalSong | safeHtml"></span> finale:
+              <span class="{{edit ? checkBusyWeek(week, 'finalPrayer') : ''}}">{{week.finalPrayer.name}} {{week.finalPrayer.surname}}<i *ngIf="edit" class="material-icons" (click)="change(week, 'finalPrayer', null, null)">mode_edit</i></span>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+  </md-card-content>
+</md-card>

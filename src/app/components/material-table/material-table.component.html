@@ -1,0 +1,57 @@
+<div class="mt-container">
+
+    <div class="mt-header" fxLayout="row">
+        <div [ngClass]="{ 'mt-search': !isSearching(), 'mt-search-focus': isSearching() }" fxLayout="row" fxFlex="20" fxFlex.xs="84"
+            (tap)="focusSearch()" (mouseover)="focusSearch()" (mouseout)="leaveSearch()">
+            <md-icon>search</md-icon>
+            <input #searchInput [(ngModel)]="filter" (ngModelChange)="onFilterChange($event)" fxFlex type="text" class="search-value" placeholder="Filter">
+            <md-icon *ngIf="filter" (click)="resetFilter()">close</md-icon>
+        </div>
+        <div fxFlex></div>
+        <div class="mt-title">{{ tableTitle }}</div>
+        <div fxFlex></div>
+    </div>
+
+    <div class="mt-table">
+        <table *ngIf="rows.length > 0">
+            <thead>
+                <tr>
+                    <ng-template ngFor let-column [ngForOf]="columns">
+                        <th *ngIf="showColumnInHeader(column)" (click)="orderBy(column.name)">
+                            <span class="mt-column" [ngClass]="{'mt-action-value': isActionColumn(column)}">
+                                <span> {{ (column.name.toUpperCase()) }} </span>
+                                <md-icon *ngIf="column.name === currentSorting.column && !isActionColumn(column)">
+                                    {{ currentSorting ? (currentSorting.direction ? 'keyboard_arrow_up' : 'keyboard_arrow_down') : '' }}
+                                </md-icon>
+                            </span>
+                        </th>
+                    </ng-template>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let row of rows">
+                    <ng-template ngFor let-column [ngForOf]="columns">
+                        <td *ngIf="showColumnInRow(column)">
+                            {{ row[column.name] }}
+                        </td>
+                    </ng-template>
+                    <td>
+                        <md-icon (click)="rowAction(row)" class="mt-action-value">
+                            {{ actionSelector(row) }}
+                        </md-icon>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div *ngIf="rows.length === 0" class="no-data">
+            {{ (noRowsAlert) }}
+        </div>
+
+        <button md-fab *ngIf="addRowFunction" (click)="addRowFunction()" [ngClass]="plusButtonClass">
+            <md-icon>add</md-icon>
+        </button>
+        <!--<div style="clear: both;" fxHide.lt-xs fxHide.gt-lg></div>-->
+    </div>
+</div>

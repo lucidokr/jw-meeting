@@ -1,0 +1,87 @@
+<div class="header" [hidden]="login">
+  <div >
+    <div class="wrapper-container">
+      <div class="toogle-sidenav" (click)="openSidenav()"><i class="material-icons">menu</i></div>
+      <div class="logo" aria-hidden="true">
+        <img src="assets/images/jw-meeting-logo-256x256.png">
+      </div>
+      <div class="title">
+        <h3 >{{subtitle}}</h3>
+        <!--<h4 class="subtitle">{{subtitle}}</h4>-->
+      </div>
+      <div class="logout">
+        <i (click)="logout()" class="fa fa-sign-out" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+  <div class="sidenav-overlay" (click)="openSidenav()" [ngClass]="{open:sidenavOpen}"></div>
+  <div class="sidenav" #start align="start" mode="over" [ngClass]="{open:sidenavOpen}">
+    <ul class="clearfix">
+      <li class="">
+        <a href="/home" title="Homepage">
+          <i class="fa fa-home" aria-hidden="true"></i><span>HOME</span>
+        </a>
+      </li>
+      <li class="" *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER || user.role==USER_ROLE.PRESIDENT ">
+        <a href="program/new" title="Nuovo programma vita cristiana e ministero">
+          <i class="fa fa-plus-square-o" aria-hidden="true"></i><span>NUOVO PROGRAMMA</span>
+        </a>
+      </li>
+      <li class="">
+        <a href="/meeting" title="Lista delle adunanze inserite a sistema">
+          <i class="fa fa-briefcase" aria-hidden="true"></i><span>ADUNANZE</span>
+        </a>
+      </li>
+      <li class="" *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER  || user.role==USER_ROLE.PRESIDENT ">
+        <a href="/brother" title="Lista dei fratelli">
+          <i class="fa fa-users" aria-hidden="true"></i><span>FRATELLI</span>
+        </a>
+      </li>
+      <li class="" *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER  || user.role==USER_ROLE.PRESIDENT ">
+        <a href="/student" title="Lista degli studenti iscritti">
+          <i class="fa fa-graduation-cap"></i><span>STUDENTI</span>
+        </a>
+      </li>
+      <li class="" *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER  || user.role==USER_ROLE.PRESIDENT ">
+        <a href="/servant" title="Lista dei fratelli che che servono come servitori di ministero">
+          <i class="fa fa-user" aria-hidden="true"></i><span>SERVITORI</span>
+        </a>
+      </li>
+      <li class="" *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER || user.role==USER_ROLE.PRESIDENT ">
+        <a href="/elder" title="Lista dei fratelli che servono come anziani">
+          <i class="fa fa-user-o" aria-hidden="true"></i><span>ANZIANI</span>
+        </a>
+      </li>
+      <li class="" *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER  || user.role==USER_ROLE.PRESIDENT ">
+        <a href="/prayer" title="Lista dei fratelli che hanno il privilegio di fare le preghiere">
+          <i class="fa fa-user-circle-o" aria-hidden="true"></i><span>PREGHIERE</span>
+        </a>
+      </li>
+      <li class="" *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER  || user.role==USER_ROLE.PRESIDENT ">
+        <a href="/reader" title="Lista dei fratelli che hanno il privilegio di fare il lettore">
+          <i class="fa fa-book" aria-hidden="true"></i><span>LETTORI</span>
+        </a>
+      </li>
+      <li class="" *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER  || user.role==USER_ROLE.PRESIDENT ">
+        <a href="/statistics" title="Statistiche dello svolgimento delle parti">
+          <i class="fa fa-bar-chart" aria-hidden="true"></i><span>STATISTICHE</span>
+        </a>
+      </li>
+    </ul>
+    <!--<a [routerLink]="['/login']" class="btn btn-primary">Log in</a>-->
+  </div>
+</div>
+
+<div [ngClass]="{'sidenav-content':!login}">
+  <div [ngClass]="{'container':!login}">
+    <div [ngClass]="{'wrapper-container':!login}">
+
+      <div class="wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <footer #footer></footer>
+  </div>
+</div>
+
+
