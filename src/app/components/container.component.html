@@ -1,5 +1,5 @@
-<div class="header" [hidden]="login" *ngIf="user">
-  <div >
+<div class="header" [hidden]="login">
+  <div *ngIf="user">
     <div class="wrapper-container">
       <div class="toogle-sidenav" (click)="openSidenav()"><i class="material-icons">menu</i></div>
       <div class="logo" aria-hidden="true">
@@ -14,8 +14,8 @@
       </div>
     </div>
   </div>
-  <div class="sidenav-overlay" (click)="openSidenav()" [ngClass]="{open:sidenavOpen}"></div>
-  <div class="sidenav" #start align="start" mode="over" [ngClass]="{open:sidenavOpen}">
+  <div *ngIf="user" class="sidenav-overlay" (click)="openSidenav()" [ngClass]="{open:sidenavOpen}"></div>
+  <div *ngIf="user" class="sidenav" #start align="start" mode="over" [ngClass]="{open:sidenavOpen}">
     <ul class="clearfix">
       <li class="">
         <a href="/home" title="Homepage">

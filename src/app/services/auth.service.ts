@@ -3,7 +3,7 @@
  */
 import {Injectable} from '@angular/core';
 
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {HttpInterceptor} from "../shared/http-interceptor.service";
 import {MeetingWorkbook} from "../shared/models/meetingWorkbook.model";
 import {environment} from "../../environments/environment";
@@ -13,23 +13,26 @@ import * as moment from "moment";
 @Injectable()
 export class AuthService {
 
+  private loginEvent = new Subject<any>();
+  login$ = this.loginEvent.asObservable();
+
   public refreshTimeout : any = null;
   constructor(
     private http: HttpInterceptor,
   ) {
     let expires, user;
-    if(localStorage.expires) {
-      expires = localStorage.expires;
+    if(localStorage.getItem("expires")) {
+      expires = localStorage.getItem("expires");
     }
-    if(localStorage.user){
-      user = JSON.parse(localStorage.user);
+    if(localStorage.getItem("user")){
+      user = JSON.parse(localStorage.getItem("user"));
     }
     if(expires){
       if(expires > new Date().getTime()){
         this.setRefreshToken(expires);
       }else{
         if(user){
-          this.refreshToken(user.username, localStorage.refreshToken);
+          this.refreshToken(user.username, localStorage.getItem("refreshToken"));
         }else{
           this.logout(true);
         }
@@ -50,13 +53,14 @@ export class AuthService {
           let arr = token.split(".");
           if(arr[1]){
             let obj = JSON.parse(atob(arr[1]));
-            localStorage.expires = obj.exp * 1000;
-            localStorage.user = JSON.stringify(obj._doc)
+            localStorage.setItem("expires", ""+(obj.exp * 1000));
+            localStorage.setItem("user", JSON.stringify(obj._doc));
           }
-          localStorage.token = token;
-          localStorage.refreshToken = refreshToken;
-          this.setRefreshToken(localStorage.expires);
+          localStorage.setItem("token", token);
+          localStorage.setItem("refreshToken", refreshToken);
+          this.setRefreshToken(localStorage.getItem("expires"));
           return json.token;
+
 
         }else{
           this.logout(false);
@@ -69,10 +73,11 @@ export class AuthService {
   }
 
   logout(withReload){
-    delete localStorage.refreshToken;
-    delete localStorage.expires;
-    delete localStorage.token;
-    delete localStorage.user;
+    this.loginEvent.next(false);
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("expires");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     if(this.refreshTimeout){
       clearTimeout(this.refreshTimeout)
     }
@@ -82,13 +87,13 @@ export class AuthService {
 
   setRefreshToken(expires){
     let that = this;
-    let diff = expires - new Date().getTime() - 36e5;
+    let diff = parseInt(expires) - new Date().getTime() - 36e5;
     if(this.refreshTimeout){
       clearTimeout(this.refreshTimeout)
     }
     this.refreshTimeout = setTimeout(function(){
-      let user = JSON.parse(localStorage.user);
-      that.refreshToken(user.username, localStorage.refreshToken).subscribe(token => {
+      let user = JSON.parse(localStorage.getItem("user"));
+      that.refreshToken(user.username, localStorage.getItem("refreshToken")).subscribe(token => {
         if(token){
           console.log("Token refreshed")
         }
@@ -105,13 +110,12 @@ export class AuthService {
           let arr = token.split(".");
           if(arr[1]){
             let obj = JSON.parse(atob(arr[1]));
-            localStorage.expires = obj.exp * 1000;
-            localStorage.user = JSON.stringify(obj._doc)
+            localStorage.setItem("expires",""+(obj.exp * 1000));
+            localStorage.setItem("user",JSON.stringify(obj._doc));
           }
-          localStorage.token = token;
-          localStorage.refreshToken = refreshToken;
-
-          this.setRefreshToken(localStorage.expires);
+          localStorage.setItem("token", token);
+          localStorage.setItem("refreshToken", refreshToken);
+          this.setRefreshToken(localStorage.getItem("expires"));
           return json.token;
 
         }else{

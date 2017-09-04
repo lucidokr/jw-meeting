@@ -29,6 +29,7 @@ export class LoginComponent{
           this.router.navigateByUrl(c);
         else
           this.router.navigateByUrl("home")
+
       }else{
         this.message = "Username o password errati";
       }

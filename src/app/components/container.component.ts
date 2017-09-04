@@ -31,11 +31,17 @@ export class ContainerComponent implements AfterContentChecked, OnInit {
     this.user = authService.getUser();
     router.events.subscribe((val) => {
       if(location.href.indexOf("login")==-1){
+        this.user = authService.getUser();
         this.login = false;
       }else{
+        this.user = authService.getUser();
         this.login = true;
       }
     });
+  }
+
+  checkLoginPage(){
+
   }
 
   openSidenav(){
