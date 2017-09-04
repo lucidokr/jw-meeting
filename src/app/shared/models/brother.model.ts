@@ -4,6 +4,7 @@ import {Elder} from "./elder.model";
 import {Student} from "./student.model";
 import {Prayer} from "./prayer.model";
 import {Reader} from "./reader.model";
+import {Congregation} from "./congregation.model";
 
 export class Brother {
   _id:string;
@@ -16,4 +17,5 @@ export class Brother {
   student: Student;
   prayer: Prayer;
   reader: Reader;
+  congregation: Congregation;
 }

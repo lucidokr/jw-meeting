@@ -6,7 +6,7 @@ var Brother = require('./models/brother');
 router.route('/')
   .get(function(req, res) {
     Brother
-      .find({prayer: {$exists: true, $ne: null}})
+      .find({congregation:req.decoded._doc.congregation._id, prayer: {$exists: true, $ne: null}})
       .sort([['surname', 'ascending']])
       .populate('prayer')
       .or([

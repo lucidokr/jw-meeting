@@ -6,7 +6,7 @@ router.route('/')
   .get(function(req, res) {
 
     History
-      .find({})
+      .find()
       .populate('student') // space delimited path names
       .populate('studyNumber')
       .or([
@@ -16,6 +16,10 @@ router.route('/')
       .exec(function(err, histories) {
         if (err)
           res.send(err);
+
+        histories = histories.filter(function(history) {
+          return history.student.congregation == req.decoded._doc.congregation._id; // return only users with email matching 'type: "Gmail"' query
+        });
 
         res.json(histories);
       });

@@ -14,7 +14,9 @@ var BrotherSchema   = new Schema({
   elder: {type: mongoose.Schema.Types.ObjectId, ref: 'Elder'},
   student: {type: mongoose.Schema.Types.ObjectId, ref: 'Student'},
   prayer: {type: mongoose.Schema.Types.ObjectId, ref: 'Prayer'},
-  reader: {type: mongoose.Schema.Types.ObjectId, ref: 'Reader'}
+  reader: {type: mongoose.Schema.Types.ObjectId, ref: 'Reader'},
+
+  congregation: {type: mongoose.Schema.Types.ObjectId, ref: 'Congregation'}
 
 });
 

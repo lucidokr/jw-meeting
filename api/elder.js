@@ -6,7 +6,7 @@ var Brother = require('./models/brother');
 router.route('/')
   .get(function(req, res) {
     Brother
-      .find({elder: {$exists: true, $ne: null}})
+      .find({congregation:req.decoded._doc.congregation._id, elder: {$exists: true, $ne: null}})
       .populate('elder')
       .or([
         { 'elder.deleted': {$exists:false} },

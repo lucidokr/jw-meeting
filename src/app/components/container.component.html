@@ -1,4 +1,4 @@
-<div class="header" [hidden]="login">
+<div class="header" [hidden]="login" *ngIf="user">
   <div >
     <div class="wrapper-container">
       <div class="toogle-sidenav" (click)="openSidenav()"><i class="material-icons">menu</i></div>

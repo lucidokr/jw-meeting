@@ -1,5 +1,6 @@
   export class WeekMeeting {
     _id:string;
+    congregation: any = null;
     date: any = null;
     completed: boolean = false;
     type: any = null;

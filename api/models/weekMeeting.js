@@ -3,6 +3,7 @@ var Schema       = mongoose.Schema;
 
 var WeekMeetingSchema   = new Schema(
 {
+  congregation: {type: mongoose.Schema.Types.ObjectId, ref: 'Congregation'},
   date: Date,
   completed: Boolean,
   type: Schema.Types.Mixed,

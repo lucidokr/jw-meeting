@@ -92,7 +92,7 @@ var sendMail = function(mail, brother, assistant, date, point, type, school){
 router.route('/temp')
   .get(function(req, res) {
     WeekTemp
-      .find()
+      .find({congregation:req.decoded._doc.congregation._id})
       .populate('presentationExercise.brother')
       .populate('christianLivingPart.brother')
       .sort([['date', 'ascending']])
@@ -106,6 +106,7 @@ router.route('/temp')
   .post(function(req, res) {
     var updateWeek = function(week, nextWeek) {
       var tempWeek = new WeekTemp(week);
+      tempWeek.congregation = req.decoded._doc.congregation;
       tempWeek.completed = false;
 
       tempWeek.save(function(err) {
@@ -132,7 +133,7 @@ router.route('/temp')
 router.route('/')
   .get(function(req, res) {
     Week
-      .find()
+      .find({congregation:req.decoded._doc.congregation._id})
       .sort([['date', 'descending']])
       .exec(function(err, weeks) {
         if (err)
@@ -358,7 +359,7 @@ router.route('/')
         }else{
           var tempWeek = new Week(week);
           tempWeek.completed = true;
-
+          tempWeek.congregation = req.decoded._doc.congregation;
           tempWeek.save(function(err) {
             nextWeek();
             if (err)
@@ -391,7 +392,7 @@ router.route('/')
 
 router.route('/pgm/:year/:month')
 
-  .post(function(req, res) {
+  .get(function(req, res) {
     Week.find({"date": {"$gte": new Date(req.params.year, req.params.month, 1), "$lt": new Date(req.params.year, req.params.month+1, 6)}})
       .populate('initialPrayer')
       .populate('finalPrayer')

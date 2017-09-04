@@ -10,8 +10,9 @@ var Reader = require('./models/reader');
 
 router.route('/')
   .get(function(req, res) {
+    console.log(req.decoded._doc);
     Brother
-      .find()
+      .find({congregation:req.decoded._doc.congregation._id})
       .or([
         { 'deleted':{$exists:false} },
         { 'deleted':{$exists:true, $ne:true }}
@@ -33,9 +34,12 @@ router.route('/')
 
     var brother = new Brother();
     brother = Object.assign(brother, req.body);
+    brother.congregation = req.decoded._doc.congregation;
     brother.save(function(err) {
       if (err)
         res.send(err);
+
+
 
       res.json({ message: 'Brother created!' , brother:brother});
     });

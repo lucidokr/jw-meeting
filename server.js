@@ -41,7 +41,7 @@ app.use(function(req, res, next){
     var accept = req.accepts('html', 'json', 'xml');
     if(accept !== 'html'){
       console.log(req.url);
-      if (req.url.indexOf('/login')) return next();
+      if (req.url.indexOf('/login')!=-1) return next();
       var token = req.headers['x-access-token'];
 
       // decode token
@@ -55,7 +55,7 @@ app.use(function(req, res, next){
             });
           } else {
             var dateNow = new Date();
-            if(decoded.exp < dateNow.getTime()){
+            if((decoded.exp * 1000) < dateNow.getTime()){
               return res.status(403).send({
                 success: false,
                 message: 'Token expired'

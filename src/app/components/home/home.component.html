@@ -3,7 +3,7 @@
 <div fxLayout="row" fxLayoutAlign="center center"><h3>{{date.format('dddd D MMMM YYYY')}}</h3></div>
 <md-card class="counter">
   <md-card-header>
-      <h3>Congregazione di Scorzè</h3>
+      <h3>Congregazione di {{user.congregation.name}}</h3>
   </md-card-header>
   <md-card-content>
     <loader *ngIf="loadingCount"></loader>
