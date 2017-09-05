@@ -710,6 +710,7 @@ export class NewPgmPreviewComponent implements OnInit{
   }
 
   confirmChange(){
+
     if(this.changeMode.school)
       this.changeMode.week[this.changeMode.partType][this.changeMode.school][this.changeMode.partBrother] = this.changeMode.newBrother;
     else if(this.changeMode.partBrother)
@@ -748,48 +749,53 @@ export class NewPgmPreviewComponent implements OnInit{
   }
 
   confirm(){
-    this.loadingInsertPgm = true;
-    this.newPgmService.insert(this.weeks).subscribe(res => {
+    this.dialogService.confirm("Confermi la creazione del programma?").subscribe(confirm => {
+      if(confirm){
+        this.loadingInsertPgm = true;
+        this.newPgmService.insert(this.weeks).subscribe(res => {
 
 
-      let week = this.weeks[0];
+          let week = this.weeks[0];
 
-      this.meetingService.getPgm(week.date.year(), week.date.month()).subscribe((res : Array<WeekMeeting>) => {
-        this.dialogService.openDownloadWeeksDialog(res, true)
-      });
-      //
-      // this.loadingInsertPgm = false;
-      // let dateArr = [];
-      // let week = this.weeks[0]
-      // this.router.navigateByUrl("/meeting");
-      // let date = week.date.clone().add(-2, 'd');
-      // let ms = date.month();
-      // // date.startOf('week').isoWeekday(1);
-      // let monday = date
-      //   .startOf('month')
-      //   .day(1)
-      // if (monday.date() > 7) monday.add(7,'d');
-      // let month = monday.month();
-      // while(month === monday.month()){
-      //   dateArr.push(moment(monday));
-      //   monday.add(7,'d');
-      // }
-      // let meetings = []
-      // console.log(this.weeks)
-      // for(let d of dateArr){
-      //   for(let w of this.weeks){
-      //     if(w.date.isBetween(d, d.clone().add(7, 'd'))){
-      //       meetings.push(this.meetingService.getMeeting(w._id));
-      //     }
-      //   }
-      // }
-      //
-      // Observable.forkJoin(meetings).subscribe((res : Array<WeekMeeting>) => {
-      //   this.dialogService.openDownloadWeeksDialog(res.sort((a:any,b:any) => {return (moment(a.date).isBefore(b.date) ? -1 : 1)}), false)
-      // });
-      // this.dialogService.openDownloadWeeksDialog(this.weeks, true);
+          this.meetingService.getPgm(week.date.year(), week.date.month()).subscribe((res : Array<WeekMeeting>) => {
+            this.dialogService.openDownloadWeeksDialog(res, true)
+          });
+          //
+          // this.loadingInsertPgm = false;
+          // let dateArr = [];
+          // let week = this.weeks[0]
+          // this.router.navigateByUrl("/meeting");
+          // let date = week.date.clone().add(-2, 'd');
+          // let ms = date.month();
+          // // date.startOf('week').isoWeekday(1);
+          // let monday = date
+          //   .startOf('month')
+          //   .day(1)
+          // if (monday.date() > 7) monday.add(7,'d');
+          // let month = monday.month();
+          // while(month === monday.month()){
+          //   dateArr.push(moment(monday));
+          //   monday.add(7,'d');
+          // }
+          // let meetings = []
+          // console.log(this.weeks)
+          // for(let d of dateArr){
+          //   for(let w of this.weeks){
+          //     if(w.date.isBetween(d, d.clone().add(7, 'd'))){
+          //       meetings.push(this.meetingService.getMeeting(w._id));
+          //     }
+          //   }
+          // }
+          //
+          // Observable.forkJoin(meetings).subscribe((res : Array<WeekMeeting>) => {
+          //   this.dialogService.openDownloadWeeksDialog(res.sort((a:any,b:any) => {return (moment(a.date).isBefore(b.date) ? -1 : 1)}), false)
+          // });
+          // this.dialogService.openDownloadWeeksDialog(this.weeks, true);
 
-    });
+        });
+      }
+    })
+
   }
 
   filterBrother(ev){

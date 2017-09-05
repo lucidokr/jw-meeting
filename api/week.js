@@ -69,7 +69,7 @@ var sendMail = function(mail, brother, assistant, date, point, type, school){
   }
 
   if(templateMail != "" || !transporter){
-    fs.readFile(path.join(__dirname, 'mail/assegnation.html'), 'utf8', function (err,html) {
+    fs.readFile(path.join(__dirname, 'mail/assegnation2.html'), 'utf8', function (err,html) {
       if (err) {
         return console.log(err);
       }
@@ -534,7 +534,6 @@ router.route('/:week_id')
             }
           }
 
-      console.log('Length', toFind.length);
 
           Brother.find({
             $or: toFind
@@ -559,30 +558,42 @@ router.route('/:week_id')
                       } else {
                         history.studyNumber = brother.student.pendingStudyNumber;
                       }
-                      if(week[partType][school].made == 1){
-                        if(week[partType][school].pointCompleted) {
+                      if(week[partType][school].made == 1){ //svolto
+                        if(week[partType][school].pointCompleted && !week[partType][school].pointChanged) { // punto superato  e punto non cambiato
                           if (partType == 'bibleReading') {
                             brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingStudyNumber;
                           } else {
                             brother.student.studyNumber = week[partType][school].student.student.studyNumber;
                           }
                         }
+                        if(!week[partType][school].pointCompleted && week[partType][school].pointChanged) { // punto non superato  e punto cambiato
+                          if (partType == 'bibleReading') {
+                            brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingPendingStudyNumber;
+                          } else {
+                            brother.student.studyNumber = week[partType][school].student.student.pendingStudyNumber;
+                          }
+                        }
                         history.made = true;
                         history.pointCompleted = week[partType][school].pointCompleted;
-                      }else if(week[partType][school].made == 2){
+                      }else if(week[partType][school].made == 2){ //non svolto
                         brother.student.lastDate = brother.student.lastPrevDate;
                         brother.student[partType+"Date"] = brother.student[partType+"PrevDate"];
                         brother.student.lastSchool = brother.student.lastPrevSchool;
                         brother.student[partType+"LastSchool"] = brother.student[partType+"LastPrevSchool"];
-                        if(partType=='bibleReading'){
-                          brother.student.bibleReadingStudyNumber = brother.student.bibleReadingPendingStudyNumber;
-                        }else{
-                          brother.student.studyNumber = brother.student.pendingStudyNumber;
+
+                        // se punto cambiato e il discorso non è stato svolto rimane il punto che aveva in precedenza
+                        // mentre se il punto non è stato cambiato il punto pending torna normale
+                        if(!week[partType][school].pointChanged){ //punto non cambiato
+                          if(partType=='bibleReading'){
+                            brother.student.bibleReadingStudyNumber = brother.student.bibleReadingPendingStudyNumber;
+                          }else{
+                            brother.student.studyNumber = brother.student.pendingStudyNumber;
+                          }
                         }
                         history.made = false;
                         history.pointCompleted = false;
                       }
-                      historiesToSave.push(history)
+                      historiesToSave.push(history);
                       week[partType][school].updated = true;
                     }
                   })

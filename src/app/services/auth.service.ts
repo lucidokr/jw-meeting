@@ -8,6 +8,7 @@ import {HttpInterceptor} from "../shared/http-interceptor.service";
 import {MeetingWorkbook} from "../shared/models/meetingWorkbook.model";
 import {environment} from "../../environments/environment";
 import * as moment from "moment";
+import {User} from "../shared/models/user.model";
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class AuthService {
   login$ = this.loginEvent.asObservable();
 
   public refreshTimeout : any = null;
-  private _user:null;
+  private _user: User = null;
   constructor(
     private http: HttpInterceptor,
   ) {

@@ -33,12 +33,12 @@ export class DialogService {
   ) {
   }
 
-  public confirm(callback:any): Observable<Servant> {
+  public confirm(message:string): Observable<Servant> {
 
     let dialogRef: MdDialogRef<ConfirmDialog>;
 
     dialogRef = this.dialog.open(ConfirmDialog);
-    dialogRef.componentInstance.callback = callback;
+    dialogRef.componentInstance.message = message;
 
     return dialogRef.afterClosed();
   }

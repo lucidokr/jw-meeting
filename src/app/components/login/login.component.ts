@@ -23,7 +23,7 @@ export class LoginComponent{
       if(token){
         this.message = null;
 
-        let url = new URL(location.href);
+        let url : any = new URL(location.href);
         let c = url.searchParams.get("returnUrl");
         if(c)
           this.router.navigateByUrl(c);

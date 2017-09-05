@@ -28,7 +28,7 @@ export class WeekStudyNumberUpdateComponent implements OnInit{
   public SCHOOLS = CONST_ARR.SCHOOLS;
   public snackBarConfig : MdSnackBarConfig = new MdSnackBarConfig();
 
-  public constructor(private meetingService: MeetingService, private snackBar:MdSnackBar, private studyNumberService: StudyNumberService) {
+  public constructor(private meetingService: MeetingService, private snackBar:MdSnackBar, private studyNumberService: StudyNumberService, private dialogService:DialogService) {
     this.studyNumberService.get()
       .subscribe(list => this.studyNumberList = list);
 
@@ -48,17 +48,23 @@ export class WeekStudyNumberUpdateComponent implements OnInit{
   }
 
   public confirm(){
-    this.loading = true;
-    this.meetingService.updateMeeting(this.week._id, this.week).subscribe(res => {
-      this.snackBar.open("Settimana aggiornata", null, this.snackBarConfig)
-      this.meetingService.getMeeting(this.week._id).subscribe(week=> {
-        this.week = week;
-        this.loading = false;
-      })
-    },res =>{
-      this.loading = false;
-      this.snackBar.open("Errore nell'aggiornamento", null, this.snackBarConfig)
-    })
+
+    this.dialogService.confirm("Confermi l'aggiornamento?").subscribe(confirm => {
+      if(confirm){
+        this.loading = true;
+        this.meetingService.updateMeeting(this.week._id, this.week).subscribe(res => {
+          this.snackBar.open("Settimana aggiornata", null, this.snackBarConfig);
+          this.meetingService.getMeeting(this.week._id).subscribe(week=> {
+            this.week = week;
+            this.loading = false;
+          })
+        },res =>{
+          this.loading = false;
+          this.snackBar.open("Errore nell'aggiornamento", null, this.snackBarConfig)
+        })
+      }
+    });
+
   }
 
 }

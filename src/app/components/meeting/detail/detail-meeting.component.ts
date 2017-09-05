@@ -10,6 +10,7 @@ import {StudyNumberService} from "../../../services/study-number.service";
 import {EmitterService} from "../../../services/emitter.service";
 import {AuthService} from "../../../services/auth.service";
 import {USER_ROLE} from "../../../constant";
+import {User} from "../../../shared/models/user.model";
 
 @Component({
   selector: 'meeting-detail',
@@ -20,7 +21,7 @@ export class MeetingDetailComponent {
   public week : WeekMeeting;
   public loading : boolean = true;
 
-  public user: any = null;
+  public user : User = null;
 
   public USER_ROLE = USER_ROLE;
 

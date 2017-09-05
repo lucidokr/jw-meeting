@@ -8,6 +8,7 @@ import 'moment/locale/it';
 import {EmitterService} from "../services/emitter.service";
 import {AuthService} from "../services/auth.service";
 import {USER_ROLE} from "../constant";
+import {User} from "../shared/models/user.model";
 
 @Component({
   selector: 'container',
@@ -24,7 +25,7 @@ export class ContainerComponent implements AfterContentChecked, OnInit {
   sidenavOpen: boolean = false;
   headerTitleEmitter: EventEmitter<string>;
 
-  user: any = null;
+  user: User = null;
   public USER_ROLE = USER_ROLE;
 
   constructor(private emitterService: EmitterService, private router:Router, private authService: AuthService) {

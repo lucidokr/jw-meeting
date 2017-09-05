@@ -12,6 +12,7 @@ import {History} from "../../shared/models/history.model";
 import {Brother} from "../../shared/models/brother.model";
 import {BrotherService} from "../../services/brother.service";
 import {AuthService} from "../../services/auth.service";
+import {User} from "../../shared/models/user.model";
 
 @Component({
   selector: 'statistics',
@@ -198,7 +199,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
     let dateArr = [];
     let currentDate = moment().year(this.selectedYear).month(this.selectedMonth).day(1);
 
-    let user = this.authService.getUser();
+    let user : User = this.authService.getUser();
 
     currentDate.startOf('week').isoWeekday(1);
     var monday = currentDate
@@ -296,7 +297,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
   buildChartByBrother(histories, brothers){
     let brothersChart = [];
     for(let brother of brothers){
-      let obj = {...brother};
+      let obj : any = {...brother};
       obj.made = 0;
       obj.madeWithoutPoint = 0;
       obj.notMade = 0;

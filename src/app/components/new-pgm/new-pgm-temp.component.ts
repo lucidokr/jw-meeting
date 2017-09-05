@@ -13,6 +13,7 @@ import {ServantService} from "../../services/servant.service";
 import {DialogService} from "../../services/dialog.service";
 import {MeetingService} from "../../services/meeting.service";
 import {AuthService} from "../../services/auth.service";
+import {User} from "../../shared/models/user.model";
 
 @Component({
   selector: 'new-pgm-temp',
@@ -44,7 +45,8 @@ export class NewPgmTempComponent {
               private newPgmService: NewPgmService,
               private elderService:ElderService,
               private servantService:ServantService,
-              private dialogService:DialogService) {
+              private dialogService:DialogService,
+              private authService: AuthService) {
     let currentDate = moment();
     let allMonths = moment.months();
 
@@ -57,7 +59,7 @@ export class NewPgmTempComponent {
       arrMonths.push({date: date, month: allMonths[date.month()], year: date.year()});
     }
     let newArrMonths = [];
-    meetingService.getTemp().subscribe(weeks => {
+    meetingService.get().subscribe(weeks => {
       for(let month of arrMonths){
         let find = false;
         for(let week of weeks){
@@ -91,7 +93,7 @@ export class NewPgmTempComponent {
       .day(1)
     if (monday.date() > 7) monday.add(7,'d');
     var month = monday.month();
-    let user = this.authService.getUser();
+    let user: User = this.authService.getUser();
     while(month === monday.month()){
       dateArr.push(moment(monday).add(user.congregation.meetingDay, 'd'));
       monday.add(7,'d');
@@ -190,7 +192,8 @@ export class NewPgmTempComponent {
   // }
 
   public confirm(){
-    this.complete.emit(this.weeks);
+
+    this.dialogService.confirm("Confermi la creazione del programma?").subscribe(confirm => {if(confirm) this.complete.emit(this.weeks);});
   }
 
   filterBrother(ev){

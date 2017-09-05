@@ -42,21 +42,23 @@ export class NewPgmConfigComponent {
       meetingService.get().subscribe(weeks => {
         for(let tempWeek of weeksTemp){
           let find = false;
+          let dt = tempWeek.date.clone().day(1);
           for(let week of weeks){
-            if(tempWeek.date.date() == week.date.date() && tempWeek.date.month() == week.date.month() && tempWeek.date.year() == week.date.year())
+            let dw = week.date.clone().day(1);
+            if(dt.date() == dw.date() && dt.month() == dw.month() && dt.year() == dw.year())
               find = true
 
           }
           if(!find){
             let findArr = false;
             for(let arr of arrMonths){
-              if(arr.date.month() == tempWeek.date.month() && arr.date.year() == tempWeek.date.year()){
+              if(arr.date.month() == dt.month() && arr.date.year() == dt.year()){
                 arr.weeks.push(tempWeek)
                 findArr = true;
               }
             }
             if(!findArr)
-              arrMonths.push({weeks:[tempWeek], date: moment(tempWeek.date), month: allMonths[moment(tempWeek.date).month()], year: moment(tempWeek.date).year()})
+              arrMonths.push({weeks:[tempWeek], date: moment(dt), month: allMonths[moment(dt).month()], year: moment(dt).year()})
           }
         }
 

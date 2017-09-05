@@ -8,6 +8,7 @@ import {WeekMeeting} from "../../shared/models/weekMeeting.model";
 import {EmitterService} from "../../services/emitter.service";
 import {AuthService} from "../../services/auth.service";
 import {USER_ROLE} from "../../constant";
+import {User} from "../../shared/models/user.model";
 
 @Component({
   selector: 'home',
@@ -20,7 +21,7 @@ export class HomeComponent implements OnInit{
   private count: any;
   private loadingCount = true;
   private loadingMeeting = true;
-  private user = null;
+  private user: User = null;
 
   public USER_ROLE = USER_ROLE;
 

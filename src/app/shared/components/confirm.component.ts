@@ -8,12 +8,12 @@ import { Component } from '@angular/core';
   selector: 'confirm-dialog',
   template: `
       <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center">
-          Confermi?
+          {{message}}
             <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
               <button fxLayoutAlign="center center" color="accent" fxLayout="column" md-button 
-                    (click)="dialogRef.close()">Annula</button>
+                    (click)="dialogRef.close(false)">Annula</button>
                 <button fxLayoutAlign="center center" fxLayout="column" md-raised-button
-                  (click)="dialogRef.close(); callback()">Conferma</button>
+                  (click)="dialogRef.close(true);">Conferma</button>
                   
             </div>
       </div>
@@ -21,7 +21,7 @@ import { Component } from '@angular/core';
 })
 export class ConfirmDialog {
 
-  callback:any;
+  message: string = "Confermi?";
 
   constructor(public dialogRef: MdDialogRef<ConfirmDialog>) {
   }

@@ -92,7 +92,7 @@ export class GeneralListComponent {
 
   public delete(ev, confirm:boolean = false):void{
     if(!confirm)
-      this.dialogService.confirm(this.delete.bind(this, ev, true));
+      this.dialogService.confirm("Confermi?").subscribe(confirm => {if(confirm) this.delete(ev, true)});
     else{
       this.service.delete(ev.data._id).subscribe(id =>{
         this.snackBar.open(this.type+" eliminato", null, this.snackBarConfig);

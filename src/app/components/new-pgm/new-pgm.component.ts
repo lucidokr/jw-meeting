@@ -9,6 +9,7 @@ import {NewPgmService} from "../../services/new-pgm.service";
 import {AuthService} from "../../services/auth.service";
 import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
 import {USER_ROLE} from "../../constant";
+import {User} from "../../shared/models/user.model";
 
 @Component({
   selector: 'new-pgm',
@@ -18,7 +19,7 @@ import {USER_ROLE} from "../../constant";
 export class NewPgmComponent {
   public config : boolean = true;
   public weeks : Array<WeekMeeting> = [];
-  public user: any;
+  public user : User;
   public USER_ROLE = USER_ROLE;
 
   snackBarConfig : MdSnackBarConfig = new MdSnackBarConfig();
