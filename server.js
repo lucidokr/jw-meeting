@@ -45,6 +45,7 @@ app.use(function(req, res, next){
       var token = req.headers['x-access-token'];
 
       // decode token
+      console.log(token);
       if (token) {
 
         jwt.verify(token, app.get('superSecret'), function(err, decoded) {
@@ -61,8 +62,9 @@ app.use(function(req, res, next){
                 message: 'Token expired'
               });
             }else{
+              console.log("Valid token");
               req.decoded = decoded;
-              next();
+              return next();
             }
 
           }
@@ -87,8 +89,8 @@ app.use(function(req, res, next){
       res.send(200);
     }
 
-    // if(process.env.NODE_ENV &&  process.env.NODE_ENV != "development")
-    //   fs.createReadStream(staticRoot + 'index.html').pipe(res);
+    if(process.env.NODE_ENV &&  process.env.NODE_ENV != "development")
+      fs.createReadStream(staticRoot + 'index.html').pipe(res);
 });
 
 mongoose.connect(config.MONGO_URI, {
