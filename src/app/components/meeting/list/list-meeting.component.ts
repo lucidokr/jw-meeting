@@ -15,6 +15,7 @@ import {MeetingService} from "../../../services/meeting.service";
 import * as moment from 'moment';
 import {Observable} from "rxjs";
 import {WeekMeeting} from "../../../shared/models/weekMeeting.model";
+import {AuthService} from "../../../services/auth.service";
 
 @Component({
   selector: 'prayer-list',
@@ -94,7 +95,8 @@ export class MeetingListComponent extends GeneralListComponent{
   public download(ev: any){
     let week = ev.data;
     // let dateArr = [];
-    let date = week.date.clone().add(-2, 'd');
+
+    let date = week.date.clone().day(1);
     // let ms = date.month();
     // // date.startOf('week').isoWeekday(1);
     // let monday = date

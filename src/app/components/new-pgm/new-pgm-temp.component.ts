@@ -12,6 +12,7 @@ import {ElderService} from "../../services/elder.service";
 import {ServantService} from "../../services/servant.service";
 import {DialogService} from "../../services/dialog.service";
 import {MeetingService} from "../../services/meeting.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'new-pgm-temp',
@@ -37,7 +38,13 @@ export class NewPgmTempComponent {
   public christianLivingPartBrotherFiltered: Array<Brother> = [];
   public presentationExerciseListFiltered: Array<Brother> = [];
 
-  constructor(private router:Router, private meetingService:MeetingService, private wtjService:WTJService, private newPgmService: NewPgmService, private elderService:ElderService, private servantService:ServantService, private dialogService:DialogService) {
+  constructor(private router:Router,
+              private meetingService:MeetingService,
+              private wtjService:WTJService,
+              private newPgmService: NewPgmService,
+              private elderService:ElderService,
+              private servantService:ServantService,
+              private dialogService:DialogService) {
     let currentDate = moment();
     let allMonths = moment.months();
 
@@ -54,7 +61,7 @@ export class NewPgmTempComponent {
       for(let month of arrMonths){
         let find = false;
         for(let week of weeks){
-          let date = week.date.clone().add(-2, 'd');
+          let date = week.date.clone().day(1);
           if(allMonths[date.month()] == month.month && date.year() == month.year){
             find  = true;
             break;
@@ -84,8 +91,9 @@ export class NewPgmTempComponent {
       .day(1)
     if (monday.date() > 7) monday.add(7,'d');
     var month = monday.month();
+    let user = this.authService.getUser();
     while(month === monday.month()){
-      dateArr.push(moment(monday).add(2, 'd'));
+      dateArr.push(moment(monday).add(user.congregation.meetingDay, 'd'));
       monday.add(7,'d');
     }
 
@@ -166,10 +174,10 @@ export class NewPgmTempComponent {
   public changeDate(week){
     if(week.supervisor){
       week.secondarySchool = false;
-      week.date.add(-1, 'd')
+      week.date.day(2)
     }else{
       week.secondarySchool = false;
-      week.date.add(1, 'd')
+      week.date.day(2)
     }
   }
 

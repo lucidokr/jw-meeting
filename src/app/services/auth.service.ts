@@ -17,6 +17,7 @@ export class AuthService {
   login$ = this.loginEvent.asObservable();
 
   public refreshTimeout : any = null;
+  private _user:null;
   constructor(
     private http: HttpInterceptor,
   ) {
@@ -41,7 +42,10 @@ export class AuthService {
   }
 
   getUser(){
-    return JSON.parse(localStorage.getItem("user"));
+    if(!this._user){
+      this._user = JSON.parse(localStorage.getItem("user"))
+    }
+    return this._user;
   }
 
   login(username:string, password:string): Observable<string> {

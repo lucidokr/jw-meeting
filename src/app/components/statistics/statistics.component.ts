@@ -11,6 +11,7 @@ import {HistoryService} from "../../services/history.service";
 import {History} from "../../shared/models/history.model";
 import {Brother} from "../../shared/models/brother.model";
 import {BrotherService} from "../../services/brother.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'statistics',
@@ -30,12 +31,16 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
 
   public histories:Array<History>;
 
-  public colorMade = "#22aa24"
-  public colorNotMade = "#c00000"
-  public colorMadeWithoutPoint = "#cdcd00"
+  public colorMade = "#22aa24";
+  public colorNotMade = "#c00000";
+  public colorMadeWithoutPoint = "#cdcd00";
 
 
-  constructor(private emitterService: EmitterService, private AmCharts: AmChartsService,private historyService:HistoryService,private brotherService:BrotherService) {
+  constructor(private emitterService: EmitterService,
+              private AmCharts: AmChartsService,
+              private historyService:HistoryService,
+              private brotherService:BrotherService,
+              private authService: AuthService) {
     this.emitterService.get("change_header_subtitle")
       .emit('Statistiche');
 
@@ -123,7 +128,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
       let date = moment(currentDate.add(-1, 'M'));
       model[i].month = date.month()+1 + "/"+date.year();
       for(let history of histories){
-        let historyDate = moment(history.date).add(-2, 'd');
+        let historyDate = moment(history.date).day(1);
         if(historyDate.month() == date.month() && historyDate.year() == date.year()){
           if(history.made && history.pointCompleted){
             model[i].made++
@@ -193,14 +198,17 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
     let dateArr = [];
     let currentDate = moment().year(this.selectedYear).month(this.selectedMonth).day(1);
 
+    let user = this.authService.getUser();
+
     currentDate.startOf('week').isoWeekday(1);
     var monday = currentDate
       .startOf('month')
       .day(1)
     if (monday.date() > 7) monday.add(7,'d');
     var month = monday.month();
+
     while(month === monday.month()){
-      dateArr.push(moment(monday).add(2, 'd'));
+      dateArr.push(moment(monday).add(user.congregation.meetingDay, 'd'));
       monday.add(7,'d');
     }
 
@@ -215,7 +223,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
     //   let date = moment(currentDate.add(-1, 'M'));
     for(let i in dateArr){
       if(!model[i]){
-        let tempDate = moment(dateArr[i]).add(-2, 'd');
+        let tempDate = moment(dateArr[i]).day(1);
         model[i] ={week: "Settimana del "+tempDate.date()+"/"+(tempDate.month()+1)+"/"+tempDate.year(), made:0, madeWithoutPoint:0, notMade:0};
       }
       for(let history of histories){
