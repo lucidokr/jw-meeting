@@ -87,8 +87,8 @@ app.use(function(req, res, next){
       res.send(200);
     }
 
-    if(process.env.NODE_ENV &&  process.env.NODE_ENV != "development")
-      fs.createReadStream(staticRoot + 'index.html').pipe(res);
+    // if(process.env.NODE_ENV &&  process.env.NODE_ENV != "development")
+    //   fs.createReadStream(staticRoot + 'index.html').pipe(res);
 });
 
 mongoose.connect(config.MONGO_URI, {
