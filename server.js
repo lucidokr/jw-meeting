@@ -49,7 +49,7 @@ app.use(function(req, res, next){
       console.log(token);
       if (token) {
 
-        jwt.verify(token, app.get('superSecret'), function(err, decoded) {
+        return jwt.verify(token, app.get('superSecret'), function(err, decoded) {
           if (err) {
             return res.status(403).send({
               success: false,
