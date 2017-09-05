@@ -62,7 +62,7 @@ app.use(function(req, res, next){
               });
             }else{
               req.decoded = decoded;
-              return next();
+              next();
             }
 
           }

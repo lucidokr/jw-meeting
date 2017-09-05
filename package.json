@@ -13,7 +13,7 @@
     "api": "node server.js",
     "db": "mongod --dbpath ./db",
     "prod": "ng serve -prod",
-    "build": "ng build --env prod && npm run precache",
+    "build": "ng build --env prod",
     "heroku": "node server.js",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
