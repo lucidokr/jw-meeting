@@ -39,6 +39,7 @@ app.use(function(req, res, next){
 
     // if the request is not html then move along
     var accept = req.accepts('html', 'json', 'xml');
+  console.log(req.url);
     if(accept !== 'html'){
       console.log(req.url);
       if (req.url.indexOf('/login')!=-1) return next();
