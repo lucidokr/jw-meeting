@@ -39,14 +39,11 @@ app.use(function(req, res, next){
 
     // if the request is not html then move along
     var accept = req.accepts('html', 'json', 'xml');
-  console.log(req.url);
     if(accept !== 'html'){
-      console.log(req.url);
       if (req.url.indexOf('/login')!=-1) return next();
       var token = req.headers['x-access-token'];
 
       // decode token
-      console.log(token);
       if (token) {
 
         return jwt.verify(token, app.get('superSecret'), function(err, decoded) {
@@ -63,7 +60,6 @@ app.use(function(req, res, next){
                 message: 'Token expired'
               });
             }else{
-              console.log("Valid token");
               req.decoded = decoded;
               return next();
             }
