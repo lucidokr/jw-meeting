@@ -41,6 +41,7 @@ export class GeneralListComponent {
   service = null;
   data = [];
   source: any = new LocalDataSource(this.data);
+  loading: boolean;
 
   snackBarConfig : MdSnackBarConfig = new MdSnackBarConfig();
 
@@ -54,9 +55,13 @@ export class GeneralListComponent {
   }
 
   public load():void{
+    this.loading = true;
     this.service.get().subscribe(res => {
+      this.loading = false;
       this.data = res;
       this.source = new LocalDataSource(this.data);
+    }, err=> {
+      this.loading = false;
     })
   }
 

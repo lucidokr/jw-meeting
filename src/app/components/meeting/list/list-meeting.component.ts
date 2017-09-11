@@ -103,9 +103,11 @@ export class MeetingListComponent extends GeneralListComponent{
   }
 
   public load():void{
+      this.loading = true;
     this.service.get().subscribe(weeks => {
       if(this.user.role == USER_ROLE.PRESIDENT){
         this.service.getTemp().subscribe(tempWeeks => {
+            this.loading = false;
           let arr = [];
           for(let tempWeek of tempWeeks){
             let find = false;
@@ -126,6 +128,7 @@ export class MeetingListComponent extends GeneralListComponent{
           this.source = new LocalDataSource(this.data);
         })
       }else{
+        this.loading = false;
         this.data = weeks;
         this.source = new LocalDataSource(this.data);
       }

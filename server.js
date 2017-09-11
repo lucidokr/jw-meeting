@@ -5,7 +5,6 @@ var compression = require('compression');
 var mongoose   = require('mongoose')
 if(!process.env.NODE_ENV || process.env.NODE_ENV == "development"){
     var config = require('./api/env.json')['development'];
-    console.log(config)
     process.env.MONGO_DB_URI = config.MONGO_DB_URI;
     process.env.SECRET = config.SECRET;
     process.env.GMAIL_ACCOUNT = config.GMAIL_ACCOUNT;

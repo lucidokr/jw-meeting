@@ -1,14 +1,19 @@
 <md-card class="card-table">
-  <md-input-container fxFlex class="search-container">
-    <input mdInput #search class="search" type="text" placeholder="Cerca..." [ngModel]="searchValue" (ngModelChange)="onSearch($event)"/>
-  </md-input-container>
-  <div class="table-wrapper">
-    <div class="table-container">
-      <ng2-smart-table
-        [settings]="model"
-        [source]="source"
-        (custom)="onCustom($event)">
-      </ng2-smart-table>
-    </div>
-  </div>
+    <md-card-content *ngIf="!loading">
+        <md-input-container fxFlex class="search-container">
+            <input mdInput #search class="search" type="text" placeholder="Cerca..." [ngModel]="searchValue" (ngModelChange)="onSearch($event)"/>
+        </md-input-container>
+        <div class="table-wrapper">
+            <div class="table-container">
+                <ng2-smart-table
+                        [settings]="model"
+                        [source]="source"
+                        (custom)="onCustom($event)">
+                </ng2-smart-table>
+            </div>
+        </div>
+    </md-card-content>
+    <md-card-content *ngIf="loading">
+        <loader></loader>
+    </md-card-content>
 </md-card>
