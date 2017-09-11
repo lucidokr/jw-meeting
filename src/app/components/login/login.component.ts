@@ -11,6 +11,7 @@ export class LoginComponent{
   public username: string;
   public password: string;
   public message: string;
+  public loading: boolean;
 
 
   constructor(private authService: AuthService,
@@ -19,7 +20,9 @@ export class LoginComponent{
   }
 
   login(){
+    this.loading = true;
     this.authService.login(this.username, this.password).subscribe(token => {
+      this.loading = false;
       if(token){
         this.message = null;
 
@@ -34,6 +37,7 @@ export class LoginComponent{
         this.message = "Username o password errati";
       }
     },err =>{
+      this.loading = false;
       this.message = "Username o password errati";
     })
   }

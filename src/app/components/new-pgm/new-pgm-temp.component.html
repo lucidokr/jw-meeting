@@ -26,10 +26,10 @@
           <md-radio-button *ngFor="let keys of weekType | keys" [value]="keys.v" [hidden]="week.supervisor && !keys.v.withSupervisor">{{keys.v.label}}</md-radio-button>
         </md-radio-group>
 
-        <div class="weekConfig" fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" *ngIf="week.type.meeting " >
-          <div fxFlex="100%" width="100%" fxLayout="row" fxLayoutAlign="center center" *ngIf="week.type.disableSchool">
-            <div class="meetingWorkbook" fxFlex="100%" fxFlex fxLayout="column">
-              <div class="effective" fxLayout="column" fxFlex="100%" fxLayoutGap="10px">
+        <div class="weekConfig" fxLayout="column" fxLayoutAlign="center center" *ngIf="week.type.meeting " fxFlexFill>
+          <div width="100%" fxLayout="row" fxLayoutAlign="center center" *ngIf="week.type.disableSchool" fxFlexFill>
+            <div class="meetingWorkbook" fxFlex fxLayout="column" fxFlexFill>
+              <div class="effective" fxLayout="column" fxLayoutGap="10px" fxFlexFill>
                 <h3 >EFFICACI NEL MINISTERO</h3>
                 <div fxFlex="100%" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px"  fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
                   <div fxFlex="50%" [innerHTML]="week.presentationExercise.label | safeHtml"></div>
@@ -40,6 +40,9 @@
                     <md-autocomplete  #presentationExercise="mdAutocomplete" name="brotherAutocomplete" placeholder="Seleziona fratello">
                       <md-option *ngFor="let b of presentationExerciseList" [value]="b" (onSelectionChange)="resetFilterPresentationExercise()">
                         {{b.surname}} {{b.name}}
+                        <span *ngIf="b.servant && b.servant.presentationExerciseDate"> - {{b.servant.presentationExerciseDate.format('DD/MM/YY')}}</span>
+                        <span *ngIf="b.elder && b.elder.presentationExerciseDate"> - {{b.elder.presentationExerciseDate.format('DD/MM/YY')}}</span>
+
                       </md-option>
                     </md-autocomplete>
                   </div>
@@ -51,9 +54,9 @@
           </div>
 
 
-          <div fxFlex="100%" width="100%" fxLayout="row" fxLayoutAlign="center center">
-            <div class="meetingWorkbook" fxFlex="100%" fxLayout="column">
-              <div class="living" fxLayout="column" fxFlex="100%" fxLayoutGap="10px">
+          <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
+            <div class="meetingWorkbook" fxFlex="100%" fxLayout="column" fxFlexFill>
+              <div class="living" fxLayout="column" fxLayoutGap="10px" fxFlexFill>
                 <h3 >VITA CRISTIANA</h3>
                 <div *ngFor="let part of week.christianLivingPart; let j = index" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px" fxFlex="100%" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
                   <div fxFlex="50%" [innerHTML]="part.label | safeHtml"></div>
@@ -64,6 +67,9 @@
                     <md-autocomplete  #auto="mdAutocomplete" name="brotherAutocomplete" placeholder="Seleziona fratello">
                       <md-option *ngFor="let b of christianLivingPartBrotherFiltered" [value]="b" (onSelectionChange)="resetFilter()">
                         {{b.surname}} {{b.name}}
+                        <span *ngIf="b.servant && b.servant.christianLivingPartDate"> - {{b.servant.christianLivingPartDate.format('DD/MM/YY')}}</span>
+                        <span *ngIf="b.elder && b.elder.christianLivingPartDate"> - {{b.elder.christianLivingPartDate.format('DD/MM/YY')}}</span>
+
                       </md-option>
                     </md-autocomplete>
                   </div>

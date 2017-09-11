@@ -5,4 +5,10 @@ export class Servant {
   gemsEnabled: boolean = true;
   talkDate: any = moment();
   gemsDate: any = moment();
+
+  christianLivingPartEnabled: Boolean  = true;
+  christianLivingPartDate: any;
+
+  presentationExerciseEnabled: Boolean  = true;
+  presentationExerciseDate: any;
 }

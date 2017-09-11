@@ -17,6 +17,9 @@ import {NewBrotherDialog} from "./components/brother/new/new-brother";
 import {NewReaderDialog} from "./components/reader/new/new-reader";
 import {DownloadWeeksDialog} from "./shared/components/downloadWeeks.component";
 import {ChangeNumberDialog} from "./shared/components/changeNumber.component";
+import {ChangePartDialog} from "./shared/components/changePart.component";
+import {SafeHtmlPipe} from "./pipes/safe.pipe";
+import {PipeModule} from "./pipe.module";
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import {ChangeNumberDialog} from "./shared/components/changeNumber.component";
     ErrorDialog,
     DownloadWeeksDialog,
     ChangeNumberDialog,
+    ChangePartDialog,
 
     FilterPipe
   ],
@@ -37,7 +41,8 @@ import {ChangeNumberDialog} from "./shared/components/changeNumber.component";
     BrowserModule,
     MdButtonModule, MdInputModule, MdDatepickerModule, MdCheckboxModule, MdRadioModule, MdSidenavModule, MdSelectModule, MdCardModule, MdAutocompleteModule, MdTabsModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    PipeModule
   ],
   exports: [
     NewPrayerDialog,
@@ -50,6 +55,7 @@ import {ChangeNumberDialog} from "./shared/components/changeNumber.component";
     ErrorDialog,
     DownloadWeeksDialog,
     ChangeNumberDialog,
+    ChangePartDialog,
 
     FilterPipe
   ],
@@ -66,7 +72,9 @@ import {ChangeNumberDialog} from "./shared/components/changeNumber.component";
     ConfirmDialog,
     ErrorDialog,
     DownloadWeeksDialog,
-    ChangeNumberDialog
+    ChangeNumberDialog,
+    ChangePartDialog
+
   ]
 })
 export class DialogModule { }

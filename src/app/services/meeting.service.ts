@@ -18,6 +18,7 @@ export class MeetingService {
   constructor(
     private http: HttpInterceptor
   ) {
+
   }
 
   get(): Observable<Array<WeekMeeting>> {
@@ -29,15 +30,23 @@ export class MeetingService {
   }
 
   getTemp(): Observable<Array<WeekMeeting>> {
-    return this.http.get(environment.url + this.url+"/temp", null)
+    return this.http.get(environment.url + "/tempWeek", null)
   }
 
   getMeeting(meetingId:string): Observable<WeekMeeting> {
     return this.http.get(environment.url + this.url+"/"+meetingId, null)
   }
 
+  getMeetingTemp(meetingId:string): Observable<WeekMeeting> {
+    return this.http.get(environment.url +"/tempWeek/"+meetingId, null)
+  }
+
   updateMeeting(meetingId:string, week:WeekMeeting): Observable<void> {
     return this.http.put(environment.url + this.url+"/"+meetingId, week, null)
+  }
+
+  updateMeetingTemp(meetingId:string, week:WeekMeeting): Observable<void> {
+    return this.http.put(environment.url + "/tempWeek/"+meetingId, week, null)
   }
 
 

@@ -73,6 +73,9 @@ import {MomentDateAdapter, MOMENT_DATE_FORMATS} from "./shared/moment.adapter";
 import {SafeHtmlPipe} from "./pipes/safe.pipe";
 import {KeysPipe} from "./pipes/keys.pipe";
 import {AuthGuard} from "./guards/auth.guard";
+import {WeekTempComponent} from "./shared/components/week-temp/week-temp.component";
+import {MeetingDetailTempComponent} from "./components/meeting/detail-temp/detail-meeting-temp.component";
+import {PipeModule} from "./pipe.module";
 
 @NgModule({
   imports: [
@@ -86,7 +89,8 @@ import {AuthGuard} from "./guards/auth.guard";
     FlexLayoutModule,
     Ng2SmartTableModule,
     AmChartsModule,
-    Angular2FontawesomeModule
+    Angular2FontawesomeModule,
+    PipeModule
   ],
   declarations: [
     RootComponent,
@@ -118,8 +122,9 @@ import {AuthGuard} from "./guards/auth.guard";
     WeekStudyNumberUpdateComponent,
     StatisticsComponent,
     NewPgmTempComponent,
+    MeetingDetailTempComponent,
+    WeekTempComponent,
 
-    SafeHtmlPipe,
     KeysPipe,
 
     StickyDirective

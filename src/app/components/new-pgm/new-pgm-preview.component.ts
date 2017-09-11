@@ -120,12 +120,12 @@ export class NewPgmPreviewComponent implements OnInit{
     this.readerList = this.readerList.sort((a:Brother,b:Brother) => {return (moment(a.reader.date).isBefore(b.reader.date) ? -1 : 1)});
     // let elderAndServantList = [].concat(this.elderList, this.servantList);
     this.gemsList = [].concat(this.elderList, this.servantList).sort((a:any,b:any) => {
-      let objA : any = a.elder | a.servant;
-      let objB : any = b.elder | b.servant;
+      let objA : any = a.elder || a.servant;
+      let objB : any = b.elder || b.servant;
       return (moment(objA.gemsDate).isBefore(objB.gemsDate) ? -1 : 1)});
     this.talkList = [].concat(this.elderList, this.servantList).sort((a:any,b:any) => {
-      let objA : any = a.elder | a.servant;
-      let objB : any = b.elder | b.servant;
+      let objA : any = a.elder || a.servant;
+      let objB : any = b.elder || b.servant;
       return (moment(objA.talkDate).isBefore(objB.talkDate) ? -1 : 1)});
     this.presidentList = [].concat(this.elderList).sort((a:Brother,b:Brother) => {return (moment(a.elder.presidentDate).isBefore(b.elder.presidentDate) ? -1 : 1)});
     this.congregationBibleStudyList = [].concat(this.elderList).sort((a:Brother,b:Brother) => {return (moment(a.elder.bibleStudyDate).isBefore(b.elder.bibleStudyDate) ? -1 : 1)});

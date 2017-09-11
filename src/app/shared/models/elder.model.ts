@@ -14,5 +14,11 @@ export class Elder {
   presidentDate: any = moment();
   bibleStudyDate: any = moment();
 
+  christianLivingPartEnabled: Boolean  = true;
+  christianLivingPartDate: any;
+
+  presentationExerciseEnabled: Boolean  = true;
+  presentationExerciseDate: any;
+
 
 }

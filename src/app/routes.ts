@@ -16,6 +16,7 @@ import {ReaderListComponent} from "./components/reader/list/list-reader.componen
 import {LoginComponent} from "./components/login/login.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {StatisticsComponent} from "./components/statistics/statistics.component";
+import {MeetingDetailTempComponent} from "./components/meeting/detail-temp/detail-meeting-temp.component";
 
 @Component({
   selector: 'app',
@@ -57,6 +58,11 @@ export const routes: Routes = [
   {
     path: 'meeting/:meetingId',
     component: MeetingDetailComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'meeting/temp/:meetingId',
+    component: MeetingDetailTempComponent,
     canActivate: [AuthGuard]
   },
   {

@@ -59,21 +59,38 @@ export class NewPgmTempComponent {
       arrMonths.push({date: date, month: allMonths[date.month()], year: date.year()});
     }
     let newArrMonths = [];
+    let newArrMonthsTemp = [];
     meetingService.get().subscribe(weeks => {
-      for(let month of arrMonths){
-        let find = false;
-        for(let week of weeks){
-          let date = week.date.clone().day(1);
-          if(allMonths[date.month()] == month.month && date.year() == month.year){
-            find  = true;
-            break;
+      meetingService.getTemp().subscribe(weeksTemp => {
+        for (let month of arrMonths) {
+          let find = false;
+          for (let week of weeks) {
+            let date = week.date.clone().day(1);
+            if (allMonths[date.month()] == month.month && date.year() == month.year) {
+              find = true;
+              break;
+            }
           }
+          if (!find)
+            newArrMonths.push(month);
         }
-        if(!find)
-          newArrMonths.push(month);
-      }
 
-      this.arrMonths = newArrMonths;
+        for (let month of newArrMonths) {
+          let find = false;
+          for (let week of weeksTemp) {
+            let date = week.date.clone().day(1);
+            if (allMonths[date.month()] == month.month && date.year() == month.year) {
+              find = true;
+              break;
+            }
+          }
+          if (!find)
+            newArrMonthsTemp.push(month);
+        }
+
+        this.arrMonths = newArrMonthsTemp;
+      })
+
     })
 
 
@@ -154,11 +171,30 @@ export class NewPgmTempComponent {
           this.servantService.get()
         ];
         Observable.forkJoin(obsArr).subscribe(res => {
+          let list = res[0].concat(res[1]);
+          list = list.sort((a:any,b:any) => {
+            let objA : any = a.elder || a.servant;
+            let objB : any = b.elder || b.servant;
+            return (moment(objA.christianLivingPartDate).isBefore(objB.christianLivingPartDate) ? -1 : 1)})
+          list = list.filter(brother => {
+            if(brother.servant) return brother.servant.christianLivingPartEnabled
+            if(brother.elder) return brother.elder.christianLivingPartEnabled
+          })
+          this.christianLivingPartBrother = list;
+          this.christianLivingPartBrotherFiltered = [].concat(list);
 
-          this.christianLivingPartBrother = res[0].concat(res[1]);
-          this.christianLivingPartBrotherFiltered = res[0].concat(res[1]);
-          this.presentationExerciseList = res[0].concat(res[1])
-          this.presentationExerciseListFiltered = res[0].concat(res[1])
+          let list2 = res[0].concat(res[1]);
+          list2 = list2.sort((a:any,b:any) => {
+            let objA : any = a.elder || a.servant;
+            let objB : any = b.elder || b.servant;
+            return (moment(objA.presentationExerciseDate).isBefore(objB.presentationExerciseDate) ? -1 : 1)})
+          list2 = list2.filter(brother => {
+            if(brother.servant) return brother.servant.presentationExerciseEnabled
+            if(brother.elder) return brother.elder.presentationExerciseEnabled
+          })
+
+          this.presentationExerciseList = list2
+          this.presentationExerciseListFiltered = [].concat(list2)
           this.loadingMeetingWorkbooks = false;
         });
       }else{
@@ -170,7 +206,7 @@ export class NewPgmTempComponent {
   }
 
   public resetFilter(){
-    this.christianLivingPartBrotherFiltered = [].concat(this.christianLivingPartBrother)
+    this.christianLivingPartBrotherFiltered = [].concat(this.christianLivingPartBrother);
   }
 
   public changeDate(week){

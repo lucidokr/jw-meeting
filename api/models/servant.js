@@ -6,6 +6,13 @@ var ServantSchema   = new Schema({
   gemsDate: Date,
   talkEnabled: Boolean,
   gemsEnabled: Boolean,
+  christianLivingPartEnabled: Boolean,
+  christianLivingPartDate: Date,
+  christianLivingPartPrevDate: Date,
+
+  presentationExerciseEnabled: Boolean,
+  presentationExerciseDate: Date,
+  presentationExercisePrevDate: Date,
 
   deleted: Boolean
 });

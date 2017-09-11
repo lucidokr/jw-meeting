@@ -17,6 +17,6 @@
 </md-card>
 <loader *ngIf="loadingMeeting"></loader>
 <div *ngIf="!loadingMeeting && currentWeek && (user.role==USER_ROLE.SCHOOL_OVERSEER || user.role==USER_ROLE.PRESIDENT)" fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px">
-  <week-study-number-update fromHome="true" fxFlex="100%" [week]="currentWeek"></week-study-number-update>
+  <week-study-number-update *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER" fromHome="true" fxFlex="100%" [week]="currentWeek"></week-study-number-update>
   <week fxFlex="100%" [edit]="false" [week]="currentWeek"></week>
 </div>

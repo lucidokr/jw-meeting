@@ -12,7 +12,7 @@ var refreshTokens = {};
 var EXPIRES = 60*60*24*7;
 
 
-app.set('superSecret', 'jwmeeting');
+app.set('superSecret', process.env.SECRET);
 router.route('/login')
   .post(function(req, res) {
 

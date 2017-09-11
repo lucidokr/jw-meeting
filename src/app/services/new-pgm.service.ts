@@ -24,7 +24,7 @@ export class NewPgmService {
   }
 
   public insertTemp(weeks: Array<WeekMeeting>){
-    return this.http.post(environment.url + "/week/temp", weeks)
+    return this.http.post(environment.url + "/tempWeek", weeks)
   }
 
 

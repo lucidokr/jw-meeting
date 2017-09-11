@@ -25,6 +25,7 @@ export class NewStudentDialog implements OnInit{
   public loading;
 
   ngOnInit(){
+    this.checkIfAllDisabled();
     if(!this.edit){
       this.loading = true;
       this.brotherService.get()

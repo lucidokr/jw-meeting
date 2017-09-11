@@ -24,6 +24,7 @@ import {WeekMeeting} from "../shared/models/weekMeeting.model";
 import {DownloadWeeksDialog} from "../shared/components/downloadWeeks.component";
 import {StudyNumber} from "../shared/models/studyNumber.model";
 import {ChangeNumberDialog} from "../shared/components/changeNumber.component";
+import {ChangePartDialog} from "../shared/components/changePart.component";
 
 
 @Injectable()
@@ -135,6 +136,17 @@ export class DialogService {
     dialogRef = this.dialog.open(ChangeNumberDialog);
     dialogRef.componentInstance.point = point;
     dialogRef.componentInstance.forBibleReading = forBibleReading;
+
+    return dialogRef.afterClosed();
+  }
+
+  public openChangePart(part: any, list: Array<Brother>, t: string): Observable<void>{
+    let dialogRef: MdDialogRef<ChangePartDialog>;
+
+    dialogRef = this.dialog.open(ChangePartDialog);
+    dialogRef.componentInstance.part = part;
+    dialogRef.componentInstance.t = t;
+    dialogRef.componentInstance.list = list;
 
     return dialogRef.afterClosed();
   }

@@ -78,8 +78,8 @@ var sendMail = function(mail, brother, assistant, date, point, type, school){
       transporter = nodemailer.createTransport({
         service: "Gmail",
         auth: {
-          user: "jwmeetingscorze@gmail.com",
-          pass: "jw-meeting"
+          user: process.env.GMAIL_ACCOUNT,
+          pass: process.env.GMAIL_ACCOUNT_PASSWORD
         }
       });
       send()
@@ -88,47 +88,6 @@ var sendMail = function(mail, brother, assistant, date, point, type, school){
     send()
   }
 }
-
-router.route('/temp')
-  .get(function(req, res) {
-    WeekTemp
-      .find({congregation:req.decoded._doc.congregation._id})
-      .populate('presentationExercise.brother')
-      .populate('christianLivingPart.brother')
-      .sort([['date', 'ascending']])
-      .exec(function(err, weeks) {
-        if (err)
-          res.send(err);
-
-        res.json(weeks);
-      });
-  })
-  .post(function(req, res) {
-    var updateWeek = function(week, nextWeek) {
-      var tempWeek = new WeekTemp(week);
-      tempWeek.congregation = req.decoded._doc.congregation;
-      tempWeek.completed = false;
-
-      tempWeek.save(function(err) {
-        nextWeek();
-        if (err)
-          console.error(err);
-        else
-          console.log("Week saved")
-      });
-    }
-    async.each(req.body, function(week, nextWeek) {
-      console.log("start to update week", week.date);
-      updateWeek(week, nextWeek)
-    },function(err) {
-      if( err ) {
-        console.log('Process failed');
-      } else {
-        res.json({ message: 'All weeks updated!' });
-        console.log('All weeks updated');
-      }
-    });
-  })
 
 router.route('/')
   .get(function(req, res) {
@@ -163,6 +122,11 @@ router.route('/')
           {'_id': week.congregationBibleStudy.reader._id},
           {'_id': week.bibleReading.primarySchool.student._id}
         ];
+
+        for(var i = 0; i < week.christianLivingPart.length; i++){
+          toFind.push({'_id': week.christianLivingPart[i].brother._id});
+        }
+
         if(week.secondarySchool){
           toFind.push({'_id': week.bibleReading.secondarySchool.student._id});
         }
@@ -184,6 +148,8 @@ router.route('/')
             if(!week.bibleStudy.secondarySchool.isTalk)
               toFind.push({'_id': week.bibleStudy.secondarySchool.assistant._id});
           }
+        }else{
+          toFind.push({'_id': week.presentationExercise.brother._id});
         }
 
         console.log("To find", toFind.length);
@@ -218,6 +184,16 @@ router.route('/')
                 if (brother._id == week.congregationBibleStudy.brother._id)
                   brother.elder.bibleStudyDate = week.date;
 
+                if(week.presentationExercise.enabled && brother._id == week.presentationExercise.brother._id)
+                    brother.elder.presentationExerciseDate = week.date;
+
+                for(var i = 0; i < week.christianLivingPart.length; i++){
+                    if(brother._id == week.christianLivingPart[i].brother._id){
+                        brother.elder.christianLivingPartPrevDate = brother.elder.christianLivingPartDate;
+                        brother.elder.christianLivingPartDate = week.date;
+                    }
+                }
+
                 objToSave.push(brother.elder);
               }
               if (brother.servant) {
@@ -225,6 +201,15 @@ router.route('/')
                   brother.servant.gemsDate = week.date;
                 if (brother._id == week.talk.brother._id)
                   brother.servant.talkDate = week.date;
+                if(week.presentationExercise.enabled && brother._id == week.presentationExercise.brother._id)
+                    brother.servant.presentationExerciseDate = week.date;
+
+                for(var i = 0; i < week.christianLivingPart.length; i++){
+                    if(brother._id == week.christianLivingPart[i].brother._id){
+                        brother.servant.christianLivingPartPrevDate = brother.servant.christianLivingPartDate;
+                        brother.servant.christianLivingPartDate = week.date;
+                    }
+                }
                 objToSave.push(brother.servant)
               }
               if (brother.prayer) {
@@ -378,12 +363,20 @@ router.route('/')
           console.log('Process failed');
         } else {
 
-          res.json({ message: 'All weeks updated!' });
+          var arr = [];
+          for(var i=0; i<req.body.length; i++){
+            arr.push({"_id":req.body[i]._id})
+          }
+          WeekTemp.remove({
+              $or: arr
+          }, function(err, week) {
+              if (err)
+                  res.send(err);
 
-          var weekDate = new Date(req.body[0].date);
-          WeekTemp.remove({"date": {"$gte": new Date(weekDate.getFullYear(), weekDate.getMonth(), 1), "$lt": new Date(weekDate.getFullYear(), weekDate.getMonth()+1, 6)}});
-          console.log('All weeks updated');
-          sendMails(mailToSend);
+              res.json({ message: 'All weeks updated!' });
+              sendMails(mailToSend);
+          });
+
 
         }
       });
@@ -504,9 +497,6 @@ router.route('/:week_id')
         //   }
         //   sendMails(mailToSend);
         // }
-
-
-
       });
   })
   .put(function(req, res) {
@@ -566,13 +556,13 @@ router.route('/:week_id')
                             brother.student.studyNumber = week[partType][school].student.student.studyNumber;
                           }
                         }
-                        if(!week[partType][school].pointCompleted && week[partType][school].pointChanged) { // punto non superato  e punto cambiato
-                          if (partType == 'bibleReading') {
-                            brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingPendingStudyNumber;
-                          } else {
-                            brother.student.studyNumber = week[partType][school].student.student.pendingStudyNumber;
-                          }
-                        }
+                        // if(!week[partType][school].pointCompleted && week[partType][school].pointChanged) { // punto non superato  e punto cambiato
+                        //   if (partType == 'bibleReading') {
+                        //     brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingPendingStudyNumber;
+                        //   } else {
+                        //     brother.student.studyNumber = week[partType][school].student.student.pendingStudyNumber;
+                        //   }
+                        // }
                         history.made = true;
                         history.pointCompleted = week[partType][school].pointCompleted;
                       }else if(week[partType][school].made == 2){ //non svolto

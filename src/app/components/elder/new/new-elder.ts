@@ -53,7 +53,7 @@ import {DialogService} from "../../../services/dialog.service";
             </div>
             
             <div fxLayout="row" fxLayoutAlign="start center">
-              <md-checkbox fxFlex [(ngModel)]="brother.elder.bibleStudyEnabled" name="presidentEnabled" >
+              <md-checkbox fxFlex [(ngModel)]="brother.elder.bibleStudyEnabled" name="bibleStudyEnabled" >
                       Studio biblico di congregazione
               </md-checkbox>
                 <div *ngIf="brother.elder.bibleStudyEnabled">
@@ -63,6 +63,32 @@ import {DialogService} from "../../../services/dialog.service";
                   </md-input-container>
                   <md-datepicker #dateBibleStudy></md-datepicker>
                 </div>
+            </div>
+            
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <md-checkbox fxFlex [(ngModel)]="brother.elder.christianLivingPartEnabled" name="christianLivingPartEnabled" >
+                      Parti Vita Cristiana
+                  </md-checkbox>
+              <div *ngIf="brother.elder.christianLivingPartEnabled">
+                <md-input-container fxFlex >
+                  <input mdInput [mdDatepicker]="dateChristianLivingPart" [(ngModel)]="brother.elder.christianLivingPartDate" name="christianLivingPartDate"  placeholder="Data ultimo parte Vita cristiana">
+                  <button mdSuffix [mdDatepickerToggle]="dateChristianLivingPart"></button>
+                </md-input-container>
+                <md-datepicker #dateChristianLivingPart></md-datepicker>
+              </div>
+            </div>
+            
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <md-checkbox fxFlex [(ngModel)]="brother.elder.presentationExerciseEnabled" name="presentationExerciseEnabled" >
+                      Esercitiamoci
+                  </md-checkbox>
+              <div *ngIf="brother.elder.presentationExerciseEnabled">
+                <md-input-container fxFlex >
+                  <input mdInput [mdDatepicker]="datePresentationExercise" [(ngModel)]="brother.elder.presentationExerciseDate" name="presentationExerciseDate"  placeholder="Data ultima parte Esercitiamoci">
+                  <button mdSuffix [mdDatepickerToggle]="datePresentationExercise"></button>
+                </md-input-container>
+                <md-datepicker #datePresentationExercise></md-datepicker>
+              </div>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start center">

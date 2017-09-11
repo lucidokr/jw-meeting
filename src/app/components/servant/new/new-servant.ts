@@ -28,6 +28,33 @@ import {BrotherService} from "../../../services/brother.service";
             <h3>{{brother.name}} {{brother.surname}}</h3>
           </div>
           <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center" *ngIf="brother && brother.servant">
+          
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <md-checkbox fxFlex [(ngModel)]="brother.servant.christianLivingPartEnabled" name="christianLivingPartEnabled" >
+                      Parti Vita Cristiana
+                  </md-checkbox>
+              <div *ngIf="brother.servant.christianLivingPartEnabled">
+                <md-input-container fxFlex >
+                  <input mdInput [mdDatepicker]="dateChristianLivingPart" [(ngModel)]="brother.servant.christianLivingPartDate" name="christianLivingPartDate"  placeholder="Data ultimo parte Vita cristiana">
+                  <button mdSuffix [mdDatepickerToggle]="dateChristianLivingPart"></button>
+                </md-input-container>
+                <md-datepicker #dateChristianLivingPart></md-datepicker>
+              </div>
+            </div>
+            
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <md-checkbox fxFlex [(ngModel)]="brother.servant.presentationExerciseEnabled" name="presentationExerciseEnabled" >
+                      Esercitiamoci
+                  </md-checkbox>
+              <div *ngIf="brother.servant.presentationExerciseEnabled">
+                <md-input-container fxFlex >
+                  <input mdInput [mdDatepicker]="datePresentationExercise" [(ngModel)]="brother.servant.presentationExerciseDate" name="presentationExerciseDate"  placeholder="Data ultima parte Esercitiamoci">
+                  <button mdSuffix [mdDatepickerToggle]="datePresentationExercise"></button>
+                </md-input-container>
+                <md-datepicker #datePresentationExercise></md-datepicker>
+              </div>
+            </div>
+          
             <div fxLayout="row" fxLayoutAlign="start center">
               <md-checkbox fxFlex [(ngModel)]="brother.servant.talkEnabled" name="talkEnabled" >
                       Discorso Tesori

@@ -1,0 +1,46 @@
+<md-card class="weekConfigContainer" fxLayout="column"  fxLayoutAlign="start start">
+  <md-card-header fxLayout="row" fxLayoutAlign="start start">
+    <md-card-title>
+      <span>{{week.date.format('dddd D MMMM YYYY')}} - {{week.type.label}}</span>
+      <h3  class="flex-item" *ngIf="week.supervisor">Visita del sorvegliante</h3>
+    </md-card-title>
+  </md-card-header>
+  <md-card-content fxLayout="column" fxLayoutAlign="center center">
+    <div class="weekPreview" fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" *ngIf="week.type.meeting && !week.supervisor" >
+      <div fxFlex="100%" width="100%" fxLayout="row" fxLayoutAlign="center center"  >
+        <div class="meetingWorkbook flex-item" fxFlex="100%" fxFlex fxLayout="column" fxLayoutGap="10px">
+
+          <div class="effective" fxLayout="column" fxFlex="100%" fxLayoutGap="10px" *ngIf="week.presentationExercise.enabled">
+            <h3>EFFICACI NEL MINISTERO</h3>
+            <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%"  fxLayoutGap="5px" fxLayoutAlign="center center" *ngIf="week.presentationExercise.enabled">
+              <div fxFlex="50%" class="descriptionPart" [innerHTML]="week.presentationExercise.label | safeHtml"></div>
+              <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                {{week.presentationExercise.brother.name}} {{week.presentationExercise.brother.surname}}
+                <i *ngIf="edit" class="material-icons" (click)="changePart(week.presentationExercise, 'presentationExercise')">mode_edit</i>
+              </div>
+              <div fxFlex="25%" ></div>
+            </div>
+
+          </div>
+          <div class="living" fxLayout="column" fxFlex="100%" fxLayoutGap="10px">
+            <h3 >VITA CRISTIANA</h3>
+            <div *ngFor="let part of week.christianLivingPart" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column"  fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
+              <div class="flex-item" fxFlex="50%" [innerHTML]="part.label | safeHtml"></div>
+              <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                {{part.brother.name}} {{part.brother.surname}}
+                <i *ngIf="edit" class="material-icons" (click)="changePart(part, 'christianLivingPart')">mode_edit</i>
+              </div>
+              <div fxFlex="25%" fxLayout="column"></div>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+    <button *ngIf="!loading" type="button" md-raised-button [disabled]="!edited" (click)="editMeeting()">Salva</button>
+    <loader *ngIf="loading"></loader>
+  </md-card-content>
+</md-card>

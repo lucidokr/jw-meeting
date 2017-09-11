@@ -27,7 +27,8 @@
         <input mdInput type="password" name="password" [(ngModel)]="password" required placeholder="Password">
       </md-input-container>
       <label class="error" *ngIf="message">{{message}}</label>
-      <button md-raised-button [disabled]="!loginForm.form.valid" (click)="login()">Login</button>
+      <button *ngIf="!loading" md-raised-button [disabled]="!loginForm.form.valid" (click)="login()">Login</button>
+      <loader *ngIf="loading"></loader>
     </form>
   </md-card-content>
 </md-card>

@@ -13,6 +13,14 @@ var ElderSchema   = new Schema({
   serviceOverseer: Boolean,
   schoolOverseer: Boolean,
 
+  christianLivingPartEnabled: Boolean,
+  christianLivingPartDate: Date,
+  christianLivingPartPrevDate: Date,
+
+  presentationExerciseEnabled: Boolean,
+  presentationExerciseDate: Date,
+  presentationExercisePrevDate: Date,
+
   deleted: Boolean
 });
 
