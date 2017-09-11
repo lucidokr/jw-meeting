@@ -129,5 +129,5 @@ if(process.env.NODE_ENV &&  process.env.NODE_ENV != "development"){
   var http = require("http");
   setInterval(function() {
       http.get("http://jw-meeting.herokuapp.com");
-  }, 300000);
+  }, 1500000);
 }
