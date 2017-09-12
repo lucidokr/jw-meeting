@@ -210,95 +210,14 @@ router.route('/:week_id')
     })
     .put(function(req, res){
       var newWeek = req.body;
-      WeekTemp.find({_id:req.params.week_id}).exec(function (err, weeks) {
-        var week = weeks[0];
-        var toFind = [];
-        if(week.presentationExercise.enabled && week.presentationExercise.brother != newWeek.presentationExercise.brother._id){
-          toFind.push(newWeek.presentationExercise.brother._id)
-          toFind.push(week.presentationExercise.brother)
-        }
-        for(let i=0; i<week.christianLivingPart;i++){
-            if(week.christianLivingPart[i].brother != newWeek.christianLivingPart[i].brother._id){
-              toFind.push(newWeek.christianLivingPart[i].brother._id)
-              toFind.push(week.christianLivingPart[i].brother)
+        WeekTemp.findOneAndUpdate({'_id':req.params.week_id}, newWeek, {upsert:true}, function(err, doc){
+            if (err)
+                console.error(err);
+            else{
+                res.json({ message: 'Temp weeks updated!' });
+                console.log('Temp weeks updated');
             }
-        }
-
-        Brother.find({
-            $or: toFind
-        })
-        .populate('servant')
-        .populate('elder')
-        .exec(function (err, brothers) {
-            async.each(brothers, function(brother, nextBrother) {
-              if(brother.servant){
-                  if(week.presentationExercise.enabled && week.presentationExercise.brother == brother._id){
-                      brother.servant.presentationExerciseDate = brother.servant.presentationExercisePrevDate;
-                  }
-                  if(week.presentationExercise.enabled && newWeek.presentationExercise.brother._id == brother._id){
-                      brother.servant.presentationExercisePrevDate = brother.servant.presentationExerciseDate;
-                      brother.servant.presentationExerciseDate = week.date;
-                  }
-                  for(let i=0; i<week.christianLivingPart;i++){
-                      if(week.christianLivingPart[i].brother == brother._id){
-                          brother.servant.christianLivingPartDate = brother.servant.christianLivingPartPrevDate;
-                      }
-                      if(newWeek.christianLivingPart[i].brother._id == brother._id){
-                          brother.servant.christianLivingPartPrevDate = brother.servant.christianLivingPartDate;
-                          brother.servant.pchristianLivingPartDate = week.date;
-                      }
-                  }
-                  brother.servant.save(function(err) {
-                      nextBrother();
-                      if (err)
-                          console.error(err);
-                      else
-                          console.log("Servant updated")
-                  });
-              }
-                if(brother.elder){
-                    if(week.presentationExercise.enabled && week.presentationExercise.brother == brother._id){
-                        brother.elder.presentationExerciseDate = brother.elder.presentationExercisePrevDate;
-                    }
-                    if(week.presentationExercise.enabled && newWeek.presentationExercise.brother._id == brother._id){
-                        brother.elder.presentationExercisePrevDate = brother.elder.presentationExerciseDate;
-                        brother.elder.presentationExerciseDate = week.date;
-                    }
-                    for(let i=0; i<week.christianLivingPart;i++){
-                        if(week.christianLivingPart[i].brother == brother._id){
-                            brother.elder.christianLivingPartDate = brother.elder.christianLivingPartPrevDate;
-                        }
-                        if(newWeek.christianLivingPart[i].brother._id == brother._id){
-                            brother.elder.christianLivingPartPrevDate = brother.elder.christianLivingPartDate;
-                            brother.elder.pchristianLivingPartDate = week.date;
-                        }
-                    }
-                    brother.elder.save(function(err) {
-                        nextBrother();
-                        if (err)
-                            console.error(err);
-                        else
-                            console.log("Elder updated")
-                    });
-                }
-
-            },function(err) {
-                if( err ) {
-                    console.log('Process failed');
-                } else {
-                    WeekTemp.findOneAndUpdate({'_id':req.params.week_id}, newWeek, {upsert:true}, function(err, doc){
-                        if (err)
-                            console.error(err);
-                        else{
-                            res.json({ message: 'Temp weeks updated!' });
-                            console.log('Temp weeks updated');
-                        }
-                    });
-
-                }
-            });
-        })
-      })
+        });
     })
 
 module.exports = router;
