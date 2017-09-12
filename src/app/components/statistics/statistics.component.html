@@ -45,12 +45,11 @@
               fxFlex="70%"
               mode="determinate"
               color="warn"
-              value="{{(100/obj.v.total) * obj.v.made}}">
+              value="{{getPercent(obj.v.total, obj.v.made)}}">
             </md-progress-bar>
             <div fxFlex="30%" fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center">
               {{obj.v.made}}
-              <span *ngIf="obj.v.made != 0">({{(100/obj.v.total) * obj.v.made}}%)</span>
-              <span *ngIf="obj.v.made == 0">(0%)</span>
+              <span> ({{getPercent(obj.v.total, obj.v.made)}}%)</span>
             </div>
           </div>
         </div>
@@ -60,12 +59,11 @@
               fxFlex="70%"
               color="accent"
               mode="determinate"
-              value="{{(100/obj.v.total) * obj.v.madeWithoutPoint}}">
+              value="{{getPercent(obj.v.total, obj.v.madeWithoutPoint)}}">
             </md-progress-bar>
             <div fxFlex="30%" fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center">
               {{obj.v.madeWithoutPoint}}
-              <span *ngIf="obj.v.madeWithoutPoint != 0">({{(100/obj.v.total) * obj.v.madeWithoutPoint}}%)</span>
-              <span *ngIf="obj.v.madeWithoutPoint == 0">(0%)</span>
+              <span > ({{getPercent(obj.v.total, obj.v.madeWithoutPoint)}}%)</span>
             </div>
           </div>
         </div>
@@ -74,12 +72,11 @@
             <md-progress-bar
               fxFlex="70%"
               mode="determinate"
-              value="{{(100/obj.v.total) * obj.v.notMade}}">
+              value="{{getPercent(obj.v.total, obj.v.notMade)}}">
             </md-progress-bar>
             <div fxFlex="30%" fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center">
               {{obj.v.notMade}}
-              <span *ngIf="obj.v.notMade != 0">({{(100/obj.v.total) * obj.v.notMade}}%)</span>
-              <span *ngIf="obj.v.notMade == 0">(0%)</span>
+              <span> ({{getPercent(obj.v.total, obj.v.madeWithoutPoint)}}%)</span>
             </div>
           </div>
         </div>

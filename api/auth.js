@@ -20,6 +20,7 @@ router.route('/login')
     User
     .find({username: req.body.username})
       .populate('congregation')
+      .populate('brother')
       .exec(function(err, users) {
 
           if (err) throw err;

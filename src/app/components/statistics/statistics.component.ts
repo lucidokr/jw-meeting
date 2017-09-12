@@ -328,5 +328,11 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
     this.AmCharts.destroyChart(this.chartPart);
   }
 
+  getPercent(total, value){
+    if(value != 0){
+      return Math.floor((100/total) * value)
+    }else return 0
+  }
+
 
 }

@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit{
       .emit('Home');
     this.date = moment();
     this.meetingService.get().subscribe(weeks => {
-      let date = moment().add(27,'d');
+      let date = moment()
       if(weeks.length > 0){
         for(let week of weeks){
           if(week.date.isBetween(moment(date).day(1), moment(date).day(7))){

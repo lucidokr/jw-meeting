@@ -4,90 +4,18 @@ var Week = require('./models/weekMeeting');
 var WeekTemp = require('./models/weekMeetingTemp');
 var async = require('async');
 var Brother = require('./models/brother');
+var User = require('./models/user');
 var History = require('./models/history');
 var XLSX = require('xlsx');
 var nodemailer = require('nodemailer');
 var fs = require('fs')
 var path = require('path');
+var MAIL = require('./mail/send-mail');
 
 var config = require(path.join(__dirname, 'env.json'))[process.env.NODE_ENV || 'development'];
 
 var templateMail = "";
 var transporter = null;
-
-var sendMails = function(mails){
-  if(mails && mails.length > 0){
-    mails.forEach(function(data){
-      if(data.type=="bibleReading") data.type = "Lettura biblica";
-      if(data.type=="initialCall") data.type = "Primo contatto";
-      if(data.type=="returnVisit") data.type = "Visita ulteriore";
-      if(data.type=="bibleStudy") data.type = "Studio biblico";
-      if(data.type=="talk") data.type = "Discorso";
-      if(data.school==1) data.school = "Sala principale";
-      if(data.school==2) data.school = "Classe supplementare 1";
-      var date = new Date(data.date);
-      data.date = date.getDate()+"/"+(date.getMonth()+1)+"/"+date.getFullYear();
-      sendMail(data.mail, data.brother, data.assistant, data.date, data.point.number+ ' - '+data.point.title, data.type, data.school)
-    })
-  }
-}
-
-var sendMail = function(mail, brother, assistant, date, point, type, school){
-
-  function send(){
-    if(!data){
-      var data = {
-        brother: brother || "Kristian Lucido",
-        assistant: assistant || "",
-        date: date || "10/10/17",
-        point: point || "6 - Enfasi Orale",
-        type: type || "Lettura biblica",
-        school: school || "Sala principale"
-      };
-      console.log(data);
-    }
-
-    var tempMail = templateMail;
-    Object.keys(data).forEach(function(k){
-      tempMail = tempMail.replace("{{"+k+"}}",data[k])
-    });
-
-    var mailOptions = {
-      from: 'Adunanza Vita Cristiana e Ministero <jwmeetingscorze@gmail.com>',
-      to: mail,
-      subject: 'Assegnazione '+data.type+' - '+data.date,
-      html: tempMail
-    };
-
-// send mail with defined transport object
-    transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-        return console.log(error);
-      }
-      console.log('Message %s sent: %s', info.messageId, info.response);
-    });
-  }
-
-  if(templateMail != "" || !transporter){
-    fs.readFile(path.join(__dirname, 'mail/assegnation2.html'), 'utf8', function (err,html) {
-      if (err) {
-        return console.log(err);
-      }
-      templateMail = html;
-      // create reusable transporter object using the default SMTP transport
-      transporter = nodemailer.createTransport({
-        service: "Gmail",
-        auth: {
-          user: process.env.GMAIL_ACCOUNT,
-          pass: process.env.GMAIL_ACCOUNT_PASSWORD
-        }
-      });
-      send()
-    });
-  }else{
-    send()
-  }
-}
 
 router.route('/')
     .get(function(req, res) {
@@ -126,47 +54,13 @@ router.route('/')
             } else {
                 res.json({ message: 'All weeks updated!' });
                 console.log('All weeks updated');
-                Brother
-                    .find({})
-                    .populate('elder')
-                    .exec(function(err, brothers) {
-                        if (err)
-                            res.send(err);
 
-                        var schoolOverseer
-                        for(var i=0; i<brothers.length; i++){
-                          if(brothers[i].elder && brothers[i].elder.schoolOverseer)
-                            schoolOverseer = brothers[i];
-                        }
-                        if(schoolOverseer && schoolOverseer.email){
-                            if(!transporter){
-                                transporter = nodemailer.createTransport({
-                                    service: "Gmail",
-                                    auth: {
-                                        user: process.env.GMAIL_ACCOUNT,
-                                        pass: process.env.GMAIL_ACCOUNT_PASSWORD
-                                    }
-                                });
-                            }
-                            var date = new Date(req.body[0].date);
-                            var str = (date.getMonth()+1)+"/"+date.getFullYear();
-                            var mailOptions = {
-                                from: 'Adunanza Vita Cristiana e Ministero <jwmeetingscorze@gmail.com>',
-                                to: schoolOverseer.email,
-                                subject: 'Programma inserito dal coordinatore',
-                                text: 'Il coordinatore ha inserito il programma del mese di: ' +str,
-                            };
-                            if(!process.env.NODE_ENV || process.env.NODE_ENV == "development"){
-                              mailOptions.to ='kristianl_91@hotmail.it'
-                            }
-                            transporter.sendMail(mailOptions, function(error, info){
-                                if (error) {
-                                    return console.log(error);
-                                }
-                                console.log('Message %s sent: %s', info.messageId, info.response);
-                            });
-                        }
-                    });
+                var date = new Date(req.body[0].date);
+                var str = (date.getMonth()+1)+"/"+date.getFullYear();
+
+                MAIL.sendToRole('Programma Vita Cristiana inserito dal coordinatore',
+                    'Il coordinatore ha inserito il programma del mese di: ' +str,
+                    req, ['schoolOverseer'])
 
             }
         });
