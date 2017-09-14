@@ -68,7 +68,8 @@ export class MeetingListComponent extends GeneralListComponent{
     this.user = authService.getUser();
     if(this.user.role == USER_ROLE.PRESIDENT){
       delete this.columns.completed;
-    }else{
+    }else if(this.user.role == USER_ROLE.VIEWER){
+      delete this.columns.completed;
       delete this.columns.temporary;
     }
     this.service = meetingService;
