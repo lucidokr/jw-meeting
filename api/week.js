@@ -28,8 +28,10 @@ router.route('/')
                 ['date', 'descending']
             ])
             .exec(function(err, weeks) {
-                if (err)
-                    res.send(err);
+                if (err){
+                    console.error('Week Meeting get error:', err);
+                    return res.send(err);
+                }
 
                 res.json(weeks);
             });
@@ -97,8 +99,10 @@ router.route('/')
                     .populate('reader')
                     .populate('student')
                     .exec(function(err, brothers) {
-                        if (err)
-                            res.send(err);
+                        if (err){
+                            console.error('Week Meeting create - Brother Find -  error:', err);
+                            // return res.send(err);
+                        }
 
                         console.log('Length', brothers.length);
 
@@ -272,14 +276,18 @@ router.route('/')
 
                             async.each(objToSave, function(obj, nextObj) {
                                 obj.save(function(err) {
-                                    if (err)
-                                        res.send(err);
-                                    console.log("Updated", brother.name + " " + brother.surname)
+                                    if (err){
+                                        console.error('Week Meeting create - Brother Update error:', err, brother);
+                                        // return res.send(err);
+                                    }else{
+                                        console.log("Updated", brother.name + " " + brother.surname)
+
+                                    }
                                     nextObj();
                                 });
                             }, function(err) {
                                 if (err) {
-                                    console.log('Brother update failed');
+                                    console.error('Week Meeting create - Brother Update error:', err, brother);
                                 } else {
                                     console.log("Finish to update", brother.name + " " + brother.surname);
                                     nextBrother();
@@ -288,7 +296,7 @@ router.route('/')
 
                         }, function(err) {
                             if (err) {
-                                console.log('Update week failed');
+                                console.error('Week Meeting create - Week update error:', err);
                             } else {
                                 console.log("finish to update week", week.date);
                                 var tempWeek = new Week(week);
@@ -297,7 +305,7 @@ router.route('/')
                                 tempWeek.save(function(err) {
                                     nextWeek();
                                     if (err)
-                                        console.error(err);
+                                        console.error('Week Meeting create - Week save error:', err);
                                     else
                                         console.log("Week saved")
                                 });
@@ -313,7 +321,7 @@ router.route('/')
                 tempWeek.save(function(err) {
                     nextWeek();
                     if (err)
-                        console.error(err);
+                        console.error('Week Meeting create - Week save error:', err);
                     else
                         console.log("Week saved")
                 });
@@ -325,7 +333,7 @@ router.route('/')
             updateWeek(week, nextWeek)
         }, function(err) {
             if (err) {
-                console.log('Process failed');
+                console.error('Week Meeting create - Week save error:', err);
             } else {
 
                 var arr = [];
@@ -335,8 +343,10 @@ router.route('/')
                 WeekTemp.remove({
                     $or: arr
                 }, function(err, week) {
-                    if (err)
-                        res.send(err);
+                    if (err){
+                        console.error('Week Meeting create - Week temp remove error:', err);
+                        return res.send(err);
+                    }
 
                     res.json({ message: 'All weeks updated!' });
 
@@ -348,7 +358,7 @@ router.route('/')
                     var date = new Date(req.body[0].date);
                     var str = (date.getMonth() + 1) + "/" + date.getFullYear();
 
-                    MAIL.sendToRole('Programma Vita Cristiana e ministero inserito - ' + str,
+                    MAIL.sendToRole('Programma Vita Cristiana e Ministero inserito - ' + str,
                         'Il fratello ' + req.decoded._doc.brother.name + ' ' + req.decoded._doc.brother.surname + ' ha inserito il programma del mese di: ' + str,
                         req, ['schoolOverseer', 'viewer', 'president'])
 

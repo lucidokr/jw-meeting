@@ -8,8 +8,10 @@ router.route('/')
       .find()
 
       .exec(function(err, studies) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Study Number get error:', err);
+              return res.send(err);
+          }
 
         res.json(studies);
       });

@@ -14,8 +14,10 @@ router.route('/')
       ])
       .sort([['surname', 'ascending']])
       .exec(function(err, brothers) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Elder get error:', err);
+              return res.send(err);
+          }
 
         res.json(brothers);
       });
@@ -31,16 +33,22 @@ router.route('/:brother_id')
     elder = Object.assign(elder, req.body);
 
     elder.save(function(err, elder) {
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('Elder create error:', err);
+            return res.send(err);
+        }
 
       Brother.findById(req.params.brother_id, function(err, brother) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Elder create error:', err);
+              return res.send(err);
+          }
         brother.elder = elder;
         brother.save(function(err) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Elder create error:', err);
+                return res.send(err);
+            }
           res.json({ message: 'Elder updated!' });
         });
 
@@ -52,14 +60,18 @@ router.route('/:brother_id')
     Brother.findOne({'_id': req.params.brother_id})
       .populate('elder')
       .exec(function(err, brother) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Elder update error:', err);
+              return res.send(err);
+          }
 
         brother.elder = Object.assign(brother.elder, req.body);
 
         brother.elder.save(function(err) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Elder update error:', err);
+                return res.send(err);
+            }
 
           res.json({ message: 'Elder updated!' });
         });
@@ -67,16 +79,23 @@ router.route('/:brother_id')
   })
   .delete(function(req, res) {
     Brother.findOne({'_id': req.params.brother_id}).exec(function(err, brother) {
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('Elder delete error:', err);
+            return res.send(err);
+        }
 
       Elder.update({ _id: brother.elder }, { $set: { deleted: true }},function(err) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Elder delete error:', err);
+              return res.send(err);
+          }
         brother.elder = undefined;
         brother.save(function(err) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Elder delete error:', err);
+                return res.send(err);
+            }
+
           res.json({ message: 'Elder deleted' });
         });
       });

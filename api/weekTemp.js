@@ -25,8 +25,10 @@ router.route('/')
             .populate('christianLivingPart.brother')
             .sort([['date', 'ascending']])
             .exec(function(err, weeks) {
-                if (err)
-                    res.send(err);
+                if (err){
+                    console.error('Weeks Meeting Temp get error:', err);
+                    return res.send(err);
+                }
 
                 res.json(weeks);
             });
@@ -39,8 +41,9 @@ router.route('/')
 
             tempWeek.save(function(err) {
                 nextWeek();
-                if (err)
-                    console.error(err);
+                if (err){
+                    console.error('Weeks Meeting Temp update error:', err);
+                }
                 else
                     console.log("Week saved")
             });
@@ -49,8 +52,8 @@ router.route('/')
             console.log("start to update week", week.date);
             updateWeek(week, nextWeek)
         },function(err) {
-            if( err ) {
-                console.log('Process failed');
+            if (err){
+                console.error('Weeks Meeting Temp update error:', err);
             } else {
                 res.json({ message: 'All weeks updated!' });
                 console.log('All weeks updated');
@@ -96,8 +99,9 @@ router.route('/:week_id')
 
 
             .exec(function (err, week) {
-                if (err)
-                    res.send(err);
+                if (err){
+                    console.error('Week Meeting Temp get error:', err);
+                }
 
                 res.json(week[0]);
             });
@@ -105,9 +109,9 @@ router.route('/:week_id')
     .put(function(req, res){
       var newWeek = req.body;
         WeekTemp.findOneAndUpdate({'_id':req.params.week_id}, newWeek, {upsert:true}, function(err, doc){
-            if (err)
-                console.error(err);
-            else{
+            if (err){
+                console.error('Week Meeting Temp update error:', err);
+            }else{
                 res.json({ message: 'Temp weeks updated!' });
                 console.log('Temp weeks updated');
             }

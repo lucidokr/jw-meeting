@@ -14,8 +14,10 @@ router.route('/')
         { 'student.deleted':{$exists:true, $ne:true} }
       ])
       .exec(function(err, histories) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('History get error:', err);
+              return res.send(err);
+          }
 
         histories = histories.filter(function(history) {
           return history.student.congregation == req.decoded._doc.congregation._id; // return only users with email matching 'type: "Gmail"' query
@@ -31,10 +33,12 @@ router.route('/')
 
     // save the bear and check for errors
     history.save(function(err) {
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('History create error:', err);
+            return res.send(err);
+        }
 
-      res.json({ message: 'history created!' });
+      res.json({ message: 'History created!' });
     });
 
   });
@@ -45,8 +49,10 @@ router.route('/:student_id')
       .populate('student') // space delimited path names
       .populate('studyNumber')
       .exec(function(err, histories) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('History student get error:', err);
+              return res.send(err);
+          }
 
         res.json(histories);
       });
@@ -54,16 +60,20 @@ router.route('/:student_id')
   .put(function(req, res) {
     History.findById(req.params.student_id, function(err, history) {
 
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('History student update error:', err);
+            return res.send(err);
+        }
 
       history.name = req.body.name;  // update the bears info
       history.surname = req.body.surname;  // update the bears info
 
       // save the bear
       history.save(function(err) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('History student update error:', err);
+              return res.send(err);
+          }
 
         res.json({ message: 'History updated!' });
       });
@@ -74,8 +84,10 @@ router.route('/:student_id')
     History.remove({
       _id: req.params.student_id
     }, function(err, history) {
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('History student delete error:', err);
+            return res.send(err);
+        }
 
       res.json({ message: 'Successfully deleted' });
     });

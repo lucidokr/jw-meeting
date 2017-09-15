@@ -14,8 +14,10 @@ router.route('/')
         { 'servant.deleted':{$exists:true, $ne:true} }
       ])
       .exec(function(err, servants) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Servant get error:', err);
+              return res.send(err);
+          }
 
         res.json(servants);
       });
@@ -31,16 +33,22 @@ router.route('/:brother_id')
     servant = Object.assign(servant, req.body);
 
     servant.save(function(err, servant) {
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('Servant create error:', err);
+            return res.send(err);
+        }
 
       Brother.findById(req.params.brother_id, function(err, brother) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Servant create error:', err);
+              return res.send(err);
+          }
         brother.servant = servant;
         brother.save(function(err) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Servant create error:', err);
+                return res.send(err);
+            }
           res.json({ message: 'Servant updated!' });
         });
 
@@ -52,14 +60,18 @@ router.route('/:brother_id')
     Brother.findOne({'_id': req.params.brother_id})
       .populate('servant')
       .exec(function(err, brother) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Servant update error:', err);
+              return res.send(err);
+          }
 
         brother.servant = Object.assign(brother.servant, req.body);
 
         brother.servant.save(function(err) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Servant update error:', err);
+                return res.send(err);
+            }
 
           res.json({ message: 'Servant updated!' });
         });
@@ -67,12 +79,16 @@ router.route('/:brother_id')
   })
   .delete(function(req, res) {
     Brother.findOne({'_id': req.params.brother_id}).exec(function(err, brother) {
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('Servant delete error:', err);
+            return res.send(err);
+        }
 
       Servant.update({ _id: brother.servant }, { $set: { deleted: true }},function(err) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Servant delete error:', err);
+              return res.send(err);
+          }
         brother.servant = undefined;
         brother.save(function(err) {
           if (err)

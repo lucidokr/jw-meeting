@@ -14,8 +14,10 @@ router.route('/')
         { 'reader.deleted':{$exists:true, $ne:true} }
       ])
       .exec(function(err, readers) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Reader get error:', err);
+              return res.send(err);
+          }
 
         res.json(readers);
       });
@@ -31,17 +33,23 @@ router.route('/:brother_id')
     reader = Object.assign(reader, req.body);
 
     reader.save(function(err, newReader) {
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('Reader create error:', err);
+            return res.send(err);
+        }
 
       Brother.findById(req.params.brother_id, function(err, brother) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Reader create error:', err);
+              return res.send(err);
+          }
         brother.reader = newReader;
         brother.save(function(err) {
-          if (err)
-            res.send(err);
-          res.json({ message: 'Reader updated!', brother: brother});
+            if (err){
+                console.error('Reader create error:', err);
+                return res.send(err);
+            }
+          res.json({ message: 'Reader created!', brother: brother});
         });
 
       });
@@ -52,14 +60,18 @@ router.route('/:brother_id')
     Brother.findOne({'_id': req.params.brother_id})
       .populate('reader')
       .exec(function(err, brother) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Reader update error:', err);
+              return res.send(err);
+          }
 
         brother.reader = Object.assign(brother.reader, req.body);
 
         brother.reader.save(function(err) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Reader update error:', err);
+                return res.send(err);
+            }
 
           res.json({ message: 'Reader updated!' });
         });
@@ -67,16 +79,22 @@ router.route('/:brother_id')
   })
   .delete(function(req, res) {
     Brother.findOne({'_id': req.params.brother_id}).exec(function(err, brother) {
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('Reader delete error:', err);
+            return res.send(err);
+        }
 
       Reader.update({ _id: brother.reader }, { $set: { deleted: true }},function(err) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Reader delete error:', err);
+              return res.send(err);
+          }
         brother.reader = undefined;
         brother.save(function(err) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Reader delete error:', err);
+                return res.send(err);
+            }
           res.json({ message: 'Reader deleted' });
         });
       });
