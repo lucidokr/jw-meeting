@@ -49,6 +49,9 @@ import {DownloadRenderComponent} from "./shared/components/downloadRender.compon
 import {ViewRenderComponent} from "./shared/components/viewRender.component";
 import {StatisticsComponent} from "./components/statistics/statistics.component";
 import {NewPgmTempComponent} from "./components/new-pgm/new-pgm-temp.component";
+import {UsherListComponent} from "./components/usher/list/list-usher.component";
+import {MicOperatorListComponent} from "./components/mic-operator/list/list-mic-operator.component";
+import {AcousticsListComponent} from "./components/acoustics/list/list-acoustics.component";
 
 import {StickyDirective} from "./shared/directives/sticky.directive";
 
@@ -67,6 +70,9 @@ import {NewPgmService} from "./services/new-pgm.service";
 import {MeetingService} from "./services/meeting.service";
 import {ReaderService} from "./services/reader.service";
 import {AuthService} from "./services/auth.service";
+import {AcousticsService} from "./services/acoustics.service";
+import {MicOperatorService} from "./services/mic-operator.service";
+import {UsherService} from "./services/usher.service";
 
 import {MomentDateAdapter, MOMENT_DATE_FORMATS} from "./shared/moment.adapter";
 
@@ -114,6 +120,9 @@ import {PipeModule} from "./pipe.module";
     LoaderComponent,
     ServantListComponent,
     ElderListComponent,
+    UsherListComponent,
+    MicOperatorListComponent,
+    AcousticsListComponent,
     WeekComponent,
     DateRenderComponent,
     BooleanRenderComponent,
@@ -143,6 +152,9 @@ import {PipeModule} from "./pipe.module";
     BrotherService,
     MeetingService,
     ReaderService,
+    UsherService,
+    MicOperatorService,
+    AcousticsService,
     AuthService,
     AuthGuard,
     {provide: DateAdapter, useClass: MomentDateAdapter },

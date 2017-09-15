@@ -22,6 +22,7 @@ const USER_ROLE = {
   SCHOOL_OVERSEER: 'schoolOverseer',
   SECOND_SCHOOL_OVERSEER: 'secondSchoolOverseer',
   VIEWER: 'viewer',
+  MIC_USC_PGM_CREATOR: 'MIC_USC_PGM_CREATOR'
 };
 
 

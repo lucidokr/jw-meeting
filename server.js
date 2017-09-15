@@ -117,6 +117,9 @@ router.use('/servant', require('./api/servant'));
 router.use('/wtj', require('./api/wtj'));
 router.use('/studyNumber', require('./api/studyNumber'));
 router.use('/reader', require('./api/reader'));
+router.use('/usher', require('./api/usher'));
+router.use('/micoperator', require('./api/micOperator'));
+router.use('/acoustics', require('./api/acoustics'));
 
 app.use('/api', router);
 

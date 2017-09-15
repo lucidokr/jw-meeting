@@ -25,6 +25,12 @@ import {DownloadWeeksDialog} from "../shared/components/downloadWeeks.component"
 import {StudyNumber} from "../shared/models/studyNumber.model";
 import {ChangeNumberDialog} from "../shared/components/changeNumber.component";
 import {ChangePartDialog} from "../shared/components/changePart.component";
+import {Usher} from "../shared/models/usher.model";
+import {MicOperator} from "../shared/models/mic-operator.model";
+import {Acoustics} from "../shared/models/acoustics.model";
+import {AcousticsDialog} from "../components/acoustics/new/new-acoustics";
+import {MicOperatorDialog} from "../components/mic-operator/new/new-mic-operator";
+import {UsherDialog} from "../components/usher/new/new-usher";
 
 
 @Injectable()
@@ -147,6 +153,39 @@ export class DialogService {
     dialogRef.componentInstance.part = part;
     dialogRef.componentInstance.t = t;
     dialogRef.componentInstance.list = list;
+
+    return dialogRef.afterClosed();
+  }
+
+  public openUsher(brother:Brother, edit:boolean): Observable<Usher> {
+
+    let dialogRef: MdDialogRef<UsherDialog>;
+
+    dialogRef = this.dialog.open(UsherDialog);
+    dialogRef.componentInstance.brother = brother;
+    dialogRef.componentInstance.edit = edit;
+
+    return dialogRef.afterClosed();
+  }
+
+  public openMicOperator(brother:Brother, edit:boolean): Observable<MicOperator> {
+
+    let dialogRef: MdDialogRef<MicOperatorDialog>;
+
+    dialogRef = this.dialog.open(MicOperatorDialog);
+    dialogRef.componentInstance.brother = brother;
+    dialogRef.componentInstance.edit = edit;
+
+    return dialogRef.afterClosed();
+  }
+
+  public openAcoustics(brother:Brother, edit:boolean): Observable<Acoustics> {
+
+    let dialogRef: MdDialogRef<AcousticsDialog>;
+
+    dialogRef = this.dialog.open(AcousticsDialog);
+    dialogRef.componentInstance.brother = brother;
+    dialogRef.componentInstance.edit = edit;
 
     return dialogRef.afterClosed();
   }

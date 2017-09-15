@@ -16,6 +16,10 @@ var BrotherSchema   = new Schema({
   prayer: {type: mongoose.Schema.Types.ObjectId, ref: 'Prayer'},
   reader: {type: mongoose.Schema.Types.ObjectId, ref: 'Reader'},
 
+  acoustics: {type: mongoose.Schema.Types.ObjectId, ref: 'Acoustics'},
+  micOperator: {type: mongoose.Schema.Types.ObjectId, ref: 'MicOperator'},
+  usher: {type: mongoose.Schema.Types.ObjectId, ref: 'Usher'},
+
   congregation: {type: mongoose.Schema.Types.ObjectId, ref: 'Congregation'}
 
 });

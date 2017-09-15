@@ -20,6 +20,9 @@ import {ChangeNumberDialog} from "./shared/components/changeNumber.component";
 import {ChangePartDialog} from "./shared/components/changePart.component";
 import {SafeHtmlPipe} from "./pipes/safe.pipe";
 import {PipeModule} from "./pipe.module";
+import {UsherDialog} from "./components/usher/new/new-usher";
+import {AcousticsDialog} from "./components/acoustics/new/new-acoustics";
+import {MicOperatorDialog} from "./components/mic-operator/new/new-mic-operator";
 
 @NgModule({
   declarations: [
@@ -29,6 +32,9 @@ import {PipeModule} from "./pipe.module";
     NewStudentDialog,
     NewBrotherDialog,
     NewReaderDialog,
+    UsherDialog,
+    AcousticsDialog,
+    MicOperatorDialog,
     ConfirmDialog,
     ErrorDialog,
     DownloadWeeksDialog,
@@ -51,6 +57,9 @@ import {PipeModule} from "./pipe.module";
     NewStudentDialog,
     NewBrotherDialog,
     NewReaderDialog,
+    UsherDialog,
+    AcousticsDialog,
+    MicOperatorDialog,
     ConfirmDialog,
     ErrorDialog,
     DownloadWeeksDialog,
@@ -69,6 +78,9 @@ import {PipeModule} from "./pipe.module";
     NewStudentDialog,
     NewBrotherDialog,
     NewReaderDialog,
+    UsherDialog,
+    AcousticsDialog,
+    MicOperatorDialog,
     ConfirmDialog,
     ErrorDialog,
     DownloadWeeksDialog,

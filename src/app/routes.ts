@@ -17,6 +17,9 @@ import {LoginComponent} from "./components/login/login.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {StatisticsComponent} from "./components/statistics/statistics.component";
 import {MeetingDetailTempComponent} from "./components/meeting/detail-temp/detail-meeting-temp.component";
+import {AcousticsListComponent} from "./components/acoustics/list/list-acoustics.component";
+import {UsherListComponent} from "./components/usher/list/list-usher.component";
+import {MicOperatorListComponent} from "./components/mic-operator/list/list-mic-operator.component";
 
 @Component({
   selector: 'app',
@@ -93,6 +96,21 @@ export const routes: Routes = [
   {
     path: 'reader',
     component: ReaderListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'acoustics',
+    component: AcousticsListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'usher',
+    component: UsherListComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'micoperator',
+    component: MicOperatorListComponent,
     canActivate: [AuthGuard]
   },
   {
