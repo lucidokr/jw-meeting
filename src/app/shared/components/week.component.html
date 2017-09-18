@@ -84,7 +84,12 @@
                     </div>
 
                     <div fxFlex class="assistant {{edit ? checkBusyWeek(week, partType, 'primarySchool', 'assistant') : ''}}"  *ngIf="!week[partType].primarySchool.isTalk">
-                      Ass.: {{week[partType].primarySchool.assistant.name}} {{week[partType].primarySchool.assistant.surname}}
+                      <span *ngIf="week[partType].primarySchool.assistant">
+                        Ass.: {{week[partType].primarySchool.assistant.name}} {{week[partType].primarySchool.assistant.surname}}
+                      </span>
+                      <span *ngIf="!week[partType].primarySchool.assistant">
+                        Ass.: *** Non trovato ***
+                      </span>
                       <i *ngIf="edit" class="material-icons" (click)="change(week, partType, 'primarySchool', 'assistant')">mode_edit</i>
                     </div>
 
@@ -103,8 +108,13 @@
                       <i *ngIf="edit" class="fa fa-list-ol" aria-hidden="true" (click)="changeNumber(week, partType, 'secondarySchool', 'student')"></i>
                     </div>
 
-                    <div fxFlex class="assistant {{edit ? checkBusyWeek(week, partType, 'secondarySchool', 'assistant') : ''}}" *ngIf="week.secondarySchool && !week[partType].primarySchool.isTalk" >
-                      Ass.: {{week[partType].secondarySchool.assistant.name}} {{week[partType].secondarySchool.assistant.surname}}
+                    <div fxFlex class="assistant {{edit ? checkBusyWeek(week, partType, 'secondarySchool', 'assistant') : ''}} {{edit ? checkBusyWeek(week, partType, 'secondarySchool', 'assistant') : ''}}" *ngIf="week.secondarySchool && !week[partType].primarySchool.isTalk" >
+                      <span *ngIf="week[partType].secondarySchool.assistant">
+                        Ass.: {{week[partType].secondarySchool.assistant.name}} {{week[partType].secondarySchool.assistant.surname}}
+                      </span>
+                      <span *ngIf="!week[partType].secondarySchool.assistant">
+                        Ass.: *** Non trovato ***
+                      </span>
                       <i *ngIf="edit" class="material-icons" (click)="change(week, partType, 'secondarySchool', 'assistant')">mode_edit</i>
                     </div>
 

@@ -428,7 +428,10 @@ export class NewPgmPreviewComponent implements OnInit{
               }
             }
           }
-          this.checkWeekCompletedAndRemove(week, this.PART_TYPE, 'assistant');
+          if(!this.checkWeekCompletedAndRemove(week, this.PART_TYPE, 'assistant')){
+            this.dialogService.showError("Attenzione per alcuni discorsi non sono riuscito a trovare un assistente dello stesso sesso! E' necessaria la modifica manuale").subscribe(res => {})
+
+          }
         }
 
         /** PRAYER  **/
@@ -718,20 +721,22 @@ export class NewPgmPreviewComponent implements OnInit{
     else
       this.changeMode.week[this.changeMode.partType] = this.changeMode.newBrother;
     if((this.PART_TYPE_ALL.indexOf(this.changeMode.partType) != -1)){
-      let arr : Array<Brother> = [].concat(this.busyErrorBrother);
-      arr = arr.filter(id => id != this.changeMode.brotherToChange._id);
-      if(this.changeMode.busyError){
-        arr.push(this.changeMode.newBrother._id);
+      // let arr : Array<Brother> = [].concat(this.busyErrorBrother);
+      // arr = arr.filter(id => id != this.changeMode.brotherToChange._id);
+      // if(this.changeMode.busyError){
+      //   arr.push(this.changeMode.newBrother._id);
+      // }
+      // this.busyErrorBrother = arr;
+      if(this.changeMode.brotherToChange && this.changeMode.brotherToChange.name && this.changeMode.brotherToChange.surname){
+        this.studentList.push(this.changeMode.brotherToChange);
       }
-      this.busyErrorBrother = arr;
-      this.studentList.push(this.changeMode.brotherToChange);
       this.removeFromStudentList([this.changeMode.newBrother]);
-      for(let i=0; i<this.studentListBusy.length; i++){
-        if(this.changeMode.brotherToChange._id == this.studentListBusy[i]._id){
-          this.studentListBusy.splice(i, 1);
-          break;
-        }
-      }
+      // for(let i=0; i<this.studentListBusy.length; i++){
+      //   if(this.changeMode.brotherToChange._id == this.studentListBusy[i]._id){
+      //     this.studentListBusy.splice(i, 1);
+      //     break;
+      //   }
+      // }
     }
     this.disableChangeMode()
   }
