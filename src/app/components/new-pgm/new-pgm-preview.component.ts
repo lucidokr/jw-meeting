@@ -170,7 +170,7 @@ export class NewPgmPreviewComponent implements OnInit{
 
         /**PRESIDENT**/
         // if(!week.president){
-        if(countSchoolOverseer >= 2 && arrChristianLivingPartBrother.indexOf(schoolOverseer._id) == -1){
+        if(countSchoolOverseer >= 2 && arrChristianLivingPartBrother.indexOf(schoolOverseer._id) == -1 && ((week.presentationExercise.enabled && schoolOverseer._id != week.presentationExercise.brother._id) || !week.presentationExercise.enabled)){
           week.president = schoolOverseer;
           countSchoolOverseer = 0;
         }else{
