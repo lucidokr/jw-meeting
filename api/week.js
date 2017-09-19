@@ -42,12 +42,17 @@ router.route('/')
         var mailToSend = [];
 
         var updateWeek = function(week, nextWeek) {
-            console.log('Week', week.toString());
+            console.log('Week', JSON.stringify(week));
             if (week.type.meeting && !week.supervisor) {
                 console.log('Date', week.date);
                 console.log('President', week.president._id);
                 console.log('Gems', week.gems.brother._id);
                 console.log('Talk', week.talk.brother._id);
+                console.log('Initial Prayer', week.initialPrayer._id);
+                console.log('Final Prayer', week.finalPrayer._id);
+                console.log('Congregation Bible Study', week.congregationBibleStudy.brother._id);
+                console.log('Congregation Bible Study Reader', week.congregationBibleStudy.reader._id);
+                console.log('Bible reading', week.bibleReading.primarySchool.student._id);
                 var toFind = [
                     { '_id': week.president._id },
                     { '_id': week.gems.brother._id },
@@ -357,9 +362,15 @@ router.route('/')
 
                     var date = new Date(req.body[0].date);
                     var str = (date.getMonth() + 1) + "/" + date.getFullYear();
+                    var strName = '';
+                    if(req.decoded && req.decoded._doc && req.decoded._doc.brother && req.decoded._doc.brother.name)
+                      strName = 'fratello '+ req.decoded._doc.brother.name + ' ' + req.decoded._doc.brother.surname;
+                    else
+                      strName = "sorvegliante dell'adunanza vita cristiana e ministero";
+                      
 
                     MAIL.sendToRole('Programma Vita Cristiana e Ministero inserito - ' + str,
-                        'Il fratello ' + req.decoded._doc.brother.name + ' ' + req.decoded._doc.brother.surname + ' ha inserito il programma del mese di: ' + str,
+                        'Il ' + strName + ' ha inserito il programma del mese di: ' + str,
                         req, ['schoolOverseer', 'viewer', 'president'])
 
                 });

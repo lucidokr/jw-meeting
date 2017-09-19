@@ -476,14 +476,19 @@ export class NewPgmPreviewComponent implements OnInit{
       if(week[partType].secondarySchool[type])
         toRemove.push(week[partType].secondarySchool[type]);
 
-      if(!week[partType].primarySchool[type]){
-        allCompleted = false;
-        // break;
+      if(type != "assistant" || (!week[partType].primarySchool.isTalk && type=="assistant")){
+        if(!week[partType].primarySchool[type]){
+          allCompleted = false;
+          // break;
+        }
       }
-      if(week.secondarySchool && !week[partType].secondarySchool[type]){
-        allCompleted = false;
-        // break;
+      if(week.secondarySchool && (type != "assistant" || (!week[partType].secondarySchool.isTalk && type=="assistant"))) {
+        if (!week[partType].secondarySchool[type]) {
+          allCompleted = false;
+          // break;
+        }
       }
+
     }
     this.removeFromStudentList(toRemove);
     return allCompleted;
