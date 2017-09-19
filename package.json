@@ -14,9 +14,7 @@
         "db": "mongod --dbpath ./db",
         "prod": "ng serve -prod",
         "build": "ng build --env prod",
-
         "heroku": "node server.js",
-        "postinstall": "npm run build",
         "lint": "tslint \"src/**/*.ts\"",
         "pree2e": "webdriver-manager update",
         "precache": "sw-precache --config=sw-precache-config.js --verbose"
