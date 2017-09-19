@@ -90,11 +90,8 @@ app.use(function(req, res, next){
     }
 
     if ('OPTIONS' === req.method) {
-      res.send(200);
+      res.status(200).send();
     }
-
-    if(process.env.NODE_ENV &&  process.env.NODE_ENV != "development")
-      fs.createReadStream(staticRoot + 'index.html').pipe(res);
 });
 
 mongoose.connect(process.env.MONGO_DB_URI, {
