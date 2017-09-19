@@ -356,22 +356,22 @@ router.route('/')
                     res.json({ message: 'All weeks updated!' });
 
 
-                    MAIL.sendAssegnations(mailAssegnationToSend);
+                    // MAIL.sendAssegnations(mailAssegnationToSend);
 
-                    MAIL.sendMails(mailToSend);
+                    // MAIL.sendMails(mailToSend);
 
-                    var date = new Date(req.body[0].date);
-                    var str = (date.getMonth() + 1) + "/" + date.getFullYear();
-                    var strName = '';
-                    if(req.decoded && req.decoded._doc && req.decoded._doc.brother && req.decoded._doc.brother.name)
-                      strName = 'fratello '+ req.decoded._doc.brother.name + ' ' + req.decoded._doc.brother.surname;
-                    else
-                      strName = "sorvegliante dell'adunanza vita cristiana e ministero";
-                      
-
-                    MAIL.sendToRole('Programma Vita Cristiana e Ministero inserito - ' + str,
-                        'Il ' + strName + ' ha inserito il programma del mese di: ' + str,
-                        req, ['schoolOverseer', 'viewer', 'president'])
+                    // var date = new Date(req.body[0].date);
+                    // var str = (date.getMonth() + 1) + "/" + date.getFullYear();
+                    // var strName = '';
+                    // if(req.decoded && req.decoded._doc && req.decoded._doc.brother && req.decoded._doc.brother.name)
+                    //   strName = 'fratello '+ req.decoded._doc.brother.name + ' ' + req.decoded._doc.brother.surname;
+                    // else
+                    //   strName = "sorvegliante dell'adunanza vita cristiana e ministero";
+                    //
+                    //
+                    // MAIL.sendToRole('Programma Vita Cristiana e Ministero inserito - ' + str,
+                    //     'Il ' + strName + ' ha inserito il programma del mese di: ' + str,
+                    //     req, ['schoolOverseer', 'viewer', 'president'])
 
                 });
 
