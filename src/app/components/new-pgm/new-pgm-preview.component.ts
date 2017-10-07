@@ -223,130 +223,130 @@ export class NewPgmPreviewComponent implements OnInit{
 
         /**SECOND IMPLEMENTATION**/
 
-        let studentList = this.studentList.filter(brother =>
-        arrChristianLivingPartBrother.indexOf(brother._id) == -1 &&
-        brother._id != week.talk.brother._id
-        && brother._id != week.gems.brother._id);
-
-        let find = function(list, partTypeList, forced){
-          // filtro la lista degli studenti
-          for(let brother of list){
-            let dates = [];
-            // controllo per quali parti il fratello può essere inserito e da quanto non fa una determinata parte
-            for(let partType of partTypeList) {
-              //se è un discorso faccio un controllo speciale per verificare se è abilitato
-              let partEnabled = brother.student[partType + "Enabled"];
-              if(week[partType].primarySchool.isTalk){
-                partEnabled = brother.student.talkEnabled;
-              }
-              if (partEnabled) {
-                // Nell'array dates ci saranno le parti per il quale il fratello non fa da più tempo discorsi
-                // La lettura della bibbia viene fatta solo da uomini, non ha bisogno del controllo sul gender
-                if(partType!='bibleReading'){
-                  let primarySchool = ((week[partType].primarySchool.gender != '' && brother.gender ==  week[partType].primarySchool.gender) || week[partType].primarySchool.gender == '')
-                  let secondarySchool = ((week[partType].secondarySchool.gender != '' && brother.gender ==  week[partType].secondarySchool.gender) || week[partType].secondarySchool.gender == '')
-                  dates.push({
-                    type: partType,
-                    date: brother.student[partType + "Date"],
-                    primarySchoolEnabled: primarySchool && brother.student.primarySchoolEnabled,
-                    secondarySchoolEnabled: secondarySchool && brother.student.secondarySchoolEnabled
-                  })
-                }else{
-                  dates.push({
-                    type: partType,
-                    date: brother.student[partType + "Date"],
-                    primarySchoolEnabled: brother.student.primarySchoolEnabled,
-                    secondarySchoolEnabled: brother.student.secondarySchoolEnabled
-                  })
-                }
-              }
-            }
-            if(dates.length>0){
-              dates.sort((a:any,b:any) => {return (moment(a.date).isBefore(b.date) ? -1 : 1)});
-              // se devo forzare il completamento della settimana mi ciclo tutto le parti ordinate per data per trovare la migliore
-              // controllo ovvimaente nache che il fratello sia abilitato a svolgere quella parte
-              if(forced){
-                for(let date of dates) {
-                  if(date.primarySchoolEnabled && date.secondarySchoolEnabled){
-                    if(week.secondarySchool && date.secondarySchoolEnabled){
-                      let lastSchoolPart = brother.student[date.type+"LastSchool"];
-                      if(lastSchoolPart == 1 || !date.primarySchoolEnabled){
-                        if(!week[date.type].secondarySchool.student ){
-                          week[date.type].secondarySchool.student = brother;
-                          break;
-                        }else if(date.primarySchoolEnabled){
-                          if(!week[date.type].primarySchool.student){
-                            week[date.type].primarySchool.student = brother;
-                            break;
-                          }
-                        }
-
-                      }else if(date.primarySchoolEnabled){
-                        if(!week[date.type].primarySchool.student){
-                          week[date.type].primarySchool.student = brother;
-                          break;
-                        }
-                      }
-                    }else if(date.primarySchoolEnabled){
-                      if(!week[date.type].primarySchool.student){
-                        week[date.type].primarySchool.student = brother;
-                        break;
-                      }
-                    }
-                  }
-                }
-              }else{
-                // se non devo forzare il completamento della settimana cerco di inserire il fratello
-                // nella parte che non fa da più tempo e per la scuola diversa dall'ultimo discorso
-                // controllo ovvimaente nache che il fratello sia abilitato a svolgere quella parte
-                let date = dates[0];
-                if(date.primarySchoolEnabled && date.secondarySchoolEnabled) {
-                  if (week.secondarySchool && brother.student.secondarySchoolEnabled) {
-                    let lastSchoolPart = brother.student[date.type + "LastSchool"];
-                    if (lastSchoolPart == 1 || !brother.student.primarySchoolEnabled) {
-                      if (!week[date.type].secondarySchool.student) {
-                        week[date.type].secondarySchool.student = brother;
-                      }
-                    } else {
-                      if (!week[date.type].primarySchool.student) {
-                        week[date.type].primarySchool.student = brother;
-                      }
-                    }
-                  } else if (brother.student.primarySchoolEnabled) {
-                    if (!week[date.type].primarySchool.student) {
-                      week[date.type].primarySchool.student = brother;
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-        //inizio la ricerca della combinazione migliore in base al tipo di settimana
-        let allCompleted;
-        if(week.presentationExercise.enabled){
-          find(studentList, ['bibleReading'],false);
-          allCompleted = this.checkWeekCompletedAndRemove(week, ['bibleReading'], 'student')
-        }else{
-          find(studentList, this.PART_TYPE_ALL,false);
-          allCompleted = this.checkWeekCompletedAndRemove(week, this.PART_TYPE_ALL, 'student')
-        }
-
-        // controllo che la ricerca è completata e la settimana è coperta ed elimino gli studenti già inseriti dalla lista
-        if(!allCompleted){
-          let studentList = this.studentList.filter(brother =>
-            arrChristianLivingPartBrother.indexOf(brother._id) == -1 &&
-            brother._id != week.talk.brother._id
-            && brother._id != week.gems.brother._id);
-          if(week.presentationExercise.enabled){
-            find(studentList, ['bibleReading'],true);
-            this.checkWeekCompletedAndRemove(week, ['bibleReading'], 'student')
-          }else{
-            find(studentList, this.PART_TYPE_ALL,true);
-            this.checkWeekCompletedAndRemove(week, this.PART_TYPE_ALL, 'student')
-          }
-
-        }
+        // let studentList = this.studentList.filter(brother =>
+        // arrChristianLivingPartBrother.indexOf(brother._id) == -1 &&
+        // brother._id != week.talk.brother._id
+        // && brother._id != week.gems.brother._id);
+        //
+        // let find = function(list, partTypeList, forced){
+        //   // filtro la lista degli studenti
+        //   for(let brother of list){
+        //     let dates = [];
+        //     // controllo per quali parti il fratello può essere inserito e da quanto non fa una determinata parte
+        //     for(let partType of partTypeList) {
+        //       //se è un discorso faccio un controllo speciale per verificare se è abilitato
+        //       let partEnabled = brother.student[partType + "Enabled"];
+        //       if(week[partType].primarySchool.isTalk){
+        //         partEnabled = brother.student.talkEnabled;
+        //       }
+        //       if (partEnabled) {
+        //         // Nell'array dates ci saranno le parti per il quale il fratello non fa da più tempo discorsi
+        //         // La lettura della bibbia viene fatta solo da uomini, non ha bisogno del controllo sul gender
+        //         if(partType!='bibleReading'){
+        //           let primarySchool = ((week[partType].primarySchool.gender != '' && brother.gender ==  week[partType].primarySchool.gender) || week[partType].primarySchool.gender == '')
+        //           let secondarySchool = ((week[partType].secondarySchool.gender != '' && brother.gender ==  week[partType].secondarySchool.gender) || week[partType].secondarySchool.gender == '')
+        //           dates.push({
+        //             type: partType,
+        //             date: brother.student[partType + "Date"],
+        //             primarySchoolEnabled: primarySchool && brother.student.primarySchoolEnabled,
+        //             secondarySchoolEnabled: secondarySchool && brother.student.secondarySchoolEnabled
+        //           })
+        //         }else{
+        //           dates.push({
+        //             type: partType,
+        //             date: brother.student[partType + "Date"],
+        //             primarySchoolEnabled: brother.student.primarySchoolEnabled,
+        //             secondarySchoolEnabled: brother.student.secondarySchoolEnabled
+        //           })
+        //         }
+        //       }
+        //     }
+        //     if(dates.length>0){
+        //       dates.sort((a:any,b:any) => {return (moment(a.date).isBefore(b.date) ? -1 : 1)});
+        //       // se devo forzare il completamento della settimana mi ciclo tutto le parti ordinate per data per trovare la migliore
+        //       // controllo ovvimaente nache che il fratello sia abilitato a svolgere quella parte
+        //       if(forced){
+        //         for(let date of dates) {
+        //           if(date.primarySchoolEnabled && date.secondarySchoolEnabled){
+        //             if(week.secondarySchool && date.secondarySchoolEnabled){
+        //               let lastSchoolPart = brother.student[date.type+"LastSchool"];
+        //               if(lastSchoolPart == 1 || !date.primarySchoolEnabled){
+        //                 if(!week[date.type].secondarySchool.student ){
+        //                   week[date.type].secondarySchool.student = brother;
+        //                   break;
+        //                 }else if(date.primarySchoolEnabled){
+        //                   if(!week[date.type].primarySchool.student){
+        //                     week[date.type].primarySchool.student = brother;
+        //                     break;
+        //                   }
+        //                 }
+        //
+        //               }else if(date.primarySchoolEnabled){
+        //                 if(!week[date.type].primarySchool.student){
+        //                   week[date.type].primarySchool.student = brother;
+        //                   break;
+        //                 }
+        //               }
+        //             }else if(date.primarySchoolEnabled){
+        //               if(!week[date.type].primarySchool.student){
+        //                 week[date.type].primarySchool.student = brother;
+        //                 break;
+        //               }
+        //             }
+        //           }
+        //         }
+        //       }else{
+        //         // se non devo forzare il completamento della settimana cerco di inserire il fratello
+        //         // nella parte che non fa da più tempo e per la scuola diversa dall'ultimo discorso
+        //         // controllo ovvimaente nache che il fratello sia abilitato a svolgere quella parte
+        //         let date = dates[0];
+        //         if(date.primarySchoolEnabled && date.secondarySchoolEnabled) {
+        //           if (week.secondarySchool && brother.student.secondarySchoolEnabled) {
+        //             let lastSchoolPart = brother.student[date.type + "LastSchool"];
+        //             if (lastSchoolPart == 1 || !brother.student.primarySchoolEnabled) {
+        //               if (!week[date.type].secondarySchool.student) {
+        //                 week[date.type].secondarySchool.student = brother;
+        //               }
+        //             } else {
+        //               if (!week[date.type].primarySchool.student) {
+        //                 week[date.type].primarySchool.student = brother;
+        //               }
+        //             }
+        //           } else if (brother.student.primarySchoolEnabled) {
+        //             if (!week[date.type].primarySchool.student) {
+        //               week[date.type].primarySchool.student = brother;
+        //             }
+        //           }
+        //         }
+        //       }
+        //     }
+        //   }
+        // }
+        // //inizio la ricerca della combinazione migliore in base al tipo di settimana
+        // let allCompleted;
+        // if(week.presentationExercise.enabled){
+        //   find(studentList, ['bibleReading'], false);
+        //   allCompleted = this.checkWeekCompletedAndRemove(week, ['bibleReading'], 'student')
+        // }else{
+        //   find(studentList, this.PART_TYPE_ALL, false);
+        //   allCompleted = this.checkWeekCompletedAndRemove(week, this.PART_TYPE_ALL, 'student')
+        // }
+        //
+        // // controllo che la ricerca è completata e la settimana è coperta ed elimino gli studenti già inseriti dalla lista
+        // if(!allCompleted){
+        //   let studentList = this.studentList.filter(brother =>
+        //     arrChristianLivingPartBrother.indexOf(brother._id) == -1 &&
+        //     brother._id != week.talk.brother._id
+        //     && brother._id != week.gems.brother._id);
+        //   if(week.presentationExercise.enabled){
+        //     find(studentList, ['bibleReading'],true);
+        //     this.checkWeekCompletedAndRemove(week, ['bibleReading'], 'student')
+        //   }else{
+        //     find(studentList, this.PART_TYPE_ALL,true);
+        //     this.checkWeekCompletedAndRemove(week, this.PART_TYPE_ALL, 'student')
+        //   }
+        //
+        // }
 
 
         /**FIRST IMPLEMENTATION**/
@@ -400,6 +400,67 @@ export class NewPgmPreviewComponent implements OnInit{
 
       console.log(this)
     }
+
+    /**THIRD IMPLEMENTATION**/
+    let brotherToIgnore = [];
+    function findAlgorithm(partType, forced, minLastDate){
+        //FILTER AND SORT BY PART
+        let list = [].concat(this.studentList)
+          .filter(brother => {
+            return (brotherToIgnore.indexOf(brother._id) == -1
+            && ((brother.student.lastDate && brother.student.lastDate.isBefore(moment(this.weeks[0].date).add(-minLastDate, "d")))))})
+          .sort((a:Brother,b:Brother) => {return (moment(a.student[partType+"lastDate"]).isBefore(b.student[partType+"lastDate"]) ? -1 : 1)});
+
+      for(let week of this.weeks) {
+        for(let brother of list.filter(brother => brotherToIgnore.indexOf(brother._id) == -1)) {
+            if(week.type.meeting && !week.supervisor){
+              let partEnabled = brother.student[partType + "Enabled"];
+              if(week[partType].primarySchool.isTalk){
+                partEnabled = brother.student.talkEnabled && brother.student[partType + "Enabled"];
+              }
+              if(partEnabled){
+                let arrChristianLivingPartBrother = [];
+                for (let part of week.christianLivingPart){
+                  arrChristianLivingPartBrother.push(part.brother._id);
+                }
+                //filtro per i fratelli che non sono già impegnati in una parte vita cristiana nelle gemme e nei tesori
+                if(arrChristianLivingPartBrother.indexOf(brother._id) == -1 && brother._id != week.talk.brother._id && brother._id != week.gems.brother._id){
+                  let lastSchoolPart = brother.student[partType + "LastSchool"];
+                  if(!week[partType].primarySchool.student && brother.student.primarySchoolEnabled &&
+                    ((week[partType].primarySchool.gender != '' && brother.gender ==  week[partType].primarySchool.gender) || week[partType].primarySchool.gender == '' || partType == CONST.BIBLE_READING)){
+                    if((!week.secondarySchool && !week.presentationExercise.enabled) || lastSchoolPart == 2 || forced){
+                      week[partType].primarySchool.student = brother;
+                      brotherToIgnore.push(brother._id);
+                    }
+                  }
+                  if(week.secondarySchool
+                    && !week[partType].secondarySchool.student
+                    && (week[partType].primarySchool.student && brother._id != week[partType].primarySchool.student._id)
+                    && brother.student.secondarySchoolEnabled
+                    && ((week[partType].secondarySchool.gender != '' && brother.gender ==  week[partType].secondarySchool.gender) || week[partType].secondarySchool.gender == '' || partType == CONST.BIBLE_READING)){
+                    if(lastSchoolPart == 1 || forced){
+                      week[partType].secondarySchool.student = brother;
+                      brotherToIgnore.push(brother._id);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        let weeksCompleted = true;
+        for(let week of this.weeks) {
+          if(!this.checkWeekCompletedAndRemove(week, [partType], 'student'))
+            weeksCompleted = false;
+        }
+        if(!weeksCompleted && minLastDate != 0)
+          findAlgorithm.call(this, partType, !forced, (forced ? minLastDate -30 : minLastDate))
+    }
+
+    for(let partType of this.PART_TYPE_ALL){
+      findAlgorithm.call(this, partType, false, 60)
+    }
+
 
 
     for(let week of this.weeks) {

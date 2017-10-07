@@ -37,6 +37,7 @@ $bluJW: #a8291f;
       font-size: 35px;
     }
   }
+
   .sidenav{
     left:-300px;
     background: $bluJW;
@@ -71,6 +72,7 @@ $bluJW: #a8291f;
     &.open{
       left:0px;
     }
+
   }
   .sidenav-overlay{
     display:none;
@@ -112,6 +114,13 @@ $bluJW: #a8291f;
   height: 100%;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.footer{
+  width:100%;
+  text-align:center;
+  font-size:11px;
+  padding:5px;
 }
 
 .mat-sidenav{

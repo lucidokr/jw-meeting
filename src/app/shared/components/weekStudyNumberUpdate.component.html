@@ -10,8 +10,18 @@
           <div fxLayout="row" ><h4 [innerHTML]="week[partType].label.split(':')[0] | safeHtml"></h4></div>
           <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" class="containerSchoolPart" >
             <div class="containerSchoolPart" *ngFor="let school of SCHOOLS" fxLayout="column" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="start center" >
+              <div *ngIf="!week[partType][school].student.student" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
+                <strong fxFlex>
+                  <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
+                  <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
+                  scuola: {{week[partType][school].student.name}} {{week[partType][school].student.surname}}
+                </strong>
+                <div fxFlex >
+                  La parte è stata assegnata ad un anziano. Non necessita quindi di aggiornamento.
+                </div>
+              </div>
 
-              <div *ngIf="!week[partType][school].updated" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
+              <div *ngIf="!week[partType][school].updated && week[partType][school].student.student" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
                 <strong fxFlex>
                   <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
                   <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>

@@ -28,7 +28,7 @@ router.route('/')
                 ['date', 'descending']
             ])
             .exec(function(err, weeks) {
-                if (err){
+                if (err) {
                     console.error('Week Meeting get error:', err);
                     return res.send(err);
                 }
@@ -104,7 +104,7 @@ router.route('/')
                     .populate('reader')
                     .populate('student')
                     .exec(function(err, brothers) {
-                        if (err){
+                        if (err) {
                             console.error('Week Meeting create - Brother Find -  error:', err);
                             // return res.send(err);
                         }
@@ -281,10 +281,10 @@ router.route('/')
 
                             async.each(objToSave, function(obj, nextObj) {
                                 obj.save(function(err) {
-                                    if (err){
+                                    if (err) {
                                         console.error('Week Meeting create - Brother Update error:', err, brother);
                                         // return res.send(err);
-                                    }else{
+                                    } else {
                                         console.log("Updated", brother.name + " " + brother.surname)
 
                                     }
@@ -348,7 +348,7 @@ router.route('/')
                 WeekTemp.remove({
                     $or: arr
                 }, function(err, week) {
-                    if (err){
+                    if (err) {
                         console.error('Week Meeting create - Week temp remove error:', err);
                         return res.send(err);
                     }
@@ -358,15 +358,15 @@ router.route('/')
 
                     MAIL.sendAssegnations(mailAssegnationToSend);
 
-                    MAIL.sendMails(mailToSend);
 
+                    MAIL.sendMails(mailToSend);
                     var date = new Date(req.body[0].date);
                     var str = (date.getMonth() + 1) + "/" + date.getFullYear();
                     var strName = '';
-                    if(req.decoded && req.decoded._doc && req.decoded._doc.brother && req.decoded._doc.brother.name)
-                      strName = 'fratello '+ req.decoded._doc.brother.name + ' ' + req.decoded._doc.brother.surname;
+                    if (req.decoded && req.decoded._doc && req.decoded._doc.brother && req.decoded._doc.brother.name)
+                        strName = 'fratello ' + req.decoded._doc.brother.name + ' ' + req.decoded._doc.brother.surname;
                     else
-                      strName = "sorvegliante dell'adunanza vita cristiana e ministero";
+                        strName = "sorvegliante dell'adunanza vita cristiana e ministero";
 
 
                     MAIL.sendToRole('Programma Vita Cristiana e Ministero inserito - ' + str,
@@ -384,7 +384,16 @@ router.route('/')
 router.route('/pgm/:year/:month')
 
 .get(function(req, res) {
-    Week.find({ "date": { "$gte": new Date(req.params.year, req.params.month, 1), "$lt": new Date(req.params.year, req.params.month + 1, 6) } })
+
+    Week
+    // .where('date').gte(new Date(req.params.year, req.params.month, 6)).lte(new Date(req.params.year, req.params.month + 1, 3))
+        .find({
+            $and: [{
+                "date": { $gte: new Date(req.params.year + "-" + (parseInt(req.params.month)) + "-03T22:00:00.000+0000") }
+            }, {
+                "date": { $lte: new Date(req.params.year + "-" + (parseInt(req.params.month) + 1) + "-02T22:00:00.000+0000") }
+            }]
+        })
         .populate('initialPrayer')
         .populate('finalPrayer')
         .populate('president')
@@ -415,7 +424,7 @@ router.route('/pgm/:year/:month')
 
     .exec(function(err, weeks) {
         if (err)
-            res.send(err);
+            return res.send(err);
         res.json(weeks);
 
     });

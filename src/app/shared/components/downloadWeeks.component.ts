@@ -140,7 +140,7 @@ export class DownloadWeeksDialog implements OnInit{
               cellRef = XLSX.utils.encode_cell({r:countRow, c:column});
               if (draft[cellRef]) draft[cellRef].v = this.getSurnameName(week.bibleReading[school].student);
               cellRef = XLSX.utils.encode_cell({r:countRow, c:columnPoint});
-              if (draft[cellRef] && week.bibleReading[school].student.student.bibleReadingPendingStudyNumber)
+              if (draft[cellRef] && week.bibleReading[school].student.student && week.bibleReading[school].student.student.bibleReadingPendingStudyNumber)
                 draft[cellRef] = {t: 'n', v:week.bibleReading[school].student.student.bibleReadingPendingStudyNumber.number};
             }
           //
@@ -165,7 +165,7 @@ export class DownloadWeeksDialog implements OnInit{
                   cellRef = XLSX.utils.encode_cell({r:countRow, c:column});
                   if(draft[cellRef]) draft[cellRef].v = this.getSurnameName(week[partType][school].student);
                   cellRef = XLSX.utils.encode_cell({r:countRow, c:columnPoint});
-                  if(draft[cellRef] && week[partType][school].student.student.pendingStudyNumber)
+                  if(draft[cellRef] && week[partType][school].student.student && week[partType][school].student.student.pendingStudyNumber)
                     draft[cellRef] = {t:'n', v:week[partType][school].student.student.pendingStudyNumber.number};
                   let tempRow = countRow+1;
                   cellRef = XLSX.utils.encode_cell({r:tempRow, c:column});

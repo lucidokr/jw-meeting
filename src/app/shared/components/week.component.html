@@ -76,11 +76,11 @@
                   <div fxFlex  fxLayout="column" fxlayoutAlign="center center">
                     <div fxFlex class="{{edit ? checkBusyWeek(week, partType, 'primarySchool', 'student') : ''}}">
                       {{week[partType].primarySchool.student.name}} {{week[partType].primarySchool.student.surname}}
-                      <span *ngIf="edit && !week[partType].primarySchool.pointChanged">{{week[partType].primarySchool.student.student.studyNumber.number}}</span>
-                      <span *ngIf="edit && week[partType].primarySchool.pointChanged">{{week[partType].primarySchool.student.student.pendingStudyNumber.number}}</span>
+                      <span *ngIf="edit && !week[partType].primarySchool.student.elder && !week[partType].primarySchool.pointChanged">{{week[partType].primarySchool.student.student.studyNumber.number}}</span>
+                      <span *ngIf="edit && !week[partType].primarySchool.student.elder && week[partType].primarySchool.pointChanged">{{week[partType].primarySchool.student.student.pendingStudyNumber.number}}</span>
 
                       <i *ngIf="edit" class="material-icons" (click)="change(week, partType, 'primarySchool', 'student')">mode_edit</i>
-                      <i *ngIf="edit" class="fa fa-list-ol" aria-hidden="true" (click)="changeNumber(week, partType, 'primarySchool', 'student')"></i>
+                      <i *ngIf="edit && !week[partType].primarySchool.student.elder" class="fa fa-list-ol" aria-hidden="true" (click)="changeNumber(week, partType, 'primarySchool', 'student')"></i>
                     </div>
 
                     <div fxFlex class="assistant {{edit ? checkBusyWeek(week, partType, 'primarySchool', 'assistant') : ''}}"  *ngIf="!week[partType].primarySchool.isTalk">
@@ -101,11 +101,11 @@
                   <div fxFlex *ngIf="week.secondarySchool" fxLayout="column" fxLayoutAlign="center center"  >
                     <div fxFlex class="{{edit ? checkBusyWeek(week, partType, 'secondarySchool', 'student') : ''}}">
                       {{week[partType].secondarySchool.student.name}} {{week[partType].secondarySchool.student.surname}}
-                      <span *ngIf="edit && !week[partType].secondarySchool.pointChanged">{{week[partType].secondarySchool.student.student.studyNumber.number}}</span>
-                      <span *ngIf="edit && week[partType].secondarySchool.pointChanged">{{week[partType].secondarySchool.student.student.pendingStudyNumber.number}}</span>
+                      <span *ngIf="edit && !week[partType].secondarySchool.student.elder && !week[partType].secondarySchool.pointChanged">{{week[partType].secondarySchool.student.student.studyNumber.number}}</span>
+                      <span *ngIf="edit && !week[partType].secondarySchool.student.elder && week[partType].secondarySchool.pointChanged">{{week[partType].secondarySchool.student.student.pendingStudyNumber.number}}</span>
 
                       <i *ngIf="edit" class="material-icons" (click)="change(week, partType, 'secondarySchool', 'student')">mode_edit</i>
-                      <i *ngIf="edit" class="fa fa-list-ol" aria-hidden="true" (click)="changeNumber(week, partType, 'secondarySchool', 'student')"></i>
+                      <i *ngIf="edit && !week[partType].secondarySchool.student.elder" class="fa fa-list-ol" aria-hidden="true" (click)="changeNumber(week, partType, 'secondarySchool', 'student')"></i>
                     </div>
 
                     <div fxFlex class="assistant {{edit ? checkBusyWeek(week, partType, 'secondarySchool', 'assistant') : ''}} {{edit ? checkBusyWeek(week, partType, 'secondarySchool', 'assistant') : ''}}" *ngIf="week.secondarySchool && !week[partType].primarySchool.isTalk" >
