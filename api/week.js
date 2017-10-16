@@ -14,7 +14,7 @@ var path = require('path');
 var MAIL = require('./mail/send-mail');
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
-    var config = require('./api/env.json')['development'];
+    var config = require('./env.json')['development'];
     process.env.MONGO_DB_URI = config.MONGO_DB_URI;
     process.env.SECRET = config.SECRET;
     process.env.GMAIL_ACCOUNT = config.GMAIL_ACCOUNT;
@@ -172,7 +172,7 @@ router.route('/')
                             if (brother.prayer) {
                                 if (brother._id == week.initialPrayer._id) {
                                     brother.prayer.date = week.date;
-                                    if (brother.email && config.SEND_ASSEGNATION) {
+                                    if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailToSend.push({
                                             to: brother.email,
                                             subject: "Preghiera iniziale - ",
@@ -182,7 +182,7 @@ router.route('/')
                                 }
 
                                 if (brother._id == week.finalPrayer._id) {
-                                    if (brother.email && config.SEND_ASSEGNATION) {
+                                    if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailToSend.push({
                                             to: brother.email,
                                             subject: "Preghiera finale - ",
@@ -200,7 +200,7 @@ router.route('/')
 
                                 objToSave.push(brother.reader)
 
-                                if (brother.email && config.SEND_ASSEGNATION) {
+                                if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                     mailToSend.push({
                                         to: brother.email,
                                         subject: "Lettura dello studio biblico - ",
@@ -223,7 +223,7 @@ router.route('/')
                                         brother.student.bibleReadingPendingStudyNumber = week.bibleReading.primarySchool.student.student.bibleReadingPendingStudyNumber;
                                     }
                                     objToSave.push(brother.student);
-                                    if (brother.email && config.SEND_ASSEGNATION) {
+                                    if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailAssegnationToSend.push({ mail: brother.email, brother: brother.surname + ' ' + brother.name, assistant: '', type: "bibleReading", school: brother.student.lastSchool, date: week.date, point: brother.student.bibleReadingPendingStudyNumber })
                                     }
                                 }
@@ -269,7 +269,7 @@ router.route('/')
                                                 }
 
                                                 objToSave.push(brother.student)
-                                                if (brother.email && config.SEND_ASSEGNATION) {
+                                                if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                                     var obj = { mail: brother.email, brother: brother.surname + ' ' + brother.name, assistant: '', type: (week[partType][school].isTalk ? 'talk' : partType), school: brother.student.lastSchool, date: week.date, point: brother.student.pendingStudyNumber };
                                                     obj.assistant = (week[partType][school].assistant ? week[partType][school].assistant.surname + ' ' + week[partType][school].assistant.name : '')
                                                     mailAssegnationToSend.push({ mail: brother.email, brother: brother.surname + ' ' + brother.name, type: partType, school: brother.student.lastSchool, date: week.date, point: brother.student.pendingStudyNumber })
@@ -472,7 +472,7 @@ router.route('/:week_id')
             res.json(week[0]);
             var mailAssegnationToSend = [];
             var week = week[0];
-            // if(config.SEND_ASSEGNATION){
+            // if(process.env.SEND_ASSEGNATION == "true"){
             //   var brother = week.bibleReading.primarySchool.student;
             //   brother.email = "lucido.kristian@gmail.com";
             //   mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
@@ -486,7 +486,7 @@ router.route('/:week_id')
             //         schools.forEach(function (school) {
             //           var brother = week[partType][school].student;
             //           brother.email = "lucido.kristian@gmail.com";
-            //             if (brother.email && config.SEND_ASSEGNATION) {
+            //             if (brother.email && process.env.SEND_ASSEGNATION == "true") {
             //               var obj = {
             //                 mail: brother.email,
             //                 brother: brother.surname + ' ' + brother.name,

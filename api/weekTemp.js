@@ -13,7 +13,7 @@ var path = require('path');
 var MAIL = require('./mail/send-mail');
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
-    var config = require('./api/env.json')['development'];
+    var config = require('./env.json')['development'];
     process.env.MONGO_DB_URI = config.MONGO_DB_URI;
     process.env.SECRET = config.SECRET;
     process.env.GMAIL_ACCOUNT = config.GMAIL_ACCOUNT;
