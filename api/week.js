@@ -13,7 +13,14 @@ var path = require('path');
 
 var MAIL = require('./mail/send-mail');
 
-var config = require(path.join(__dirname, 'env.json'))[process.env.NODE_ENV || 'development'];
+if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
+    var config = require('./api/env.json')['development'];
+    process.env.MONGO_DB_URI = config.MONGO_DB_URI;
+    process.env.SECRET = config.SECRET;
+    process.env.GMAIL_ACCOUNT = config.GMAIL_ACCOUNT;
+    process.env.GMAIL_ACCOUNT_PASSWORD = config.GMAIL_ACCOUNT_PASSWORD;
+    process.env.SEND_ASSEGNATION = config.SEND_ASSEGNATION;
+}
 
 var templateMail = "";
 var transporter = null;
