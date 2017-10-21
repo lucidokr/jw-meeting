@@ -157,11 +157,11 @@ var MAIL = {
             this.sendMail(mailOptions)
         }
 
-        if (!this.template) {
+        // if (!this.template) {
             this.getAssegnationTemplate(send.bind(this));
-        } else {
-            send()
-        }
+        // } else {
+            // send()
+        // }
     }
 
 }
