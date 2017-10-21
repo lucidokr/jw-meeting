@@ -492,6 +492,8 @@ router.route('/:week_id')
                       var brother = week[partType][school].student;
                       // brother.email = "lucido.kristian@gmail.com";
                         if (brother.email && process.env.SEND_ASSEGNATION == "true" && brother.student) {
+                          console.log("brother student name: ", brother.surname + ' ' + brother.name);
+                          console.log("brother student school: ", brother.student.lastSchool);
                           var obj = {
                             mail: brother.email,
                             brother: brother.surname + ' ' + brother.name,
