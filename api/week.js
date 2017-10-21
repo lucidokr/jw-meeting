@@ -491,7 +491,7 @@ router.route('/:week_id')
                     schools.forEach(function (school) {
                       var brother = week[partType][school].student;
                       // brother.email = "lucido.kristian@gmail.com";
-                        if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                        if (brother.email && process.env.SEND_ASSEGNATION == "true" && brother.student) {
                           var obj = {
                             mail: brother.email,
                             brother: brother.surname + ' ' + brother.name,
