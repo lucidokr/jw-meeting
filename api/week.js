@@ -472,39 +472,41 @@ router.route('/:week_id')
             res.json(week[0]);
             var mailAssegnationToSend = [];
             var week = week[0];
-            // if(process.env.SEND_ASSEGNATION == "true"){
-            //   var brother = week.bibleReading.primarySchool.student;
-            //   brother.email = "lucido.kristian@gmail.com";
-            //   mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
-            //   var brother = week.bibleReading.secondarySchool.student;
-            //   brother.email = "lucido.kristian@gmail.com";
-            //   mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
-            //   if (!week.presentationExercise.enabled) {
-            //       var arr = ["initialCall", "returnVisit", "bibleStudy"];
-            //       var schools = ["primarySchool", "secondarySchool"];
-            //       arr.forEach(function (partType) {
-            //         schools.forEach(function (school) {
-            //           var brother = week[partType][school].student;
-            //           brother.email = "lucido.kristian@gmail.com";
-            //             if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-            //               var obj = {
-            //                 mail: brother.email,
-            //                 brother: brother.surname + ' ' + brother.name,
-            //                 assistant: '',
-            //                 type: (week[partType][school].isTalk ? 'talk' : partType),
-            //                 school: brother.student.lastSchool,
-            //                 date: week.date,
-            //                 point: brother.student.pendingStudyNumber
-            //               };
-            //               obj.assistant = (week[partType][school].assistant ? week[partType][school].assistant.surname + ' ' + week[partType][school].assistant.name : '')
-            //               mailAssegnationToSend.push(obj)
-            //           }
-            //         })
-            //       })
-            //
-            //   }
-            //   MAIL.sendAssegnations(mailAssegnationToSend);
-            // }
+            if(process.env.SEND_ASSEGNATION == "true"){
+              var brother = week.bibleReading.primarySchool.student;
+              brother.email = "lucido.kristian@gmail.com";
+              mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
+              if (!week.presentationExercise.enabled) {
+
+                  brother = week.bibleReading.secondarySchool.student;
+                  brother.email = "lucido.kristian@gmail.com";
+                  mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
+
+                  var arr = ["initialCall", "returnVisit", "bibleStudy"];
+                  var schools = ["primarySchool", "secondarySchool"];
+                  arr.forEach(function (partType) {
+                    schools.forEach(function (school) {
+                      var brother = week[partType][school].student;
+                      brother.email = "lucido.kristian@gmail.com";
+                        if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                          var obj = {
+                            mail: brother.email,
+                            brother: brother.surname + ' ' + brother.name,
+                            assistant: '',
+                            type: (week[partType][school].isTalk ? 'talk' : partType),
+                            school: brother.student.lastSchool,
+                            date: week.date,
+                            point: brother.student.pendingStudyNumber
+                          };
+                          obj.assistant = (week[partType][school].assistant ? week[partType][school].assistant.surname + ' ' + week[partType][school].assistant.name : '')
+                          mailAssegnationToSend.push(obj)
+                      }
+                    })
+                  })
+
+              }
+              MAIL.sendAssegnations(mailAssegnationToSend);
+            }
         });
     })
     .put(function(req, res) {
