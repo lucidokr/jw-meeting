@@ -6,7 +6,9 @@ router.route('/')
   .get(function(req, res) {
     StudyNumber
       .find()
-
+      .sort([
+          ['number', 'ascending']
+      ])
       .exec(function(err, studies) {
           if (err){
               console.error('Study Number get error:', err);
