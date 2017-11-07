@@ -392,15 +392,28 @@ router.route('/pgm/:year/:month')
 
 .get(function(req, res) {
 
+    var startMonth = parseInt(req.params.month);
+    var startYear = parseInt(req.params.year);
+    var endYear = parseInt(req.params.year);
+    var endMonth = parseInt(req.params.month);
+    if(startMonth == 12) {
+      endMonth = "01";
+      endYear++;
+      endYear = endYear + "";
+    }else{
+      endMonth++;
+      endMonth = endMonth + "";
+    }
     Week
     // .where('date').gte(new Date(req.params.year, req.params.month, 6)).lte(new Date(req.params.year, req.params.month + 1, 3))
         .find({
             $and: [{
-                "date": { $gte: new Date(req.params.year + "-" + (parseInt(req.params.month)) + "-03T22:00:00.000+0000") }
+                "date": { $gte: new Date((startYear+"") + "-" + (startMonth+"") + "-03T23:00:00.000+0000") }
             }, {
-                "date": { $lte: new Date(req.params.year + "-" + (parseInt(req.params.month) + 1) + "-02T22:00:00.000+0000") }
+                "date": { $lte: new Date((endYear+"") + "-" + (endMonth+"") + "-02T23:00:00.000+0000") }
             }]
         })
+        // .find({})
         .populate('initialPrayer')
         .populate('finalPrayer')
         .populate('president')
