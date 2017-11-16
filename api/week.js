@@ -243,7 +243,7 @@ router.route('/')
                                     }
                                     // brother.student.bibleReadingPendingStudyNumber = brother.student.bibleReadingStudyNumber;
                                     objToSave.push(brother.student)
-                                    if (brother.email && process.env.SEND_ASSEGNATION) {
+                                    if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailAssegnationToSend.push({ mail: brother.email, brother: brother.surname + ' ' + brother.name, assistant: '', type: "bibleReading", school: brother.student.lastSchool, date: week.date, point: brother.student.bibleReadingPendingStudyNumber })
                                     }
                                 }
