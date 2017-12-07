@@ -3,6 +3,7 @@ var Schema       = mongoose.Schema;
 
 var ReaderSchema   = new Schema({
   date: Date,
+  prevDate: Date,
   enabled: Boolean,
 
   deleted: Boolean

@@ -62,7 +62,8 @@
         pointCompleted:false,
         pointChanged: false
       },
-      label: ''
+      label: '',
+      video: false
     };
     returnVisit: any ={
       primarySchool:{
@@ -83,7 +84,8 @@
         pointCompleted:false,
         pointChanged: false
       },
-      label: ''
+      label: '',
+      video: false
     };
     bibleStudy: any ={
       primarySchool:{
@@ -106,7 +108,8 @@
         pointCompleted:false,
         pointChanged: false
       },
-      label: ''
+      label: '',
+      video: false
     };
     christianLivingPart:any=[];
     congregationBibleStudy:any={

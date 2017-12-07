@@ -14,7 +14,9 @@ router.route('/:year/:month/:day')
         console.log("cached value WOL");
         res.json(value);
     } else {
-        wtj.extractUrl('https://wol.jw.org/it/wol/dt/r6/lp-i/' + req.params.year + '/' + req.params.month + '/' + req.params.day, {
+
+        wtj.extractUrl('https://wol.jw.org/en/wol/dt/r1/lp-e/' + req.params.year + '/' + req.params.month + '/' + req.params.day, {
+        // wtj.extractUrl('https://wol.jw.org/it/wol/dt/r6/lp-i/' + req.params.year + '/' + req.params.month + '/' + req.params.day, {
                 fields: ['data'],
                 parse: function($) {
                     var r = function(string) {
@@ -36,15 +38,28 @@ router.route('/:year/:month/:day')
                     } else {
                         result.presentationExercise = null;
                         result.initialCall = r($("#section3 #p17").html());
+                        result.initialCallVideo = false;
+                        if(result.initialCall.split("(")[0].toLowerCase().indexOf("video") != -1){
+                          result.initialCallVideo = true;
+                        }
                         result.returnVisit = r($("#section3 #p18").html());
+                        result.returnVisitVideo = false;
+                        if(result.returnVisit.split("(")[0].toLowerCase().indexOf("video") != -1){
+                          result.returnVisitVideo = true;
+                        }
                         result.bibleStudy = r($("#section3 #p19").html());
-                        if (result.bibleStudy.indexOf("Discorso:") != -1) {
-                            result.isTalk = true;
-                        } else {
-                            result.isTalk = false;
+                        result.bibleStudyVideo = false;
+                        if(result.bibleStudy.split("(")[0].toLowerCase().indexOf("video") != -1){
+                          result.bibleStudyVideo = true;
+                        }else{
+                          if (result.bibleStudy.indexOf("Discorso:") != -1 || result.bibleStudy.indexOf("Talk:") != -1 ) {
+                              result.isTalk = true;
+                          } else {
+                              result.isTalk = false;
+                          }
                         }
                     }
-                    var christianLivingPart = $("#section4 .pGroup li");
+                    var christianLivingPart = $("#section4 .pGroup>ul>li");
                     //cantico intermedio
                     result.intervalSong = r($(christianLivingPart[0]).find("p").html());
                     christianLivingPart.splice(0, 1)

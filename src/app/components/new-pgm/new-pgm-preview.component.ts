@@ -412,35 +412,37 @@ export class NewPgmPreviewComponent implements OnInit{
           .sort((a:Brother,b:Brother) => {return (moment(a.student[partType+"lastDate"]).isBefore(b.student[partType+"lastDate"]) ? -1 : 1)});
 
       for(let week of this.weeks) {
-        for(let brother of list.filter(brother => brotherToIgnore.indexOf(brother._id) == -1)) {
-            if(week.type.meeting && !week.supervisor){
-              let partEnabled = brother.student[partType + "Enabled"];
-              if(week[partType].primarySchool.isTalk){
-                partEnabled = brother.student.talkEnabled && brother.student[partType + "Enabled"];
-              }
-              if(partEnabled){
-                let arrChristianLivingPartBrother = [];
-                for (let part of week.christianLivingPart){
-                  arrChristianLivingPartBrother.push(part.brother._id);
+        if(!week[partType].video){
+          for(let brother of list.filter(brother => brotherToIgnore.indexOf(brother._id) == -1)) {
+              if(week.type.meeting && !week.supervisor){
+                let partEnabled = brother.student[partType + "Enabled"];
+                if(week[partType].primarySchool.isTalk){
+                  partEnabled = brother.student.talkEnabled && brother.student[partType + "Enabled"];
                 }
-                //filtro per i fratelli che non sono già impegnati in una parte vita cristiana nelle gemme e nei tesori
-                if(arrChristianLivingPartBrother.indexOf(brother._id) == -1 && brother._id != week.talk.brother._id && brother._id != week.gems.brother._id){
-                  let lastSchoolPart = brother.student[partType + "LastSchool"];
-                  if(!week[partType].primarySchool.student && brother.student.primarySchoolEnabled &&
-                    ((week[partType].primarySchool.gender != '' && brother.gender ==  week[partType].primarySchool.gender) || week[partType].primarySchool.gender == '' || partType == CONST.BIBLE_READING)){
-                    if((!week.secondarySchool && !week.presentationExercise.enabled) || lastSchoolPart == 2 || forced){
-                      week[partType].primarySchool.student = brother;
-                      brotherToIgnore.push(brother._id);
-                    }
+                if(partEnabled){
+                  let arrChristianLivingPartBrother = [];
+                  for (let part of week.christianLivingPart){
+                    arrChristianLivingPartBrother.push(part.brother._id);
                   }
-                  if(week.secondarySchool
-                    && !week[partType].secondarySchool.student
-                    && (week[partType].primarySchool.student && brother._id != week[partType].primarySchool.student._id)
-                    && brother.student.secondarySchoolEnabled
-                    && ((week[partType].secondarySchool.gender != '' && brother.gender ==  week[partType].secondarySchool.gender) || week[partType].secondarySchool.gender == '' || partType == CONST.BIBLE_READING)){
-                    if(lastSchoolPart == 1 || forced){
-                      week[partType].secondarySchool.student = brother;
-                      brotherToIgnore.push(brother._id);
+                  //filtro per i fratelli che non sono già impegnati in una parte vita cristiana nelle gemme e nei tesori
+                  if(arrChristianLivingPartBrother.indexOf(brother._id) == -1 && brother._id != week.talk.brother._id && brother._id != week.gems.brother._id){
+                    let lastSchoolPart = brother.student[partType + "LastSchool"];
+                    if(!week[partType].primarySchool.student && brother.student.primarySchoolEnabled &&
+                      ((week[partType].primarySchool.gender != '' && brother.gender ==  week[partType].primarySchool.gender) || week[partType].primarySchool.gender == '' || partType == CONST.BIBLE_READING)){
+                      if((!week.secondarySchool && !week.presentationExercise.enabled) || lastSchoolPart == 2 || forced){
+                        week[partType].primarySchool.student = brother;
+                        brotherToIgnore.push(brother._id);
+                      }
+                    }
+                    if(week.secondarySchool
+                      && !week[partType].secondarySchool.student
+                      && (week[partType].primarySchool.student && brother._id != week[partType].primarySchool.student._id)
+                      && brother.student.secondarySchoolEnabled
+                      && ((week[partType].secondarySchool.gender != '' && brother.gender ==  week[partType].secondarySchool.gender) || week[partType].secondarySchool.gender == '' || partType == CONST.BIBLE_READING)){
+                      if(lastSchoolPart == 1 || forced){
+                        week[partType].secondarySchool.student = brother;
+                        brotherToIgnore.push(brother._id);
+                      }
                     }
                   }
                 }
@@ -476,7 +478,7 @@ export class NewPgmPreviewComponent implements OnInit{
           for (let brother of this.assistantList) {
             if (brother.student.assistantEnabled) {
               for (let partType of this.PART_TYPE) {
-                if (!week[partType].primarySchool.isTalk) {
+                if (!week[partType].primarySchool.isTalk && !week[partType].video) {
                   if (!week[partType].primarySchool.assistant && week[partType].primarySchool.student.gender == brother.gender && brother.student.primarySchoolEnabled) {
                     week[partType].primarySchool.assistant = brother;
                     break;
@@ -532,21 +534,23 @@ export class NewPgmPreviewComponent implements OnInit{
     let allCompleted = true;
     let toRemove = [];
     for(let partType of partTypes) {
-      if(week[partType].primarySchool[type])
-        toRemove.push(week[partType].primarySchool[type]);
-      if(week[partType].secondarySchool[type])
-        toRemove.push(week[partType].secondarySchool[type]);
+      if(!week[partType].video){
+        if(week[partType].primarySchool[type])
+          toRemove.push(week[partType].primarySchool[type]);
+        if(week[partType].secondarySchool[type])
+          toRemove.push(week[partType].secondarySchool[type]);
 
-      if(type != "assistant" || (!week[partType].primarySchool.isTalk && type=="assistant")){
-        if(!week[partType].primarySchool[type]){
-          allCompleted = false;
-          // break;
+        if(type != "assistant" || (!week[partType].primarySchool.isTalk && type=="assistant")){
+          if(!week[partType].primarySchool[type]){
+            allCompleted = false;
+            // break;
+          }
         }
-      }
-      if(week.secondarySchool && (type != "assistant" || (!week[partType].secondarySchool.isTalk && type=="assistant"))) {
-        if (!week[partType].secondarySchool[type]) {
-          allCompleted = false;
-          // break;
+        if(week.secondarySchool && (type != "assistant" || (!week[partType].secondarySchool.isTalk && type=="assistant"))) {
+          if (!week[partType].secondarySchool[type]) {
+            allCompleted = false;
+            // break;
+          }
         }
       }
 

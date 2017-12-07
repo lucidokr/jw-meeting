@@ -43,7 +43,7 @@ export class DownloadWeeksDialog implements OnInit{
 
   constructor(public dialogRef: MdDialogRef<DownloadWeeksDialog>, private meetingService:MeetingService, private router:Router) {
     // this.xls = XLSX.readFile('http://localhost:4200/assets/xls/pgm-vcm.xlsx')
-    var url = "assets/xls/pgm-draft-vcm.xlsx";
+    var url = "assets/xls/pgm-draft-vcm-2018.xlsx";
     var oReq = new XMLHttpRequest();
     oReq.open("GET", url, true);
     oReq.responseType = "arraybuffer";
@@ -157,27 +157,28 @@ export class DownloadWeeksDialog implements OnInit{
                 countRow++;
                 countRow++;
                 draft[XLSX.utils.encode_cell({r:countRow, c:0})] = {v:this.getPartSchoolTitle(week[partType].label), s:{font: {sz: 15, bold: true }}};
-                for(let school of SCHOOLS) {
+                if(!week[partType].video){
+                  for(let school of SCHOOLS) {
+                    let column = 2;
+                    let columnPoint = 4;
+                    if(school == "secondarySchool") {column = 5; columnPoint = 7;}
+                    cellRef = XLSX.utils.encode_cell({r:countRow, c:column});
+                    if(draft[cellRef]) draft[cellRef].v = this.getSurnameName(week[partType][school].student);
+                    cellRef = XLSX.utils.encode_cell({r:countRow, c:columnPoint});
+                    if(draft[cellRef] && week[partType][school].student.student && week[partType][school].student.student.pendingStudyNumber)
+                      draft[cellRef] = {t:'n', v:week[partType][school].student.student.pendingStudyNumber.number};
+                    let tempRow = countRow+1;
+                    cellRef = XLSX.utils.encode_cell({r:tempRow, c:column});
+                    if(week[partType][school].assistant){
+                      if(draft[cellRef]) draft[cellRef] = {t:'s', v:this.getSurnameName(week[partType][school].assistant)};
+                    }
+                    if(week[partType][school].isTalk){
+                      cellRef = XLSX.utils.encode_cell({r:countRow, c:0});
+                      draft[cellRef] = {t:'s', v:this.getPartSchoolTitle(week[partType].label)};
+                      draft[cellRef].s = {font: {sz: 15, bold: true }};
+                    }
 
-                  let column = 2;
-                  let columnPoint = 4;
-                  if(school == "secondarySchool") {column = 5; columnPoint = 7;}
-                  cellRef = XLSX.utils.encode_cell({r:countRow, c:column});
-                  if(draft[cellRef]) draft[cellRef].v = this.getSurnameName(week[partType][school].student);
-                  cellRef = XLSX.utils.encode_cell({r:countRow, c:columnPoint});
-                  if(draft[cellRef] && week[partType][school].student.student && week[partType][school].student.student.pendingStudyNumber)
-                    draft[cellRef] = {t:'n', v:week[partType][school].student.student.pendingStudyNumber.number};
-                  let tempRow = countRow+1;
-                  cellRef = XLSX.utils.encode_cell({r:tempRow, c:column});
-                  if(week[partType][school].assistant){
-                    if(draft[cellRef]) draft[cellRef] = {t:'s', v:this.getSurnameName(week[partType][school].assistant)};
                   }
-                  if(week[partType][school].isTalk){
-                    cellRef = XLSX.utils.encode_cell({r:countRow, c:0});
-                    draft[cellRef] = {t:'s', v:this.getPartSchoolTitle(week[partType].label)};
-                    draft[cellRef].s = {font: {sz: 15, bold: true }};
-                  }
-
                 }
 
               }
@@ -252,7 +253,7 @@ export class DownloadWeeksDialog implements OnInit{
           if(draft[cellRef]) draft[cellRef] = {t: 's', v:"Visita del sorvegliante di circoscrizione"};
         }
         if(week.presentationExercise.enabled)
-          countRow += 14;
+          countRow += 12;
         else
           countRow += 18;
 
@@ -281,7 +282,7 @@ export class DownloadWeeksDialog implements OnInit{
     document.body.appendChild(a);
     a.click();
 
-    a.href        = 'assets/xls/pgm-vcm-macro.xlsm';
+    a.href        = 'assets/xls/pgm-vcm-macro-2018.xlsm';
     a.target      = '_blank';
     a.download    = 'Vita-Cristiana-Ministero-'+(this.weeks[0].date.format('MMMM-YY'))+'.xlsm';
     document.body.appendChild(a);
@@ -321,8 +322,8 @@ export class DownloadWeeksDialog implements OnInit{
     div.innerHTML = html;
     str = div.textContent || div.innerText || "";
     // str = str.substr(0, str.length-2);
-    let temp = str.split("(")[0];
-    temp = temp + str.split(")")[1].split(". ")[0];
+    let temp = str.split(":")[0];
+    // temp = temp + str.split(")")[1].split(". ")[0];
     return temp.trim();
   }
 

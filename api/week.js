@@ -10,7 +10,6 @@ var XLSX = require('xlsx');
 var nodemailer = require('nodemailer');
 var fs = require('fs')
 var path = require('path');
-
 var MAIL = require('./mail/send-mail');
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
@@ -80,21 +79,33 @@ router.route('/')
                 }
 
                 if (!week.presentationExercise.enabled) {
-                    toFind.push({ '_id': week.initialCall.primarySchool.student._id });
-                    toFind.push({ '_id': week.initialCall.primarySchool.assistant._id });
-                    toFind.push({ '_id': week.returnVisit.primarySchool.student._id });
-                    toFind.push({ '_id': week.returnVisit.primarySchool.assistant._id });
-                    toFind.push({ '_id': week.bibleStudy.primarySchool.student._id });
-                    if (!week.bibleStudy.primarySchool.isTalk)
-                        toFind.push({ '_id': week.bibleStudy.primarySchool.assistant._id });
+                    if(!week.initialCall.video){
+                      toFind.push({ '_id': week.initialCall.primarySchool.student._id });
+                      toFind.push({ '_id': week.initialCall.primarySchool.assistant._id });
+                    }
+                    if(!week.returnVisit.video){
+                      toFind.push({ '_id': week.returnVisit.primarySchool.student._id });
+                      toFind.push({ '_id': week.returnVisit.primarySchool.assistant._id });
+                    }
+                    if(!week.bibleStudy.video){
+                      toFind.push({ '_id': week.bibleStudy.primarySchool.student._id });
+                      if (!week.bibleStudy.primarySchool.isTalk)
+                          toFind.push({ '_id': week.bibleStudy.primarySchool.assistant._id });
+                    }
                     if (week.secondarySchool) {
+                      if(!week.initialCall.video){
                         toFind.push({ '_id': week.initialCall.secondarySchool.student._id });
                         toFind.push({ '_id': week.initialCall.secondarySchool.assistant._id });
+                      }
+                      if(!week.returnVisit.video){
                         toFind.push({ '_id': week.returnVisit.secondarySchool.student._id });
                         toFind.push({ '_id': week.returnVisit.secondarySchool.assistant._id });
+                      }
+                      if(!week.bibleStudy.video){
                         toFind.push({ '_id': week.bibleStudy.secondarySchool.student._id });
                         if (!week.bibleStudy.secondarySchool.isTalk)
                             toFind.push({ '_id': week.bibleStudy.secondarySchool.assistant._id });
+                      }
                     }
                 } else {
                     toFind.push({ '_id': week.presentationExercise.brother._id });
@@ -122,24 +133,33 @@ router.route('/')
                             var objToSave = [];
 
                             var date = new Date(req.body[0].date);
-                            var strDate = date.getMonth() + (date.getMonth() + 1) + "/" + date.getFullYear();
+                            var strDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
                             if (brother.elder) {
                                 if (brother._id == week.president._id) {
+                                    brother.elder.presidentPrevDate = brother.elder.presidentDate ;
                                     brother.elder.presidentDate = week.date;
                                 }
 
-                                if (brother._id == week.gems.brother._id)
+                                if (brother._id == week.gems.brother._id) {
+                                    brother.elder.gemsPrevDate = brother.elder.gemsDate;
                                     brother.elder.gemsDate = week.date;
+                                  }
 
-                                if (brother._id == week.talk.brother._id)
+                                if (brother._id == week.talk.brother._id) {
+                                    brother.elder.talkPrevDate = brother.elder.talkDate;
                                     brother.elder.talkDate = week.date;
+                                  }
 
-                                if (brother._id == week.congregationBibleStudy.brother._id)
+                                if (brother._id == week.congregationBibleStudy.brother._id) {
+                                    brother.elder.bibleStudyPrevDate = brother.elder.bibleStudyDate;
                                     brother.elder.bibleStudyDate = week.date;
+                                  }
 
-                                if (week.presentationExercise.enabled && brother._id == week.presentationExercise.brother._id)
+                                if (week.presentationExercise.enabled && brother._id == week.presentationExercise.brother._id) {
+                                    brother.elder.presentationExercisePrevDate = brother.elder.presentationExerciseDate;
                                     brother.elder.presentationExerciseDate = week.date;
+                                  }
 
                                 for (var i = 0; i < week.christianLivingPart.length; i++) {
                                     if (brother._id == week.christianLivingPart[i].brother._id) {
@@ -152,12 +172,15 @@ router.route('/')
                             }
                             if (brother.servant) {
                                 if (brother._id == week.gems.brother._id) {
+                                    brother.servant.gemsPrevDate = brother.servant.gemsDate;
                                     brother.servant.gemsDate = week.date;
                                 }
                                 if (brother._id == week.talk.brother._id) {
+                                    brother.servant.talkPrevDate = brother.servant.talkDate;
                                     brother.servant.talkDate = week.date;
                                 }
                                 if (week.presentationExercise.enabled && brother._id == week.presentationExercise.brother._id) {
+                                    brother.servant.presentationExercisePrevDate = brother.servant.presentationExerciseDate;
                                     brother.servant.presentationExerciseDate = week.date;
                                 }
 
@@ -171,6 +194,7 @@ router.route('/')
                             }
                             if (brother.prayer) {
                                 if (brother._id == week.initialPrayer._id) {
+                                    brother.prayer.prevDate = brother.prayer.date;
                                     brother.prayer.date = week.date;
                                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailToSend.push({
@@ -189,14 +213,17 @@ router.route('/')
                                             text: "Ciao " + brother.name + " " + brother.surname + ", ti è stata assegnata la preghiera finale dell'adunanza Vita Cristiana e Ministero che si svolgerà in data: " + strDate
                                         })
                                     }
+                                    brother.prayer.prevDate = brother.prayer.date;
                                     brother.prayer.date = week.date;
                                 }
 
                                 objToSave.push(brother.prayer)
                             }
                             if (brother.reader) {
-                                if (brother._id == week.congregationBibleStudy.reader._id)
+                                if (brother._id == week.congregationBibleStudy.reader._id) {
+                                    brother.reader.prevDate = brother.reader.date;
                                     brother.reader.date = week.date;
+                                }
 
                                 objToSave.push(brother.reader)
 
@@ -253,6 +280,7 @@ router.route('/')
                                     var arr = ["initialCall", "returnVisit", "bibleStudy"];
                                     var schools = ["primarySchool", "secondarySchool"];
                                     arr.forEach(function(partType) {
+                                      if ( !week[partType].video){
                                         schools.forEach(function(school) {
                                             if (brother._id == week[partType][school].student._id) {
                                                 brother.student.lastDate = week.date;
@@ -280,7 +308,9 @@ router.route('/')
                                                 brother.student.assistantLastSchool = (school == "primarySchool" ? 1 : 2);
                                                 objToSave.push(brother.student)
                                             }
+
                                         })
+                                      }
                                     })
 
                                 }
@@ -404,11 +434,16 @@ router.route('/pgm/:year/:month')
       endMonth++;
       endMonth = endMonth + "";
     }
+    if(startMonth+"".length == 1)
+      startMonth = "0"+startMonth;
+
+    if(endMonth.length == 1)
+      endMonth = "0"+endMonth;
     Week
     // .where('date').gte(new Date(req.params.year, req.params.month, 6)).lte(new Date(req.params.year, req.params.month + 1, 3))
         .find({
             $and: [{
-                "date": { $gte: new Date((startYear+"") + "-" + (startMonth+"") + "-03T23:00:00.000+0000") }
+                "date": { $gte: new Date((startYear+"") + "-" + (startMonth+"") + "-02T23:00:00.000+0000") }
             }, {
                 "date": { $lte: new Date((endYear+"") + "-" + (endMonth+"") + "-02T23:00:00.000+0000") }
             }]
@@ -444,7 +479,7 @@ router.route('/pgm/:year/:month')
 
     .exec(function(err, weeks) {
         if (err)
-            return res.send(err);
+            return res.status(500).send(err);
         res.json(weeks);
 
     });
@@ -566,55 +601,57 @@ router.route('/:week_id')
                 async.each(brothers, function(brother, nextBrother) {
 
                     partTypes.forEach(function(partType) {
-                        schools.forEach(function(school) {
-                            if (brother._id == week[partType][school].student._id) {
-                                var history = new History();
-                                history.date = week.date;
-                                history.student = week[partType][school].student;
-                                if (partType == 'bibleReading') {
-                                    history.studyNumber = brother.student.bibleReadingPendingStudyNumber;
-                                } else {
-                                    history.studyNumber = brother.student.pendingStudyNumber;
-                                }
-                                if (week[partType][school].made == 1) { //svolto
-                                    if (week[partType][school].pointCompleted && !week[partType][school].pointChanged) { // punto superato  e punto non cambiato
-                                        if (partType == 'bibleReading') {
-                                            brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingStudyNumber;
-                                        } else {
-                                            brother.student.studyNumber = week[partType][school].student.student.studyNumber;
-                                        }
-                                    }
-                                    // if(!week[partType][school].pointCompleted && week[partType][school].pointChanged) { // punto non superato  e punto cambiato
-                                    //   if (partType == 'bibleReading') {
-                                    //     brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingPendingStudyNumber;
-                                    //   } else {
-                                    //     brother.student.studyNumber = week[partType][school].student.student.pendingStudyNumber;
-                                    //   }
-                                    // }
-                                    history.made = true;
-                                    history.pointCompleted = week[partType][school].pointCompleted;
-                                } else if (week[partType][school].made == 2) { //non svolto
-                                    brother.student.lastDate = brother.student.lastPrevDate;
-                                    brother.student[partType + "Date"] = brother.student[partType + "PrevDate"];
-                                    brother.student.lastSchool = brother.student.lastPrevSchool;
-                                    brother.student[partType + "LastSchool"] = brother.student[partType + "LastPrevSchool"];
+                      if(!week[partType].video){
+                          schools.forEach(function(school) {
+                              if (brother._id == week[partType][school].student._id) {
+                                  var history = new History();
+                                  history.date = week.date;
+                                  history.student = week[partType][school].student;
+                                  if (partType == 'bibleReading') {
+                                      history.studyNumber = brother.student.bibleReadingPendingStudyNumber;
+                                  } else {
+                                      history.studyNumber = brother.student.pendingStudyNumber;
+                                  }
+                                  if (week[partType][school].made == 1) { //svolto
+                                      if (week[partType][school].pointCompleted && !week[partType][school].pointChanged) { // punto superato  e punto non cambiato
+                                          if (partType == 'bibleReading') {
+                                              brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingStudyNumber;
+                                          } else {
+                                              brother.student.studyNumber = week[partType][school].student.student.studyNumber;
+                                          }
+                                      }
+                                      // if(!week[partType][school].pointCompleted && week[partType][school].pointChanged) { // punto non superato  e punto cambiato
+                                      //   if (partType == 'bibleReading') {
+                                      //     brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingPendingStudyNumber;
+                                      //   } else {
+                                      //     brother.student.studyNumber = week[partType][school].student.student.pendingStudyNumber;
+                                      //   }
+                                      // }
+                                      history.made = true;
+                                      history.pointCompleted = week[partType][school].pointCompleted;
+                                  } else if (week[partType][school].made == 2) { //non svolto
+                                      brother.student.lastDate = brother.student.lastPrevDate;
+                                      brother.student[partType + "Date"] = brother.student[partType + "PrevDate"];
+                                      brother.student.lastSchool = brother.student.lastPrevSchool;
+                                      brother.student[partType + "LastSchool"] = brother.student[partType + "LastPrevSchool"];
 
-                                    // se punto cambiato e il discorso non è stato svolto rimane il punto che aveva in precedenza
-                                    // mentre se il punto non è stato cambiato il punto pending torna normale
-                                    if (!week[partType][school].pointChanged) { //punto non cambiato
-                                        if (partType == 'bibleReading') {
-                                            brother.student.bibleReadingStudyNumber = brother.student.bibleReadingPendingStudyNumber;
-                                        } else {
-                                            brother.student.studyNumber = brother.student.pendingStudyNumber;
-                                        }
-                                    }
-                                    history.made = false;
-                                    history.pointCompleted = false;
-                                }
-                                historiesToSave.push(history);
-                                week[partType][school].updated = true;
-                            }
-                        })
+                                      // se punto cambiato e il discorso non è stato svolto rimane il punto che aveva in precedenza
+                                      // mentre se il punto non è stato cambiato il punto pending torna normale
+                                      if (!week[partType][school].pointChanged) { //punto non cambiato
+                                          if (partType == 'bibleReading') {
+                                              brother.student.bibleReadingStudyNumber = brother.student.bibleReadingPendingStudyNumber;
+                                          } else {
+                                              brother.student.studyNumber = brother.student.pendingStudyNumber;
+                                          }
+                                      }
+                                      history.made = false;
+                                      history.pointCompleted = false;
+                                  }
+                                  historiesToSave.push(history);
+                                  week[partType][school].updated = true;
+                              }
+                          })
+                        }
                     });
 
                     brother.student.save(function(err) {
@@ -645,10 +682,12 @@ router.route('/:week_id')
                                 var tempWeek = new Week(week);
                                 var completed = true;
                                 partTypes.forEach(function(partType) {
+                                  if(!week[partType].video){
                                     schools.forEach(function(school) {
                                         if (!week[partType][school].updated)
                                             completed = false;
                                     })
+                                  }
                                 });
                                 tempWeek.completed = completed;
                                 var w = tempWeek.toObject();

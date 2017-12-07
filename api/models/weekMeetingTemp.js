@@ -63,7 +63,8 @@ var WeekMeetingTempSchema   = new Schema(
       pointCompleted: Boolean,
       gender: String
     },
-    label: String
+    label: String,
+    video: Boolean
   },
   returnVisit: {
     primarySchool:{
@@ -82,7 +83,8 @@ var WeekMeetingTempSchema   = new Schema(
       pointCompleted: Boolean,
       gender: String
     },
-    label: String
+    label: String,
+    video: Boolean
   },
   bibleStudy:{
     primarySchool:{
@@ -103,7 +105,8 @@ var WeekMeetingTempSchema   = new Schema(
       pointCompleted: Boolean,
       gender: String
     },
-    label: String
+    label: String,
+    video: Boolean
   },
   christianLivingPart: [{
     brother: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},

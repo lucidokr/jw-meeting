@@ -181,6 +181,8 @@ export class MeetingListComponent extends GeneralListComponent{
       // }
       this.meetingService.getPgm(date.year(), date.month()).subscribe((res : Array<WeekMeeting>) => {
         this.dialogService.openDownloadWeeksDialog(res, false)
+      }, err => {
+        this.dialogService.showError("Non è possibile scaricare le adunanze.")
       });
     }else{
       this.dialogService.showError("Non è possibile scaricare le adunanze non complete")

@@ -3,9 +3,13 @@ var Schema       = mongoose.Schema;
 
 var ElderSchema   = new Schema({
   presidentDate: Date,
+  presidentPrevDate: Date,
   talkDate: Date,
+  talkPrevDate: Date,
   gemsDate: Date,
+  gemsPrevDate: Date,
   bibleStudyDate: Date,
+  bibleStudyPrevDate: Date,
   gemsEnabled: Boolean,
   talkEnabled: Boolean,
   presidentEnabled: Boolean,

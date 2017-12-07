@@ -112,7 +112,7 @@ export class NewPgmTempComponent {
     var month = monday.month();
     let user: User = this.authService.getUser();
     while(month === monday.month()){
-      dateArr.push(moment(monday).add(user.congregation.meetingDay, 'd'));
+      dateArr.push(moment(monday).add(user.congregation.meetingDay, 'd').add(12, 'h'));
       monday.add(7,'d');
     }
 
@@ -154,8 +154,11 @@ export class NewPgmTempComponent {
                 model.type = this.weekType.STANDARD;
                 model.bibleReading.label = weekMeetingWorkbook.bibleReading;
                 model.initialCall.label = weekMeetingWorkbook.initialCall;
+                model.initialCall.video = weekMeetingWorkbook.initialCallVideo;
                 model.returnVisit.label = weekMeetingWorkbook.returnVisit;
+                model.returnVisit.video = weekMeetingWorkbook.returnVisitVideo;
                 model.bibleStudy.label = weekMeetingWorkbook.bibleStudy;
+                model.bibleStudy.video = weekMeetingWorkbook.bibleStudyVideo;
                 model.bibleStudy.primarySchool.isTalk = weekMeetingWorkbook.isTalk;
                 model.bibleStudy.primarySchool.gender = weekMeetingWorkbook.isTalk ? 'M' : '';
                 model.bibleStudy.secondarySchool.isTalk = weekMeetingWorkbook.isTalk;
