@@ -126,12 +126,13 @@ export class DialogService {
     return dialogRef.afterClosed();
   }
 
-  public openDownloadWeeksDialog(weeks: Array<WeekMeeting>, fromCreate: Boolean): Observable<void>{
+  public openDownloadWeeksDialog(weeks: Array<WeekMeeting>, fromCreate: Boolean, format: string): Observable<void>{
     let dialogRef: MdDialogRef<DownloadWeeksDialog>;
 
     dialogRef = this.dialog.open(DownloadWeeksDialog);
     dialogRef.componentInstance.weeks = weeks;
     dialogRef.componentInstance.fromCreate = fromCreate;
+    dialogRef.componentInstance.format = format;
 
     return dialogRef.afterClosed();
   }

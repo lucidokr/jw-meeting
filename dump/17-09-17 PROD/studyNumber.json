@@ -1,0 +1,318 @@
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac8c"), 
+    "number" : NumberInt(1), 
+    "title" : "Leggere accuratamente", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac8d"), 
+    "number" : NumberInt(2), 
+    "title" : "Dizione", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac8e"), 
+    "number" : NumberInt(3), 
+    "title" : "Pronuncia", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac8f"), 
+    "number" : NumberInt(4), 
+    "title" : "Scorrevolezza", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac90"), 
+    "number" : NumberInt(5), 
+    "title" : "Pause", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac91"), 
+    "number" : NumberInt(6), 
+    "title" : "Enfasi orale", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac92"), 
+    "number" : NumberInt(7), 
+    "title" : "Idee principali messe in risalto", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac93"), 
+    "number" : NumberInt(8), 
+    "title" : "Volume", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac94"), 
+    "number" : NumberInt(9), 
+    "title" : "Modulazione", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac95"), 
+    "number" : NumberInt(10), 
+    "title" : "Entusiasmo", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac96"), 
+    "number" : NumberInt(11), 
+    "title" : "Calore e sentimento", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac97"), 
+    "number" : NumberInt(12), 
+    "title" : "Gesti ed espressioni facciali", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac98"), 
+    "number" : NumberInt(13), 
+    "title" : "Contatto visivo", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac99"), 
+    "number" : NumberInt(14), 
+    "title" : "Naturalezza", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac9a"), 
+    "number" : NumberInt(15), 
+    "title" : "Aspetto personale", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac9b"), 
+    "number" : NumberInt(16), 
+    "title" : "Equilibrio", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac9c"), 
+    "number" : NumberInt(17), 
+    "title" : "Uso del microfono", 
+    "forBibleReading" : true
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac9d"), 
+    "number" : NumberInt(18), 
+    "title" : "Uso della Bibbia per rispondere", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac9e"), 
+    "number" : NumberInt(19), 
+    "title" : "Uditorio incoraggiato a usare la Bibbia", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbac9f"), 
+    "number" : NumberInt(20), 
+    "title" : "Scritture dovutamente introdotte", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbaca0"), 
+    "number" : NumberInt(21), 
+    "title" : "Scritture lette con la giusta enfasi", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbaca1"), 
+    "number" : NumberInt(22), 
+    "title" : "Scritture correttamente applicate", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbaca2"), 
+    "number" : NumberInt(23), 
+    "title" : "Valore pratico messo in risalto", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbaca3"), 
+    "number" : NumberInt(24), 
+    "title" : "Scelta delle parole", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbaca4"), 
+    "number" : NumberInt(25), 
+    "title" : "Uso dello schema", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbaca5"), 
+    "number" : NumberInt(26), 
+    "title" : "Sviluppo logico del materiale", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbaca6"), 
+    "number" : NumberInt(27), 
+    "title" : "Discorso estemporaneo", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbaca7"), 
+    "number" : NumberInt(28), 
+    "title" : "Stile di conversazione", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbaca8"), 
+    "number" : NumberInt(29), 
+    "title" : "Qualità della voce", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbaca9"), 
+    "number" : NumberInt(30), 
+    "title" : "Interesse per gli altri", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacaa"), 
+    "number" : NumberInt(31), 
+    "title" : "Rispetto per gli altri", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacab"), 
+    "number" : NumberInt(32), 
+    "title" : "Esprimersi con convinzione", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacac"), 
+    "number" : NumberInt(33), 
+    "title" : "Tatto e fermezza", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacad"), 
+    "number" : NumberInt(34), 
+    "title" : "Edificanti e positivi", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacae"), 
+    "number" : NumberInt(35), 
+    "title" : "Ripetizione usata per dare enfasi", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacaf"), 
+    "number" : NumberInt(36), 
+    "title" : "Sviluppato il tema", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacb0"), 
+    "number" : NumberInt(37), 
+    "title" : "Punti principali messi in risalto", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacb1"), 
+    "number" : NumberInt(38), 
+    "title" : "Introduzione che suscita interesse", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacb2"), 
+    "number" : NumberInt(39), 
+    "title" : "Conclusione", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacb3"), 
+    "number" : NumberInt(40), 
+    "title" : "Accuratezza delle affermazioni", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacb4"), 
+    "number" : NumberInt(41), 
+    "title" : "Comprensibile", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacb5"), 
+    "number" : NumberInt(42), 
+    "title" : "Informativo per l'uditorio", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacb6"), 
+    "number" : NumberInt(43), 
+    "title" : "Uso del materiale assegnato", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacb7"), 
+    "number" : NumberInt(44), 
+    "title" : "Uso di domande", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacb8"), 
+    "number" : NumberInt(45), 
+    "title" : "Illustrazioni ed esempi istruttivi", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacb9"), 
+    "number" : NumberInt(46), 
+    "title" : "Illustrazioni tratte da situazioni note", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacba"), 
+    "number" : NumberInt(47), 
+    "title" : "Uso di ausili visivi", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacbb"), 
+    "number" : NumberInt(48), 
+    "title" : "Ragionevolezza", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacbc"), 
+    "number" : NumberInt(49), 
+    "title" : "Argomenti convincenti", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacbd"), 
+    "number" : NumberInt(50), 
+    "title" : "Toccare il cuore", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacbe"), 
+    "number" : NumberInt(51), 
+    "title" : "Tempo ben calcolato e ben ripartito", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacbf"), 
+    "number" : NumberInt(52), 
+    "title" : "Esortare con efficacia", 
+    "forBibleReading" : false
+}
+{ 
+    "_id" : ObjectId("59491f623545c51678fbacc0"), 
+    "number" : NumberInt(53), 
+    "title" : "Uditorio incoraggiato e rafforzato", 
+    "forBibleReading" : false
+}

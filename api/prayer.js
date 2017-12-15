@@ -14,8 +14,10 @@ router.route('/')
         { 'prayer.deleted':{$exists:true, $ne:true} }
       ])
       .exec(function(err, prayers) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Prayer get error:', err);
+              return res.send(err);
+          }
 
         res.json(prayers);
       });
@@ -31,17 +33,23 @@ router.route('/:brother_id')
     prayer = Object.assign(prayer, req.body);
 
     prayer.save(function(err, newPr) {
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('Prayer create error:', err);
+            return res.send(err);
+        }
 
       Brother.findById(req.params.brother_id, function(err, brother) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Prayer create error:', err);
+              return res.send(err);
+          }
         brother.prayer = newPr;
         brother.save(function(err) {
-          if (err)
-            res.send(err);
-          res.json({ message: 'Prayer updated!' ,brother: brother});
+            if (err){
+                console.error('Prayer create error:', err);
+                return res.send(err);
+            }
+          res.json({ message: 'Prayer created!' ,brother: brother});
         });
 
       });
@@ -52,14 +60,18 @@ router.route('/:brother_id')
     Brother.findOne({'_id': req.params.brother_id})
       .populate('prayer')
       .exec(function(err, brother) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Prayer update error:', err);
+              return res.send(err);
+          }
 
         brother.prayer = Object.assign(brother.prayer, req.body);
 
         brother.prayer.save(function(err) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Prayer update error:', err);
+                return res.send(err);
+            }
 
           res.json({ message: 'Prayer updated!' });
         });
@@ -67,16 +79,22 @@ router.route('/:brother_id')
   })
   .delete(function(req, res) {
     Brother.findOne({'_id': req.params.brother_id}).exec(function(err, brother) {
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('Prayer delete error:', err);
+            return res.send(err);
+        }
 
       Prayer.update({ _id: brother.prayer }, { $set: { deleted: true }},function(err) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Prayer delete error:', err);
+              return res.send(err);
+          }
         brother.prayer = undefined;
         brother.save(function(err) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Prayer delete error:', err);
+                return res.send(err);
+            }
           res.json({ message: 'Prayer deleted' });
         });
       });

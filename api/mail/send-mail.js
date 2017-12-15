@@ -57,8 +57,6 @@ var MAIL = {
         if (!this.transporter) {
             this.createTransporter();
         }
-        var date = new Date(req.body[0].date);
-        var str = (date.getMonth() + 1) + "/" + date.getFullYear();
         var mailOptions = {
             from: 'Adunanza Vita Cristiana e Ministero <jwmeetingscorze@gmail.com>',
             to: to,
@@ -159,11 +157,11 @@ var MAIL = {
             this.sendMail(mailOptions)
         }
 
-        if (!this.template) {
+        // if (!this.template) {
             this.getAssegnationTemplate(send.bind(this));
-        } else {
-            send()
-        }
+        // } else {
+            // send()
+        // }
     }
 
 }

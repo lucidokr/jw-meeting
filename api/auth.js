@@ -6,6 +6,7 @@ var User = require('./models/user');
 var Congregation = require('./models/congregation');
 var jwt    = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var randtoken = require('rand-token');
+const crypto = require('crypto');
 
 var refreshTokens = {};
 
@@ -43,17 +44,25 @@ router.route('/login')
                 expiresIn : EXPIRES
               });
 
-              var refreshToken = randtoken.uid(256)
-              refreshTokens[refreshToken] = req.body.username;
+              crypto.randomBytes(256, (err, buf) => {
+                if (err) throw err;
 
+                var refreshToken = buf.toString('hex');
+                refreshTokens[refreshToken] = req.body.username;
 
-              // return the information including token as JSON
-              res.json({
-                success: true,
-                message: 'Token created!',
-                token: token,
-                refreshToken: refreshToken
+                // return the information including token as JSON
+                res.json({
+                  success: true,
+                  message: 'Token created!',
+                  token: token,
+                  refreshToken: refreshToken
+                });
               });
+
+
+
+
+
             }
 
           }

@@ -24,8 +24,10 @@ router.route('/')
       .populate('prayer')
       .populate('reader')
       .exec(function(err, brothers) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Brothers get error:', err);
+              return res.send(err);
+          }
 
         res.json(brothers);
       });
@@ -36,10 +38,10 @@ router.route('/')
     brother = Object.assign(brother, req.body);
     brother.congregation = req.decoded._doc.congregation;
     brother.save(function(err) {
-      if (err)
-        res.send(err);
-
-
+        if (err){
+            console.error('Brother create error:', err);
+            return res.send(err);
+        }
 
       res.json({ message: 'Brother created!' , brother:brother});
     });
@@ -50,23 +52,29 @@ router.route('/:brother_id')
 
   .get(function(req, res) {
     Brother.findById(req.params.brother_id, function(err, brother) {
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('Brother get error:', err);
+            return res.send(err);
+        }
       res.json(brother);
     });
   })
   .put(function(req, res) {
     Brother.findById(req.params.brother_id, function(err, brother) {
 
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('Brother update error:', err);
+            return res.send(err);
+        }
 
       brother = Object.assign(brother, req.body);
 
       // save the bear
       brother.save(function(err) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Brother update error:', err);
+              return res.send(err);
+          }
 
         res.json({ message: 'Brother updated!' });
       });
@@ -77,8 +85,10 @@ router.route('/:brother_id')
     // Brother.update({ _id: id }, { $set: { size: 'large' }}, callback);
     Brother.findById(req.params.brother_id, function(err, brother) {
 
-      if (err)
-        res.send(err);
+        if (err){
+            console.error('Brother delete error:', err);
+            return res.send(err);
+        }
 
       brother.deleted = true;
       if(brother.student){
@@ -100,8 +110,10 @@ router.route('/:brother_id')
 
       // save the bear
       brother.save(function(err) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Brother delete error:', err);
+              return res.send(err);
+          }
 
         res.json({ message: 'Successfully deleted' });
       });

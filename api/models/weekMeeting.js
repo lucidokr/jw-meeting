@@ -65,7 +65,8 @@ var WeekMeetingSchema   = new Schema(
       gender: String,
       pointChanged: Boolean
     },
-    label: String
+    label: String,
+    video: Boolean
   },
   returnVisit: {
     primarySchool:{
@@ -86,7 +87,8 @@ var WeekMeetingSchema   = new Schema(
       gender: String,
       pointChanged: Boolean
     },
-    label: String
+    label: String,
+    video: Boolean
   },
   bibleStudy:{
     primarySchool:{
@@ -109,7 +111,8 @@ var WeekMeetingSchema   = new Schema(
       gender: String,
       pointChanged: Boolean
     },
-    label: String
+    label: String,
+    video: Boolean
   },
   christianLivingPart: [{
     brother: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},

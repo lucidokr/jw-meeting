@@ -3,7 +3,9 @@ var Schema       = mongoose.Schema;
 
 var ServantSchema   = new Schema({
   talkDate: Date,
+  talkPrevDate: Date,
   gemsDate: Date,
+  gemsPrevDate: Date,
   talkEnabled: Boolean,
   gemsEnabled: Boolean,
   christianLivingPartEnabled: Boolean,

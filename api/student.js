@@ -38,8 +38,10 @@ router.route('/')
       // .populate('student.pendingStudyNumber')
       // .populate('student.bibleReadingPendingStudyNumber')
       .exec(function(err, students) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Get students error:', err);
+              return res.send(err);
+          }
 
         res.json(students);
       });
@@ -141,12 +143,16 @@ router.route('/:brother_id')
         res.send(err);
 
       Brother.findById(req.params.brother_id, function(err, brother) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Sudent create error:', err);
+              return res.send(err);
+          }
         brother.student = student;
         brother.save(function(err, student) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Sudent create error:', err);
+                return res.send(err);
+            }
           res.json({ message: 'Student updated!' , student: student});
         });
 
@@ -174,14 +180,18 @@ router.route('/:brother_id')
         }]
       })
       .exec(function(err, brother) {
-        if (err)
-          res.send(err);
+          if (err){
+              console.error('Sudent update error:', err);
+              return res.send(err);
+          }
 
         brother.student = Object.assign(brother.student, req.body);
 
         brother.student.save(function(err) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Sudent update error:', err);
+                return res.send(err);
+            }
 
           res.json({ message: 'Student updated!' });
         });
@@ -189,13 +199,17 @@ router.route('/:brother_id')
   })
   .delete(function(req, res) {
     Brother.findOne({'_id': req.params.brother_id}).exec(function(err, brother) {
-      if (err)
-        res.send(err);
+      if (err){
+          console.error('Sudent delete error:', err);
+        return res.send(err);
+      }
       Student.update({ _id: brother.student }, { $set: { deleted: true }},function(err) {
         brother.student = undefined;
         brother.save(function(err) {
-          if (err)
-            res.send(err);
+            if (err){
+                console.error('Sudent delete error:', err);
+                return res.send(err);
+            }
           res.json({ message: 'Student deleted' });
         });
       });

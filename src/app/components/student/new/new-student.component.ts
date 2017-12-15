@@ -59,27 +59,29 @@ export class NewStudentDialog implements OnInit{
   }
 
   checkIfAllDisabled(){
-    if(this.brother.student.initialCallEnabled ||
-      this.brother.student.returnVisitEnabled ||
-      this.brother.student.bibleStudyEnabled ||
-      this.brother.student.talkEnabled
-    ){
-      if(!this.brother.student.studyNumber) this.brother.student.studyNumber = new StudyNumber();
-      if(!this.brother.student.lastDate) this.brother.student.lastDate = moment();
-      if(!this.brother.student.lastPrevDate) this.brother.student.lastPrevDate = moment();
-      this.enable = true;
-      this.enablePoint = true;
-    }else{
-      this.brother.student.studyNumber = null;
-      this.enablePoint = false;
-      if(this.brother.student.bibleReadingEnabled){
+    if(this.brother){
+      if(this.brother.student.initialCallEnabled ||
+        this.brother.student.returnVisitEnabled ||
+        this.brother.student.bibleStudyEnabled ||
+        this.brother.student.talkEnabled
+      ){
+        if(!this.brother.student.studyNumber) this.brother.student.studyNumber = new StudyNumber();
         if(!this.brother.student.lastDate) this.brother.student.lastDate = moment();
         if(!this.brother.student.lastPrevDate) this.brother.student.lastPrevDate = moment();
-        this.enable = true
+        this.enable = true;
+        this.enablePoint = true;
       }else{
-        this.brother.student.lastDate = null;
-        this.brother.student.lastPrevDate = null;
-        this.enable = false;
+        this.brother.student.studyNumber = null;
+        this.enablePoint = false;
+        if(this.brother.student.bibleReadingEnabled){
+          if(!this.brother.student.lastDate) this.brother.student.lastDate = moment();
+          if(!this.brother.student.lastPrevDate) this.brother.student.lastPrevDate = moment();
+          this.enable = true
+        }else{
+          this.brother.student.lastDate = null;
+          this.brother.student.lastPrevDate = null;
+          this.enable = false;
+        }
       }
     }
   }

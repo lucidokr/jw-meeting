@@ -7,8 +7,12 @@ md-card-title  {
      font-weight:bold;
    }
 }
-md-card-content{
+.width100{
   width:100%;
+  min-width:100%;
+}
+md-card-content{
+
   .weekPreview{
     width:100%;
     div{

@@ -10,10 +10,16 @@ var XLSX = require('xlsx');
 var nodemailer = require('nodemailer');
 var fs = require('fs')
 var path = require('path');
-
 var MAIL = require('./mail/send-mail');
 
-var config = require(path.join(__dirname, 'env.json'))[process.env.NODE_ENV || 'development'];
+if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
+    var config = require('./env.json')['development'];
+    process.env.MONGO_DB_URI = config.MONGO_DB_URI;
+    process.env.SECRET = config.SECRET;
+    process.env.GMAIL_ACCOUNT = config.GMAIL_ACCOUNT;
+    process.env.GMAIL_ACCOUNT_PASSWORD = config.GMAIL_ACCOUNT_PASSWORD;
+    process.env.SEND_ASSEGNATION = config.SEND_ASSEGNATION;
+}
 
 var templateMail = "";
 var transporter = null;
@@ -28,8 +34,10 @@ router.route('/')
                 ['date', 'descending']
             ])
             .exec(function(err, weeks) {
-                if (err)
-                    res.send(err);
+                if (err) {
+                    console.error('Week Meeting get error:', err);
+                    return res.send(err);
+                }
 
                 res.json(weeks);
             });
@@ -40,12 +48,17 @@ router.route('/')
         var mailToSend = [];
 
         var updateWeek = function(week, nextWeek) {
-            console.log('Week', week.toString());
+            console.log('Week', JSON.stringify(week));
             if (week.type.meeting && !week.supervisor) {
                 console.log('Date', week.date);
                 console.log('President', week.president._id);
                 console.log('Gems', week.gems.brother._id);
                 console.log('Talk', week.talk.brother._id);
+                console.log('Initial Prayer', week.initialPrayer._id);
+                console.log('Final Prayer', week.finalPrayer._id);
+                console.log('Congregation Bible Study', week.congregationBibleStudy.brother._id);
+                console.log('Congregation Bible Study Reader', week.congregationBibleStudy.reader._id);
+                console.log('Bible reading', week.bibleReading.primarySchool.student._id);
                 var toFind = [
                     { '_id': week.president._id },
                     { '_id': week.gems.brother._id },
@@ -66,21 +79,33 @@ router.route('/')
                 }
 
                 if (!week.presentationExercise.enabled) {
-                    toFind.push({ '_id': week.initialCall.primarySchool.student._id });
-                    toFind.push({ '_id': week.initialCall.primarySchool.assistant._id });
-                    toFind.push({ '_id': week.returnVisit.primarySchool.student._id });
-                    toFind.push({ '_id': week.returnVisit.primarySchool.assistant._id });
-                    toFind.push({ '_id': week.bibleStudy.primarySchool.student._id });
-                    if (!week.bibleStudy.primarySchool.isTalk)
-                        toFind.push({ '_id': week.bibleStudy.primarySchool.assistant._id });
+                    if(!week.initialCall.video){
+                      toFind.push({ '_id': week.initialCall.primarySchool.student._id });
+                      toFind.push({ '_id': week.initialCall.primarySchool.assistant._id });
+                    }
+                    if(!week.returnVisit.video){
+                      toFind.push({ '_id': week.returnVisit.primarySchool.student._id });
+                      toFind.push({ '_id': week.returnVisit.primarySchool.assistant._id });
+                    }
+                    if(!week.bibleStudy.video){
+                      toFind.push({ '_id': week.bibleStudy.primarySchool.student._id });
+                      if (!week.bibleStudy.primarySchool.isTalk)
+                          toFind.push({ '_id': week.bibleStudy.primarySchool.assistant._id });
+                    }
                     if (week.secondarySchool) {
+                      if(!week.initialCall.video){
                         toFind.push({ '_id': week.initialCall.secondarySchool.student._id });
                         toFind.push({ '_id': week.initialCall.secondarySchool.assistant._id });
+                      }
+                      if(!week.returnVisit.video){
                         toFind.push({ '_id': week.returnVisit.secondarySchool.student._id });
                         toFind.push({ '_id': week.returnVisit.secondarySchool.assistant._id });
+                      }
+                      if(!week.bibleStudy.video){
                         toFind.push({ '_id': week.bibleStudy.secondarySchool.student._id });
                         if (!week.bibleStudy.secondarySchool.isTalk)
                             toFind.push({ '_id': week.bibleStudy.secondarySchool.assistant._id });
+                      }
                     }
                 } else {
                     toFind.push({ '_id': week.presentationExercise.brother._id });
@@ -97,8 +122,10 @@ router.route('/')
                     .populate('reader')
                     .populate('student')
                     .exec(function(err, brothers) {
-                        if (err)
-                            res.send(err);
+                        if (err) {
+                            console.error('Week Meeting create - Brother Find -  error:', err);
+                            // return res.send(err);
+                        }
 
                         console.log('Length', brothers.length);
 
@@ -106,24 +133,33 @@ router.route('/')
                             var objToSave = [];
 
                             var date = new Date(req.body[0].date);
-                            var strDate = date.getMonth() + (date.getMonth() + 1) + "/" + date.getFullYear();
+                            var strDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
                             if (brother.elder) {
                                 if (brother._id == week.president._id) {
+                                    brother.elder.presidentPrevDate = brother.elder.presidentDate ;
                                     brother.elder.presidentDate = week.date;
                                 }
 
-                                if (brother._id == week.gems.brother._id)
+                                if (brother._id == week.gems.brother._id) {
+                                    brother.elder.gemsPrevDate = brother.elder.gemsDate;
                                     brother.elder.gemsDate = week.date;
+                                  }
 
-                                if (brother._id == week.talk.brother._id)
+                                if (brother._id == week.talk.brother._id) {
+                                    brother.elder.talkPrevDate = brother.elder.talkDate;
                                     brother.elder.talkDate = week.date;
+                                  }
 
-                                if (brother._id == week.congregationBibleStudy.brother._id)
+                                if (brother._id == week.congregationBibleStudy.brother._id) {
+                                    brother.elder.bibleStudyPrevDate = brother.elder.bibleStudyDate;
                                     brother.elder.bibleStudyDate = week.date;
+                                  }
 
-                                if (week.presentationExercise.enabled && brother._id == week.presentationExercise.brother._id)
+                                if (week.presentationExercise.enabled && brother._id == week.presentationExercise.brother._id) {
+                                    brother.elder.presentationExercisePrevDate = brother.elder.presentationExerciseDate;
                                     brother.elder.presentationExerciseDate = week.date;
+                                  }
 
                                 for (var i = 0; i < week.christianLivingPart.length; i++) {
                                     if (brother._id == week.christianLivingPart[i].brother._id) {
@@ -136,12 +172,15 @@ router.route('/')
                             }
                             if (brother.servant) {
                                 if (brother._id == week.gems.brother._id) {
+                                    brother.servant.gemsPrevDate = brother.servant.gemsDate;
                                     brother.servant.gemsDate = week.date;
                                 }
                                 if (brother._id == week.talk.brother._id) {
+                                    brother.servant.talkPrevDate = brother.servant.talkDate;
                                     brother.servant.talkDate = week.date;
                                 }
                                 if (week.presentationExercise.enabled && brother._id == week.presentationExercise.brother._id) {
+                                    brother.servant.presentationExercisePrevDate = brother.servant.presentationExerciseDate;
                                     brother.servant.presentationExerciseDate = week.date;
                                 }
 
@@ -155,8 +194,9 @@ router.route('/')
                             }
                             if (brother.prayer) {
                                 if (brother._id == week.initialPrayer._id) {
+                                    brother.prayer.prevDate = brother.prayer.date;
                                     brother.prayer.date = week.date;
-                                    if (brother.email && config.SEND_ASSEGNATION) {
+                                    if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailToSend.push({
                                             to: brother.email,
                                             subject: "Preghiera iniziale - ",
@@ -166,25 +206,28 @@ router.route('/')
                                 }
 
                                 if (brother._id == week.finalPrayer._id) {
-                                    if (brother.email && config.SEND_ASSEGNATION) {
+                                    if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailToSend.push({
                                             to: brother.email,
                                             subject: "Preghiera finale - ",
                                             text: "Ciao " + brother.name + " " + brother.surname + ", ti è stata assegnata la preghiera finale dell'adunanza Vita Cristiana e Ministero che si svolgerà in data: " + strDate
                                         })
                                     }
+                                    brother.prayer.prevDate = brother.prayer.date;
                                     brother.prayer.date = week.date;
                                 }
 
                                 objToSave.push(brother.prayer)
                             }
                             if (brother.reader) {
-                                if (brother._id == week.congregationBibleStudy.reader._id)
+                                if (brother._id == week.congregationBibleStudy.reader._id) {
+                                    brother.reader.prevDate = brother.reader.date;
                                     brother.reader.date = week.date;
+                                }
 
                                 objToSave.push(brother.reader)
 
-                                if (brother.email && config.SEND_ASSEGNATION) {
+                                if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                     mailToSend.push({
                                         to: brother.email,
                                         subject: "Lettura dello studio biblico - ",
@@ -207,7 +250,7 @@ router.route('/')
                                         brother.student.bibleReadingPendingStudyNumber = week.bibleReading.primarySchool.student.student.bibleReadingPendingStudyNumber;
                                     }
                                     objToSave.push(brother.student);
-                                    if (brother.email && config.SEND_ASSEGNATION) {
+                                    if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailAssegnationToSend.push({ mail: brother.email, brother: brother.surname + ' ' + brother.name, assistant: '', type: "bibleReading", school: brother.student.lastSchool, date: week.date, point: brother.student.bibleReadingPendingStudyNumber })
                                     }
                                 }
@@ -227,7 +270,7 @@ router.route('/')
                                     }
                                     // brother.student.bibleReadingPendingStudyNumber = brother.student.bibleReadingStudyNumber;
                                     objToSave.push(brother.student)
-                                    if (brother.email && config.SEND_ASSEGNATION) {
+                                    if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailAssegnationToSend.push({ mail: brother.email, brother: brother.surname + ' ' + brother.name, assistant: '', type: "bibleReading", school: brother.student.lastSchool, date: week.date, point: brother.student.bibleReadingPendingStudyNumber })
                                     }
                                 }
@@ -237,6 +280,7 @@ router.route('/')
                                     var arr = ["initialCall", "returnVisit", "bibleStudy"];
                                     var schools = ["primarySchool", "secondarySchool"];
                                     arr.forEach(function(partType) {
+                                      if ( !week[partType].video){
                                         schools.forEach(function(school) {
                                             if (brother._id == week[partType][school].student._id) {
                                                 brother.student.lastDate = week.date;
@@ -253,7 +297,7 @@ router.route('/')
                                                 }
 
                                                 objToSave.push(brother.student)
-                                                if (brother.email && config.SEND_ASSEGNATION) {
+                                                if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                                     var obj = { mail: brother.email, brother: brother.surname + ' ' + brother.name, assistant: '', type: (week[partType][school].isTalk ? 'talk' : partType), school: brother.student.lastSchool, date: week.date, point: brother.student.pendingStudyNumber };
                                                     obj.assistant = (week[partType][school].assistant ? week[partType][school].assistant.surname + ' ' + week[partType][school].assistant.name : '')
                                                     mailAssegnationToSend.push({ mail: brother.email, brother: brother.surname + ' ' + brother.name, type: partType, school: brother.student.lastSchool, date: week.date, point: brother.student.pendingStudyNumber })
@@ -264,7 +308,9 @@ router.route('/')
                                                 brother.student.assistantLastSchool = (school == "primarySchool" ? 1 : 2);
                                                 objToSave.push(brother.student)
                                             }
+
                                         })
+                                      }
                                     })
 
                                 }
@@ -272,14 +318,18 @@ router.route('/')
 
                             async.each(objToSave, function(obj, nextObj) {
                                 obj.save(function(err) {
-                                    if (err)
-                                        res.send(err);
-                                    console.log("Updated", brother.name + " " + brother.surname)
+                                    if (err) {
+                                        console.error('Week Meeting create - Brother Update error:', err, brother);
+                                        // return res.send(err);
+                                    } else {
+                                        console.log("Updated", brother.name + " " + brother.surname)
+
+                                    }
                                     nextObj();
                                 });
                             }, function(err) {
                                 if (err) {
-                                    console.log('Brother update failed');
+                                    console.error('Week Meeting create - Brother Update error:', err, brother);
                                 } else {
                                     console.log("Finish to update", brother.name + " " + brother.surname);
                                     nextBrother();
@@ -288,7 +338,7 @@ router.route('/')
 
                         }, function(err) {
                             if (err) {
-                                console.log('Update week failed');
+                                console.error('Week Meeting create - Week update error:', err);
                             } else {
                                 console.log("finish to update week", week.date);
                                 var tempWeek = new Week(week);
@@ -297,7 +347,7 @@ router.route('/')
                                 tempWeek.save(function(err) {
                                     nextWeek();
                                     if (err)
-                                        console.error(err);
+                                        console.error('Week Meeting create - Week save error:', err);
                                     else
                                         console.log("Week saved")
                                 });
@@ -313,7 +363,7 @@ router.route('/')
                 tempWeek.save(function(err) {
                     nextWeek();
                     if (err)
-                        console.error(err);
+                        console.error('Week Meeting create - Week save error:', err);
                     else
                         console.log("Week saved")
                 });
@@ -325,7 +375,7 @@ router.route('/')
             updateWeek(week, nextWeek)
         }, function(err) {
             if (err) {
-                console.log('Process failed');
+                console.error('Week Meeting create - Week save error:', err);
             } else {
 
                 var arr = [];
@@ -335,21 +385,29 @@ router.route('/')
                 WeekTemp.remove({
                     $or: arr
                 }, function(err, week) {
-                    if (err)
-                        res.send(err);
+                    if (err) {
+                        console.error('Week Meeting create - Week temp remove error:', err);
+                        return res.send(err);
+                    }
 
                     res.json({ message: 'All weeks updated!' });
 
 
                     MAIL.sendAssegnations(mailAssegnationToSend);
 
-                    MAIL.sendMails(mailToSend);
 
+                    MAIL.sendMails(mailToSend);
                     var date = new Date(req.body[0].date);
                     var str = (date.getMonth() + 1) + "/" + date.getFullYear();
+                    var strName = '';
+                    if (req.decoded && req.decoded._doc && req.decoded._doc.brother && req.decoded._doc.brother.name)
+                        strName = 'fratello ' + req.decoded._doc.brother.name + ' ' + req.decoded._doc.brother.surname;
+                    else
+                        strName = "sorvegliante dell'adunanza vita cristiana e ministero";
 
-                    MAIL.sendToRole('Programma Vita Cristiana e ministero inserito - ' + str,
-                        'Il fratello ' + req.decoded._doc.brother.name + ' ' + req.decoded._doc.brother.surname + ' ha inserito il programma del mese di: ' + str,
+
+                    MAIL.sendToRole('Programma Vita Cristiana e Ministero inserito - ' + str,
+                        'Il ' + strName + ' ha inserito il programma del mese di: ' + str,
                         req, ['schoolOverseer', 'viewer', 'president'])
 
                 });
@@ -363,7 +421,34 @@ router.route('/')
 router.route('/pgm/:year/:month')
 
 .get(function(req, res) {
-    Week.find({ "date": { "$gte": new Date(req.params.year, req.params.month, 1), "$lt": new Date(req.params.year, req.params.month + 1, 6) } })
+
+    var startMonth = parseInt(req.params.month);
+    var startYear = parseInt(req.params.year);
+    var endYear = parseInt(req.params.year);
+    var endMonth = parseInt(req.params.month);
+    if(startMonth == 12) {
+      endMonth = "01";
+      endYear++;
+      endYear = endYear + "";
+    }else{
+      endMonth++;
+      endMonth = endMonth + "";
+    }
+    if(startMonth+"".length == 1)
+      startMonth = "0"+startMonth;
+
+    if(endMonth.length == 1)
+      endMonth = "0"+endMonth;
+    Week
+    // .where('date').gte(new Date(req.params.year, req.params.month, 6)).lte(new Date(req.params.year, req.params.month + 1, 3))
+        .find({
+            $and: [{
+                "date": { $gte: new Date((startYear+"") + "-" + (startMonth+"") + "-02T23:00:00.000+0000") }
+            }, {
+                "date": { $lte: new Date((endYear+"") + "-" + (endMonth+"") + "-02T23:00:00.000+0000") }
+            }]
+        })
+        // .find({})
         .populate('initialPrayer')
         .populate('finalPrayer')
         .populate('president')
@@ -394,7 +479,7 @@ router.route('/pgm/:year/:month')
 
     .exec(function(err, weeks) {
         if (err)
-            res.send(err);
+            return res.status(500).send(err);
         res.json(weeks);
 
     });
@@ -433,23 +518,30 @@ router.route('/:week_id')
             if (err)
                 res.send(err);
             res.json(week[0]);
-            var mailAssegnationToSend = [];
-            var week = week[0];
-            // if(config.SEND_ASSEGNATION){
+            // var mailAssegnationToSend = [];
+            // var week = week[0];
+            // if(process.env.SEND_ASSEGNATION == "true"){
             //   var brother = week.bibleReading.primarySchool.student;
-            //   brother.email = "lucido.kristian@gmail.com";
-            //   mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
-            //   var brother = week.bibleReading.secondarySchool.student;
-            //   brother.email = "lucido.kristian@gmail.com";
-            //   mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
+            //   // brother.email = "lucido.kristian@gmail.com";
+            //   if(brother.email){
+            //     mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
+            //   }
             //   if (!week.presentationExercise.enabled) {
+
+            //       brother = week.bibleReading.secondarySchool.student;
+            //       // brother.email = "lucido.kristian@gmail.com";
+            //       if(brother.email){
+            //         mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
+            //       }
             //       var arr = ["initialCall", "returnVisit", "bibleStudy"];
             //       var schools = ["primarySchool", "secondarySchool"];
             //       arr.forEach(function (partType) {
             //         schools.forEach(function (school) {
             //           var brother = week[partType][school].student;
-            //           brother.email = "lucido.kristian@gmail.com";
-            //             if (brother.email && config.SEND_ASSEGNATION) {
+            //           // brother.email = "lucido.kristian@gmail.com";
+            //             if (brother.email && process.env.SEND_ASSEGNATION == "true" && brother.student) {
+            //               console.log("brother student name: ", brother.surname + ' ' + brother.name);
+            //               console.log("brother student school: ", brother.student.lastSchool);
             //               var obj = {
             //                 mail: brother.email,
             //                 brother: brother.surname + ' ' + brother.name,
@@ -464,7 +556,7 @@ router.route('/:week_id')
             //           }
             //         })
             //       })
-            //
+
             //   }
             //   MAIL.sendAssegnations(mailAssegnationToSend);
             // }
@@ -509,55 +601,57 @@ router.route('/:week_id')
                 async.each(brothers, function(brother, nextBrother) {
 
                     partTypes.forEach(function(partType) {
-                        schools.forEach(function(school) {
-                            if (brother._id == week[partType][school].student._id) {
-                                var history = new History();
-                                history.date = week.date;
-                                history.student = week[partType][school].student;
-                                if (partType == 'bibleReading') {
-                                    history.studyNumber = brother.student.bibleReadingPendingStudyNumber;
-                                } else {
-                                    history.studyNumber = brother.student.pendingStudyNumber;
-                                }
-                                if (week[partType][school].made == 1) { //svolto
-                                    if (week[partType][school].pointCompleted && !week[partType][school].pointChanged) { // punto superato  e punto non cambiato
-                                        if (partType == 'bibleReading') {
-                                            brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingStudyNumber;
-                                        } else {
-                                            brother.student.studyNumber = week[partType][school].student.student.studyNumber;
-                                        }
-                                    }
-                                    // if(!week[partType][school].pointCompleted && week[partType][school].pointChanged) { // punto non superato  e punto cambiato
-                                    //   if (partType == 'bibleReading') {
-                                    //     brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingPendingStudyNumber;
-                                    //   } else {
-                                    //     brother.student.studyNumber = week[partType][school].student.student.pendingStudyNumber;
-                                    //   }
-                                    // }
-                                    history.made = true;
-                                    history.pointCompleted = week[partType][school].pointCompleted;
-                                } else if (week[partType][school].made == 2) { //non svolto
-                                    brother.student.lastDate = brother.student.lastPrevDate;
-                                    brother.student[partType + "Date"] = brother.student[partType + "PrevDate"];
-                                    brother.student.lastSchool = brother.student.lastPrevSchool;
-                                    brother.student[partType + "LastSchool"] = brother.student[partType + "LastPrevSchool"];
+                      if(!week[partType].video){
+                          schools.forEach(function(school) {
+                              if (brother._id == week[partType][school].student._id) {
+                                  var history = new History();
+                                  history.date = week.date;
+                                  history.student = week[partType][school].student;
+                                  if (partType == 'bibleReading') {
+                                      history.studyNumber = brother.student.bibleReadingPendingStudyNumber;
+                                  } else {
+                                      history.studyNumber = brother.student.pendingStudyNumber;
+                                  }
+                                  if (week[partType][school].made == 1) { //svolto
+                                      if (week[partType][school].pointCompleted && !week[partType][school].pointChanged) { // punto superato  e punto non cambiato
+                                          if (partType == 'bibleReading') {
+                                              brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingStudyNumber;
+                                          } else {
+                                              brother.student.studyNumber = week[partType][school].student.student.studyNumber;
+                                          }
+                                      }
+                                      // if(!week[partType][school].pointCompleted && week[partType][school].pointChanged) { // punto non superato  e punto cambiato
+                                      //   if (partType == 'bibleReading') {
+                                      //     brother.student.bibleReadingStudyNumber = week[partType][school].student.student.bibleReadingPendingStudyNumber;
+                                      //   } else {
+                                      //     brother.student.studyNumber = week[partType][school].student.student.pendingStudyNumber;
+                                      //   }
+                                      // }
+                                      history.made = true;
+                                      history.pointCompleted = week[partType][school].pointCompleted;
+                                  } else if (week[partType][school].made == 2) { //non svolto
+                                      brother.student.lastDate = brother.student.lastPrevDate;
+                                      brother.student[partType + "Date"] = brother.student[partType + "PrevDate"];
+                                      brother.student.lastSchool = brother.student.lastPrevSchool;
+                                      brother.student[partType + "LastSchool"] = brother.student[partType + "LastPrevSchool"];
 
-                                    // se punto cambiato e il discorso non è stato svolto rimane il punto che aveva in precedenza
-                                    // mentre se il punto non è stato cambiato il punto pending torna normale
-                                    if (!week[partType][school].pointChanged) { //punto non cambiato
-                                        if (partType == 'bibleReading') {
-                                            brother.student.bibleReadingStudyNumber = brother.student.bibleReadingPendingStudyNumber;
-                                        } else {
-                                            brother.student.studyNumber = brother.student.pendingStudyNumber;
-                                        }
-                                    }
-                                    history.made = false;
-                                    history.pointCompleted = false;
-                                }
-                                historiesToSave.push(history);
-                                week[partType][school].updated = true;
-                            }
-                        })
+                                      // se punto cambiato e il discorso non è stato svolto rimane il punto che aveva in precedenza
+                                      // mentre se il punto non è stato cambiato il punto pending torna normale
+                                      if (!week[partType][school].pointChanged) { //punto non cambiato
+                                          if (partType == 'bibleReading') {
+                                              brother.student.bibleReadingStudyNumber = brother.student.bibleReadingPendingStudyNumber;
+                                          } else {
+                                              brother.student.studyNumber = brother.student.pendingStudyNumber;
+                                          }
+                                      }
+                                      history.made = false;
+                                      history.pointCompleted = false;
+                                  }
+                                  historiesToSave.push(history);
+                                  week[partType][school].updated = true;
+                              }
+                          })
+                        }
                     });
 
                     brother.student.save(function(err) {
@@ -588,10 +682,12 @@ router.route('/:week_id')
                                 var tempWeek = new Week(week);
                                 var completed = true;
                                 partTypes.forEach(function(partType) {
+                                  if(!week[partType].video){
                                     schools.forEach(function(school) {
                                         if (!week[partType][school].updated)
                                             completed = false;
                                     })
+                                  }
                                 });
                                 tempWeek.completed = completed;
                                 var w = tempWeek.toObject();

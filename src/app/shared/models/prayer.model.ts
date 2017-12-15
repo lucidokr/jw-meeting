@@ -9,5 +9,6 @@ export class Prayer {
 
   _id: string;
   date: any = this.randomDate(new Date(2017, 2, 1), new Date());
+  prevDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
   enabled: boolean = true;
 }

@@ -26,7 +26,7 @@ export class MeetingService {
   }
 
   getPgm(year, month):Observable<Array<WeekMeeting>> {
-    return this.http.get(environment.url + this.url + "/pgm/"+year+"/"+month, null)
+    return this.http.get(environment.url + this.url + "/pgm/"+year+"/"+(parseInt(month)+1), null)
   }
 
   getTemp(): Observable<Array<WeekMeeting>> {

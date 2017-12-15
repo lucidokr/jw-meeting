@@ -123,13 +123,15 @@ export class WeekComponent implements OnChanges {
       }
       if(this.PART_TYPE_ALL.indexOf(part) == -1) {
         for (let p of this.PART_TYPE_ALL) {
-          for (let s of this.PART_SCHOOLS) {
-            if (week[p][s]) {
-              if (week[p][s].student && b._id == week[p][s].student._id) {
-                busy = true;
-              }
-              if (week[p][s].assistant && b._id == week[p][s].assistant._id) {
-                busy = true;
+          if(week[p].video){
+            for (let s of this.PART_SCHOOLS) {
+              if (week[p][s]) {
+                if (week[p][s].student && b._id == week[p][s].student._id) {
+                  busy = true;
+                }
+                if (week[p][s].assistant && b._id == week[p][s].assistant._id) {
+                  busy = true;
+                }
               }
             }
           }
@@ -138,15 +140,17 @@ export class WeekComponent implements OnChanges {
       if(this.PART_TYPE_ALL.indexOf(part)!= -1){
         for(let w of this.weeks) {
           for (let p of this.PART_TYPE_ALL) {
-            for (let s of this.PART_SCHOOLS) {
-              if (w[p][s] && (part != p || s != brother || type != 'student')) {
-                if (w[p][s].student && b._id == w[p][s].student._id) {
-                  busy = true;
+            if(w[p].video){
+              for (let s of this.PART_SCHOOLS) {
+                if (w[p][s] && (part != p || s != brother || type != 'student' || w.date != week.date)) {
+                  if (w[p][s].student && b._id == w[p][s].student._id) {
+                    busy = true;
+                  }
                 }
-              }
-              if (w[p][s] && (part != p || s != brother || type != 'assistant')) {
-                if (w[p][s].assistant && b._id == w[p][s].assistant._id) {
-                  busy = true;
+                if (w[p][s] && (part != p || s != brother || type != 'assistant' || w.date != week.date)) {
+                  if (w[p][s].assistant && b._id == w[p][s].assistant._id) {
+                    busy = true;
+                  }
                 }
               }
             }

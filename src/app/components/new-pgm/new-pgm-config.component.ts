@@ -68,8 +68,46 @@ export class NewPgmConfigComponent {
 
   }
 
+  public findDate(obj, keys){
+    if(obj[keys]){
+      if(typeof obj[keys] == "object"){
+        for(let k in obj[keys]){
+          this.findDate(obj[keys], k)
+        }
+      }else{
+        if(keys.indexOf("Date") != -1 || keys.indexOf("date") != -1){
+          if(obj[keys])
+            obj[keys] = moment(obj[keys])
+        }
+      }
+    }
+  }
+
   public findWeeks(selectedMonth: any){
-    this.weeks = selectedMonth.weeks;
+    var savedWeeks = localStorage["weeks_"+selectedMonth.date.month()+"_"+selectedMonth.date.year()]
+    if(savedWeeks){
+      this.dialogService.confirm("Vuoi recuperare la precedente sessione?").subscribe(confirm => {
+        if(confirm){
+          let json = JSON.parse(savedWeeks);
+          if(json.length && json.length > 0){
+            for(let obj of json){
+              for(let keys in obj){
+                this.findDate(obj, keys)
+              }
+            }
+          }else{
+            for(let keys in json){
+              this.findDate(json, keys)
+            }
+          }
+          this.complete.emit(json);
+        }else{
+          this.weeks = selectedMonth.weeks;
+        }
+      });
+    }else{
+      this.weeks = selectedMonth.weeks;
+    }
   }
 
   public confirm(){

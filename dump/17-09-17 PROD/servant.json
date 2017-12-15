@@ -1,0 +1,44 @@
+{ 
+    "_id" : ObjectId("594d4d49b810b07cdb867dd3"), 
+    "gemsEnabled" : false, 
+    "talkEnabled" : false, 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("594d4da4b810b07cdb867dd4"), 
+    "gemsEnabled" : false, 
+    "talkEnabled" : false, 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("594d4daeb810b07cdb867dd5"), 
+    "gemsDate" : ISODate("2017-09-19T22:00:00.000+0000"), 
+    "talkDate" : ISODate("2017-08-08T22:00:00.000+0000"), 
+    "gemsEnabled" : true, 
+    "talkEnabled" : true, 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("594d4dc1b810b07cdb867dd6"), 
+    "gemsDate" : ISODate("2017-08-08T22:00:00.000+0000"), 
+    "talkDate" : ISODate("2017-09-26T22:00:00.000+0000"), 
+    "gemsEnabled" : true, 
+    "talkEnabled" : true, 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("594d4dceb810b07cdb867dd7"), 
+    "gemsDate" : ISODate("2017-09-12T22:00:00.000+0000"), 
+    "talkDate" : ISODate("2017-09-19T22:00:00.000+0000"), 
+    "gemsEnabled" : true, 
+    "talkEnabled" : true, 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("594d4ddfb810b07cdb867dd8"), 
+    "gemsDate" : ISODate("2017-09-05T22:00:00.000+0000"), 
+    "talkDate" : ISODate("2017-07-18T22:00:00.000+0000"), 
+    "gemsEnabled" : true, 
+    "talkEnabled" : true, 
+    "__v" : NumberInt(0)
+}

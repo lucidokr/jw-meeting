@@ -18,7 +18,17 @@ export class WTJService {
   }
 
   getMeetingWorkbook(date:any): Observable<MeetingWorkbook> {
-    return this.http.get(environment.url+"/wtj/"+date.year()+"/"+(date.month()+1)+"/"+date.date(), null)
+    let dateStart = date;
+    let dateEnd = moment(date).add(6, 'd');
+    let dateStartStr, dateEndStr
+    if(dateStart.format("MMM") == dateEnd.format("MMM")){
+      dateStartStr = dateStart.date()
+      dateEndStr = dateEnd.date()+"-"+dateStart.format("MMM")
+    }else{
+      dateStartStr = dateStart.date() + dateStart.format("MMM")
+      dateEndStr = dateEnd.date() + dateEnd.format("MMM")
+    }
+    return this.http.get(environment.url+"/wtj/"+date.year()+"/"+(date.format('MMMM'))+"/"+dateStartStr+"/"+dateEndStr, null)
       .map(json => {
         if(json.data){
           let data = json.data;

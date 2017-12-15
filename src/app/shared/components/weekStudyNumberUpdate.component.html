@@ -8,44 +8,60 @@
     <div class="containerSchoolPart" fxLayout="column"  fxLayoutGap="10px">
       <div class="containerSchoolPart" *ngFor="let partType of PART_TYPE" fxLayout="column"  fxLayout.xs="column" fxLayoutAlign="start center">
           <div fxLayout="row" ><h4 [innerHTML]="week[partType].label.split(':')[0] | safeHtml"></h4></div>
-          <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" class="containerSchoolPart" >
-            <div class="containerSchoolPart" *ngFor="let school of SCHOOLS" fxLayout="column" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="start center" >
+          <div fxLayout="row"  *ngIf="week[partType].video">
+              Parte con video. Non necessita quindi di aggiornamento
+          </div>
+          <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" class="containerSchoolPart" *ngIf="!week[partType].video">
 
-              <div *ngIf="!week[partType][school].updated" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
-                <strong fxFlex>
-                  <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
-                  <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
-                  scuola: {{week[partType][school].student.name}} {{week[partType][school].student.surname}}</strong>
-                <md-radio-group  name="{{partType}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="week[partType][school].made">
-                  <md-radio-button [value]="0">Non aggiornare</md-radio-button>
-                  <md-radio-button [value]="1">Svolto</md-radio-button>
-                  <md-radio-button [value]="2">Non svolto</md-radio-button>
-                </md-radio-group>
-                <div *ngIf="week[partType][school].made == 1" fxLayout="column" fxLayoutGap="20px">
-                  <md-checkbox fxFlex name="completed" [(ngModel)]="week[partType][school].pointCompleted">
-                    Ha superato il punto {{(partType==CONST.BIBLE_READING ? week[partType][school].student.student.bibleReadingPendingStudyNumber.number : week[partType][school].student.student.pendingStudyNumber.number)}}?
-                  </md-checkbox>
-                  <div fxFlex *ngIf="week[partType][school].pointCompleted && !week[partType][school].pointChanged">
-                    Nuovo punto assegnato:
-                    <md-select *ngIf="partType==CONST.BIBLE_READING" fxFlex required [(ngModel)]="week[partType][school].student.student.bibleReadingStudyNumber._id" name="bibleReadingStudyNumber">
-                      <md-option [value]="studyNumber._id" *ngFor="let studyNumber of studyNumberList | filter: 'forBibleReading' : true">{{studyNumber.number}} - {{studyNumber.title}}</md-option>
-                    </md-select>
-                    <md-select *ngIf="partType!=CONST.BIBLE_READING" fxFlex required [(ngModel)]="week[partType][school].student.student.studyNumber._id" name="studyNumber">
-                      <md-option [value]="studyNumber._id" *ngFor="let studyNumber of studyNumberList ">{{studyNumber.number}} - {{studyNumber.title}}</md-option>
-                    </md-select>
+            <div class="containerSchoolPart" *ngFor="let school of SCHOOLS" fxLayout="column" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="start center" >
+                  <div *ngIf="!week[partType][school].student.student" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
+                    <strong fxFlex>
+                      <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
+                      <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
+                      scuola: {{week[partType][school].student.name}} {{week[partType][school].student.surname}}
+                    </strong>
+                    <div fxFlex >
+                      La parte è stata assegnata ad un anziano. Non necessita quindi di aggiornamento.
+                    </div>
                   </div>
-                  <div fxFlex *ngIf="week[partType][school].pointCompleted && week[partType][school].pointChanged">
-                    Il punto è stato modificato rispetto a quello assegnato inizialmente quindi verrà riassegnato il punto precedente:
-                    <span *ngIf="partType==CONST.BIBLE_READING" fxFlex>{{week[partType][school].student.student.bibleReadingStudyNumber.number}} - {{week[partType][school].student.student.bibleReadingStudyNumber.title}}</span>
-                    <span *ngIf="partType!=CONST.BIBLE_READING" fxFlex>{{week[partType][school].student.student.studyNumber.number}} - {{week[partType][school].student.student.studyNumber.title}}</span>
-                  </div>
-                </div>
-              </div>
-              <div *ngIf="week[partType][school].updated" fxLayout="column" fxLayoutGap="10px" class="updated">
-                  <strong><i class="material-icons">check_circle</i>Prima scuola: {{week[partType][school].student.name}} {{week[partType][school].student.surname}}</strong>
-                  <span *ngIf="week[partType][school].made==1">Svolto <span *ngIf="week[partType][school].pointCompleted">e punto superato</span></span>
-                  <span *ngIf="week[partType][school].made==2">Non svolto </span>
-              </div>
+
+                    <div *ngIf="!week[partType][school].updated && week[partType][school].student.student" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
+                      <strong fxFlex>
+                        <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
+                        <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
+                        scuola: {{week[partType][school].student.name}} {{week[partType][school].student.surname}}</strong>
+                      <md-radio-group  name="{{partType}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="week[partType][school].made">
+                        <md-radio-button [value]="0">Non aggiornare</md-radio-button>
+                        <md-radio-button [value]="1">Svolto</md-radio-button>
+                        <md-radio-button [value]="2">Non svolto</md-radio-button>
+                      </md-radio-group>
+                      <div *ngIf="week[partType][school].made == 1" fxLayout="column" fxLayoutGap="20px">
+                        <md-checkbox fxFlex name="completed" [(ngModel)]="week[partType][school].pointCompleted">
+                          Ha superato il punto {{(partType==CONST.BIBLE_READING ? week[partType][school].student.student.bibleReadingPendingStudyNumber.number : week[partType][school].student.student.pendingStudyNumber.number)}}?
+                        </md-checkbox>
+                        <div fxFlex *ngIf="week[partType][school].pointCompleted && !week[partType][school].pointChanged">
+                          Nuovo punto assegnato:
+                          <md-select *ngIf="partType==CONST.BIBLE_READING" fxFlex required [(ngModel)]="week[partType][school].student.student.bibleReadingStudyNumber._id" name="bibleReadingStudyNumber">
+                            <md-option [value]="studyNumber._id" *ngFor="let studyNumber of studyNumberList | filter: 'forBibleReading' : true">{{studyNumber.number}} - {{studyNumber.title}}</md-option>
+                          </md-select>
+                          <md-select *ngIf="partType!=CONST.BIBLE_READING" fxFlex required [(ngModel)]="week[partType][school].student.student.studyNumber._id" name="studyNumber">
+                            <md-option [value]="studyNumber._id" *ngFor="let studyNumber of studyNumberList ">{{studyNumber.number}} - {{studyNumber.title}}</md-option>
+                          </md-select>
+                        </div>
+                        <div fxFlex *ngIf="week[partType][school].pointCompleted && week[partType][school].pointChanged">
+                          Il punto è stato modificato rispetto a quello assegnato inizialmente quindi verrà riassegnato il punto precedente:
+                          <span *ngIf="partType==CONST.BIBLE_READING" fxFlex>{{week[partType][school].student.student.bibleReadingStudyNumber.number}} - {{week[partType][school].student.student.bibleReadingStudyNumber.title}}</span>
+                          <span *ngIf="partType!=CONST.BIBLE_READING" fxFlex>{{week[partType][school].student.student.studyNumber.number}} - {{week[partType][school].student.student.studyNumber.title}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div *ngIf="week[partType][school].updated" fxLayout="column" fxLayoutGap="10px" class="updated">
+                        <strong><i class="material-icons">check_circle</i>Prima scuola: {{week[partType][school].student.name}} {{week[partType][school].student.surname}}</strong>
+                        <span *ngIf="week[partType][school].made==1">Svolto <span *ngIf="week[partType][school].pointCompleted">e punto superato</span></span>
+                        <span *ngIf="week[partType][school].made==2">Non svolto </span>
+                    </div>
+
+
             </div>
         </div>
 
