@@ -8,6 +8,7 @@ import {Router} from "@angular/router";
 import {Brother} from "../models/brother.model";
 import {CONST, CONST_LABEL} from "../../constant";
 
+import * as jsPDF from 'jsPDF';
 import * as he from 'he';
 
 declare var XLSX:any;
@@ -16,18 +17,20 @@ declare var XLSX:any;
   template: `
     <div fxLayout="column" fxLayoutAlign="center center">
       <span *ngIf="fromCreate">Programma correttamente creato</span>
-      Vuoi scaricare il programma in formato Excel delle seguenti adunanze?
+      <span *ngIf="format=='XLS'">Vuoi scaricare il programma in formato Excel delle seguenti adunanze?</span>
+      <span *ngIf="format=='PDF'">Vuoi scaricare il programma in formato PDF delle seguenti adunanze?</span>
       <ul>
         <li *ngFor="let week of weeks">{{week.date.format('dddd D MMMM YYYY')}}</li>
       </ul>
       <span *ngIf="fromCreate">Il programma può anche essere scaricato successivamente dalla sezione adunanze</span>
-      <span style="text-align:center;"><strong>Cliccando su Download verranno scaricati 2 file. <br><br>
+      <span *ngIf="format=='XLS'" style="text-align:center;"><strong>Cliccando su Download verranno scaricati 2 file. <br><br>
       Per ottenere il programma bisogna copiare il contenuto della prima pagina del file Vita-Cristiana-Ministero-Bozza-(mese-anno).xlsx nel primo foglio del file Vita-Cristiana-Ministero-(mese-anno).xlsm <u> avendo cura di non cambiare foglio prima di aver copiato e copiare il contenuto del primo foglio dalla prima cella in alto a destra</u><br>
       <br>
       All'apertura del file bozza vi potrà dare errori voi cliccate su "Apri e ripristina" e successivamente su "Elimina". <br></strong></span>
       <div fxLayout="row" fxLayoutAlign="center center">
         <button fxFlex md-raised-button (click)="close()">Annulla</button>
-        <button FxFlex md-raised-button (click)="download()">Download</button>
+        <button *ngIf="format=='XLS'" FxFlex md-raised-button (click)="download()">Download </button>
+        <button *ngIf="format=='PDF'" FxFlex md-raised-button (click)="downloadPDF()">Download</button>
       </div>
     </div>
     `,
@@ -36,6 +39,7 @@ export class DownloadWeeksDialog implements OnInit{
 
   public weeks: Array<WeekMeeting>;
   public fromCreate: Boolean;
+  public format: string;
   public xls: any;
 
   public dateArr: Array<any> = []
@@ -43,31 +47,275 @@ export class DownloadWeeksDialog implements OnInit{
 
   constructor(public dialogRef: MdDialogRef<DownloadWeeksDialog>, private meetingService:MeetingService, private router:Router) {
     // this.xls = XLSX.readFile('http://localhost:4200/assets/xls/pgm-vcm.xlsx')
-    var url = "assets/xls/pgm-draft-vcm-2018.xlsx";
-    var oReq = new XMLHttpRequest();
-    oReq.open("GET", url, true);
-    oReq.responseType = "arraybuffer";
-    let that = this;
-    oReq.onload = function(e) {
-      var arraybuffer = oReq.response;
-
-      /* convert data to binary string */
-      var data = new Uint8Array(arraybuffer);
-      var arr = new Array();
-      for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-      var bstr = arr.join("");
-
-      /* Call XLSX */
-      that.xls = XLSX.read(bstr, {type:"binary", cellStyles:true});
-      /* DO SOMETHING WITH workbook HERE */
-    }
-
-    oReq.send();
 
   }
 
   ngOnInit(){
+    if(this.format == "XLS"){
+      var url = "assets/xls/pgm-draft-vcm-"+this.weeks[0].date.format('YYYY')+".xlsx";
+      var oReq = new XMLHttpRequest();
+      oReq.open("GET", url, true);
+      oReq.responseType = "arraybuffer";
+      let that = this;
+      oReq.onload = function(e) {
+        var arraybuffer = oReq.response;
 
+        /* convert data to binary string */
+        var data = new Uint8Array(arraybuffer);
+        var arr = new Array();
+        for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+        var bstr = arr.join("");
+
+        /* Call XLSX */
+        that.xls = XLSX.read(bstr, {type:"binary", cellStyles:true});
+        /* DO SOMETHING WITH workbook HERE */
+      }
+
+      oReq.send();
+    }
+  }
+
+  getTextWidth(doc, text){
+    return doc.getStringUnitWidth(text) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+  }
+
+  centeredText(doc, text, y) {
+    var textWidth = this.getTextWidth(doc, text);
+    var textOffset = (doc.internal.pageSize.width - textWidth) / 2;
+    doc.text(textOffset, y, text);
+}
+
+
+  downloadPDF(){
+    var doc = new jsPDF()
+
+    doc.addFont("Roboto", "Roboto", "normal")
+    let fonts = doc.getFontList();
+    if(fonts.helvetica)
+      doc.setFont("helvetica")
+    else if(fonts.arial){
+      doc.setFont("arial")
+    }else if(fonts.times){
+      doc.setFont("times")
+    }
+    this.centeredText(doc, 'Programma vita cristiana e ministero - '+this.weeks[0].date.format('MMMM YYYY'), 10);
+    let PART_TYPE_ALL = ['initialCall', 'returnVisit', 'bibleStudy'];
+
+
+
+    // doc.addPage()
+
+    // let week = this.weeks[0];
+    let row = 12;
+    for(let i=0; i<this.weeks.length; i++){
+      console.log(row)
+      if(row>210){
+        // console.log(row)
+        // row = 10
+        doc.addPage()
+        row = 10
+      }
+      let week = this.weeks[i];
+      doc.setFillColor(36,64,98);
+      doc.rect(5, row, doc.internal.pageSize.width-10, 7, 'F')
+
+      doc.setTextColor(255, 255, 255)
+        .setFontStyle("normal")
+        .setFontSize(13);
+      this.centeredText(doc, week.date.format('dddd D MMMM YYYY'), row+5)
+      row = row -4;
+      if(week.type.meeting && !week.supervisor){
+        doc.setFontSize(9)
+          .setTextColor(0, 0, 0)
+          .setFontStyle("normal")
+          .text(5, row+15, "Cantico iniziale:");
+
+        doc
+          .setTextColor(36,64,98)
+          .setFontStyle("normal")
+          .text(8 + this.getTextWidth(doc, "Cantico iniziale:"), row+15, this.getSongNumber(week.initialSong));
+
+        doc.setTextColor(0, 0, 0)
+          .setFontStyle("normal")
+          .text(60, row+15, "Presidente:");
+
+        doc
+          .setTextColor(36,64,98)
+          .setFontStyle("normal")
+          .text(63 + this.getTextWidth(doc, "Presidente:"), row+15, this.getSurnameName(week.president));
+
+        doc.setTextColor(0, 0, 0)
+          .setFontStyle("normal")
+          .text(130, row+15, "Preghiera iniziale:");
+
+        doc
+          .setTextColor(36,64,98)
+          .setFontStyle("normal")
+          .text(133 + this.getTextWidth(doc, "Preghiera iniziale:"), row+15, this.getSurnameName(week.initialPrayer));
+
+        doc.setFillColor(89,89,89)
+          .rect(5, row+16, doc.internal.pageSize.width/2, 5, 'F')
+
+        doc.setTextColor(255, 255, 255)
+          .setFontSize(11)
+          .setFontStyle("normal")
+          .text(7, row+16+4, "TESORI DELLA PAROLA DI DIO")
+
+          row = row + 20;
+        doc.setTextColor(0, 0, 0)
+          .setFontSize(9)
+          .setFontStyle("normal")
+          .text(7, row+4, this.getPartTitle(week.talk.label));
+          doc.text(7, row+8, this.getPartTitle(week.gems.label));
+          doc.text(7, row+16, this.getPartTitle(week.bibleReading.label));
+        doc.setFontStyle("normal")
+        doc.setTextColor(89, 89, 89).text(130, row+4, this.getSurnameName(week.talk.brother));
+        doc.text(130, row+8, this.getSurnameName(week.gems.brother));
+        doc.setFontStyle("italic").setFontSize(11).setTextColor(0, 0, 0)
+        doc.text(70, row+12, "Sala principale");
+        doc.text(140, row+12, "Classe supplementare 1");
+        doc.setFontStyle("normal").setFontSize(9).setTextColor(89, 89, 89)
+        let name = this.getSurnameName(week.bibleReading.primarySchool.student)
+        doc.text(60, row+16, name);
+        if(week.bibleReading.primarySchool.student.student.bibleReadingPendingStudyNumber)
+          doc.text(62 + this.getTextWidth(doc, name), row+16, week.bibleReading.primarySchool.student.student.bibleReadingPendingStudyNumber.number+"");
+        if(week.secondarySchool){
+          name = this.getSurnameName(week.bibleReading.secondarySchool.student)
+          doc.text(130, row+16, this.getSurnameName(week.bibleReading.secondarySchool.student));
+          if(week.bibleReading.secondarySchool.student.student.bibleReadingPendingStudyNumber)
+            doc.text(132 + this.getTextWidth(doc, name), row+16, week.bibleReading.secondarySchool.student.student.bibleReadingPendingStudyNumber.number+"");
+        }
+
+        let rowTemp = row+17;
+        doc.setFillColor(146,113,40);
+        doc.rect(5, rowTemp, doc.internal.pageSize.width/2, 5, 'F')
+        doc.setTextColor(255, 255, 255)
+          .setFontSize(11)
+          .setFontStyle("normal")
+          .text(7, rowTemp+4, "EFFICACI NEL MINISTERO")
+
+          doc.setTextColor(0, 0, 0)
+          .setFontStyle("normal")
+          .setFontSize(9)
+
+        rowTemp = rowTemp +8;
+        if(week.presentationExercise.enabled){
+          doc.setTextColor(0, 0, 0).setFontStyle("normal").setFontSize(9).text(7, rowTemp, "Esercitiamoci con le presentazioni di questo mese");
+          name = this.getSurnameName(week.presentationExercise.brother);
+          doc.setFontStyle("normal").setTextColor(146,113,40).text(130, rowTemp, name)
+        }else{
+          for(let partType of PART_TYPE_ALL) {
+            doc.setTextColor(0, 0, 0).setFontStyle("normal").setFontSize(9).text(7, rowTemp, this.getPartTitle(week[partType].label));
+            if(!week[partType].video){
+              name = this.getSurnameName(week[partType].primarySchool.student);
+              doc.setFontStyle("normal").setTextColor(146,113,40).text(60, rowTemp, name)
+              if(week[partType].primarySchool.student.student.pendingStudyNumber)
+                doc.text(62 + this.getTextWidth(doc, name), rowTemp, week[partType].primarySchool.student.student.pendingStudyNumber.number+"");
+              if(week[partType].primarySchool.assistant)
+                doc.setFontSize(8).setFontStyle("italic").text(60, rowTemp+3, this.getSurnameName(week[partType].primarySchool.assistant));
+              if(week.secondarySchool){
+                name = this.getSurnameName(week[partType].secondarySchool.student);
+                doc.setFontSize(9).setFontStyle("normal").text(130, rowTemp, this.getSurnameName(week[partType].secondarySchool.student));
+                if(week[partType].secondarySchool.student.student.pendingStudyNumber)
+                  doc.text(132 + this.getTextWidth(doc, name), rowTemp, week[partType].secondarySchool.student.student.pendingStudyNumber.number+"");
+                if(week[partType].secondarySchool.assistant)
+                  doc.setFontSize(8).setFontStyle("italic").text(130, rowTemp+3, this.getSurnameName(week[partType].secondarySchool.assistant));
+              }
+
+            }
+            rowTemp = rowTemp +8;
+          }
+        }
+
+        rowTemp = rowTemp -3;
+        doc.setFillColor(153,0,0);
+        doc.rect(5, rowTemp, doc.internal.pageSize.width/2, 5, 'F')
+        doc.setTextColor(255, 255, 255)
+        .setFontSize(11)
+        .setFontStyle("normal")
+        .text(7, rowTemp+4, "VITA CRISTIANA")
+
+        doc.setFontSize(9)
+        .setTextColor(0, 0, 0)
+        .setFontStyle("normal")
+        .text(7, rowTemp+8, "Cantico:");
+
+      doc.setTextColor(153, 0, 0)
+        .setFontStyle("normal")
+        .text(10 + this.getTextWidth(doc, "Cantico:"), rowTemp+8, this.getSongNumber(week.intervalSong));
+
+        rowTemp=rowTemp+12
+      for(let part of week.christianLivingPart) {
+        doc.setTextColor(0, 0, 0)
+        .setFontStyle("normal")
+        .text(7, rowTemp, this.getPartTitle(part.label))
+        .setFontStyle("normal")
+        .setTextColor(153, 0, 0)
+        .text(130, rowTemp, this.getSurnameName(part.brother));
+
+        rowTemp = rowTemp+5
+      }
+      if(week.christianLivingPart.length == 1){
+        rowTemp = rowTemp+5
+      }
+      doc.setTextColor(0, 0, 0)
+      .setFontStyle("normal")
+      .text(7, rowTemp, "Studio biblico di congregazione")
+      doc.setTextColor(0, 0, 0)
+      .text(60, rowTemp, "Conduttore:");
+
+      doc.setTextColor(153, 0, 0)
+        .setFontStyle("normal")
+        .text(63 + this.getTextWidth(doc, "Conduttore:"), rowTemp, this.getSurnameName(week.congregationBibleStudy.brother));
+
+      doc.setTextColor(0, 0, 0)
+        .setFontStyle("normal")
+        .text(130, rowTemp, "Lettore:");
+
+      doc.setTextColor(153, 0, 0)
+        .setFontStyle("normal")
+        .text(133 + this.getTextWidth(doc, "Lettore:"), rowTemp, this.getSurnameName(week.congregationBibleStudy.reader));
+
+        rowTemp = rowTemp + 5;
+      doc.setFontSize(9)
+        .setTextColor(0, 0, 0)
+        .setFontStyle("normal")
+        .text(7, rowTemp, "Cantico finale:");
+
+      doc.setTextColor(153, 0, 0)
+        .setFontStyle("normal")
+        .text(10 + this.getTextWidth(doc, "Cantico finale:"), rowTemp, this.getSongNumber(week.finalSong));
+
+      doc.setTextColor(0, 0, 0)
+        .setFontStyle("normal")
+        .text(130, rowTemp, "Preghiera finale:");
+
+      doc.setTextColor(153, 0, 0)
+        .setFontStyle("normal")
+        .text(133 + this.getTextWidth(doc, "Preghiera finale:"), rowTemp, this.getSurnameName(week.finalPrayer));
+
+        row = rowTemp +2;
+      }else{
+        row = row+15;
+        if(!week.supervisor){
+          doc.setFontSize(11)
+          .setTextColor(0, 0, 0)
+          .setFontStyle("bold")
+          this.centeredText(doc, week.type.label, row)
+        }else{
+          doc.setFontSize(11)
+          .setTextColor(0, 0, 0)
+          .setFontStyle("bold")
+          this.centeredText(doc, "Visita del sorvegliante di circoscrizione", row)
+        }
+
+        row = row+2;
+      }
+    }
+
+
+// doc.output('datauristring');
+    doc.save('Vita-Cristiana-Ministero-'+ this.weeks[0].date.format('MMMM YYYY') +'.pdf')
   }
 
   download(){
@@ -282,7 +530,7 @@ export class DownloadWeeksDialog implements OnInit{
     document.body.appendChild(a);
     a.click();
 
-    a.href        = 'assets/xls/pgm-vcm-macro-2018.xlsm';
+    a.href        = 'assets/xls/pgm-vcm-macro-'+this.weeks[0].date.format('YYYY')+'.xlsm';
     a.target      = '_blank';
     a.download    = 'Vita-Cristiana-Ministero-'+(this.weeks[0].date.format('MMMM-YY'))+'.xlsm';
     document.body.appendChild(a);

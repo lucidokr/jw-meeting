@@ -5,7 +5,7 @@
       <h3  class="flex-item" *ngIf="week.supervisor">Visita del sorvegliante</h3>
     </md-card-title>
   </md-card-header>
-  <md-card-content fxLayout="column" fxLayoutAlign="center center">
+  <md-card-content class="width100" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
     <div class="weekPreview" fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" *ngIf="week.type.meeting && !week.supervisor" >
       <div fxFlex="100%" width="100%" fxLayout="row" fxLayoutAlign="center center"  >
         <div class="meetingWorkbook flex-item" fxFlex="100%" fxFlex fxLayout="column" fxLayoutGap="10px">

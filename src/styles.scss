@@ -98,7 +98,7 @@ ng2-smart-table{
   font-size: 18px !important;
   .ng2-smart-actions{
     color:black;
-    width: 120px;
+    width: 140px;
     padding: 10px 0px !important;
     a{
       float:left;
@@ -109,7 +109,16 @@ ng2-smart-table{
         color:#7E7E7E;
       }
       @media screen and (max-width:640px){
-        padding:0 2px;
+      }
+
+      .action-download-container{
+        position:relative;
+      }
+      .action-download-label{
+        font-size: 13px;
+        position: absolute;
+        margin-left: -21px;
+        margin-top: 17px;
       }
 
     }
@@ -290,6 +299,9 @@ md-option{
   color:red !important;
 }
 
+.weekConfigContainer md-card-content{
+  min-width:100%;
+}
 .meetingWorkbook{
   h3{
     width:100%;

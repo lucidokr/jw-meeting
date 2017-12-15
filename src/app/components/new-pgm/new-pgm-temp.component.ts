@@ -112,7 +112,7 @@ export class NewPgmTempComponent {
     var month = monday.month();
     let user: User = this.authService.getUser();
     while(month === monday.month()){
-      dateArr.push(moment(monday).add(user.congregation.meetingDay, 'd').add(12, 'h'));
+      dateArr.push(moment(monday));
       monday.add(7,'d');
     }
 
@@ -131,7 +131,7 @@ export class NewPgmTempComponent {
             let weekMeetingWorkbook = weeksMeetingWorkbook[j];
             if(dateArr[i].unix()==weekMeetingWorkbook.date.unix()){
               let model = new WeekMeeting();
-              model.date = moment(dateArr[i]);
+              model.date = moment(dateArr[i]).add(user.congregation.meetingDay, 'd').add(12, 'h');
               model.initialSong = weekMeetingWorkbook.initialSong;
               model.finalSong = weekMeetingWorkbook.finalSong;
               model.intervalSong = weekMeetingWorkbook.intervalSong;

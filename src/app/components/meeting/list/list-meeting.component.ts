@@ -84,8 +84,12 @@ export class MeetingListComponent extends GeneralListComponent{
           title: '<fa><i class="fa fa-eye fa-lg"></i></fa>',
         },
         {
-          name: 'download',
-          title: '<fa><i class="fa fa-download fa-lg"></i></fa>',
+          name: 'downloadXLS',
+          title: '<span class="action-download-container"><fa><i class="fa fa-download fa-lg"></i></fa><span class="action-download-label">XLS</span></span>',
+        },
+        {
+          name: 'downloadPDF',
+          title: '<span class="action-download-container"><fa><i class="fa fa-download fa-lg"></i></fa><span class="action-download-label">PDF</span></span>',
         }
 
       ]
@@ -143,8 +147,10 @@ export class MeetingListComponent extends GeneralListComponent{
       }else{
         this.show(ev)
       }
-    }else if(ev.action == "download"){
-      this.download(ev)
+    }else if(ev.action == "downloadXLS"){
+      this.download(ev, "XLS")
+    }else if(ev.action == "downloadPDF"){
+      this.download(ev, "PDF")
     }
   }
 
@@ -152,7 +158,7 @@ export class MeetingListComponent extends GeneralListComponent{
     this.router.navigateByUrl(location.pathname + "/temp/" + ev.data._id)
   }
 
-  public download(ev: any){
+  public download(ev: any, format: string){
 
     let week = ev.data;
     if(!week.temp){
@@ -180,7 +186,7 @@ export class MeetingListComponent extends GeneralListComponent{
       //   }
       // }
       this.meetingService.getPgm(date.year(), date.month()).subscribe((res : Array<WeekMeeting>) => {
-        this.dialogService.openDownloadWeeksDialog(res, false)
+        this.dialogService.openDownloadWeeksDialog(res, false, format)
       }, err => {
         this.dialogService.showError("Non è possibile scaricare le adunanze.")
       });

@@ -32,6 +32,7 @@ export class NewPgmPreviewComponent implements OnInit{
   @Output() back: EventEmitter<any> = new EventEmitter<any>();
 
   public loading : Boolean = true;
+  public interval;
   public loadingInsertPgm : Boolean = false;
   public changeMode : any = {
     busyError:false,
@@ -108,6 +109,17 @@ export class NewPgmPreviewComponent implements OnInit{
         })
 
       })
+  }
+
+  ngOnDestroy(){
+    clearInterval(this.interval);
+  }
+
+  createIntervalSave(){
+    let that = this;
+    this.interval = setInterval(function(){
+      localStorage["weeks_"+that.weeks[0].date.month()+"_"+that.weeks[0].date.year()] = JSON.stringify(that.weeks);
+    },15000)
   }
 
   sortAndFind(res:any, meetings:any){
@@ -401,15 +413,123 @@ export class NewPgmPreviewComponent implements OnInit{
       console.log(this)
     }
 
-    /**THIRD IMPLEMENTATION**/
     let brotherToIgnore = [];
+    /**THIRD IMPLEMENTATION**/
+
+    function putBrother(week, brother, partType, forced){
+      // let arrChristianLivingPartBrother = [];
+      // for (let part of week.christianLivingPart){
+      //   arrChristianLivingPartBrother.push(part.brother._id);
+      // }
+      // if(arrChristianLivingPartBrother.indexOf(brother._id) == -1 && brother._id != week.talk.brother._id && brother._id != week.gems.brother._id){
+      //   let lastSchoolPart = brother.student[part + "LastSchool"];
+      //   if(!week[part].primarySchool.student && brother.student.primarySchoolEnabled &&
+      //     ((week[part].primarySchool.gender != '' && brother.gender ==  week[part].primarySchool.gender) || week[part].primarySchool.gender == '' || part == CONST.BIBLE_READING)){
+      //     if((!week.secondarySchool && !week.presentationExercise.enabled) || lastSchoolPart == 2 || !lastSchoolPart || week[part].secondarySchool.student){
+      //       week[part].primarySchool.student = brother;
+      //       brotherToIgnore.push(brother._id);
+      //       return true;
+      //     }
+      //   }
+      //   if(week.secondarySchool
+      //     && !week[part].secondarySchool.student
+      //     // && (week[part].primarySchool.student && brother._id != week[part].primarySchool.student._id)
+      //     && brother.student.secondarySchoolEnabled
+      //     && ((week[part].secondarySchool.gender != '' && brother.gender ==  week[part].secondarySchool.gender) || week[part].secondarySchool.gender == '' || part == CONST.BIBLE_READING)){
+      //     if(lastSchoolPart == 1 || !lastSchoolPart || week[part].primarySchool.student){
+      //       week[part].secondarySchool.student = brother;
+      //       brotherToIgnore.push(brother._id);
+      //       return true;
+      //     }
+      //   }
+      // }
+      let arrChristianLivingPartBrother = [];
+      for (let part of week.christianLivingPart){
+        arrChristianLivingPartBrother.push(part.brother._id);
+      }
+      //filtro per i fratelli che non sono già impegnati in una parte vita cristiana nelle gemme e nei tesori
+      if(arrChristianLivingPartBrother.indexOf(brother._id) == -1 && brother._id != week.talk.brother._id && brother._id != week.gems.brother._id){
+        let lastSchoolPart = brother.student[partType + "LastSchool"];
+        if(!week[partType].primarySchool.student && brother.student.primarySchoolEnabled &&
+          ((week[partType].primarySchool.gender != '' && brother.gender ==  week[partType].primarySchool.gender) || week[partType].primarySchool.gender == '' || partType == CONST.BIBLE_READING)){
+          if((!week.secondarySchool && !week.presentationExercise.enabled) || lastSchoolPart == 2 || forced || !lastSchoolPart){
+            week[partType].primarySchool.student = brother;
+            brotherToIgnore.push(brother._id);
+            return true;
+          }
+        }
+        if(week.secondarySchool
+          && !week[partType].secondarySchool.student
+          && ((week[partType].primarySchool.student && brother._id != week[partType].primarySchool.student._id) || !week[partType].primarySchool.student)
+          && brother.student.secondarySchoolEnabled
+          && ((week[partType].secondarySchool.gender != '' && brother.gender ==  week[partType].secondarySchool.gender) || week[partType].secondarySchool.gender == '' || partType == CONST.BIBLE_READING)){
+          if(lastSchoolPart == 1 || forced || !lastSchoolPart){
+            week[partType].secondarySchool.student = brother;
+            brotherToIgnore.push(brother._id);
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+
+    let listBibleReading = [].concat(this.studentList)
+    .filter(brother => brother.student.bibleReadingEnabled /*&& brother.student.lastDate.isBefore(moment(this.weeks[0].date).add(-15, "d"))*/)
+    .sort((a:Brother,b:Brother) => {
+      if(!a.student.bibleReadingDate)
+        return -1;
+      if(a.student.bibleReadingDate.isAfter(b.student.bibleReadingDate))
+        return 1;
+      if(a.student.bibleReadingDate.isBefore(b.student.bibleReadingDate))
+        return -1;
+      return 0;
+      // return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)
+    });
+    for(let brother of listBibleReading) {
+      let inserted = false;
+      let part = "bibleReading"
+      for(let week of this.weeks) {
+        if(week.type.meeting
+            && !week.supervisor
+            && !week[part].video
+            && brother.student.lastDate.isBefore(moment(week.date).add(-15, "d"))
+            && (!brother.student.bibleReadingLastDate || (brother.student.bibleReadingLastDate && brother.student.bibleReadingLastDate.isBefore(moment(week.date).add(-30, "d"))))
+          ){
+          inserted = putBrother(week, brother, part, false)
+          if(inserted)
+            break;
+        }
+      }
+    }
+    for(let week of this.weeks) {
+      this.checkWeekCompletedAndRemove(week, ["bibleReading"], 'student')
+    }
+
+
+
     function findAlgorithm(partType, forced, minLastDate){
         //FILTER AND SORT BY PART
         let list = [].concat(this.studentList)
           .filter(brother => {
-            return (brotherToIgnore.indexOf(brother._id) == -1
-            && ((brother.student.lastDate && brother.student.lastDate.isBefore(moment(this.weeks[0].date).add(-minLastDate, "d")))))})
-          .sort((a:Brother,b:Brother) => {return (moment(a.student[partType+"lastDate"]).isBefore(b.student[partType+"lastDate"]) ? -1 : 1)});
+            return (
+              brotherToIgnore.indexOf(brother._id) == -1
+              && (
+                !brother.student.lastDate ||
+                (brother.student.lastDate && brother.student.lastDate.isBefore(moment(this.weeks[0].date).add(-minLastDate, "d"))) ||
+                (brother.student.lastDate == brother.student.bibleReadingLastDate && brother.student.lastDate.isBefore(moment(this.weeks[0].date).add(-(minLastDate/2), "d")))
+              )
+            )
+          })
+          .sort((a:Brother,b:Brother) => {
+              if(!a.student[partType+"Date"])
+                return -1;
+              if(a.student[partType+"Date"].isAfter(b.student[partType+"Date"]))
+                return 1;
+              if(a.student[partType+"Date"].isBefore(b.student[partType+"Date"]))
+                return -1;
+              return 0;
+              // return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)
+            });
 
       for(let week of this.weeks) {
         if(!week[partType].video){
@@ -420,31 +540,8 @@ export class NewPgmPreviewComponent implements OnInit{
                   partEnabled = brother.student.talkEnabled && brother.student[partType + "Enabled"];
                 }
                 if(partEnabled){
-                  let arrChristianLivingPartBrother = [];
-                  for (let part of week.christianLivingPart){
-                    arrChristianLivingPartBrother.push(part.brother._id);
-                  }
-                  //filtro per i fratelli che non sono già impegnati in una parte vita cristiana nelle gemme e nei tesori
-                  if(arrChristianLivingPartBrother.indexOf(brother._id) == -1 && brother._id != week.talk.brother._id && brother._id != week.gems.brother._id){
-                    let lastSchoolPart = brother.student[partType + "LastSchool"];
-                    if(!week[partType].primarySchool.student && brother.student.primarySchoolEnabled &&
-                      ((week[partType].primarySchool.gender != '' && brother.gender ==  week[partType].primarySchool.gender) || week[partType].primarySchool.gender == '' || partType == CONST.BIBLE_READING)){
-                      if((!week.secondarySchool && !week.presentationExercise.enabled) || lastSchoolPart == 2 || forced){
-                        week[partType].primarySchool.student = brother;
-                        brotherToIgnore.push(brother._id);
-                      }
-                    }
-                    if(week.secondarySchool
-                      && !week[partType].secondarySchool.student
-                      && (week[partType].primarySchool.student && brother._id != week[partType].primarySchool.student._id)
-                      && brother.student.secondarySchoolEnabled
-                      && ((week[partType].secondarySchool.gender != '' && brother.gender ==  week[partType].secondarySchool.gender) || week[partType].secondarySchool.gender == '' || partType == CONST.BIBLE_READING)){
-                      if(lastSchoolPart == 1 || forced){
-                        week[partType].secondarySchool.student = brother;
-                        brotherToIgnore.push(brother._id);
-                      }
-                    }
-                  }
+                  putBrother(week, brother, partType, forced)
+
                 }
               }
             }
@@ -459,10 +556,146 @@ export class NewPgmPreviewComponent implements OnInit{
           findAlgorithm.call(this, partType, !forced, (forced ? minLastDate -30 : minLastDate))
     }
 
-    for(let partType of this.PART_TYPE_ALL){
+    for(let partType of this.PART_TYPE){
       findAlgorithm.call(this, partType, false, 60)
     }
 
+    /**FOURTH IMPLEMENTATION**/
+
+/*
+    let listBibleReading = [].concat(this.studentList)
+    .filter(brother => brother.student.bibleReadingEnabled && brother.student.lastDate.isBefore(moment(this.weeks[0].date).add(-30, "d")))
+    .sort((a:Brother,b:Brother) => {
+      if(!a.student.bibleReadingDate)
+        return -1;
+      if(a.student.bibleReadingDate.isAfter(b.student.bibleReadingDate))
+        return 1;
+      if(a.student.bibleReadingDate.isBefore(b.student.bibleReadingDate))
+        return -1;
+      return 0;
+      // return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)
+    });
+    for(let brother of listBibleReading) {
+      let partType = ["bibleReading"]
+      // .sort((a:string,b:string) => {return (moment(brother.student[a+"LastDate"]).isBefore(brother.student[b+"LastDate"]) ? -1 : 1)});
+      .sort((a:string,b:string) => {
+        if(!brother.student[a+"Date"])
+          return -1;
+        if(brother.student[a+"Date"].isAfter(brother.student[b+"Date"]))
+          return 1;
+        if(brother.student[a+"Date"].isBefore(brother.student[b+"Date"]))
+          return -1;
+        return 0;
+        // return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)
+      });
+      let inserted = false;
+      for(let part of partType){
+        if(!inserted){
+          for(let week of this.weeks) {
+            if(week.type.meeting && !week.supervisor && !week[part].video){
+              let arrChristianLivingPartBrother = [];
+              for (let part of week.christianLivingPart){
+                arrChristianLivingPartBrother.push(part.brother._id);
+              }
+              if(arrChristianLivingPartBrother.indexOf(brother._id) == -1 && brother._id != week.talk.brother._id && brother._id != week.gems.brother._id){
+                let lastSchoolPart = brother.student[partType + "LastSchool"];
+                if(!week[part].primarySchool.student && brother.student.primarySchoolEnabled &&
+                  ((week[part].primarySchool.gender != '' && brother.gender ==  week[part].primarySchool.gender) || week[part].primarySchool.gender == '' || part == CONST.BIBLE_READING)){
+                  if((!week.secondarySchool && !week.presentationExercise.enabled) || lastSchoolPart == 2 || !lastSchoolPart || week[part].secondarySchool.student){
+                    week[part].primarySchool.student = brother;
+                    brotherToIgnore.push(brother._id);
+                    inserted = true;
+                    break;
+                  }
+                }
+                if(week.secondarySchool
+                  && !week[part].secondarySchool.student
+                  // && (week[part].primarySchool.student && brother._id != week[part].primarySchool.student._id)
+                  && brother.student.secondarySchoolEnabled
+                  && ((week[part].secondarySchool.gender != '' && brother.gender ==  week[part].secondarySchool.gender) || week[part].secondarySchool.gender == '' || part == CONST.BIBLE_READING)){
+                  if(lastSchoolPart == 1 || !lastSchoolPart || week[part].primarySchool.student){
+                    week[part].secondarySchool.student = brother;
+                    brotherToIgnore.push(brother._id);
+                    inserted = true;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    let list = [].concat(this.studentList)
+    .filter(brother => brotherToIgnore.indexOf(brother._id) == -1)
+    .sort((a:Brother,b:Brother) => {
+      if(!a.student.lastDate)
+        return -1;
+      if(a.student.lastDate.isAfter(b.student.lastDate))
+        return 1;
+      if(a.student.lastDate.isBefore(b.student.lastDate))
+        return -1;
+      return 0;
+      // return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)
+    });
+    for(let brother of list) {
+      let partType = [].concat(this.PART_TYPE)
+      .filter(part => brother.student[part+"Enabled"])
+      .sort((a:string,b:string) => {
+        if(!brother.student[a+"Date"])
+          return -1;
+        if(brother.student[a+"Date"].isAfter(brother.student[b+"Date"]))
+          return 1;
+        if(brother.student[a+"Date"].isBefore(brother.student[b+"Date"]))
+          return -1;
+        return 0;
+        // return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)
+      });
+      let inserted = false;
+      for(let part of partType){
+        if(!inserted){
+          for(let week of this.weeks) {
+            if(week.type.meeting && !week.supervisor && !week[part].video){
+              let arrChristianLivingPartBrother = [];
+              for (let part of week.christianLivingPart){
+                arrChristianLivingPartBrother.push(part.brother._id);
+              }
+              if(arrChristianLivingPartBrother.indexOf(brother._id) == -1 && brother._id != week.talk.brother._id && brother._id != week.gems.brother._id){
+                let lastSchoolPart = brother.student[partType + "LastSchool"];
+                if(!week[part].primarySchool.student && brother.student.primarySchoolEnabled &&
+                  ((week[part].primarySchool.gender != '' && brother.gender ==  week[part].primarySchool.gender) || week[part].primarySchool.gender == '' || part == CONST.BIBLE_READING)){
+                  if((!week.secondarySchool && !week.presentationExercise.enabled) || lastSchoolPart == 2 || !lastSchoolPart || week[part].secondarySchool.student){
+                    week[part].primarySchool.student = brother;
+                    brotherToIgnore.push(brother._id);
+                    inserted = true;
+                    break;
+                  }
+                }
+                if(week.secondarySchool
+                  && !week[part].secondarySchool.student
+                  && (week[part].primarySchool.student && brother._id != week[part].primarySchool.student._id)
+                  && brother.student.secondarySchoolEnabled
+                  && ((week[part].secondarySchool.gender != '' && brother.gender ==  week[part].secondarySchool.gender) || week[part].secondarySchool.gender == '' || part == CONST.BIBLE_READING)){
+                  if(lastSchoolPart == 1 || !lastSchoolPart || week[part].primarySchool.student){
+                    week[part].secondarySchool.student = brother;
+                    brotherToIgnore.push(brother._id);
+                    inserted = true;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    let weeksCompleted = true;
+    for(let week of this.weeks) {
+      if(!this.checkWeekCompletedAndRemove(week, this.PART_TYPE_ALL, 'student'))
+        weeksCompleted = false;
+    }
+    */
 
 
     for(let week of this.weeks) {
@@ -479,11 +712,11 @@ export class NewPgmPreviewComponent implements OnInit{
             if (brother.student.assistantEnabled) {
               for (let partType of this.PART_TYPE) {
                 if (!week[partType].primarySchool.isTalk && !week[partType].video) {
-                  if (!week[partType].primarySchool.assistant && week[partType].primarySchool.student.gender == brother.gender && brother.student.primarySchoolEnabled) {
+                  if (week[partType].primarySchool.student && !week[partType].primarySchool.assistant && week[partType].primarySchool.student.gender == brother.gender && brother.student.primarySchoolEnabled) {
                     week[partType].primarySchool.assistant = brother;
                     break;
                   }
-                  if (week.secondarySchool && !week[partType].secondarySchool.assistant && week[partType].secondarySchool.student.gender == brother.gender && brother.student.secondarySchoolEnabled) {
+                  if (week.secondarySchool && week[partType].secondarySchool.student && !week[partType].secondarySchool.assistant && week[partType].secondarySchool.student.gender == brother.gender && brother.student.secondarySchoolEnabled) {
                     week[partType].secondarySchool.assistant = brother;
                     break;
                   }
@@ -528,6 +761,7 @@ export class NewPgmPreviewComponent implements OnInit{
       }
     }
     this.loading = false;
+    this.createIntervalSave();
   }
 
   checkWeekCompletedAndRemove(week, partTypes, type){
@@ -824,6 +1058,7 @@ export class NewPgmPreviewComponent implements OnInit{
   }
 
   confirm(){
+    localStorage["weeks_"+this.weeks[0].date.month()+"_"+this.weeks[0].date.year()] = JSON.stringify(this.weeks);
     this.dialogService.confirm("Confermi la creazione del programma?").subscribe(confirm => {
       if(confirm){
         this.loadingInsertPgm = true;
@@ -833,39 +1068,8 @@ export class NewPgmPreviewComponent implements OnInit{
           let week = this.weeks[0];
 
           this.meetingService.getPgm(week.date.year(), week.date.month()).subscribe((res : Array<WeekMeeting>) => {
-            this.dialogService.openDownloadWeeksDialog(res, true)
+            this.dialogService.openDownloadWeeksDialog(res, true, "PDF")
           });
-          //
-          // this.loadingInsertPgm = false;
-          // let dateArr = [];
-          // let week = this.weeks[0]
-          // this.router.navigateByUrl("/meeting");
-          // let date = week.date.clone().add(-2, 'd');
-          // let ms = date.month();
-          // // date.startOf('week').isoWeekday(1);
-          // let monday = date
-          //   .startOf('month')
-          //   .day(1)
-          // if (monday.date() > 7) monday.add(7,'d');
-          // let month = monday.month();
-          // while(month === monday.month()){
-          //   dateArr.push(moment(monday));
-          //   monday.add(7,'d');
-          // }
-          // let meetings = []
-          // console.log(this.weeks)
-          // for(let d of dateArr){
-          //   for(let w of this.weeks){
-          //     if(w.date.isBetween(d, d.clone().add(7, 'd'))){
-          //       meetings.push(this.meetingService.getMeeting(w._id));
-          //     }
-          //   }
-          // }
-          //
-          // Observable.forkJoin(meetings).subscribe((res : Array<WeekMeeting>) => {
-          //   this.dialogService.openDownloadWeeksDialog(res.sort((a:any,b:any) => {return (moment(a.date).isBefore(b.date) ? -1 : 1)}), false)
-          // });
-          // this.dialogService.openDownloadWeeksDialog(this.weeks, true);
 
         });
       }

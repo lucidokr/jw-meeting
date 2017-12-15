@@ -6,7 +6,7 @@ const cache = new NodeCache();
 
 
 
-router.route('/:year/:month/:day')
+router.route('/:year/:month/:dayStart/:dayEnd')
 
 .get(function(req, res) {
     var value = cache.get("WOL_" + req.params.year + '_' + req.params.month + '_' + req.params.day);
@@ -15,7 +15,9 @@ router.route('/:year/:month/:day')
         res.json(value);
     } else {
 
-        wtj.extractUrl('https://wol.jw.org/en/wol/dt/r1/lp-e/' + req.params.year + '/' + req.params.month + '/' + req.params.day, {
+      var url = 'https://www.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-' + req.params.month + '-' + req.params.year + '/programma-adunanza-' + req.params.dayStart + '-' + req.params.dayEnd+'/';
+      console.log(url);
+        wtj.extractUrl(url, {
         // wtj.extractUrl('https://wol.jw.org/it/wol/dt/r6/lp-i/' + req.params.year + '/' + req.params.month + '/' + req.params.day, {
                 fields: ['data'],
                 parse: function($) {
