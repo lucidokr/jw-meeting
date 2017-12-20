@@ -1,8 +1,6 @@
 
 <div *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER" class="flex-container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-  <new-pgm-config *ngIf="config" (complete)="complete($event)"></new-pgm-config>
-  <new-pgm-preview *ngIf="!config" (back)="back()" [weeks]="weeks"></new-pgm-preview>
+  <!-- <new-pgm-config *ngIf="config" (complete)="complete($event)"></new-pgm-config> -->
+  <!-- <new-pgm-preview *ngIf="!config" (back)="back()" [weeks]="weeks"></new-pgm-preview> -->
 </div>
-<div *ngIf="user.role==USER_ROLE.PRESIDENT" class="flex-container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-  <new-pgm-temp (complete)="completeTemp($event)"></new-pgm-temp>
-</div>
+

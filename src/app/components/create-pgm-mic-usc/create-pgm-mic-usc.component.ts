@@ -12,11 +12,11 @@ import {USER_ROLE} from "../../constant";
 import {User} from "../../shared/models/user.model";
 
 @Component({
-  selector: 'new-pgm',
-  templateUrl: './new-pgm.component.html',
-  styleUrls: ['./new-pgm.component.scss']
+  selector: 'create-pgm-mic-usc',
+  templateUrl: './create-pgm-mic-usc.component.html',
+  styleUrls: ['./create-pgm-mic-usc.component.scss']
 })
-export class NewPgmComponent {
+export class CreatePgmMicUscComponent {
   public config : boolean = true;
   public weeks : Array<WeekMeeting> = [];
   public user : User;
@@ -31,7 +31,7 @@ export class NewPgmComponent {
               private newPgmService: NewPgmService,
               private authService: AuthService) {
     this.emitterService.get("change_header_subtitle")
-      .emit('Nuovo programma');
+      .emit('Pgm Uscieri e microfonisti');
 
     this.user = authService.getUser();
     this.snackBarConfig.duration = 5000;

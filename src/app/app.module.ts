@@ -82,6 +82,7 @@ import {AuthGuard} from "./guards/auth.guard";
 import {WeekTempComponent} from "./shared/components/week-temp/week-temp.component";
 import {MeetingDetailTempComponent} from "./components/meeting/detail-temp/detail-meeting-temp.component";
 import {PipeModule} from "./pipe.module";
+import { CreatePgmMicUscComponent } from 'app/components/create-pgm-mic-usc/create-pgm-mic-usc.component';
 
 @NgModule({
   imports: [
@@ -133,6 +134,8 @@ import {PipeModule} from "./pipe.module";
     NewPgmTempComponent,
     MeetingDetailTempComponent,
     WeekTempComponent,
+
+    CreatePgmMicUscComponent,
 
     KeysPipe,
 
