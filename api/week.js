@@ -132,7 +132,7 @@ router.route('/')
                         async.each(brothers, function(brother, nextBrother) {
                             var objToSave = [];
 
-                            var date = new Date(req.body[0].date);
+                            var date = new Date(week.date);
                             var strDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
 
                             if (brother.elder) {
