@@ -1,0 +1,792 @@
+{ 
+    "_id" : ObjectId("594d4798b810b07cdb867da9"), 
+    "surname" : "Zatta", 
+    "name" : "Martina", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db5c5dc8aef8039d626c2"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "martinaz@inwind.it"
+}
+{ 
+    "_id" : ObjectId("594d47b3b810b07cdb867dac"), 
+    "surname" : "Scattolin", 
+    "name" : "Giancarlo", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da17f7d1e487e34192799"), 
+    "student" : ObjectId("594db539dc8aef8039d626b7"), 
+    "reader" : ObjectId("597f36458808800a0813f0b9"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d46e2ccde177a3f914396"), 
+    "surname" : "Meneghello", 
+    "name" : "Carla", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db447dc8aef8039d626a3"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594bdb043545c51678fbad09"), 
+    "name" : "Enrico", 
+    "surname" : "Pigozzo", 
+    "gender" : "M", 
+    "email" : "pigauz@gmail.com", 
+    "elder" : ObjectId("594d49beb810b07cdb867dd2"), 
+    "prayer" : ObjectId("594da1637d1e487e34192794"), 
+    "reader" : ObjectId("597f36108808800a0813f0b5"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d4763b810b07cdb867da4"), 
+    "surname" : "Prochilo", 
+    "name" : "Orsolina", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db4ecdc8aef8039d626b1"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "orsolina54@icloud.com"
+}
+{ 
+    "_id" : ObjectId("594d46a9ccde177a3f914390"), 
+    "surname" : "Fiorentino", 
+    "name" : "Paolo", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da1387d1e487e3419278a"), 
+    "student" : ObjectId("594db3c8dc8aef8039d62699"), 
+    "reader" : ObjectId("597f35dc8808800a0813f0ae"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "ffiorentino007@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d4812b810b07cdb867db4"), 
+    "surname" : "Pesce", 
+    "name" : "Annalisa", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db4aadc8aef8039d626ab"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "lisaquar@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d4771b810b07cdb867da5"), 
+    "surname" : "Zanon", 
+    "name" : "Dario", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "servant" : ObjectId("594d4dceb810b07cdb867dd7"), 
+    "prayer" : ObjectId("594da1877d1e487e3419279b"), 
+    "student" : ObjectId("594db5a8dc8aef8039d626c0"), 
+    "reader" : ObjectId("597f36568808800a0813f0bc"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "dario62zanon@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d487eb810b07cdb867dbe"), 
+    "surname" : "Sacchetto", 
+    "name" : "Federico", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da17b7d1e487e34192798"), 
+    "student" : ObjectId("594db506dc8aef8039d626b3"), 
+    "reader" : ObjectId("597f363d8808800a0813f0b8"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "federicosacchetto@libero.it"
+}
+{ 
+    "_id" : ObjectId("594d48c0b810b07cdb867dc6"), 
+    "surname" : "Barea", 
+    "name" : "Marco", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594da9591017967f3612513b"), 
+    "email" : "barea.marco@gmail.com", 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "reader" : ObjectId("59b661164de5fa001254b531")
+}
+{ 
+    "_id" : ObjectId("594d4748b810b07cdb867da1"), 
+    "surname" : "Ceccato", 
+    "name" : "Silvia", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db0741017967f36125145"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "sissy.eye@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d48f1b810b07cdb867dcb"), 
+    "surname" : "Mokwuyem", 
+    "name" : "Aurora", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db488dc8aef8039d626a8"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "Aury2perti@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d46cdccde177a3f914394"), 
+    "surname" : "Fontarini", 
+    "name" : "Bruno", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "servant" : ObjectId("594d4da4b810b07cdb867dd4"), 
+    "prayer" : ObjectId("594da13c7d1e487e3419278b"), 
+    "student" : ObjectId("594db3ecdc8aef8039d6269c"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "bruno.fontarini@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d481ab810b07cdb867db5"), 
+    "surname" : "Pesce", 
+    "name" : "Giuliano", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da15f7d1e487e34192793"), 
+    "student" : ObjectId("594db4b9dc8aef8039d626ac"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d473eb810b07cdb867da0"), 
+    "surname" : "Ceccato", 
+    "name" : "Denis", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da10f7d1e487e34192783"), 
+    "student" : ObjectId("594db06a1017967f36125144"), 
+    "reader" : ObjectId("597f35998808800a0813f0a9"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "cekade.dc@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d4843b810b07cdb867db8"), 
+    "surname" : "Di Stefano", 
+    "name" : "Letizia", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db382dc8aef8039d62693"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "letiziaraule1942@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d4856b810b07cdb867dba"), 
+    "surname" : "Cozzarin", 
+    "name" : "Roberta", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db2711017967f36125149"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "robertafavaro78@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d486bb810b07cdb867dbc"), 
+    "surname" : "Del Frate", 
+    "name" : "Simone", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "servant" : ObjectId("594d4d49b810b07cdb867dd3"), 
+    "prayer" : ObjectId("594da11d7d1e487e34192786"), 
+    "student" : ObjectId("594db36fdc8aef8039d62691"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d48f9b810b07cdb867dcc"), 
+    "surname" : "Pigozzo", 
+    "name" : "Rossana", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db4d9dc8aef8039d626af"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "rossanapigozzo@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594be98c2e0cb86a72b55c2e"), 
+    "email" : "lucido.kristian@gmail.com", 
+    "surname" : "Lucido", 
+    "name" : "Kristian", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da1467d1e487e3419278e"), 
+    "student" : ObjectId("594db439dc8aef8039d626a2"), 
+    "reader" : ObjectId("597f35f38808800a0813f0b1"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d4874b810b07cdb867dbd"), 
+    "surname" : "Sacchetto", 
+    "name" : "Amerigo", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da1757d1e487e34192797"), 
+    "student" : ObjectId("594db4f6dc8aef8039d626b2"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "amerigosacchetto@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d4778b810b07cdb867da6"), 
+    "surname" : "Zanon", 
+    "name" : "Bibiana", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db5bbdc8aef8039d626c1"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "b.bibi64@virgilio.it"
+}
+{ 
+    "_id" : ObjectId("594d47fcb810b07cdb867db2"), 
+    "surname" : "Simonin", 
+    "name" : "Davide", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "servant" : ObjectId("594d4dc1b810b07cdb867dd6"), 
+    "prayer" : ObjectId("594da1837d1e487e3419279a"), 
+    "student" : ObjectId("594db55adc8aef8039d626ba"), 
+    "reader" : ObjectId("597f364a8808800a0813f0ba"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "davidesimonin@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d48d3b810b07cdb867dc8"), 
+    "surname" : "Bernardi", 
+    "name" : "Massimo", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da1067d1e487e34192781"), 
+    "student" : ObjectId("594da9a91017967f3612513e"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594bdb773545c51678fbad0d"), 
+    "name" : "Marco", 
+    "surname" : "Michieletto", 
+    "gender" : "M", 
+    "email" : "marcomic@gmail.com", 
+    "elder" : ObjectId("594d49aab810b07cdb867dd1"), 
+    "prayer" : ObjectId("594da14e7d1e487e34192790"), 
+    "reader" : ObjectId("597f35fe8808800a0813f0b3"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d488db810b07cdb867dc0"), 
+    "surname" : "Sacchetto", 
+    "name" : "Sabrina", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db520dc8aef8039d626b5"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "sabrinatiozzo@libero.it"
+}
+{ 
+    "_id" : ObjectId("594d48ddb810b07cdb867dc9"), 
+    "surname" : "Didodo", 
+    "name" : "Elena", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db397dc8aef8039d62695"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "elena.didodo@live.it"
+}
+{ 
+    "_id" : ObjectId("594d46d8ccde177a3f914395"), 
+    "surname" : "Meneghello", 
+    "name" : "Lino", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "servant" : ObjectId("594d4daeb810b07cdb867dd5"), 
+    "prayer" : ObjectId("594da14a7d1e487e3419278f"), 
+    "student" : ObjectId("594db42adc8aef8039d626a1"), 
+    "reader" : ObjectId("597f35f88808800a0813f0b2"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "lino.meneghello@icloud.com"
+}
+{ 
+    "_id" : ObjectId("594d485fb810b07cdb867dbb"), 
+    "surname" : "Fontarini", 
+    "name" : "Marisa", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db3f4dc8aef8039d6269d"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d48cbb810b07cdb867dc7"), 
+    "surname" : "Bernardi", 
+    "name" : "Dobrinka", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594da9881017967f3612513d"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d4736b810b07cdb867d9f"), 
+    "surname" : "Gatto", 
+    "name" : "Tiziano", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "servant" : ObjectId("594d4ddfb810b07cdb867dd8"), 
+    "prayer" : ObjectId("594da1437d1e487e3419278d"), 
+    "student" : ObjectId("594db40fdc8aef8039d6269f"), 
+    "reader" : ObjectId("597f35ef8808800a0813f0b0"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "tiziano.gatto@alice.it"
+}
+{ 
+    "_id" : ObjectId("594d4752b810b07cdb867da2"), 
+    "surname" : "Ceccato", 
+    "name" : "David", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db2461017967f36125147"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d4807b810b07cdb867db3"), 
+    "surname" : "Cuogo", 
+    "name" : "Ledi", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db2791017967f3612514a"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "ledibusolin@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594bdb4e3545c51678fbad0b"), 
+    "name" : "Gianni", 
+    "surname" : "Cherubin", 
+    "gender" : "M", 
+    "email" : "ibeicherubin@gmail.com", 
+    "elder" : ObjectId("594d4966b810b07cdb867dcd"), 
+    "prayer" : ObjectId("594da1157d1e487e34192784"), 
+    "reader" : ObjectId("597f35c18808800a0813f0aa"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594bdb253545c51678fbad0a"), 
+    "name" : "Giovanni", 
+    "surname" : "Bragato", 
+    "gender" : "M", 
+    "email" : "giovannibragato@gmail.com", 
+    "elder" : ObjectId("594cbfbe0ac6cf6c51b80ca9"), 
+    "prayer" : ObjectId("594da10b7d1e487e34192782"), 
+    "reader" : ObjectId("597f358f8808800a0813f0a8"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d46c3ccde177a3f914393"), 
+    "surname" : "Pigozzo", 
+    "name" : "Sandro", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da16a7d1e487e34192795"), 
+    "student" : ObjectId("594db4d0dc8aef8039d626ae"), 
+    "reader" : ObjectId("597f361a8808800a0813f0b6"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594bdbcc3545c51678fbad0e"), 
+    "name" : "Rino", 
+    "surname" : "Franchetto", 
+    "gender" : "M", 
+    "email" : "rino.franchetto@gmail.com", 
+    "elder" : ObjectId("594d4998b810b07cdb867dd0"), 
+    "prayer" : ObjectId("594da13f7d1e487e3419278c"), 
+    "reader" : ObjectId("597f35e48808800a0813f0af"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594bdbd83545c51678fbad0f"), 
+    "name" : "Alessandro", 
+    "surname" : "Della Puppa", 
+    "gender" : "M", 
+    "email" : "alessandrodellapuppa@icloud.com", 
+    "elder" : ObjectId("594d4985b810b07cdb867dcf"), 
+    "prayer" : ObjectId("594da1217d1e487e34192787"), 
+    "reader" : ObjectId("597f35d08808800a0813f0ac"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d471eb810b07cdb867d9d"), 
+    "surname" : "Cabbia", 
+    "name" : "Noemi", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db03f1017967f36125142"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d4781b810b07cdb867da7"), 
+    "surname" : "Cherubin", 
+    "name" : "Marina", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db2681017967f36125148"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "marina.cherubin@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d4790b810b07cdb867da8"), 
+    "surname" : "Yaremchuk", 
+    "name" : "Olga", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db598dc8aef8039d626bf"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "olga.yaremchuk@libero.it"
+}
+{ 
+    "_id" : ObjectId("594d47dbb810b07cdb867db0"), 
+    "surname" : "Della Puppa", 
+    "name" : "Marilena", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db37bdc8aef8039d62692"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "mariquartesan@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d48a1b810b07cdb867dc2"), 
+    "surname" : "Michieletto", 
+    "name" : "Palmira", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db460dc8aef8039d626a5"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "cosmapalmira@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594bdb553545c51678fbad0c"), 
+    "name" : "Andrea", 
+    "surname" : "Cozzarin", 
+    "gender" : "M", 
+    "email" : "andreacozza77@gmail.com", 
+    "elder" : ObjectId("594d4975b810b07cdb867dce"), 
+    "prayer" : ObjectId("594da1197d1e487e34192785"), 
+    "reader" : ObjectId("597f35c68808800a0813f0ab"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d48a8b810b07cdb867dc3"), 
+    "surname" : "Parolin", 
+    "name" : "Graziano", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da15a7d1e487e34192792"), 
+    "student" : ObjectId("594db493dc8aef8039d626a9"), 
+    "reader" : ObjectId("597f36058808800a0813f0b4"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "grazianotdg@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d472bb810b07cdb867d9e"), 
+    "surname" : "Bragato", 
+    "name" : "Marina", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594da9bf1017967f3612513f"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "marinagatto1960@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d47a7b810b07cdb867dab"), 
+    "surname" : "Franchetto", 
+    "name" : "Diana", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db3fcdc8aef8039d6269e"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d48b6b810b07cdb867dc5"), 
+    "surname" : "Favaron", 
+    "name" : "Sonia", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db3aadc8aef8039d62697"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d475bb810b07cdb867da3"), 
+    "surname" : "Prochilo", 
+    "name" : "Francesco", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da1707d1e487e34192796"), 
+    "student" : ObjectId("594db4e5dc8aef8039d626b0"), 
+    "reader" : ObjectId("597f361e8808800a0813f0b7"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "ciccio.prochilo@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d479eb810b07cdb867daa"), 
+    "surname" : "Zatta", 
+    "name" : "Enrico", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da18b7d1e487e3419279c"), 
+    "student" : ObjectId("594db5d0dc8aef8039d626c3"), 
+    "reader" : ObjectId("597f365a8808800a0813f0bd"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "enrico.zatta77@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d4829b810b07cdb867db6"), 
+    "surname" : "Simionato", 
+    "name" : "Donata", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db54bdc8aef8039d626b9"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "donatasimionato@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d4899b810b07cdb867dc1"), 
+    "surname" : "Michieletto", 
+    "name" : "Luigino", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da1517d1e487e34192791"), 
+    "student" : ObjectId("594db456dc8aef8039d626a4"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d48aeb810b07cdb867dc4"), 
+    "surname" : "Parolin", 
+    "name" : "Dario", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db4a3dc8aef8039d626aa"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "dariodk95@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d48e9b810b07cdb867dca"), 
+    "surname" : "Mokwuyem", 
+    "name" : "Endurance", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db481dc8aef8039d626a7"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "prayer" : ObjectId("59be7348265808001295ec05"), 
+    "email" : "e.mokwuyem@yahoo.it"
+}
+{ 
+    "_id" : ObjectId("594be9502e0cb86a72b55c2d"), 
+    "email" : "jenn91@live.it", 
+    "surname" : "Lucido", 
+    "name" : "Jennifer", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db41adc8aef8039d626a0"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d46a0ccde177a3f91438f"), 
+    "surname" : "Fiorentino", 
+    "name" : "Luca", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "prayer" : ObjectId("594da12c7d1e487e34192789"), 
+    "student" : ObjectId("594db3bcdc8aef8039d62698"), 
+    "reader" : ObjectId("597f35d88808800a0813f0ad"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "fiorentinoluca@hotmail.it"
+}
+{ 
+    "_id" : ObjectId("594d46b2ccde177a3f914391"), 
+    "surname" : "Fiorentino", 
+    "name" : "Giovanna", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db3d2dc8aef8039d6269a"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "desantis68@live.it"
+}
+{ 
+    "_id" : ObjectId("594d46bbccde177a3f914392"), 
+    "surname" : "Pigozzo", 
+    "name" : "Nadia", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db4c1dc8aef8039d626ad"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "nadia.cazzaro@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d47bbb810b07cdb867dad"), 
+    "surname" : "Scattolin", 
+    "name" : "Cristina", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db543dc8aef8039d626b8"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "cris.franchin62@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d47c7b810b07cdb867dae"), 
+    "surname" : "Sartor", 
+    "name" : "Daniela", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db528dc8aef8039d626b6"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d47f0b810b07cdb867db1"), 
+    "surname" : "Spolador", 
+    "name" : "Patrizia", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db567dc8aef8039d626bb"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "patriziaspolador@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d484cb810b07cdb867db9"), 
+    "surname" : "Di Stefano", 
+    "name" : "Salvatore", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db38edc8aef8039d62694"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594d4835b810b07cdb867db7"), 
+    "surname" : "Cazzaro", 
+    "name" : "Patrizia", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db0581017967f36125143"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "venpatty@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594d4886b810b07cdb867dbf"), 
+    "surname" : "Sacchetto", 
+    "name" : "Bernardetta", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db510dc8aef8039d626b4"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "bernardettabrunato@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594da6ffcfc8dc7ed40fa9d0"), 
+    "surname" : "Turcato", 
+    "name" : "Gianluca", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db582dc8aef8039d626bd"), 
+    "reader" : ObjectId("597f36518808800a0813f0bb"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "turgia@alice.it"
+}
+{ 
+    "_id" : ObjectId("594da65acfc8dc7ed40fa9cc"), 
+    "surname" : "Barea", 
+    "name" : "Loriana", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594da97f1017967f3612513c"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594da709cfc8dc7ed40fa9d1"), 
+    "surname" : "Turcato", 
+    "name" : "Martina", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db58fdc8aef8039d626be"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "martina.ton@alice.it"
+}
+{ 
+    "_id" : ObjectId("594da6b2cfc8dc7ed40fa9ce"), 
+    "surname" : "Fiori", 
+    "name" : "Cristina", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db3dadc8aef8039d6269b"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "crisi.rizzo.85@gmail.com"
+}
+{ 
+    "_id" : ObjectId("594da698cfc8dc7ed40fa9cd"), 
+    "surname" : "Michieletto", 
+    "name" : "Francesca", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db46adc8aef8039d626a6"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "francescaber69@gmail.com"
+}
+{ 
+    "_id" : ObjectId("599f0138dd9945c31ccfa07a"), 
+    "email" : "finto@finto.it", 
+    "surname" : "Fratello", 
+    "name" : "Finto", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "deleted" : true, 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("59bd1f8d0c99690012e5b1d0"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "surname" : "Setaro", 
+    "name" : "Daniela", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("59c01bd144bbe70012ed70ca"), 
+    "email" : "pacedaniela00@gmail.com"
+}
+{ 
+    "_id" : ObjectId("599f02351a1284c3628760b6"), 
+    "email" : "aaa@aaa.it", 
+    "surname" : "Fratello", 
+    "name" : "Finto", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "deleted" : true, 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("59be6d7e265808001295ec04"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "surname" : "Zanatta", 
+    "name" : "Adriana", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("59c01c5244bbe70012ed70cb")
+}
+{ 
+    "_id" : ObjectId("594da71ccfc8dc7ed40fa9d2"), 
+    "surname" : "Dobre", 
+    "name" : "Vasilica", 
+    "gender" : "F", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db3a2dc8aef8039d62696"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}
+{ 
+    "_id" : ObjectId("594da6c2cfc8dc7ed40fa9cf"), 
+    "surname" : "Tota", 
+    "name" : "Massimiliano", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "student" : ObjectId("594db573dc8aef8039d626bc"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "email" : "tota.massimiliano.2000@gmail.com"
+}
+{ 
+    "_id" : ObjectId("59a40ca9971d3f15aa85830d"), 
+    "email" : "aaaa@aa.it", 
+    "surname" : "Pallino", 
+    "name" : "Pinco", 
+    "gender" : "M", 
+    "__v" : NumberInt(0), 
+    "deleted" : true, 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573")
+}

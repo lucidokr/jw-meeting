@@ -1,0 +1,513 @@
+{ 
+    "_id" : ObjectId("5a5b55d708ed0f0014dc8367"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "date" : ISODate("2018-02-21T11:00:00.000+0000"), 
+    "completed" : false, 
+    "type" : {
+        "withSupervisor" : true, 
+        "disableSchool" : false, 
+        "meeting" : true, 
+        "label" : "Adunanza normale", 
+        "id" : NumberInt(0)
+    }, 
+    "supervisor" : false, 
+    "primarySchool" : true, 
+    "secondarySchool" : true, 
+    "initialPrayer" : null, 
+    "finalPrayer" : null, 
+    "president" : null, 
+    "initialSong" : "  <a class=\"pubSym-sjj\" data-page-id=\"mid1102016845\" href=\"/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/45-la-meditazione-del-mio-cuore/\">Cantico&#xA0;45</a> e preghiera", 
+    "finalSong" : "  <a target=\"_blank\" class=\"pubSym-sjj\" data-page-id=\"mid1102016934\" href=\"https://wol.jw.org/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/134-figli-un-tesoro-affidato-da-Dio/\">Cantico 134</a> e preghiera", 
+    "intervalSong" : "  <a target=\"_blank\" class=\"pubSym-sjj\" data-page-id=\"mid1102016878\" href=\"https://wol.jw.org/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/78-insegnando-la-parola-di-dio/\">Cantico&#xA0;78</a>", 
+    "congregationBibleStudy" : {
+        "brother" : null, 
+        "label" : "  <strong>Studio biblico di congregazione: </strong>(30 min) <a target=\"_blank\" class=\"pubSym-jy\" data-page-id=\"mid1102014612\" href=\"https://wol.jw.org/it/pubblicazioni/libri/gesu/fino-al-ministero-di-gesu/cresce-a-nazaret/\"><em>jy </em>cap.&#xA0;9</a>", 
+        "reader" : null
+    }, 
+    "christianLivingPart" : [
+        {
+            "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" class=\"pubSym-mwb18\" data-page-id=\"mid202018051\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/programma-adunanza-19-25-feb/usiamo-efficacemente-domande/\"><strong>Affiniamo le nostre capacit&#xE0; nel ministero. Usiamo efficacemente le domande</strong></a><strong>&#x201D;: </strong>(15 min) Trattazione. Fai vedere il video <a target=\"_blank\" href=\"http://mediator.jw.org/finder?item=pub-jwbcov_201505_6_VIDEO&amp;lang=I\" data-video=\"webpubvid://?pub=jwbcov&amp;issue=201505&amp;track=6\" target=\"_blank\"><em>Compiamo l&#x2019;opera a cui si dedic&#xF2; Ges&#xF9;. Insegniamo</em></a>.", 
+            "brother" : ObjectId("594bdbd83545c51678fbad0f"), 
+            "_id" : ObjectId("5a5b55d708ed0f0014dc8368")
+        }
+    ], 
+    "bibleStudy" : {
+        "label" : "  <strong>Video della seconda visita ulteriore: </strong>(5&#xA0;min) Mostra il video e trattalo con l&#x2019;uditorio.", 
+        "video" : true, 
+        "secondarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "returnVisit" : {
+        "label" : "  <strong>Prima visita ulteriore: </strong>(3&#xA0;min o meno) Usa la <a target=\"_blank\" class=\"pubSym-mwb18\" data-highlightrange=\"p6-p9\" data-page-id=\"mid202018042\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/conversazioni-ministero/#p6\">conversazione modello</a>.", 
+        "video" : false, 
+        "secondarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "initialCall" : {
+        "label" : "  <strong>Primo contatto: </strong>(2&#xA0;min o meno) Inizia con la <a target=\"_blank\" class=\"pubSym-mwb18\" data-highlightrange=\"p2-p5\" data-page-id=\"mid202018042\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/conversazioni-ministero/#p2\">conversazione modello</a>. Rispondi a un&#x2019;obiezione comune nel territorio.", 
+        "video" : false, 
+        "secondarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "bibleReading" : {
+        "label" : "  <strong>Lettura biblica: </strong>(4&#xA0;min o meno) <a target=\"_blank\" class=\" jsBibleLink\" data-bible=\"nwt\" data-requested-bible=\"\" data-targetverses=\"40016001-40016020\" href=\"https://wol.jw.org/it/pubblicazioni/bibbia/nwt/libri/matteo/16/#v40016001-v40016020\" target=\"_blank\">Mt 16:1-20</a>", 
+        "secondarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "presentationExercise" : {
+        "enabled" : false, 
+        "brother" : null, 
+        "label" : ""
+    }, 
+    "gems" : {
+        "brother" : null, 
+        "label" : "  <strong>Scaviamo per trovare gemme spirituali: </strong>(8&#xA0;min)"
+    }, 
+    "talk" : {
+        "brother" : null, 
+        "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" class=\"pubSym-mwb18\" data-page-id=\"mid202018050\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/programma-adunanza-19-25-feb/chi-dietro-nostri-pensieri/\"><strong>Chi c&#x2019;&#xE8; dietro ai nostri pensieri?</strong></a><strong>&#x201D;: </strong>(10 min)"
+    }, 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5a5b55d708ed0f0014dc8361"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "date" : ISODate("2018-02-07T11:00:00.000+0000"), 
+    "completed" : false, 
+    "type" : {
+        "withSupervisor" : true, 
+        "disableSchool" : false, 
+        "meeting" : true, 
+        "label" : "Adunanza normale", 
+        "id" : NumberInt(0)
+    }, 
+    "supervisor" : false, 
+    "primarySchool" : true, 
+    "secondarySchool" : true, 
+    "initialPrayer" : null, 
+    "finalPrayer" : null, 
+    "president" : null, 
+    "initialSong" : "  <a class=\"pubSym-sjj\" data-page-id=\"mid1102016827\" href=\"/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/27-rivelazione-dei-figli-di-dio/\">Cantico&#xA0;27</a> e preghiera", 
+    "finalSong" : "  <a target=\"_blank\" class=\"pubSym-sjj\" data-page-id=\"mid1102016810\" href=\"https://wol.jw.org/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/10-lodiamo-geova-il-nostro-dio/\">Cantico&#xA0;10</a> e preghiera", 
+    "intervalSong" : "  <a target=\"_blank\" class=\"pubSym-sjj\" data-page-id=\"mid1102016868\" href=\"https://wol.jw.org/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/68-seminiamo-seme-del-regno/\">Cantico&#xA0;68</a>", 
+    "congregationBibleStudy" : {
+        "brother" : null, 
+        "label" : "  <strong>Studio biblico di congregazione: </strong>(30 min) <a target=\"_blank\" class=\"pubSym-jy\" data-page-id=\"mid1102014610\" href=\"https://wol.jw.org/it/pubblicazioni/libri/gesu/fino-al-ministero-di-gesu/astrologi-fanno-visita/\"><em>jy </em>cap.&#xA0;7</a>", 
+        "reader" : null
+    }, 
+    "christianLivingPart" : [
+        {
+            "label" : "  <strong>Bisogni locali: </strong>(5&#xA0;min)", 
+            "brother" : ObjectId("594bdb043545c51678fbad09"), 
+            "_id" : ObjectId("5a5b55d708ed0f0014dc8363")
+        }, 
+        {
+            "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" class=\"pubSym-mwb18\" data-page-id=\"mid202018045\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/programma-adunanza-5-11-feb/parabole-regno-cosa-impariamo/\"><strong>Cosa impariamo dalle parabole relative al Regno</strong></a><strong>&#x201D;: </strong>(10 min) Trattazione. Considera in che modo queste parabole dovrebbero influire sul nostro ministero.", 
+            "brother" : ObjectId("594bdbcc3545c51678fbad0e"), 
+            "_id" : ObjectId("5a5b55d708ed0f0014dc8362")
+        }
+    ], 
+    "bibleStudy" : {
+        "label" : "  <strong>Studio biblico: </strong>(6&#xA0;min o meno) <a target=\"_blank\" class=\"pubSym-bhs\" data-highlightrange=\"p14-p16\" data-page-id=\"mid1102015142\" href=\"https://wol.jw.org/it/pubblicazioni/libri/corso-biblico/cos-e-la-bibbia/#p14\"><em>bhs </em>22-23 parr.&#xA0;10-12</a>", 
+        "video" : false, 
+        "secondarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "isTalk" : false, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "isTalk" : false, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "returnVisit" : {
+        "label" : "  <strong>Prima visita ulteriore: </strong>(3&#xA0;min o meno) Usa la <a target=\"_blank\" class=\"pubSym-mwb18\" data-highlightrange=\"p6-p9\" data-page-id=\"mid202018042\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/conversazioni-ministero/#p6\">conversazione modello</a>.", 
+        "video" : false, 
+        "secondarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "initialCall" : {
+        "label" : "  <strong>Video del primo contatto: </strong>(4&#xA0;min) Mostra il video e trattalo con l&#x2019;uditorio.", 
+        "video" : true, 
+        "secondarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "bibleReading" : {
+        "label" : "  <strong>Lettura biblica: </strong>(4&#xA0;min o meno) <a target=\"_blank\" class=\" jsBibleLink\" data-bible=\"nwt\" data-requested-bible=\"\" data-targetverses=\"40012001-40012021\" href=\"https://wol.jw.org/it/pubblicazioni/bibbia/nwt/libri/matteo/12/#v40012001-v40012021\" target=\"_blank\">Mt 12:1-21</a>", 
+        "secondarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "presentationExercise" : {
+        "enabled" : false, 
+        "brother" : null, 
+        "label" : ""
+    }, 
+    "gems" : {
+        "brother" : null, 
+        "label" : "  <strong>Scaviamo per trovare gemme spirituali: </strong>(8&#xA0;min)"
+    }, 
+    "talk" : {
+        "brother" : null, 
+        "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" class=\"pubSym-mwb18\" data-page-id=\"mid202018044\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/programma-adunanza-5-11-feb/parabola-grano-e-zizzanie/\"><strong>La parabola del grano e delle zizzanie</strong></a><strong>&#x201D;: </strong>(10 min)"
+    }, 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5a5b55d708ed0f0014dc8369"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "date" : ISODate("2018-02-28T11:00:00.000+0000"), 
+    "completed" : false, 
+    "type" : {
+        "withSupervisor" : false, 
+        "disableSchool" : false, 
+        "meeting" : false, 
+        "label" : "Assemblea speciale di un giorno", 
+        "id" : NumberInt(2)
+    }, 
+    "supervisor" : false, 
+    "primarySchool" : true, 
+    "secondarySchool" : true, 
+    "initialPrayer" : null, 
+    "finalPrayer" : null, 
+    "president" : null, 
+    "initialSong" : "  <a class=\"pubSym-sjj\" data-page-id=\"mid1102016921\" href=\"/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/121-abbiamo-bisogno-di-autocontrollo/\">Cantico 121</a> e preghiera", 
+    "finalSong" : "  <a target=\"_blank\" class=\"pubSym-sjj\" data-page-id=\"mid1102016933\" href=\"https://wol.jw.org/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/133-adorate-geova-nella-giovinezza/\">Cantico 133</a> e preghiera", 
+    "intervalSong" : "  <a target=\"_blank\" class=\"pubSym-sjj\" data-page-id=\"mid1102016890\" href=\"https://wol.jw.org/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/90-incoraggiamoci-l-un-l-altro/\">Cantico&#xA0;90</a>", 
+    "congregationBibleStudy" : {
+        "brother" : null, 
+        "label" : "  <strong>Studio biblico di congregazione: </strong>(30 min) <a target=\"_blank\" class=\"pubSym-jy\" data-page-id=\"mid1102014613\" href=\"https://wol.jw.org/it/pubblicazioni/libri/gesu/fino-al-ministero-di-gesu/vanno-a-gerusalemme/\"><em>jy </em>cap.&#xA0;10</a> e riquadro &#x201C;<a target=\"_blank\" class=\"pubSym-jy\" data-highlightrange=\"p14-p15\" data-page-id=\"mid1102014613\" href=\"https://wol.jw.org/it/pubblicazioni/libri/gesu/fino-al-ministero-di-gesu/vanno-a-gerusalemme/#p14\">Viaggi gioiosi</a>&#x201D;", 
+        "reader" : null
+    }, 
+    "christianLivingPart" : [
+        {
+            "label" : "  <strong><em>Non diveniamo mai una causa d&#x2019;inciampo </em>(</strong><a target=\"_blank\" class=\" jsBibleLink\" data-bible=\"nwt\" data-requested-bible=\"\" data-targetverses=\"47006003\" href=\"https://wol.jw.org/it/pubblicazioni/bibbia/nwt/libri/2-corinti/6/#v47006003\" target=\"_blank\"><strong>2Co 6:3</strong></a><strong>): </strong>(9&#xA0;min) Fai vedere il <a target=\"_blank\" href=\"http://mediator.jw.org/finder?item=pub-jwbmw_201610_1_VIDEO&amp;lang=I\" data-video=\"webpubvid://?pub=jwbmw&amp;issue=201610&amp;track=1\" target=\"_blank\">video</a>.", 
+            "brother" : null, 
+            "_id" : ObjectId("5a5b55d708ed0f0014dc836b")
+        }, 
+        {
+            "label" : "  <strong>Il 3&#xA0;marzo inizier&#xE0; la campagna per la Commemorazione: </strong>(6&#xA0;min) Discorso basato sull&#x2019;articolo &#x201C;<a target=\"_blank\" class=\"pubSym-mwb16\" data-page-id=\"mid202016052\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/mwb-febbraio-2016/programma-adunanza-22-28-febbraio/presentazione-invito-commemorazione/\">Invitiamo tutte le persone del nostro territorio alla Commemorazione!</a>&#x201D; della <em>Guida per l&#x2019;adunanza Vita e ministero </em>del febbraio 2016. Predisponi che venga data una copia dell&#x2019;invito alla Commemorazione a tutti i presenti e analizzane il contenuto. Specifica che il discorso speciale &#x201C;Chi &#xE8; veramente Ges&#xF9; Cristo?&#x201D; sar&#xE0; pronunciato la settimana del 19&#xA0;marzo 2018. In questo modo si creer&#xE0; aspettativa per la Commemorazione. Spiega cosa si far&#xE0; a livello locale per percorrere tutto il territorio.", 
+            "brother" : null, 
+            "_id" : ObjectId("5a5b55d708ed0f0014dc836a")
+        }
+    ], 
+    "bibleStudy" : {
+        "label" : "  <strong>Studio biblico: </strong>(6&#xA0;min o meno) <a target=\"_blank\" class=\"pubSym-bhs\" data-highlightrange=\"p24-p26\" data-page-id=\"mid1102015142\" href=\"https://wol.jw.org/it/pubblicazioni/libri/corso-biblico/cos-e-la-bibbia/#p24\"><em>bhs </em>26 parr.&#xA0;18-20</a>. Cerca di arrivare al cuore dello studente.", 
+        "video" : false, 
+        "secondarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "isTalk" : false, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "isTalk" : false, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "returnVisit" : {
+        "label" : "  <strong>Terza visita ulteriore: </strong>(3&#xA0;min o meno) Scegli tu un passo biblico e offri una pubblicazione di studio.", 
+        "video" : false, 
+        "secondarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "initialCall" : {
+        "label" : "  <strong>Seconda visita ulteriore: </strong>(3&#xA0;min o meno) Usa la <a target=\"_blank\" class=\"pubSym-mwb18\" data-highlightrange=\"p10-p13\" data-page-id=\"mid202018042\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/conversazioni-ministero/#p10\">conversazione modello</a>.", 
+        "video" : false, 
+        "secondarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "bibleReading" : {
+        "label" : "  <strong>Lettura biblica: </strong>(4&#xA0;min o meno) <a target=\"_blank\" class=\" jsBibleLink\" data-bible=\"nwt\" data-requested-bible=\"\" data-targetverses=\"40018018-40018035\" href=\"https://wol.jw.org/it/pubblicazioni/bibbia/nwt/libri/matteo/18/#v40018018-v40018035\" target=\"_blank\">Mt 18:18-35</a>", 
+        "secondarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "presentationExercise" : {
+        "enabled" : false, 
+        "brother" : null, 
+        "label" : ""
+    }, 
+    "gems" : {
+        "brother" : null, 
+        "label" : "  <strong>Scaviamo per trovare gemme spirituali: </strong>(8&#xA0;min)"
+    }, 
+    "talk" : {
+        "brother" : null, 
+        "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" class=\"pubSym-mwb18\" data-page-id=\"mid202018053\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/programma-adunanza-26feb-4mar/non-sviarci-non-far-sviare-altri/\"><strong>Stiamo attenti a non sviarci e a non far sviare altri</strong></a><strong>&#x201D;: </strong>(10 min)"
+    }, 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5a5b55d708ed0f0014dc8364"), 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "date" : ISODate("2018-02-14T11:00:00.000+0000"), 
+    "completed" : false, 
+    "type" : {
+        "withSupervisor" : true, 
+        "disableSchool" : false, 
+        "meeting" : true, 
+        "label" : "Adunanza normale", 
+        "id" : NumberInt(0)
+    }, 
+    "supervisor" : false, 
+    "primarySchool" : true, 
+    "secondarySchool" : true, 
+    "initialPrayer" : null, 
+    "finalPrayer" : null, 
+    "president" : null, 
+    "initialSong" : "  <a class=\"pubSym-sjj\" data-page-id=\"mid1102016893\" href=\"/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/93-riuniti-per-adorare-dio/\">Cantico&#xA0;93</a> e preghiera", 
+    "finalSong" : "  <a target=\"_blank\" class=\"pubSym-sjj\" data-page-id=\"mid1102016948\" href=\"https://wol.jw.org/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/148-geova-il-nostro-liberatore/\">Cantico 148</a> e preghiera", 
+    "intervalSong" : "  <a target=\"_blank\" class=\"pubSym-sjj\" data-page-id=\"mid1102016935\" href=\"https://wol.jw.org/it/pubblicazioni/musica-cantici/cantiamo-a-geova-con-gioia/135-caloroso-invito-di-geova-sii-saggio-figlio-mio/\">Cantico&#xA0;135</a>", 
+    "congregationBibleStudy" : {
+        "brother" : null, 
+        "label" : "  <strong>Studio biblico di congregazione: </strong>(30 min) <a target=\"_blank\" class=\"pubSym-jy\" data-page-id=\"mid1102014611\" href=\"https://wol.jw.org/it/pubblicazioni/libri/gesu/fino-al-ministero-di-gesu/famiglia-fugge-in-egitto/\"><em>jy </em>cap.&#xA0;8</a>", 
+        "reader" : null
+    }, 
+    "christianLivingPart" : [
+        {
+            "label" : "  <strong><em>Trova nuovi amici</em>: </strong>(7&#xA0;min) Fai vedere questo <a target=\"_blank\" class=\"pubSym-ijw16\" data-page-id=\"mid502016285\" href=\"https://wol.jw.org/it/cosa-dice-la-Bibbia/bambini/diventa-amico-di-geova/video/trova-nuovi-amici/\">video</a> della serie <em>Diventa amico di Geova</em>. Poi invita sul podio bambini scelti in anticipo e fai loro le seguenti domande: Perch&#xE9; dovreste fare amicizia con quelli che amano Geova? Cosa potete imparare da loro?", 
+            "brother" : ObjectId("594bdb553545c51678fbad0c"), 
+            "_id" : ObjectId("5a5b55d708ed0f0014dc8366")
+        }, 
+        {
+            "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" class=\"pubSym-mwb18\" data-page-id=\"mid202018048\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/programma-adunanza-12-18-feb/onora-padre-e-madre/\"><strong>Onora tuo padre e tua madre</strong></a><strong>&#x201D;: </strong>(8&#xA0;min) Trattazione. Fai vedere la lavagna animata <a target=\"_blank\" class=\"pubSym-ijw17\" data-page-id=\"mid502017178\" href=\"https://wol.jw.org/it/cosa-dice-la-Bibbia/ragazzi/lavagna-animata/come-parlare-con-i-genitori/\"><em>Come faccio a parlare con i miei?</em></a>", 
+            "brother" : ObjectId("594bdb4e3545c51678fbad0b"), 
+            "_id" : ObjectId("5a5b55d708ed0f0014dc8365")
+        }
+    ], 
+    "bibleStudy" : {
+        "label" : "  <strong>Discorso: </strong>(6&#xA0;min o meno) <a target=\"_blank\" class=\"pubSym-w15\" data-highlightrange=\"p24-p27\" data-page-id=\"mid2015683\" href=\"https://wol.jw.org/it/pubblicazioni/riviste/w20150915/fermi-nella-fede-concentrati-su-ges%C3%B9/#p24\"><em>w15 </em>15/9 16-17 parr.&#xA0;14-17</a>. Tema: Rafforziamo la fede tenendo lo sguardo su Ges&#xF9;.", 
+        "video" : false, 
+        "secondarySchool" : {
+            "gender" : "M", 
+            "student" : null, 
+            "isTalk" : true, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "M", 
+            "student" : null, 
+            "isTalk" : true, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "returnVisit" : {
+        "label" : "  <strong>Video della prima visita ulteriore: </strong>(5&#xA0;min) Mostra il video e trattalo con l&#x2019;uditorio.", 
+        "video" : true, 
+        "secondarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "initialCall" : {
+        "label" : "  <strong>Primo contatto: </strong>(2&#xA0;min o meno) Usa la <a target=\"_blank\" class=\"pubSym-mwb18\" data-highlightrange=\"p2-p5\" data-page-id=\"mid202018042\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/conversazioni-ministero/#p2\">conversazione modello</a>.", 
+        "video" : false, 
+        "secondarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "gender" : "", 
+            "student" : null, 
+            "assistant" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "bibleReading" : {
+        "label" : "  <strong>Lettura biblica: </strong>(4&#xA0;min o meno) <a target=\"_blank\" class=\" jsBibleLink\" data-bible=\"nwt\" data-requested-bible=\"\" data-targetverses=\"40015001-40015020\" href=\"https://wol.jw.org/it/pubblicazioni/bibbia/nwt/libri/matteo/15/#v40015001-v40015020\" target=\"_blank\">Mt 15:1-20</a>", 
+        "secondarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }, 
+        "primarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0), 
+            "pointCompleted" : false
+        }
+    }, 
+    "presentationExercise" : {
+        "enabled" : false, 
+        "brother" : null, 
+        "label" : ""
+    }, 
+    "gems" : {
+        "brother" : null, 
+        "label" : "  <strong>Scaviamo per trovare gemme spirituali: </strong>(8&#xA0;min)"
+    }, 
+    "talk" : {
+        "brother" : null, 
+        "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" class=\"pubSym-mwb18\" data-page-id=\"mid202018047\" href=\"https://wol.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-febbraio-2018/programma-adunanza-12-18-feb/nutrire-molti-per-mezzo-di-pochi/\"><strong>Nutrire molti per mezzo di pochi</strong></a><strong>&#x201D;: </strong>(10 min)"
+    }, 
+    "__v" : NumberInt(0)
+}

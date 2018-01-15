@@ -25,8 +25,8 @@ export class WTJService {
       dateStartStr = dateStart.date()
       dateEndStr = dateEnd.date()+"-"+dateStart.format("MMM")
     }else{
-      dateStartStr = dateStart.date() + dateStart.format("MMM")
-      dateEndStr = dateEnd.date() + dateEnd.format("MMM")
+      dateStartStr = dateStart.date() + "-" + dateStart.format("MMM")
+      dateEndStr = dateEnd.date() + "-" + dateEnd.format("MMM")
     }
     return this.http.get(environment.url+"/wtj/"+date.year()+"/"+(date.format('MMMM'))+"/"+dateStartStr+"/"+dateEndStr, null)
       .map(json => {

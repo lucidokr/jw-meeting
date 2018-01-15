@@ -422,11 +422,11 @@ router.route('/pgm/:year/:month')
 
 .get(function(req, res) {
 
-    var startMonth = parseInt(req.params.month);
-    var startYear = parseInt(req.params.year);
+    var startMonth = req.params.month;
+    var startYear = req.params.year;
     var endYear = parseInt(req.params.year);
     var endMonth = parseInt(req.params.month);
-    if(startMonth == 12) {
+    if(startMonth == "12") {
       endMonth = "01";
       endYear++;
       endYear = endYear + "";
@@ -434,11 +434,14 @@ router.route('/pgm/:year/:month')
       endMonth++;
       endMonth = endMonth + "";
     }
-    if(startMonth+"".length == 1)
+    if(startMonth.length == 1)
       startMonth = "0"+startMonth;
 
     if(endMonth.length == 1)
       endMonth = "0"+endMonth;
+
+      // console.log(startYear+ "-" +startMonth)
+      // console.log(endYear+ "-" +endMonth)
     Week
     // .where('date').gte(new Date(req.params.year, req.params.month, 6)).lte(new Date(req.params.year, req.params.month + 1, 3))
         .find({

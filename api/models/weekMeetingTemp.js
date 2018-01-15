@@ -110,6 +110,7 @@ var WeekMeetingTempSchema   = new Schema(
   },
   christianLivingPart: [{
     brother: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
+    president: Boolean,
     label: String
   }],
   congregationBibleStudy: {

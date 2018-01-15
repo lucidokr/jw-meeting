@@ -177,7 +177,8 @@ export class NewPgmPreviewComponent implements OnInit{
 
         let arrChristianLivingPartBrother = [];
         for (let part of week.christianLivingPart){
-          arrChristianLivingPartBrother.push(part.brother._id);
+          if(!part.president)
+            arrChristianLivingPartBrother.push(part.brother._id);
         }
 
         /**PRESIDENT**/
@@ -192,6 +193,12 @@ export class NewPgmPreviewComponent implements OnInit{
                   brother.elder.presidentEnabled
                   && ((week.presentationExercise.enabled && brother._id != week.presentationExercise.brother._id) || !week.presentationExercise.enabled));
           week.president = {...presidentList[0]};
+        }
+        for (let part of week.christianLivingPart){
+          if(part.president){
+            part.brother = week.president
+            arrChristianLivingPartBrother.push(part.brother._id);
+          }
         }
         this.presidentList = this.presidentList.filter(brother => brother._id != week.president._id);
         this.presidentList.push(week.president);
