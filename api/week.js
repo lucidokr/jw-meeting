@@ -278,7 +278,10 @@ router.route('/')
                             if (!week.presentationExercise.enabled) {
                                 if (brother.student) {
                                     var arr = ["initialCall", "returnVisit", "bibleStudy"];
-                                    var schools = ["primarySchool", "secondarySchool"];
+                                    var schools = ["primarySchool"];
+                                    if(week.secondarySchool){
+                                      schools.push("secondarySchool");
+                                    }
                                     arr.forEach(function(partType) {
                                       if ( !week[partType].video){
                                         schools.forEach(function(school) {
