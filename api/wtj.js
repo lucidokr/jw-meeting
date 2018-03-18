@@ -9,7 +9,7 @@ const cache = new NodeCache();
 router.route('/:year/:month/:dayStart/:dayEnd')
 
 .get(function(req, res) {
-    var value = cache.get("WOL_" + req.params.year + '_' + req.params.month + '_' + req.params.day);
+    var value = cache.get("WOL_" + req.params.year + '_' + req.params.month + '_' + req.params.dayStart);
     if (value !== undefined) {
         console.log("cached value WOL");
         res.json(value);
