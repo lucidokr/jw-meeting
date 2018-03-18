@@ -6,26 +6,6 @@ var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN});
 var fs = require('fs');
 var path = require('path');
 
-var data = {
-  from: 'Excited User <noreply@'+DOMAIN+'>',
-  to: 'bar@example.com, YOU@YOUR_DOMAIN_NAME',
-  subject: 'Hello',
-  text: 'Testing some Mailgun awesomness!'
-};
-
-var data = {
-  from: 'Excited User <noreply@'+DOMAIN+'>',
-  to: to,
-  subject: 'Complex',
-  text: 'Testing some Mailgun awesomness!',
-  html: "<html>HTML version of the body</html>"
-};
-
-mailgun.messages().send(data, function (error, body) {
-  console.log(body);
-});
-
-
 var MAIL = {
     template: null,
 
@@ -42,7 +22,7 @@ var MAIL = {
     },
 
     sendMail: function(mailOptions) {
-      mailgun.messages().send(data, function (error, body) {
+      mailgun.messages().send(mailOptions, function (error, body) {
         if (error) {
           return console.log(error);
         }
@@ -61,9 +41,9 @@ var MAIL = {
 
     sendToEmailAddress: function(subject, text, to) {
 
-        if (!this.transporter) {
-            this.createTransporter();
-        }
+        // if (!this.transporter) {
+        //     this.createTransporter();
+        // }
         var mailOptions = {
             from: 'Adunanza Vita Cristiana e Ministero <noreply@'+DOMAIN+'>',
             to: to,
@@ -72,7 +52,7 @@ var MAIL = {
         };
 
         if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
-            mailOptions.to = 'kristianl_91@hotmail.it'
+          mailOptions.to = 'lucido.kristian@gmail.com'
         }
         this.sendMail(mailOptions)
 
@@ -93,9 +73,9 @@ var MAIL = {
                 })
 
                 if (arr && arr.length > 0) {
-                    if (!that.transporter) {
-                        that.createTransporter();
-                    }
+                    // if (!that.transporter) {
+                    //     that.createTransporter();
+                    // }
                     var date = new Date(req.body[0].date);
                     var str = (date.getMonth() + 1) + "/" + date.getFullYear();
 
@@ -107,7 +87,7 @@ var MAIL = {
                   };
 
                     if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
-                        mailOptions.to = 'kristianl_91@hotmail.it'
+                      mailOptions.to = 'lucido.kristian@gmail.com'
                     }
                     that.sendMail(mailOptions)
                 }

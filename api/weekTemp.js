@@ -10,7 +10,7 @@ var XLSX = require('xlsx');
 var nodemailer = require('nodemailer');
 var fs = require('fs')
 var path = require('path');
-var MAIL = require('./mail/send-mail');
+var MAIL = require('./mail/send-mailgun');
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
     var config = require('./env.json')['development'];

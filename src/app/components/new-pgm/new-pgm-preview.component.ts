@@ -1076,6 +1076,11 @@ export class NewPgmPreviewComponent implements OnInit{
 
           this.meetingService.getPgm(week.date.year(), week.date.month()).subscribe((res : Array<WeekMeeting>) => {
             this.dialogService.openDownloadWeeksDialog(res, true, "PDF")
+            this.loadingInsertPgm = false;
+          },error => {
+            console.log(error)
+            this.loadingInsertPgm = false;
+            this.dialogService.showError("Errore nella creazione del programma. Contattare l'amministratore.")
           });
 
         });

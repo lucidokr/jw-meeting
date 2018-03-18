@@ -40,6 +40,9 @@ export class WeekStudyNumberUpdateComponent implements OnInit{
       this.PART_TYPE = [CONST.BIBLE_READING];
       this.SCHOOLS = [CONST.PRIMARY_SCHOOL];
     }
+    if(!this.week.secondarySchool){
+      this.SCHOOLS = [CONST.PRIMARY_SCHOOL];
+    }
     this.snackBarConfig.duration = 3000;
   }
 

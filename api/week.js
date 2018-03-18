@@ -10,7 +10,7 @@ var XLSX = require('xlsx');
 var nodemailer = require('nodemailer');
 var fs = require('fs')
 var path = require('path');
-var MAIL = require('./mail/send-mail');
+var MAIL = require('./mail/send-mailgun');
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
     var config = require('./env.json')['development'];
@@ -199,8 +199,8 @@ router.route('/')
                                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailToSend.push({
                                             to: brother.email,
-                                            subject: "Preghiera iniziale - ",
-                                            text: "Ciao " + brother.name + " " + brother.surname + ", ti è stata assegnata la preghiera iniziale dell'adunanza Vita Cristiana e Ministero che si svolgerà in data: " + strDate
+                                            subject: "Preghiera iniziale",
+                                            text: "Ciao " + brother.name + " " + brother.surname + ",\nti è stata assegnata la preghiera iniziale dell'adunanza Vita Cristiana e Ministero che si svolgerà in data: " + strDate
                                         })
                                     }
                                 }
@@ -209,8 +209,8 @@ router.route('/')
                                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailToSend.push({
                                             to: brother.email,
-                                            subject: "Preghiera finale - ",
-                                            text: "Ciao " + brother.name + " " + brother.surname + ", ti è stata assegnata la preghiera finale dell'adunanza Vita Cristiana e Ministero che si svolgerà in data: " + strDate
+                                            subject: "Preghiera finale",
+                                            text: "Ciao " + brother.name + " " + brother.surname + ",\nti è stata assegnata la preghiera finale dell'adunanza Vita Cristiana e Ministero che si svolgerà in data: " + strDate
                                         })
                                     }
                                     brother.prayer.prevDate = brother.prayer.date;
@@ -223,17 +223,18 @@ router.route('/')
                                 if (brother._id == week.congregationBibleStudy.reader._id) {
                                     brother.reader.prevDate = brother.reader.date;
                                     brother.reader.date = week.date;
+                                    if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                                      mailToSend.push({
+                                          to: brother.email,
+                                          subject: "Lettura dello studio biblico",
+                                          text: "Ciao " + brother.name + " " + brother.surname + ",\n ti è stata assegnata la lettura dello studio biblico in data: " + strDate
+                                      })
+                                  }
                                 }
 
                                 objToSave.push(brother.reader)
 
-                                if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                                    mailToSend.push({
-                                        to: brother.email,
-                                        subject: "Lettura dello studio biblico - ",
-                                        text: "Ciao " + brother.name + " " + brother.surname + ", ti è stata assegnata la lettura dello studio biblico in data: " + strDate
-                                    })
-                                }
+
                             }
                             if (brother.student) {
                                 if (brother._id == week.bibleReading.primarySchool.student._id) {
