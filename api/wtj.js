@@ -9,11 +9,11 @@ const cache = new NodeCache();
 router.route('/:year/:month/:dayStart/:dayEnd')
 
 .get(function(req, res) {
-    var value = cache.get("WOL_" + req.params.year + '_' + req.params.month + '_' + req.params.dayStart);
-    if (value !== undefined) {
-        console.log("cached value WOL");
-        res.json(value);
-    } else {
+    // var value = cache.get("WOL_" + req.params.year + '_' + req.params.month + '_' + req.params.dayStart);
+    // if (value !== undefined) {
+    //     console.log("cached value WOL");
+    //     res.json(value);
+    // } else {
 
       var url = 'https://www.jw.org/it/pubblicazioni/guida-attivita-adunanza/guida-adunanza-' + req.params.month + '-' + req.params.year + '/programma-adunanza-' + req.params.dayStart + '-' + req.params.dayEnd+'/';
       console.log(url);
@@ -97,7 +97,7 @@ router.route('/:year/:month/:dayStart/:dayEnd')
                     bibleStudy: ''
                 });
             })
-    }
+    // }
 
 });
 
