@@ -1,10 +1,17 @@
+if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
+  var config = require('./env.json')['development'];
+  process.env.MONGO_DB_URI = config.MONGO_DB_URI;
+  process.env.SECRET = config.SECRET;
+  process.env.API_KEY_MAILGUN = config.API_KEY_MAILGUN;
+  process.env.DOMAIN_MAILGUN = config.DOMAIN_MAILGUN;
+  process.env.SEND_ASSEGNATION = config.SEND_ASSEGNATION;
+}
 var mailgun = require("mailgun-js");
 var User = require('../models/user');
-var api_key = 'key-182e65a25ef6a1dd1302598d5954d622';
-var DOMAIN = 'jw-meeting.com';
-var mailgun = require('mailgun-js')({apiKey: api_key, domain: DOMAIN});
+var mailgun = require('mailgun-js')({apiKey: process.env.API_KEY_MAILGUN, domain: process.env.DOMAIN_MAILGUN});
 var fs = require('fs');
 var path = require('path');
+
 
 var MAIL = {
     template: null,
@@ -45,7 +52,7 @@ var MAIL = {
         //     this.createTransporter();
         // }
         var mailOptions = {
-            from: 'Adunanza Vita Cristiana e Ministero <noreply@'+DOMAIN+'>',
+            from: 'Adunanza Vita Cristiana e Ministero <noreply@'+process.env.DOMAIN_MAILGUN+'>',
             to: to,
             subject: subject,
             text: text,
@@ -80,7 +87,7 @@ var MAIL = {
                     var str = (date.getMonth() + 1) + "/" + date.getFullYear();
 
                     var mailOptions = {
-                      from: 'Adunanza Vita Cristiana e Ministero <noreply@'+DOMAIN+'>',
+                      from: 'Adunanza Vita Cristiana e Ministero <noreply@'+process.env.DOMAIN_MAILGUN+'>',
                       to: arr.join(","),
                       subject: subject,
                       text: text,
@@ -134,7 +141,7 @@ var MAIL = {
             });
 
             var mailOptions = {
-                from: 'Adunanza Vita Cristiana e Ministero <noreply@'+DOMAIN+'>',
+                from: 'Adunanza Vita Cristiana e Ministero <noreply@'+process.env.DOMAIN_MAILGUN+'>',
                 to: mail,
                 subject: 'Assegnazione ' + data.type + ' - ' + data.date,
                 html: tempMail

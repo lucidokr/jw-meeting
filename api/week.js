@@ -121,6 +121,10 @@ router.route('/')
                     .populate('prayer')
                     .populate('reader')
                     .populate('student')
+                    .populate('student.bibleReadingStudyNumber')
+                    .populate('student.bibleReadingPendingStudyNumber')
+                    .populate('student.studyNumber')
+                    .populate('student.pendingStudyNumber')
                     .exec(function(err, brothers) {
                         if (err) {
                             console.error('Week Meeting create - Brother Find -  error:', err);
