@@ -95,7 +95,7 @@ var MAIL = {
           };
 
           if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
-            mailOptions.to = 'lucido.kristian@gmail.com'
+            mailOptions.to = 'kristianl_91@hotmail.it'
           }
           that.sendMail(mailOptions)
         });
@@ -134,7 +134,7 @@ var MAIL = {
                     };
 
                       if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
-                        mailOptions.to = 'lucido.kristian@gmail.com'
+                        mailOptions.to = 'kristianl_91@hotmail.it'
                       }
                       that.sendMail(mailOptions)
                   }
@@ -205,7 +205,7 @@ var MAIL = {
 
 
             if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
-                mailOptions.to = 'lucido.kristian@gmail.com'
+                mailOptions.to = 'kristianl_91@hotmail.it'
             }
 
             this.sendMail(mailOptions)
