@@ -47,7 +47,7 @@ var MAIL = {
         if (list && list.length > 0) {
             var that = this;
             list.forEach(function(data) {
-                that.sendToEmailAddress(data.subject, data.text, data.to)
+                that.sendToEmailAddress(data.brother, data.subject, data.text, data.to)
             });
         }
     },

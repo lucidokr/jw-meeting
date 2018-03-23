@@ -24,6 +24,12 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
 var templateMail = "";
 var transporter = null;
 
+const MONTH_NAMES = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+  "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+];
+
+const DAY_NAMES = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"];
+
 
 
 router.route('/')
@@ -137,7 +143,10 @@ router.route('/')
                             var objToSave = [];
 
                             var date = new Date(week.date);
-                            var strDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                            // var strDate = date.toLocaleString("it-it", { month: "long" });
+                            var month = MONTH_NAMES[date.getMonth()-1];
+                            var day = DAY_NAMES[date.getDay()-1];
+                            var strDate = day+" " +date.getDate() + " " + month + " " + date.getFullYear();
 
                             if (brother.elder) {
                                 if (brother._id == week.president._id) {
@@ -202,20 +211,22 @@ router.route('/')
                                     brother.prayer.date = week.date;
                                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailToSend.push({
+                                            brother: brother.name+ ' '+ brother.surname,
                                             to: brother.email,
-                                            subject: "Preghiera iniziale",
-                                            text: "Ciao " + brother.name + " " + brother.surname + ",\nti è stata assegnata la preghiera iniziale dell'adunanza Vita Cristiana e Ministero che si svolgerà in data: " + strDate
-                                        })
+                                            subject: "Preghiera iniziale - "+strDate,
+                                            text: "Ti è stata assegnata la preghiera iniziale dell'adunanza che si svolgerà il giorno " + strDate
+                                        });
                                     }
                                 }
 
                                 if (brother._id == week.finalPrayer._id) {
                                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                         mailToSend.push({
+                                            brother: brother.name+ ' '+ brother.surname,
                                             to: brother.email,
-                                            subject: "Preghiera finale",
-                                            text: "Ciao " + brother.name + " " + brother.surname + ",\nti è stata assegnata la preghiera finale dell'adunanza Vita Cristiana e Ministero che si svolgerà in data: " + strDate
-                                        })
+                                            subject: "Preghiera finale - "+strDate,
+                                            text: "Ti è stata assegnata la preghiera finale dell'adunanza che si svolgerà il giorno " + strDate
+                                        });
                                     }
                                     brother.prayer.prevDate = brother.prayer.date;
                                     brother.prayer.date = week.date;
@@ -229,9 +240,10 @@ router.route('/')
                                     brother.reader.date = week.date;
                                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                       mailToSend.push({
+                                          brother: brother.name+ ' '+ brother.surname,
                                           to: brother.email,
-                                          subject: "Lettura dello studio biblico",
-                                          text: "Ciao " + brother.name + " " + brother.surname + ",\n ti è stata assegnata la lettura dello studio biblico in data: " + strDate
+                                          subject: "Lettura dello studio biblico - "+strDate,
+                                          text: "Ti è stata assegnata la lettura dello studio biblico dell'adunanza che si svolgerà il giorno " + strDate
                                       })
                                   }
                                 }
@@ -256,7 +268,14 @@ router.route('/')
                                     }
                                     objToSave.push(brother.student);
                                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                                        mailAssegnationToSend.push({ mail: brother.email, brother: brother.surname + ' ' + brother.name, assistant: '', type: "bibleReading", school: brother.student.lastSchool, date: week.date, point: brother.student.bibleReadingPendingStudyNumber })
+                                        mailAssegnationToSend.push({
+                                          mail: brother.email,
+                                          brother: brother.surname + ' ' + brother.name,
+                                          assistant: null,
+                                          type: week.bibleReading.label,
+                                          school: brother.student.lastSchool,
+                                          date: strDate,
+                                          point: brother.student.bibleReadingPendingStudyNumber })
                                     }
                                 }
 
@@ -276,7 +295,16 @@ router.route('/')
                                     // brother.student.bibleReadingPendingStudyNumber = brother.student.bibleReadingStudyNumber;
                                     objToSave.push(brother.student)
                                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                                        mailAssegnationToSend.push({ mail: brother.email, brother: brother.surname + ' ' + brother.name, assistant: '', type: "bibleReading", school: brother.student.lastSchool, date: week.date, point: brother.student.bibleReadingPendingStudyNumber })
+                                        console.log("Bible reading study number:"+ brother.student.bibleReadingPendingStudyNumber);
+                                        mailAssegnationToSend.push({
+                                          mail: brother.email,
+                                          brother: brother.surname + ' ' + brother.name,
+                                          assistant: null,
+                                          type: week.bibleReading.label,
+                                          school: brother.student.lastSchool,
+                                          date: week.date,
+                                          point: brother.student.bibleReadingPendingStudyNumber
+                                        })
                                     }
                                 }
                             }
@@ -304,11 +332,19 @@ router.route('/')
                                                     brother.student.pendingStudyNumber = week[partType][school].student.student.pendingStudyNumber;
                                                 }
 
-                                                objToSave.push(brother.student)
+                                                objToSave.push(brother.student);
                                                 if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                                                    var obj = { mail: brother.email, brother: brother.surname + ' ' + brother.name, assistant: '', type: (week[partType][school].isTalk ? 'talk' : partType), school: brother.student.lastSchool, date: week.date, point: brother.student.pendingStudyNumber };
-                                                    obj.assistant = (week[partType][school].assistant ? week[partType][school].assistant.surname + ' ' + week[partType][school].assistant.name : '')
-                                                    mailAssegnationToSend.push({ mail: brother.email, brother: brother.surname + ' ' + brother.name, type: partType, school: brother.student.lastSchool, date: week.date, point: brother.student.pendingStudyNumber })
+                                                    console.log("Assistant:"+ week[partType][school].assistant);
+                                                    console.log("Study number:"+ brother.student.pendingStudyNumber);
+                                                    mailAssegnationToSend.push({
+                                                      mail: brother.email,
+                                                      brother: brother.name + ' ' + brother.surname,
+                                                      assistant: (week[partType][school].assistant ? '<h3>Assistente: '+week[partType][school].assistant.surname + ' ' + week[partType][school].assistant.name+'</h3>' : null),
+                                                      type: week[partType].label,
+                                                      school: brother.student.lastSchool,
+                                                      date: strDate,
+                                                      point: brother.student.pendingStudyNumber
+                                                    });
                                                 }
                                             }
                                             if (!week[partType][school].isTalk && brother._id == week[partType][school].assistant._id) {
