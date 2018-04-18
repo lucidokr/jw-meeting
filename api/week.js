@@ -30,7 +30,15 @@ const MONTH_NAMES = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno
 
 const DAY_NAMES = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"];
 
-
+function sendEmailError(subject, err){
+  var mailOptions = {
+    brother: "Amministratore",
+    to: "kristianl_91@hotmail.it",
+    subject: subject,
+    text: "<p style='color:red;'>"+err+"</p>"
+  };
+  MAIL.sendMail(mailOptions);
+}
 
 router.route('/')
     .get(function(req, res) {
@@ -134,7 +142,8 @@ router.route('/')
                     .exec(function(err, brothers) {
                         if (err) {
                             console.error('Week Meeting create - Brother Find -  error:', err);
-                            // return res.send(err);
+                            sendEmailError("Errore ricerca fratelli", err);
+                            return res.send(err);
                         }
 
                         console.log('Length', brothers.length);
@@ -144,7 +153,7 @@ router.route('/')
 
                             var date = new Date(week.date);
                             // var strDate = date.toLocaleString("it-it", { month: "long" });
-                            var month = MONTH_NAMES[date.getMonth()-1];
+                            var month = MONTH_NAMES[date.getMonth()];
                             var day = DAY_NAMES[date.getDay()-1];
                             var strDate = day+" " +date.getDate() + " " + month + " " + date.getFullYear();
 
@@ -364,6 +373,9 @@ router.route('/')
                                 obj.save(function(err) {
                                     if (err) {
                                         console.error('Week Meeting create - Brother Update error:', err, brother);
+
+                                        sendEmailError("Errore salvataggio fratello", err);
+                                        return res.send(err);
                                         // return res.send(err);
                                     } else {
                                         console.log("Updated", brother.name + " " + brother.surname)
@@ -374,6 +386,8 @@ router.route('/')
                             }, function(err) {
                                 if (err) {
                                     console.error('Week Meeting create - Brother Update error:', err, brother);
+                                    sendEmailError("Errore salvataggio fratelli", err);
+                                    return res.send(err);
                                 } else {
                                     console.log("Finish to update", brother.name + " " + brother.surname);
                                     nextBrother();
@@ -383,6 +397,7 @@ router.route('/')
                         }, function(err) {
                             if (err) {
                                 console.error('Week Meeting create - Week update error:', err);
+                                sendEmailError("Errore salvataggio settimana", err);
                             } else {
                                 console.log("finish to update week", week.date);
                                 var tempWeek = new Week(week);
@@ -390,9 +405,10 @@ router.route('/')
 
                                 tempWeek.save(function(err) {
                                     nextWeek();
-                                    if (err)
+                                    if (err){
                                         console.error('Week Meeting create - Week save error:', err);
-                                    else
+                                        sendEmailError("Errore salvataggio settimana", err);
+                                      }else
                                         console.log("Week saved")
                                 });
 
@@ -406,9 +422,10 @@ router.route('/')
                 tempWeek.congregation = req.decoded._doc.congregation;
                 tempWeek.save(function(err) {
                     nextWeek();
-                    if (err)
+                    if (err){
                         console.error('Week Meeting create - Week save error:', err);
-                    else
+                        sendEmailError("Errore salvataggio settimana", err);
+                      }else
                         console.log("Week saved")
                 });
             }
@@ -420,6 +437,7 @@ router.route('/')
         }, function(err) {
             if (err) {
                 console.error('Week Meeting create - Week save error:', err);
+                sendEmailError("Errore salvataggio settimana", err);
             } else {
 
                 var arr = [];
@@ -431,6 +449,7 @@ router.route('/')
                 }, function(err, week) {
                     if (err) {
                         console.error('Week Meeting create - Week temp remove error:', err);
+                        sendEmailError("Errore rimozione settimana temporanea", err);
                         return res.send(err);
                     }
 
@@ -438,20 +457,17 @@ router.route('/')
 
 
                     MAIL.sendAssegnations(mailAssegnationToSend);
-
-
                     MAIL.sendMails(mailToSend);
                     var date = new Date(req.body[0].date);
-                    var str = (date.getMonth() + 1) + "/" + date.getFullYear();
+                    var str = MONTH_NAMES[date.getMonth()] + " " + date.getFullYear();
                     var strName = '';
                     if (req.decoded && req.decoded._doc && req.decoded._doc.brother && req.decoded._doc.brother.name)
                         strName = 'fratello ' + req.decoded._doc.brother.name + ' ' + req.decoded._doc.brother.surname;
                     else
                         strName = "sorvegliante dell'adunanza vita cristiana e ministero";
 
-
                     MAIL.sendToRole('Programma Vita Cristiana e Ministero inserito - ' + str,
-                        'Il ' + strName + ' ha inserito il programma del mese di: ' + str,
+                        'Il ' + strName + ' ha inserito il programma del mese di ' + str,
                         req, ['schoolOverseer', 'viewer', 'president'])
 
                 });
@@ -525,8 +541,10 @@ router.route('/pgm/:year/:month')
 
 
     .exec(function(err, weeks) {
-        if (err)
-            return res.status(500).send(err);
+        if (err){
+          sendEmailError("Errore ottenimento programma", err);
+          return res.status(500).send(err);
+        }
         res.json(weeks);
 
     });
@@ -562,8 +580,10 @@ router.route('/:week_id')
 
 
         .exec(function(err, week) {
-            if (err)
-                res.send(err);
+            if (err){
+              sendEmailError("Errore ottenimento settimana", err);
+              res.send(err);
+            }
             res.json(week[0]);
             // var mailAssegnationToSend = [];
             // var week = week[0];
