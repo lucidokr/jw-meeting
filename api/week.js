@@ -759,6 +759,7 @@ router.route('/:week_id')
                                 tempWeek.completed = completed;
                                 var w = tempWeek.toObject();
                                 delete w._id;
+                                delete w.__v;
                                 //
                                 Week.findOneAndUpdate({ '_id': req.params.week_id }, w, { upsert: true }, function(err, doc) {
                                     if (err)
