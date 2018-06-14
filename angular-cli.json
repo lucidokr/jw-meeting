@@ -10,6 +10,7 @@
       "assets": [
         "assets",
         "manifest.json",
+        "service-worker.js",
         "browserconfig.xml",
         ".htaccess"
       ],

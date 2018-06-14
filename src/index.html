@@ -20,6 +20,8 @@
 
 
 
+
+
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,15 +34,15 @@
 
   <script async src="assets/lib/xlsx.full.min.js"></script>
 
-  <!--<script defer>-->
-    <!--if (navigator.serviceWorker) {-->
-      <!--navigator.serviceWorker.register('service-worker.js').then(function() {-->
-        <!--console.log('Service worker installed')-->
-      <!--}, function(err) {-->
-        <!--console.error('Service worker error:', err);-->
-      <!--});-->
-    <!--}-->
-  <!--</script>-->
+  <script defer>
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('service-worker.js').then(function() {
+        console.log('Service worker installed')
+      }, function(err) {
+        console.error('Service worker error:', err);
+      });
+    }
+  </script>
 
   <!-- Global Site Tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-106159207-1"></script>
