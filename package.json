@@ -1,6 +1,6 @@
 {
   "name": "jw-meeting",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "Gestione adunanza Vita cristiana e Ministero",
   "engines": {
     "node": ">=4.0.0"
@@ -13,7 +13,7 @@
     "api": "node server.js",
     "db": "mongod --dbpath ./db",
     "prod": "ng serve -prod",
-    "build": "ng build --env prod",
+    "build": "ng build --prod --aot=false --env=prod",
     "heroku": "node server.js",
     "lint": "tslint \"src/**/*.ts\"",
     "pree2e": "webdriver-manager update",

@@ -19,9 +19,9 @@ export class HomeComponent implements OnInit{
   public currentWeek: WeekMeeting;
   public date: any;
   private count: any;
-  private loadingCount = true;
-  private loadingMeeting = true;
-  private user: User = null;
+  public loadingCount = true;
+  public loadingMeeting = true;
+  public user: User = null;
 
   public USER_ROLE = USER_ROLE;
 

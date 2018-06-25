@@ -137,7 +137,7 @@ export class MaterialTableComponent implements OnChanges {
 
 
 
-  private onFilterChange(value: string): void {
+  public onFilterChange(value: string): void {
     this.rows = this.filterFunction(this.data, value);
   }
 
@@ -147,19 +147,19 @@ export class MaterialTableComponent implements OnChanges {
 
   }
 
-  private focusSearch(): void {
+  public focusSearch(): void {
     this.searching = true;
     this.searchInput.nativeElement.focus();
   }
 
-  private leaveSearch(): void {
+  public leaveSearch(): void {
     if (this.searching && this.filter) {
       return;
     }
     this.searching = false;
   }
 
-  private isSearching(): boolean {
+  public isSearching(): boolean {
     return this.searching || this.filter !== '';
   }
 
