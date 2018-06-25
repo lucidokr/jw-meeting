@@ -209,14 +209,14 @@ export class DownloadWeeksDialog implements OnInit{
             if(!week[partType].video){
               name = this.getSurnameName(week[partType].primarySchool.student);
               doc.setFontStyle("normal").setTextColor(146,113,40).text(60, rowTemp, name)
-              if(week[partType].primarySchool.student.student.pendingStudyNumber)
+              if(week[partType].primarySchool.student && week[partType].primarySchool.student.student.pendingStudyNumber)
                 doc.text(62 + this.getTextWidth(doc, name), rowTemp, week[partType].primarySchool.student.student.pendingStudyNumber.number+"");
               if(week[partType].primarySchool.assistant)
                 doc.setFontSize(8).setFontStyle("italic").text(60, rowTemp+3, this.getSurnameName(week[partType].primarySchool.assistant));
               if(week.secondarySchool){
                 name = this.getSurnameName(week[partType].secondarySchool.student);
                 doc.setFontSize(9).setFontStyle("normal").text(130, rowTemp, this.getSurnameName(week[partType].secondarySchool.student));
-                if(week[partType].secondarySchool.student.student.pendingStudyNumber)
+                if(week[partType].primarySchool.student && week[partType].secondarySchool.student.student.pendingStudyNumber)
                   doc.text(132 + this.getTextWidth(doc, name), rowTemp, week[partType].secondarySchool.student.student.pendingStudyNumber.number+"");
                 if(week[partType].secondarySchool.assistant)
                   doc.setFontSize(8).setFontStyle("italic").text(130, rowTemp+3, this.getSurnameName(week[partType].secondarySchool.assistant));
