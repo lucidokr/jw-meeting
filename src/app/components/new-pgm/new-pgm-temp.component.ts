@@ -26,6 +26,7 @@ export class NewPgmTempComponent {
 
   public arrMonths: any = moment.months();
   public weekNumber : number;
+  public month : string;
   public weeks : Array<WeekMeeting> = [];
   public weekType : any = {
     'STANDARD': {id:0, label:"Adunanza normale", meeting:true, disableSchool:false, withSupervisor:true},

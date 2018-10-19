@@ -6,7 +6,7 @@
       <!--<md-option [value]="5">5 settimane</md-option>-->
     <!--</md-select>-->
     <h3>Configurazione programma</h3>
-    <md-select fxFlex fxLayoutGap="20px" placeholder="Seleziona mese" (ngModelChange)="findWeeks($event)" name="month">
+    <md-select fxFlex fxLayoutGap="20px" placeholder="Seleziona mese" [(ngModel)]="month" (ngModelChange)="findWeeks($event)" name="month">
       <md-option *ngFor="let m of arrMonths" [value]="m" >{{m.month}} {{m.year}}</md-option>
     </md-select>
   </div>
