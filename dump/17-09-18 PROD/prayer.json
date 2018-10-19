@@ -1,0 +1,198 @@
+{ 
+    "_id" : ObjectId("594da1157d1e487e34192784"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-09-05T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-06-13T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da10b7d1e487e34192782"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-08-15T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-05-16T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da13f7d1e487e3419278c"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-08-15T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-05-23T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da1437d1e487e3419278d"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-08-29T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-06-06T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da1757d1e487e34192797"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-07-25T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-04-18T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da13c7d1e487e3419278b"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-08-01T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-05-02T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da15a7d1e487e34192792"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-09-26T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-07-18T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da17f7d1e487e34192799"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-08-01T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-05-09T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da14a7d1e487e3419278f"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-06-13T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-03-28T10:00:00.000+0000"), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("594da1637d1e487e34192794"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-08-08T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-06-20T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da18b7d1e487e3419279c"), 
+    "enabled" : false, 
+    "date" : ISODate("2018-01-24T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2017-10-17T22:00:00.000+0000"), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("594da1467d1e487e3419278e"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-08-29T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-06-06T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da15f7d1e487e34192793"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-08-22T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-05-23T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da1387d1e487e3419278a"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-09-05T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-06-20T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da17b7d1e487e34192798"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-09-19T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-07-04T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da1837d1e487e3419279a"), 
+    "enabled" : false, 
+    "date" : ISODate("2017-11-07T23:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("59be7348265808001295ec05"), 
+    "enabled" : false, 
+    "date" : ISODate("2018-01-10T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2017-10-03T22:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da1217d1e487e34192787"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-07-25T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-05-02T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da1197d1e487e34192785"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-08-22T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-04-25T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da10f7d1e487e34192783"), 
+    "enabled" : false, 
+    "date" : ISODate("2018-05-16T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-02-21T11:00:00.000+0000"), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("594da1067d1e487e34192781"), 
+    "enabled" : false, 
+    "date" : ISODate("2017-10-03T22:00:00.000+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("594da16a7d1e487e34192795"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-09-12T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-06-27T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da12c7d1e487e34192789"), 
+    "enabled" : false, 
+    "date" : ISODate("2017-08-30T14:09:13.349+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("594da1877d1e487e3419279b"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-04-25T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-01-24T11:00:00.000+0000"), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("594da11d7d1e487e34192786"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-09-19T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-07-04T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da14e7d1e487e34192790"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-09-12T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-06-27T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da1517d1e487e34192791"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-08-08T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-05-09T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("594da1707d1e487e34192796"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-09-26T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-07-18T10:00:00.000+0000")
+}
