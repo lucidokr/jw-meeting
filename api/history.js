@@ -9,6 +9,7 @@ router.route('/')
       .find()
       .populate('student') // space delimited path names
       .populate('studyNumber')
+      .populate('lesson')
       .or([
         { 'student.deleted': {$exists:false} },
         { 'student.deleted':{$exists:true, $ne:true} }
@@ -48,6 +49,7 @@ router.route('/:student_id')
     History.find({student:req.params.student_id})
       .populate('student') // space delimited path names
       .populate('studyNumber')
+      .populate('lesson')
       .exec(function(err, histories) {
           if (err){
               console.error('History student get error:', err);

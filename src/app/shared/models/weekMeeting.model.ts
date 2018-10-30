@@ -1,3 +1,5 @@
+import { MinistryPart } from "./ministryPart.model";
+
   export class WeekMeeting {
     _id:string;
     congregation: any = null;
@@ -26,6 +28,7 @@
       brother: null,
       label: ''
     };
+    ministryPart: Array<MinistryPart>;
     bibleReading: any = {
       primarySchool:{
         student: null,

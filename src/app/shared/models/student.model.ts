@@ -1,4 +1,5 @@
   import {StudyNumber} from "./studyNumber.model";
+import { Lesson } from "./lesson.model";
   export class Student {
 
     randomDate(start, end) {
@@ -49,6 +50,19 @@
     bibleReadingStudyNumber: StudyNumber = new StudyNumber();
     pendingStudyNumber: StudyNumber;
     bibleReadingPendingStudyNumber: StudyNumber;
+
+        // AFTER 2019
+        ministryPartEnabled: boolean = true;
+        ministryPartPrevDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
+        ministryPartDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
+        ministryPartLastSchool: number = 1;
+        ministryPartLastPrevSchool: number = 1;
+
+        bibleReadingLesson: Lesson = new Lesson();
+        bibleReadingPendingLesson: Lesson = new Lesson();
+
+        lesson: Lesson = new Lesson();
+        pendingLesosn: Lesson = new Lesson();
 
   }
 

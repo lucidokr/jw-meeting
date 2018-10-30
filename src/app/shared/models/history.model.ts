@@ -1,11 +1,13 @@
 
 import {Student} from "./student.model";
 import {StudyNumber} from "./studyNumber.model";
+import { Lesson } from "./lesson.model";
 export class History {
-  "date": any;
+  date: any;
   made: boolean;
   pointCompleted: boolean;
-  "student": Student;
-  "studyNumber": StudyNumber;
+  student: Student;
+  studyNumber: StudyNumber;
+  lesson: Lesson;
 
 }

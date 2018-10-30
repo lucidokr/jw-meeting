@@ -24,6 +24,18 @@ router.route('/')
         },{
           path:  'pendingStudyNumber',
           model: 'StudyNumber'
+        },{
+          path:  'lesson',
+          model: 'Lesson'
+        },{
+          path:  'bibleReadingLesson',
+          model: 'Lesson'
+        },{
+          path:  'bibleReadingPendingLesson',
+          model: 'Lesson'
+        },{
+          path:  'pendingLesson',
+          model: 'Lesson'
         }]
       })
       .or([
@@ -177,6 +189,18 @@ router.route('/:brother_id')
         },{
           path:  'pendingStudyNumber',
           model: 'StudyNumber'
+        },{
+          path:  'lesson',
+          model: 'Lesson'
+        },{
+          path:  'bibleReadingLesson',
+          model: 'Lesson'
+        },{
+          path:  'bibleReadingPendingLesson',
+          model: 'Lesson'
+        },{
+          path:  'pendingLesson',
+          model: 'Lesson'
         }]
       })
       .exec(function(err, brother) {

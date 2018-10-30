@@ -108,6 +108,29 @@ var WeekMeetingTempSchema   = new Schema(
     label: String,
     video: Boolean
   },
+  ministryPart: [{
+    primarySchool:{
+      student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
+      assistant: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
+      updated: Boolean,
+      made: Number,
+      pointCompleted: Boolean,
+      gender: String,
+      pointChanged: Boolean
+    },
+    secondarySchool:{
+      student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
+      assistant: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
+      updated: Boolean,
+      made: Number,
+      pointCompleted: Boolean,
+      gender: String,
+      pointChanged: Boolean
+    },
+    part: String,
+    forStudent: Boolean,
+    isTalk: Boolean
+  }],
   christianLivingPart: [{
     brother: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
     president: Boolean,

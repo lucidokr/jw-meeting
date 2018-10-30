@@ -35,80 +35,113 @@
                     <md-checkbox name="primarySchool{{i}}" fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.primarySchool">Prima scuola</md-checkbox>
                     <md-checkbox name="secondarySchool{{i}}"fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.secondarySchool">Seconda scuola</md-checkbox>
                   </div>
-                  <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="center center">
-                    <div  fxFlex="50%" [innerHTML]="week.initialCall.label | safeHtml"></div>
-                    <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
-                      <div fxHide.gt-sm *ngIf="!week.initialCall.video" >Prima scuola</div>
-                      <div fxLayout="column" *ngIf="!week.initialCall.video">
-                        <md-radio-group name="configInitialCallPrimarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.initialCall.primarySchool.gender" *ngIf="week.primarySchool">
-                          <md-radio-button value="F">Solo sorelle</md-radio-button>
-                          <md-radio-button value="M">Solo fratelli</md-radio-button>
-                          <md-radio-button value="">Entrambi</md-radio-button>
-                        </md-radio-group>
-                      </div>
-                    </div>
-                    <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
-                      <div fxHide.gt-sm *ngIf="week.secondarySchool && !week.supervisor && !week.initialCall.video">Seconda scuola</div>
-                      <div fxLayout="column" *ngIf="!week.initialCall.video">
-                        <md-radio-group name="configInitialCallSecondarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.initialCall.secondarySchool.gender" *ngIf="week.secondarySchool && !week.supervisor">
-                          <md-radio-button value="F">Solo sorelle</md-radio-button>
-                          <md-radio-button value="M">Solo fratelli</md-radio-button>
-                          <md-radio-button value="">Entrambi</md-radio-button>
-                        </md-radio-group>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="separator"></div>
-                  <div fxFlex="100%" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px"  fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-                    <div fxFlex="50%" [innerHTML]="week.returnVisit.label | safeHtml"></div>
-                    <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
-                      <div fxHide.gt-sm *ngIf="!week.returnVisit.video">Prima scuola</div>
-                      <div fxLayout="column" *ngIf="!week.returnVisit.video">
-                        <md-radio-group name="configReturnVisitPrimarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.returnVisit.primarySchool.gender" *ngIf="week.primarySchool">
-                          <md-radio-button value="F">Solo sorelle</md-radio-button>
-                          <md-radio-button value="M">Solo fratelli</md-radio-button>
-                          <md-radio-button value="">Entrambi</md-radio-button>
-                        </md-radio-group>
-                      </div>
-                    </div>
-                    <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
-                      <div fxHide.gt-sm *ngIf="week.secondarySchool && !week.supervisor && !week.returnVisit.video">Seconda scuola</div>
-                      <div fxLayout="column" *ngIf="!week.returnVisit.video">
-                        <md-radio-group name="configReturnVisitSecondarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.returnVisit.secondarySchool.gender" *ngIf="week.secondarySchool && !week.supervisor">
-                          <md-radio-button value="F">Solo sorelle</md-radio-button>
-                          <md-radio-button value="M">Solo fratelli</md-radio-button>
-                          <md-radio-button value="">Entrambi</md-radio-button>
-                        </md-radio-group>
-                      </div>
+                  <div fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" *ngIf="week.ministryPart && week.ministryPart.length > 0">
+                    <!-- AFTER 2019-->
+                    <div *ngFor="let part of week.ministryPart; let j = index" fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" >
+                        <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="center center">
+                          <div  fxFlex="50%" [innerHTML]="part.html | safeHtml"></div>
+                          <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                            <div fxHide.gt-sm *ngIf="part.forStudent" >Prima scuola</div>
+                            <div fxLayout="column" *ngIf="part.forStudent">
+                              <md-radio-group name="configMinistryPartPrimarySchool{{i}}{{j}}" fxLayout="column" class="radio-group" [(ngModel)]="part.primarySchool.gender" *ngIf="week.primarySchool">
+                                <md-radio-button value="F">Solo sorelle</md-radio-button>
+                                <md-radio-button value="M">Solo fratelli</md-radio-button>
+                                <md-radio-button value="">Entrambi</md-radio-button>
+                              </md-radio-group>
+                            </div>
+                          </div>
+                          <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                            <div fxHide.gt-sm *ngIf="week.secondarySchool && !week.supervisor && part.forStudent">Seconda scuola</div>
+                            <div fxLayout="column" *ngIf="part.forStudent">
+                              <md-radio-group name="configMinistryPartSecondarySchool{{i}}{{j}}" fxLayout="column" class="radio-group" [(ngModel)]="part.secondarySchool.gender" *ngIf="week.secondarySchool && !week.supervisor">
+                                <md-radio-button value="F">Solo sorelle</md-radio-button>
+                                <md-radio-button value="M">Solo fratelli</md-radio-button>
+                                <md-radio-button value="">Entrambi</md-radio-button>
+                              </md-radio-group>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="separator"></div>
                     </div>
                   </div>
-                  <div class="separator"></div>
-                  <div fxFlex="100%" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-                    <div fxFlex="50%" [innerHTML]="week.bibleStudy.label | safeHtml"></div>
+                  <div fxLayout="row" *ngIf="!week.ministryPart">
+                    <!-- BEFORE 2019-->
+                    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="center center">
+                      <div  fxFlex="50%" [innerHTML]="week.initialCall.label | safeHtml"></div>
+                      <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                        <div fxHide.gt-sm *ngIf="!week.initialCall.video" >Prima scuola</div>
+                        <div fxLayout="column" *ngIf="!week.initialCall.video">
+                          <md-radio-group name="configInitialCallPrimarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.initialCall.primarySchool.gender" *ngIf="week.primarySchool">
+                            <md-radio-button value="F">Solo sorelle</md-radio-button>
+                            <md-radio-button value="M">Solo fratelli</md-radio-button>
+                            <md-radio-button value="">Entrambi</md-radio-button>
+                          </md-radio-group>
+                        </div>
+                      </div>
+                      <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                        <div fxHide.gt-sm *ngIf="week.secondarySchool && !week.supervisor && !week.initialCall.video">Seconda scuola</div>
+                        <div fxLayout="column" *ngIf="!week.initialCall.video">
+                          <md-radio-group name="configInitialCallSecondarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.initialCall.secondarySchool.gender" *ngIf="week.secondarySchool && !week.supervisor">
+                            <md-radio-button value="F">Solo sorelle</md-radio-button>
+                            <md-radio-button value="M">Solo fratelli</md-radio-button>
+                            <md-radio-button value="">Entrambi</md-radio-button>
+                          </md-radio-group>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div fxFlex="100%" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px"  fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
+                      <div fxFlex="50%" [innerHTML]="week.returnVisit.label | safeHtml"></div>
+                      <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                        <div fxHide.gt-sm *ngIf="!week.returnVisit.video">Prima scuola</div>
+                        <div fxLayout="column" *ngIf="!week.returnVisit.video">
+                          <md-radio-group name="configReturnVisitPrimarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.returnVisit.primarySchool.gender" *ngIf="week.primarySchool">
+                            <md-radio-button value="F">Solo sorelle</md-radio-button>
+                            <md-radio-button value="M">Solo fratelli</md-radio-button>
+                            <md-radio-button value="">Entrambi</md-radio-button>
+                          </md-radio-group>
+                        </div>
+                      </div>
+                      <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                        <div fxHide.gt-sm *ngIf="week.secondarySchool && !week.supervisor && !week.returnVisit.video">Seconda scuola</div>
+                        <div fxLayout="column" *ngIf="!week.returnVisit.video">
+                          <md-radio-group name="configReturnVisitSecondarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.returnVisit.secondarySchool.gender" *ngIf="week.secondarySchool && !week.supervisor">
+                            <md-radio-button value="F">Solo sorelle</md-radio-button>
+                            <md-radio-button value="M">Solo fratelli</md-radio-button>
+                            <md-radio-button value="">Entrambi</md-radio-button>
+                          </md-radio-group>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="separator"></div>
+                    <div fxFlex="100%" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
+                      <div fxFlex="50%" [innerHTML]="week.bibleStudy.label | safeHtml"></div>
 
-                    <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
-                      <div fxHide.gt-sm *ngIf="!week.bibleStudy.video">Prima scuola</div>
-                      <div fxLayout="column" *ngIf="!week.bibleStudy.video">
-                        <md-checkbox name="configBibleStudyTalkPrimarySchool{{i}}" *ngIf="week.primarySchool && !week.supervisor" [(ngModel)]="week.bibleStudy.primarySchool.isTalk" (ngModelChange)="(week.bibleStudy.primarySchool.isTalk ? week.bibleStudy.primarySchool.gender = 'M' : week.bibleStudy.primarySchool.gender = '')">Discorso</md-checkbox>
-                        <md-radio-group name="configBibleStudyPrimarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.bibleStudy.primarySchool.gender" *ngIf="week.primarySchool">
-                          <md-radio-button value="F">Solo sorelle</md-radio-button>
-                          <md-radio-button value="M">Solo fratelli</md-radio-button>
-                          <md-radio-button value="">Entrambi</md-radio-button>
-                        </md-radio-group>
+                      <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                        <div fxHide.gt-sm *ngIf="!week.bibleStudy.video">Prima scuola</div>
+                        <div fxLayout="column" *ngIf="!week.bibleStudy.video">
+                          <md-checkbox name="configBibleStudyTalkPrimarySchool{{i}}" *ngIf="week.primarySchool && !week.supervisor" [(ngModel)]="week.bibleStudy.primarySchool.isTalk" (ngModelChange)="(week.bibleStudy.primarySchool.isTalk ? week.bibleStudy.primarySchool.gender = 'M' : week.bibleStudy.primarySchool.gender = '')">Discorso</md-checkbox>
+                          <md-radio-group name="configBibleStudyPrimarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.bibleStudy.primarySchool.gender" *ngIf="week.primarySchool">
+                            <md-radio-button value="F">Solo sorelle</md-radio-button>
+                            <md-radio-button value="M">Solo fratelli</md-radio-button>
+                            <md-radio-button value="">Entrambi</md-radio-button>
+                          </md-radio-group>
+                        </div>
                       </div>
-                    </div>
-                    <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
-                      <div fxHide.gt-sm *ngIf="week.secondarySchool && !week.supervisor && !week.bibleStudy.video">Seconda scuola</div>
-                      <div fxLayout="column" *ngIf="!week.bibleStudy.video">
-                        <md-checkbox name="configBibleStudyTalkSecondarySchool{{i}}" *ngIf="week.secondarySchool && !week.supervisor" [(ngModel)]="week.bibleStudy.secondarySchool.isTalk" (ngModelChange)="(week.bibleStudy.secondarySchool.isTalk ? week.bibleStudy.secondarySchool.gender = 'M' : week.bibleStudy.secondarySchool.gender = '')">Discorso</md-checkbox>
-                        <md-radio-group name="configBibleStudySecondarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.bibleStudy.secondarySchool.gender" *ngIf="week.secondarySchool && !week.supervisor">
-                          <md-radio-button value="F">Solo sorelle</md-radio-button>
-                          <md-radio-button value="M">Solo fratelli</md-radio-button>
-                          <md-radio-button value="">Entrambi</md-radio-button>
-                        </md-radio-group>
+                      <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
+                        <div fxHide.gt-sm *ngIf="week.secondarySchool && !week.supervisor && !week.bibleStudy.video">Seconda scuola</div>
+                        <div fxLayout="column" *ngIf="!week.bibleStudy.video">
+                          <md-checkbox name="configBibleStudyTalkSecondarySchool{{i}}" *ngIf="week.secondarySchool && !week.supervisor" [(ngModel)]="week.bibleStudy.secondarySchool.isTalk" (ngModelChange)="(week.bibleStudy.secondarySchool.isTalk ? week.bibleStudy.secondarySchool.gender = 'M' : week.bibleStudy.secondarySchool.gender = '')">Discorso</md-checkbox>
+                          <md-radio-group name="configBibleStudySecondarySchool{{i}}" fxLayout="column" class="radio-group" [(ngModel)]="week.bibleStudy.secondarySchool.gender" *ngIf="week.secondarySchool && !week.supervisor">
+                            <md-radio-button value="F">Solo sorelle</md-radio-button>
+                            <md-radio-button value="M">Solo fratelli</md-radio-button>
+                            <md-radio-button value="">Entrambi</md-radio-button>
+                          </md-radio-group>
+                        </div>
                       </div>
                     </div>
                   </div>
+
               </div>
             </div>
           </div>

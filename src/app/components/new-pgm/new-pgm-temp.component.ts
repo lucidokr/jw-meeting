@@ -14,6 +14,7 @@ import {DialogService} from "../../services/dialog.service";
 import {MeetingService} from "../../services/meeting.service";
 import {AuthService} from "../../services/auth.service";
 import {User} from "../../shared/models/user.model";
+import { MinistryPart } from '../../shared/models/ministryPart.model';
 
 @Component({
   selector: 'new-pgm-temp',
@@ -30,7 +31,7 @@ export class NewPgmTempComponent {
   public weeks : Array<WeekMeeting> = [];
   public weekType : any = {
     'STANDARD': {id:0, label:"Adunanza normale", meeting:true, disableSchool:false, withSupervisor:true},
-    'EXERCISE': {id:1, label:"Adunanza con video Esercitiamoci", meeting:true, disableSchool:true, withSupervisor:true},
+    'NO_MINISTRY_PART': {id:1, label:"Adunanza senza parti", meeting:true, disableSchool:true, withSupervisor:true},
     'SPECIAL_MEETING': {id:2, label:"Assemblea speciale di un giorno", meeting:false, disableSchool:false, withSupervisor:false},
     'CONGRESS': {id:3, label:"Congresso di zona", meeting:false, disableSchool:false, withSupervisor:false},
   };
@@ -145,26 +146,48 @@ export class NewPgmTempComponent {
               }
               model.talk.label = weekMeetingWorkbook.talk;
               model.gems.label = weekMeetingWorkbook.gems;
-              if(weekMeetingWorkbook.presentationExercise){
-                model.type = this.weekType.EXERCISE;
-                model.secondarySchool = false;
-                model.presentationExercise.label = weekMeetingWorkbook.presentationExercise;
-                model.presentationExercise.enabled = true;
-                model.bibleReading.label = weekMeetingWorkbook.bibleReading;
-              }else{
+              if(weekMeetingWorkbook.ministryPart && weekMeetingWorkbook.ministryPart.length > 0){
                 model.type = this.weekType.STANDARD;
                 model.bibleReading.label = weekMeetingWorkbook.bibleReading;
-                model.initialCall.label = weekMeetingWorkbook.initialCall;
-                model.initialCall.video = weekMeetingWorkbook.initialCallVideo;
-                model.returnVisit.label = weekMeetingWorkbook.returnVisit;
-                model.returnVisit.video = weekMeetingWorkbook.returnVisitVideo;
-                model.bibleStudy.label = weekMeetingWorkbook.bibleStudy;
-                model.bibleStudy.video = weekMeetingWorkbook.bibleStudyVideo;
-                model.bibleStudy.primarySchool.isTalk = weekMeetingWorkbook.isTalk;
-                model.bibleStudy.primarySchool.gender = weekMeetingWorkbook.isTalk ? 'M' : '';
-                model.bibleStudy.secondarySchool.isTalk = weekMeetingWorkbook.isTalk;
-                model.bibleStudy.secondarySchool.gender = weekMeetingWorkbook.isTalk ? 'M' : '';
+                var withoutPart = true;
+                weekMeetingWorkbook.ministryPart.forEach(function(part){
+                  var ministryPart = new MinistryPart()
+                  ministryPart.html = part.html
+                  if(part.forStudent)
+                    withoutPart = false
+                  ministryPart.forStudent = part.forStudent
+                  ministryPart.isTalk = part.isTalk
+                  model.bibleStudy.primarySchool.gender = part.isTalk ? 'M' : '';
+                  model.bibleStudy.secondarySchool.gender = part.isTalk ? 'M' : '';
+
+                  model.ministryPart.push(ministryPart)
+                })
+                if(withoutPart){
+                  model.type = this.weekType.NO_MINISTRY_PART;
+                }
+              }else{
+                if(weekMeetingWorkbook.presentationExercise){
+                  model.type = this.weekType.EXERCISE;
+                  model.secondarySchool = false;
+                  model.presentationExercise.label = weekMeetingWorkbook.presentationExercise;
+                  model.presentationExercise.enabled = true;
+                  model.bibleReading.label = weekMeetingWorkbook.bibleReading;
+                }else{
+                  model.type = this.weekType.STANDARD;
+                  model.bibleReading.label = weekMeetingWorkbook.bibleReading;
+                  model.initialCall.label = weekMeetingWorkbook.initialCall;
+                  model.initialCall.video = weekMeetingWorkbook.initialCallVideo;
+                  model.returnVisit.label = weekMeetingWorkbook.returnVisit;
+                  model.returnVisit.video = weekMeetingWorkbook.returnVisitVideo;
+                  model.bibleStudy.label = weekMeetingWorkbook.bibleStudy;
+                  model.bibleStudy.video = weekMeetingWorkbook.bibleStudyVideo;
+                  model.bibleStudy.primarySchool.isTalk = weekMeetingWorkbook.isTalk;
+                  model.bibleStudy.primarySchool.gender = weekMeetingWorkbook.isTalk ? 'M' : '';
+                  model.bibleStudy.secondarySchool.isTalk = weekMeetingWorkbook.isTalk;
+                  model.bibleStudy.secondarySchool.gender = weekMeetingWorkbook.isTalk ? 'M' : '';
+                }
               }
+
 
               this.weeks.push(model)
             }

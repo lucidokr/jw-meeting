@@ -18,23 +18,45 @@ var StudentSchema   = new Schema({
   bibleReadingLastSchool: Number,
   bibleReadingLastPrevSchool: Number,
 
-  initialCallEnabled: Boolean,
-  initialCallPrevDate: Date,
-  initialCallDate: Date,
-  initialCallLastSchool: Number,
-  initialCallLastPrevSchool: Number,
+  //BEFORE 2019
+    initialCallEnabled: Boolean,
+    initialCallPrevDate: Date,
+    initialCallDate: Date,
+    initialCallLastSchool: Number,
+    initialCallLastPrevSchool: Number,
 
-  returnVisitEnabled: Boolean,
-  returnVisitPrevDate: Date,
-  returnVisitDate: Date,
-  returnVisitLastSchool: Number,
-  returnVisitLastPrevSchool: Number,
+    returnVisitEnabled: Boolean,
+    returnVisitPrevDate: Date,
+    returnVisitDate: Date,
+    returnVisitLastSchool: Number,
+    returnVisitLastPrevSchool: Number,
 
-  bibleStudyEnabled: Boolean,
-  bibleStudyPrevDate: Date,
-  bibleStudyDate: Date,
-  bibleStudyLastSchool: Number,
-  bibleStudyLastPrevSchool: Number,
+    bibleStudyEnabled: Boolean,
+    bibleStudyPrevDate: Date,
+    bibleStudyDate: Date,
+    bibleStudyLastSchool: Number,
+    bibleStudyLastPrevSchool: Number,
+
+    bibleReadingStudyNumber: {type: mongoose.Schema.Types.ObjectId, ref: 'StudyNumber'},
+    bibleReadingPendingStudyNumber: {type: mongoose.Schema.Types.ObjectId, ref: 'StudyNumber'},
+
+    studyNumber: {type: mongoose.Schema.Types.ObjectId, ref: 'StudyNumber'},
+    pendingStudyNumber: {type: mongoose.Schema.Types.ObjectId, ref: 'StudyNumber'},
+
+
+  // AFTER 2019
+    ministryPartEnabled: Boolean,
+    ministryPartPrevDate: Date,
+    ministryPartDate: Date,
+    ministryPartLastSchool: Number,
+    ministryPartLastPrevSchool: Number,
+
+    bibleReadingLesson: {type: mongoose.Schema.Types.ObjectId, ref: 'Lesson'},
+    bibleReadingPendingLesson: {type: mongoose.Schema.Types.ObjectId, ref: 'Lesson'},
+
+    lesson: {type: mongoose.Schema.Types.ObjectId, ref: 'Lesson'},
+    pendingLesosn: {type: mongoose.Schema.Types.ObjectId, ref: 'Lesson'},
+
 
   talkEnabled: Boolean,
   // talkPrevDate: Date,
@@ -43,12 +65,6 @@ var StudentSchema   = new Schema({
   assistantEnabled: Boolean,
   assistantDate: Date,
   assistantLastSchool: Number,
-
-  bibleReadingStudyNumber: {type: mongoose.Schema.Types.ObjectId, ref: 'StudyNumber'},
-  bibleReadingPendingStudyNumber: {type: mongoose.Schema.Types.ObjectId, ref: 'StudyNumber'},
-
-  studyNumber: {type: mongoose.Schema.Types.ObjectId, ref: 'StudyNumber'},
-  pendingStudyNumber: {type: mongoose.Schema.Types.ObjectId, ref: 'StudyNumber'},
 
   deleted: Boolean
 

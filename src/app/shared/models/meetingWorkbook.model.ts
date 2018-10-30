@@ -13,6 +13,7 @@ export class MeetingWorkbook {
   initialSong: string;
   finalSong: string;
   intervalSong: string;
+  ministryPart : any = [];
   christianLivingPart : any = [];
   presentationExercise: any;
   congregationBibleStudy: any;

@@ -63,6 +63,7 @@ router.use('/elder', require('./api/elder'));
 router.use('/servant', require('./api/servant'));
 router.use('/wtj', require('./api/wtj'));
 router.use('/studyNumber', require('./api/studyNumber'));
+router.use('/lesson', require('./api/lesson'));
 router.use('/reader', require('./api/reader'));
 router.use('/auth', require('./api/auth'));
 

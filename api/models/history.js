@@ -7,6 +7,7 @@ var HistorySchema   = new Schema({
   pointCompleted: Boolean,
   student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
   studyNumber: {type: mongoose.Schema.Types.ObjectId, ref: 'StudyNumber'},
+  lesson: {type: mongoose.Schema.Types.ObjectId, ref: 'Lesson'},
 
   deleted: Boolean
 });

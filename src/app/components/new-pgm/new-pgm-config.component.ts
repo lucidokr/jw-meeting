@@ -27,7 +27,7 @@ export class NewPgmConfigComponent {
   public weeks : Array<WeekMeeting> = [];
   public weekType : any = {
     'STANDARD': {id:0, label:"Adunanza normale", meeting:true, disableSchool:false, withSupervisor:true},
-    'EXERCISE': {id:1, label:"Adunanza con video Esercitiamoci", meeting:true, disableSchool:true, withSupervisor:true},
+    'NO_MINISTRY_PART': {id:1, label:"Adunanza senza parti", meeting:true, disableSchool:true, withSupervisor:true},
     'SPECIAL_MEETING': {id:2, label:"Assemblea speciale di un giorno", meeting:false, disableSchool:false, withSupervisor:false},
     'CONGRESS': {id:3, label:"Congresso di zona", meeting:false, disableSchool:false, withSupervisor:false},
   };
