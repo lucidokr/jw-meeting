@@ -1,5 +1,4 @@
   import {StudyNumber} from "./studyNumber.model";
-import { Lesson } from "./lesson.model";
   export class Student {
 
     randomDate(start, end) {
@@ -22,47 +21,19 @@ import { Lesson } from "./lesson.model";
     bibleReadingLastSchool: number = 1;
     bibleReadingLastPrevSchool: number = 1;
 
-    initialCallEnabled: boolean = true;
-    initialCallPrevDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
-    initialCallDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
-    initialCallLastSchool: number = 1;
-    initialCallLastPrevSchool: number = 1;
-
-    returnVisitEnabled: boolean = true;
-    returnVisitPrevDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
-    returnVisitDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
-    returnVisitLastSchool: number = 1;
-    returnVisitLastPrevSchool: number = 1;
-
-    bibleStudyEnabled: boolean = true;
-    bibleStudyPrevDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
-    bibleStudyDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
-    bibleStudyLastSchool: number = 1;
-    bibleStudyLastPrevSchool: number = 1;
-
     talkEnabled: boolean = true;
 
     assistantEnabled: boolean = true;
     assistantDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
     assistantLastSchool: number = 1;
 
-    studyNumber: StudyNumber = new StudyNumber();
-    bibleReadingStudyNumber: StudyNumber = new StudyNumber();
-    pendingStudyNumber: StudyNumber;
-    bibleReadingPendingStudyNumber: StudyNumber;
+    // AFTER 2019
+    ministryPartEnabled: boolean = true;
+    ministryPartPrevDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
+    ministryPartDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
+    ministryPartLastSchool: number = 1;
+    ministryPartLastPrevSchool: number = 1;
 
-        // AFTER 2019
-        ministryPartEnabled: boolean = true;
-        ministryPartPrevDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
-        ministryPartDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
-        ministryPartLastSchool: number = 1;
-        ministryPartLastPrevSchool: number = 1;
-
-        bibleReadingLesson: Lesson = new Lesson();
-        bibleReadingPendingLesson: Lesson = new Lesson();
-
-        lesson: Lesson = new Lesson();
-        pendingLesosn: Lesson = new Lesson();
 
   }
 

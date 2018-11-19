@@ -11,17 +11,16 @@ import {StudyNumberService} from "../../services/study-number.service";
 import {CONST, CONST_ARR} from "../../constant";
 
 @Component({
-  selector: 'week-study-number-update',
-  templateUrl: './weekStudyNumberUpdate.component.html',
+  selector: 'week--update',
+  templateUrl: './weekUpdate.component.html',
   styles:['md-select { width:100% }','.updated,.notUpdated{width:100%}','.updated strong{padding-left:30px;}','.containerSchoolPart{width:100%}','.updated .material-icons{ margin-top:-2px;margin-left:-30px; position: absolute;color: green;}']
 
 })
-export class WeekStudyNumberUpdateComponent implements OnInit{
+export class WeekUpdateComponent implements OnInit{
 
   @Input() week: WeekMeeting ;
   @Input() fromHome: boolean ;
   @Output() onChange: EventEmitter<any> = new EventEmitter<any>();
-  public studyNumberList: Array<StudyNumber>;
   public loading: boolean;
   public CONST = CONST;
   public PART_TYPE = CONST_ARR.PART_TYPE;
@@ -29,25 +28,15 @@ export class WeekStudyNumberUpdateComponent implements OnInit{
   public snackBarConfig : MdSnackBarConfig = new MdSnackBarConfig();
 
   public constructor(private meetingService: MeetingService, private snackBar:MdSnackBar, private studyNumberService: StudyNumberService, private dialogService:DialogService) {
-    this.studyNumberService.get()
-      .subscribe(list => this.studyNumberList = list);
 
 
   }
 
   ngOnInit(){
-    if(this.week.presentationExercise.enabled){
-      this.PART_TYPE = [CONST.BIBLE_READING];
-      this.SCHOOLS = [CONST.PRIMARY_SCHOOL];
-    }
     if(!this.week.secondarySchool){
       this.SCHOOLS = [CONST.PRIMARY_SCHOOL];
     }
     this.snackBarConfig.duration = 3000;
-  }
-
-  public change(week, partType, school, partBrother){
-    this.onChange.emit({week:week, partType:partType, school:school, partBrother:partBrother})
   }
 
   public confirm(){

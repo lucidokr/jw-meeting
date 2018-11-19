@@ -31,17 +31,6 @@ export class StudentListComponent extends GeneralListComponent{
       },
       type: 'custom',
       renderComponent: DateRenderComponent
-    },
-    studyNumber: {
-      title: 'Qualità oratoria',
-      valuePrepareFunction: function(cell, row){
-        if(row.student.studyNumber)
-          return row.student.studyNumber.number+" - "+row.student.studyNumber.title;
-        else if(row.student.bibleReadingStudyNumber)
-          return row.student.bibleReadingStudyNumber.number+" - "+row.student.bibleReadingStudyNumber.title;
-        else
-          return '-'
-      }
     }
 
   };

@@ -80,13 +80,36 @@
                 <md-option [value]="1" >Prima scuola</md-option>
                 <md-option [value]="2" >Seconda scuola</md-option>
               </md-select>
-              <md-select fxFlex required  [(ngModel)]="brother.student.bibleReadingStudyNumber._id" (ngModelChange)="copyStudyNumber($event, 'bibleReadingStudyNumber')" name="bibleReadingStudyNumber" placeholder="Qualità oratoria lettura">
-                <md-option [value]="studyNumber._id" *ngFor="let studyNumber of studyNumberList | filter: 'forBibleReading' : true">{{studyNumber.number}} - {{studyNumber.title}}</md-option>
-              </md-select>
             </div>
           </div>
         </md-tab>
         <md-tab>
+          <ng-template md-tab-label>
+            Parti
+          </ng-template>
+          <div fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="center center">
+            <md-checkbox fxFlex [(ngModel)]="brother.student.ministryPartEnabled" (ngModelChange)="checkIfAllDisabled()" name="ministryPartEnabled" >
+              Abilitato a svolgere le parti del Ministero
+            </md-checkbox>
+            <div *ngIf="brother.student.ministryPartEnabled" fxLayout="row" fxLayoutAlign="start center">
+              <md-input-container fxFlex >
+                <input mdInput [mdDatepicker]="ministryPartDate" [(ngModel)]="brother.student.ministryPartDate" name="ministryPartDate"  placeholder="Data ultima parte">
+                <button mdSuffix [mdDatepickerToggle]="ministryPartDate"></button>
+              </md-input-container>
+              <md-datepicker #ministryPartDate></md-datepicker>
+              <md-input-container fxFlex >
+                <input mdInput [mdDatepicker]="ministryPartPrevDate" [(ngModel)]="brother.student.ministryPartPrevDate" name="ministryPartPrevDate"  placeholder="Data penultima parte">
+                <button mdSuffix [mdDatepickerToggle]="ministryPartPrevDate"></button>
+              </md-input-container>
+              <md-datepicker #ministryPartPrevDate></md-datepicker>
+              <md-select fxFlex required [(ngModel)]="brother.student.ministryPartLastSchool" name="ministryPartLastSchool" placeholder="Scuola dell'ultima parte">
+                <md-option [value]="1" >Prima scuola</md-option>
+                <md-option [value]="2" >Seconda scuola</md-option>
+              </md-select>
+            </div>
+          </div>
+        </md-tab>
+        <!-- <md-tab>
           <ng-template md-tab-label>
             PC
           </ng-template>
@@ -111,8 +134,8 @@
               </md-select>
             </div>
           </div>
-        </md-tab>
-        <md-tab>
+        </md-tab> -->
+        <!-- <md-tab>
           <ng-template md-tab-label>
             VU
           </ng-template>
@@ -137,8 +160,8 @@
               </md-select>
             </div>
           </div>
-        </md-tab>
-        <md-tab>
+        </md-tab> -->
+        <!-- <md-tab>
           <ng-template md-tab-label>
             SB
           </ng-template>
@@ -163,7 +186,7 @@
               </md-select>
             </div>
           </div>
-        </md-tab>
+        </md-tab> -->
         <md-tab *ngIf="brother.gender == 'M'">
           <ng-template md-tab-label>
             DISC

@@ -199,32 +199,24 @@ export class DownloadWeeksDialog implements OnInit{
           .setFontSize(9)
 
         rowTemp = rowTemp +8;
-        if(week.presentationExercise.enabled){
-          doc.setTextColor(0, 0, 0).setFontStyle("normal").setFontSize(9).text(7, rowTemp, "Esercitiamoci con le presentazioni di questo mese");
-          name = this.getSurnameName(week.presentationExercise.brother);
-          doc.setFontStyle("normal").setTextColor(146,113,40).text(130, rowTemp, name)
-        }else{
-          for(let partType of PART_TYPE_ALL) {
-            doc.setTextColor(0, 0, 0).setFontStyle("normal").setFontSize(9).text(7, rowTemp, this.getPartTitle(week[partType].label));
-            if(!week[partType].video){
-              name = this.getSurnameName(week[partType].primarySchool.student);
-              doc.setFontStyle("normal").setTextColor(146,113,40).text(60, rowTemp, name)
-              if(week[partType].primarySchool.student.student && week[partType].primarySchool.student.student.pendingStudyNumber)
-                doc.text(62 + this.getTextWidth(doc, name), rowTemp, week[partType].primarySchool.student.student.pendingStudyNumber.number+"");
-              if(week[partType].primarySchool.assistant)
-                doc.setFontSize(8).setFontStyle("italic").text(60, rowTemp+3, this.getSurnameName(week[partType].primarySchool.assistant));
-              if(week.secondarySchool){
-                name = this.getSurnameName(week[partType].secondarySchool.student);
-                doc.setFontSize(9).setFontStyle("normal").text(130, rowTemp, this.getSurnameName(week[partType].secondarySchool.student));
-                if(week[partType].primarySchool.student.student && week[partType].secondarySchool.student.student.pendingStudyNumber)
-                  doc.text(132 + this.getTextWidth(doc, name), rowTemp, week[partType].secondarySchool.student.student.pendingStudyNumber.number+"");
-                if(week[partType].secondarySchool.assistant)
-                  doc.setFontSize(8).setFontStyle("italic").text(130, rowTemp+3, this.getSurnameName(week[partType].secondarySchool.assistant));
-              }
 
+        for(let part of week.ministryPart) {
+          doc.setTextColor(0, 0, 0).setFontStyle("normal").setFontSize(9).text(7, rowTemp, this.getPartTitle(part.html));
+          if(part.forStudent){
+            name = this.getSurnameName(part.primarySchool.student);
+            doc.setFontStyle("normal").setTextColor(146,113,40).text(60, rowTemp, name)
+
+            if(part.primarySchool.assistant)
+              doc.setFontSize(8).setFontStyle("italic").text(60, rowTemp+3, this.getSurnameName(part.primarySchool.assistant));
+            if(week.secondarySchool){
+              name = this.getSurnameName(part.secondarySchool.student);
+              doc.setFontSize(9).setFontStyle("normal").text(130, rowTemp, this.getSurnameName(part.secondarySchool.student));
+              if(part.secondarySchool.assistant)
+                doc.setFontSize(8).setFontStyle("italic").text(130, rowTemp+3, this.getSurnameName(part.secondarySchool.assistant));
             }
-            rowTemp = rowTemp +8;
+
           }
+          rowTemp = rowTemp +8;
         }
 
         rowTemp = rowTemp -3;
@@ -372,9 +364,6 @@ export class DownloadWeeksDialog implements OnInit{
             if(draft[cellRef]) draft[cellRef] = {t: 's', v:this.getSurnameName(week.gems.brother)};
           //
             countRow++;
-            if(!week.presentationExercise.enabled){
-              countRow++;
-            }
             cellRef = XLSX.utils.encode_cell({r:countRow, c:0});
             if (draft[cellRef]) draft[cellRef] = {t: 's', v:this.getPartSchoolTitle(week.bibleReading.label),s:{font: {sz: 15, bold: true }}};
             for(let school of SCHOOLS) {
@@ -394,13 +383,6 @@ export class DownloadWeeksDialog implements OnInit{
           //
         draft[XLSX.utils.encode_cell({r:countRow+1, c:0})] = {v:"Efficaci nel ministero",s:{alignment:{horizontal:'center'}, font: {sz: 18, bold: true }}};
 
-        if(week.presentationExercise.enabled){
-              countRow++;
-              countRow++;
-              draft[XLSX.utils.encode_cell({r:countRow, c:0})] = {v:"Esercitiamoci",s:{ font: {sz: 15, bold: true }}};
-              cellRef = XLSX.utils.encode_cell({r:countRow, c:2});
-              if(draft[cellRef]) draft[cellRef].v = this.getSurnameName(week.presentationExercise.brother);
-            }else{
               for(let partType of PART_TYPE_ALL) {
                 countRow++;
                 countRow++;
@@ -432,7 +414,6 @@ export class DownloadWeeksDialog implements OnInit{
               }
               countRow++;
               draft[XLSX.utils.encode_cell({r:countRow, c:0})].s = {font: {sz: 15, bold: true }};
-            }
 
             countRow++;
             draft[XLSX.utils.encode_cell({r:countRow, c:0})] = {v:"Vita cristiana",s:{alignment:{horizontal:'center'}, font: {sz: 18, bold: true }}};
@@ -553,14 +534,14 @@ export class DownloadWeeksDialog implements OnInit{
     return temp[0].replace("&#xA0;",' ').replace("Cantico ", '');
   }
 
-  public getPartTitle(str : string){
+  public getPartTitle(str : String){
     var html = he.decode(str);
     html = html.split("(")[0];
     var div = document.createElement("div");
     div.innerHTML = html;
-    var str = div.textContent || div.innerText || "";
-    str = str.substr(0, str.length-2);
-    return str.trim();
+    var newstr = div.textContent || div.innerText || "";
+    newstr = newstr.substr(0, newstr.length-2);
+    return newstr.trim();
   }
 
   public getPartSchoolTitle(str : string){

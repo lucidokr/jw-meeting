@@ -27,33 +27,6 @@
         </md-radio-group>
 
         <div class="weekConfig" fxLayout="column" fxLayoutAlign="center center" *ngIf="week.type.meeting " fxFlexFill>
-          <div width="100%" fxLayout="row" fxLayoutAlign="center center" *ngIf="week.type.disableSchool" fxFlexFill>
-            <div class="meetingWorkbook" fxFlex fxLayout="column" fxFlexFill>
-              <div class="effective" fxLayout="column" fxLayoutGap="10px" fxFlexFill>
-                <h3 >EFFICACI NEL MINISTERO</h3>
-                <div fxFlex="100%" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px"  fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-                  <div fxFlex="50%" [innerHTML]="week.presentationExercise.label | safeHtml"></div>
-                  <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
-                    <md-input-container fxFlex class="brother-autocomplete">
-                      <input name="presentationExerciseBrother" type="text" mdInput [mdAutocomplete]="presentationExercise" [(ngModel)]="week.presentationExercise.brother" (ngModelChange)="filterPresentationExercise($event)" [value]="(week.presentationExercise.brother && week.presentationExercise.brother.name && week.presentationExercise.brother.surname ? week.presentationExercise.brother.name + ' '+week.presentationExercise.brother.surname: '')" name="brother" placeholder="Seleziona fratello" required>
-                    </md-input-container>
-                    <md-autocomplete  #presentationExercise="mdAutocomplete" name="brotherAutocomplete" placeholder="Seleziona fratello">
-                      <md-option *ngFor="let b of presentationExerciseList" [value]="b" (onSelectionChange)="resetFilterPresentationExercise()">
-                        {{b.surname}} {{b.name}}
-                        <span *ngIf="b.servant && b.servant.presentationExerciseDate"> - {{b.servant.presentationExerciseDate.format('DD/MM/YY')}}</span>
-                        <span *ngIf="b.elder && b.elder.presentationExerciseDate"> - {{b.elder.presentationExerciseDate.format('DD/MM/YY')}}</span>
-
-                      </md-option>
-                    </md-autocomplete>
-                  </div>
-                  <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-
           <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
             <div class="meetingWorkbook" fxFlex="100%" fxLayout="column" fxFlexFill>
               <div class="living" fxLayout="column" fxLayoutGap="10px" fxFlexFill>

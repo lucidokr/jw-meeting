@@ -2,7 +2,7 @@
   <md-tab-group>
     <md-tab *ngIf="!week.completed && (user.role==USER_ROLE.SCHOOL_OVERSEER || user.role==USER_ROLE.PRESIDENT)">
       <ng-template md-tab-label>
-        AGGIORNAMENTO PUNTI
+        AGGIORNAMENTO PARTi
       </ng-template>
       <week-study-number-update fromHome="false" [week]="week"></week-study-number-update>
     </md-tab>

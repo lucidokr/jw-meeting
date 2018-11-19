@@ -14,7 +14,7 @@ import {DialogService} from "../../services/dialog.service";
 import {MeetingService} from "../../services/meeting.service";
 import {AuthService} from "../../services/auth.service";
 import {User} from "../../shared/models/user.model";
-import { MinistryPart } from '../../shared/models/ministryPart.model';
+import { MinistryPart, SchoolMinistryPart } from '../../shared/models/ministryPart.model';
 
 @Component({
   selector: 'new-pgm-temp',
@@ -146,47 +146,27 @@ export class NewPgmTempComponent {
               }
               model.talk.label = weekMeetingWorkbook.talk;
               model.gems.label = weekMeetingWorkbook.gems;
-              if(weekMeetingWorkbook.ministryPart && weekMeetingWorkbook.ministryPart.length > 0){
-                model.type = this.weekType.STANDARD;
-                model.bibleReading.label = weekMeetingWorkbook.bibleReading;
-                var withoutPart = true;
-                weekMeetingWorkbook.ministryPart.forEach(function(part){
-                  var ministryPart = new MinistryPart()
-                  ministryPart.html = part.html
-                  if(part.forStudent)
-                    withoutPart = false
-                  ministryPart.forStudent = part.forStudent
-                  ministryPart.isTalk = part.isTalk
-                  model.bibleStudy.primarySchool.gender = part.isTalk ? 'M' : '';
-                  model.bibleStudy.secondarySchool.gender = part.isTalk ? 'M' : '';
+              model.type = this.weekType.STANDARD;
+              model.bibleReading.label = weekMeetingWorkbook.bibleReading;
+              var withoutPart = true;
+              weekMeetingWorkbook.ministryPart.forEach(function(part){
+                var ministryPart = new MinistryPart()
+                ministryPart.html = part.html
+                if(part.forStudent)
+                  withoutPart = false
+                ministryPart.forStudent = part.forStudent
+                ministryPart.isTalk = part.isTalk
+                ministryPart.primarySchool = new SchoolMinistryPart()
+                ministryPart.secondarySchool = new SchoolMinistryPart()
+                ministryPart.primarySchool.gender = part.isTalk ? 'M' : '';
+                ministryPart.secondarySchool.gender = part.isTalk ? 'M' : '';
 
-                  model.ministryPart.push(ministryPart)
-                })
-                if(withoutPart){
-                  model.type = this.weekType.NO_MINISTRY_PART;
-                }
-              }else{
-                if(weekMeetingWorkbook.presentationExercise){
-                  model.type = this.weekType.EXERCISE;
-                  model.secondarySchool = false;
-                  model.presentationExercise.label = weekMeetingWorkbook.presentationExercise;
-                  model.presentationExercise.enabled = true;
-                  model.bibleReading.label = weekMeetingWorkbook.bibleReading;
-                }else{
-                  model.type = this.weekType.STANDARD;
-                  model.bibleReading.label = weekMeetingWorkbook.bibleReading;
-                  model.initialCall.label = weekMeetingWorkbook.initialCall;
-                  model.initialCall.video = weekMeetingWorkbook.initialCallVideo;
-                  model.returnVisit.label = weekMeetingWorkbook.returnVisit;
-                  model.returnVisit.video = weekMeetingWorkbook.returnVisitVideo;
-                  model.bibleStudy.label = weekMeetingWorkbook.bibleStudy;
-                  model.bibleStudy.video = weekMeetingWorkbook.bibleStudyVideo;
-                  model.bibleStudy.primarySchool.isTalk = weekMeetingWorkbook.isTalk;
-                  model.bibleStudy.primarySchool.gender = weekMeetingWorkbook.isTalk ? 'M' : '';
-                  model.bibleStudy.secondarySchool.isTalk = weekMeetingWorkbook.isTalk;
-                  model.bibleStudy.secondarySchool.gender = weekMeetingWorkbook.isTalk ? 'M' : '';
-                }
+                model.ministryPart.push(ministryPart)
+              })
+              if(withoutPart){
+                model.type = this.weekType.NO_MINISTRY_PART;
               }
+
 
 
               this.weeks.push(model)
@@ -265,15 +245,6 @@ export class NewPgmTempComponent {
     }
   }
 
-  filterPresentationExercise(ev){
-    if(typeof ev == "string"){
-      this.presentationExerciseListFiltered = this.presentationExerciseList.filter(b => b.name.toUpperCase().indexOf(ev.toUpperCase())!=-1 || b.surname.toUpperCase().indexOf(ev.toUpperCase())!=-1)
-    }
-  }
-
-  resetFilterPresentationExercise(){
-    this.presentationExerciseListFiltered = [].concat(this.presentationExerciseList)
-  }
 
 
 }

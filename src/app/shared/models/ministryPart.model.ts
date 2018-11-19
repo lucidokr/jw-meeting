@@ -13,8 +13,6 @@ export class SchoolMinistryPart {
     assistant:  Brother = null;
     updated: Boolean = false;
     made: Number = 0;
-    pointCompleted: Boolean = false;
     gender: String = '';
-    pointChanged: Boolean = false
 }
 

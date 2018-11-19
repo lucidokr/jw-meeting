@@ -23,96 +23,20 @@ import { MinistryPart } from "./ministryPart.model";
       brother: null,
       label: ''
     };
-    presentationExercise: any = {
-      enabled: false,
-      brother: null,
-      label: ''
-    };
+
     ministryPart: Array<MinistryPart>;
     bibleReading: any = {
       primarySchool:{
         student: null,
         updated: false,
         made:0,
-        pointCompleted:false,
-        pointChanged: false
       },
       secondarySchool:{
         student: null,
         updated: false,
         made:0,
-        pointCompleted:false,
-        pointChanged: false
       },
       label: ''
-    };
-    initialCall: any = {
-      primarySchool:{
-        gender: '',
-        student: null,
-        assistant: null,
-        updated: false,
-        made:0,
-        pointCompleted:false,
-        pointChanged: false
-      },
-      secondarySchool:{
-        gender: '',
-        student: null,
-        assistant: null,
-        updated: false,
-        made:0,
-        pointCompleted:false,
-        pointChanged: false
-      },
-      label: '',
-      video: false
-    };
-    returnVisit: any ={
-      primarySchool:{
-        gender: '',
-        student: null,
-        assistant: null,
-        updated: false,
-        made:0,
-        pointCompleted:false,
-        pointChanged: false
-      },
-      secondarySchool:{
-        gender: '',
-        student: null,
-        assistant: null,
-        updated: false,
-        made:0,
-        pointCompleted:false,
-        pointChanged: false
-      },
-      label: '',
-      video: false
-    };
-    bibleStudy: any ={
-      primarySchool:{
-        gender: '',
-        student: null,
-        isTalk: false,
-        assistant: null,
-        updated: false,
-        made:0,
-        pointCompleted:false,
-        pointChanged: false
-      },
-      secondarySchool:{
-        gender: '',
-        student: null,
-        isTalk: false,
-        assistant: null,
-        updated: false,
-        made:0,
-        pointCompleted:false,
-        pointChanged: false
-      },
-      label: '',
-      video: false
     };
     christianLivingPart:any=[];
     congregationBibleStudy:any={

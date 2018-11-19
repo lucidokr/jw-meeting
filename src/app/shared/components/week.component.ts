@@ -44,28 +44,8 @@ export class WeekComponent implements OnChanges {
     }
   }
 
-  public change(week, partType, school, partBrother){
-    this.onChange.emit({week:week, partType:partType, school:school, partBrother:partBrother})
-  }
-
-  public changeNumber(week, partType, school, partBrother){
-    if(partType==CONST.BIBLE_READING){
-      this.dialogService.openChangePoint(week[partType][school][partBrother].student.bibleReadingStudyNumber, true)
-        .subscribe(newPoint =>{
-          if(newPoint != null){
-            week[partType][school].pointChanged = true;
-            week[partType][school][partBrother].student.bibleReadingPendingStudyNumber = newPoint;
-          }
-        });
-    }else{
-      this.dialogService.openChangePoint(week[partType][school][partBrother].student.studyNumber, false)
-        .subscribe(newPoint =>{
-          if(newPoint != null){
-            week[partType][school].pointChanged = true;
-            week[partType][school][partBrother].student.pendingStudyNumber = newPoint;
-          }
-        });
-    }
+  public change(week, part, partBrother){
+    this.onChange.emit({week:week, part:part, partBrother:partBrother})
   }
 
   public checkBusy(student){
@@ -80,17 +60,9 @@ export class WeekComponent implements OnChanges {
     // return this.busyErrorBrother.indexOf(student._id) != -1
   }
 
-  public checkBusyWeek(week, part, brother, type){
+  public checkBusyWeek(week, part, brother, forStudent){
     let busy = false;
-    let b = null;
-    if(this.PART_TYPE_ALL.indexOf(part)!= -1){
-      b = week[part][brother][type];
-    }else{
-      if(brother)
-        b = week[part][brother];
-      else
-        b = week[part];
-    }
+    let b = part[brother];
 
     if(b){
       let partList: any = {
@@ -101,8 +73,6 @@ export class WeekComponent implements OnChanges {
         'congregationBibleStudy': ['brother','reader'],
         'finalPrayer':null
       }
-      if(week.presentationExercise.enabled)
-        partList.presentationExercise = ['brother'];
       for(let p in partList){
         if(partList[p]){
           for(let sub of partList[p]){
@@ -121,34 +91,33 @@ export class WeekComponent implements OnChanges {
         }
 
       }
-      if(this.PART_TYPE_ALL.indexOf(part) == -1) {
-        for (let p of this.PART_TYPE_ALL) {
-          if(week[p].video){
-            for (let s of this.PART_SCHOOLS) {
-              if (week[p][s]) {
-                if (week[p][s].student && b._id == week[p][s].student._id) {
+      if(!forStudent) {
+        for (let p of week.ministryPart) {
+          if(p.forStudent){
+            for (let school of this.PART_SCHOOLS) {
+              if (p[school]) {
+                if (p[school].student && b._id == p[school].student._id) {
                   busy = true;
                 }
-                if (week[p][s].assistant && b._id == week[p][s].assistant._id) {
+                if (p[school].assistant && b._id == p[school].assistant._id) {
                   busy = true;
                 }
               }
             }
           }
         }
-      }
-      if(this.PART_TYPE_ALL.indexOf(part)!= -1){
+      }else{
         for(let w of this.weeks) {
-          for (let p of this.PART_TYPE_ALL) {
-            if(w[p].video){
+          for (let p of w.ministryPart) {
+            if(p.forStudent){
               for (let s of this.PART_SCHOOLS) {
-                if (w[p][s] && (part != p || s != brother || type != 'student' || w.date != week.date)) {
-                  if (w[p][s].student && b._id == w[p][s].student._id) {
+                if (p[s] && (part != p || brother != 'student' || w.date != week.date)) {
+                  if (p[s].student && b._id == p[s].student._id) {
                     busy = true;
                   }
                 }
-                if (w[p][s] && (part != p || s != brother || type != 'assistant' || w.date != week.date)) {
-                  if (w[p][s].assistant && b._id == w[p][s].assistant._id) {
+                if (p[s] && (part != p  || brother != 'assistant' || w.date != week.date)) {
+                  if (p[s].assistant && b._id == p[s].assistant._id) {
                     busy = true;
                   }
                 }

@@ -95,9 +95,18 @@ app.use(function(req, res, next) {
     }
 });
 
-mongoose.connect(process.env.MONGO_DB_URI, {
-    useMongoClient: true
-});
+// async function run() {
+//   // No need to `await` on this, mongoose 4 handles connection buffering
+//   // internally
+//   mongoose.connect(process.env.MONGO_DB_URI);
+
+//   // Prints an array with 1 element, the above document
+//   console.log(await Brother.find());
+// }
+
+// run();
+
+mongoose.connect(process.env.MONGO_DB_URI);
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 
@@ -113,7 +122,6 @@ router.use('/prayer', require('./api/prayer'));
 router.use('/elder', require('./api/elder'));
 router.use('/servant', require('./api/servant'));
 router.use('/wtj', require('./api/wtj'));
-router.use('/studyNumber', require('./api/studyNumber'));
 router.use('/reader', require('./api/reader'));
 
 app.use('/api', router);

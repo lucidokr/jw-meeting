@@ -32,20 +32,6 @@ export class StudentDetailComponent extends GeneralListComponent{
       title: 'Svolto',
       type: 'custom',
       renderComponent: BooleanRenderComponent
-    },
-    pointCompleted: {
-      title: 'Qualità oratoria superata',
-      type: 'custom',
-      renderComponent: BooleanRenderComponent
-    },
-    studyNumber: {
-      title: 'Qualità oratoria',
-      valuePrepareFunction: function(cell, row){
-        if(row.studyNumber)
-          return row.studyNumber.number+" - "+row.studyNumber.title;
-        else
-          return '-'
-      }
     }
 
   };

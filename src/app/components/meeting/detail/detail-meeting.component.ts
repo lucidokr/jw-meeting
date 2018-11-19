@@ -5,8 +5,6 @@ import {Student} from "../../../shared/models/student.model";
 import {Brother} from "../../../shared/models/brother.model";
 import {MeetingService} from "../../../services/meeting.service";
 import {WeekMeeting} from "../../../shared/models/weekMeeting.model";
-import {StudyNumber} from "../../../shared/models/studyNumber.model";
-import {StudyNumberService} from "../../../services/study-number.service";
 import {EmitterService} from "../../../services/emitter.service";
 import {AuthService} from "../../../services/auth.service";
 import {USER_ROLE} from "../../../constant";
@@ -27,7 +25,6 @@ export class MeetingDetailComponent {
 
   constructor(private meetingService:MeetingService,
               private route: ActivatedRoute,
-              private studyNumberService:StudyNumberService,
               private emitterService:EmitterService,
               private authService:AuthService) {
     this.emitterService.get("change_header_subtitle")

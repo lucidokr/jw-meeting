@@ -11,32 +11,7 @@ router.route('/')
       .sort([['surname', 'ascending']])
       .populate({
         path:     'student',
-        model: 'Student',
-        populate: [{
-          path:  'studyNumber',
-          model: 'StudyNumber'
-        },{
-          path:  'bibleReadingStudyNumber',
-          model: 'StudyNumber'
-        },{
-          path:  'bibleReadingPendingStudyNumber',
-          model: 'StudyNumber'
-        },{
-          path:  'pendingStudyNumber',
-          model: 'StudyNumber'
-        },{
-          path:  'lesson',
-          model: 'Lesson'
-        },{
-          path:  'bibleReadingLesson',
-          model: 'Lesson'
-        },{
-          path:  'bibleReadingPendingLesson',
-          model: 'Lesson'
-        },{
-          path:  'pendingLesson',
-          model: 'Lesson'
-        }]
+        model: 'Student'
       })
       .or([
         { 'student.deleted': {$exists:false} },
@@ -176,32 +151,7 @@ router.route('/:brother_id')
     Brother.findOne({'_id': req.params.brother_id})
       .populate({
         path:     'student',
-        model: 'Student',
-        populate: [{
-          path:  'studyNumber',
-          model: 'StudyNumber'
-        },{
-          path:  'bibleReadingStudyNumber',
-          model: 'StudyNumber'
-        },{
-          path:  'bibleReadingPendingStudyNumber',
-          model: 'StudyNumber'
-        },{
-          path:  'pendingStudyNumber',
-          model: 'StudyNumber'
-        },{
-          path:  'lesson',
-          model: 'Lesson'
-        },{
-          path:  'bibleReadingLesson',
-          model: 'Lesson'
-        },{
-          path:  'bibleReadingPendingLesson',
-          model: 'Lesson'
-        },{
-          path:  'pendingLesson',
-          model: 'Lesson'
-        }]
+        model: 'Student'
       })
       .exec(function(err, brother) {
           if (err){

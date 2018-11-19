@@ -24,95 +24,18 @@ var WeekMeetingSchema   = new Schema(
     brother: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
     label: String
   },
-  presentationExercise: {
-    enabled: Boolean,
-    brother: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-    label: String
-  },
   bibleReading: any = {
     primarySchool:{
       student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
       updated: Boolean,
-      made: Number,
-      pointCompleted: Boolean,
-      pointChanged: Boolean
+      made: Number
     },
     secondarySchool:{
       student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
       updated: Boolean,
-      made: Number,
-      pointCompleted: Boolean,
-      pointChanged: Boolean
+      made: Number
     },
     label: String
-  },
-  initialCall: {
-    primarySchool:{
-      student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      assistant: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      updated: Boolean,
-      made: Number,
-      pointCompleted: Boolean,
-      gender: String,
-      pointChanged: Boolean
-    },
-    secondarySchool:{
-      student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      assistant: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      updated: Boolean,
-      made: Number,
-      pointCompleted: Boolean,
-      gender: String,
-      pointChanged: Boolean
-    },
-    label: String,
-    video: Boolean
-  },
-  returnVisit: {
-    primarySchool:{
-      student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      assistant: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      updated: Boolean,
-      made: Number,
-      pointCompleted: Boolean,
-      gender: String,
-      pointChanged: Boolean
-    },
-    secondarySchool:{
-      student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      assistant: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      updated: Boolean,
-      made: Number,
-      pointCompleted: Boolean,
-      gender: String,
-      pointChanged: Boolean
-    },
-    label: String,
-    video: Boolean
-  },
-  bibleStudy:{
-    primarySchool:{
-      student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      isTalk: Boolean,
-      assistant: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      updated: Boolean,
-      made: Number,
-      pointCompleted: Boolean,
-      gender: String,
-      pointChanged: Boolean
-    },
-    secondarySchool:{
-      student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      isTalk: Boolean,
-      assistant: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
-      updated: Boolean,
-      made: Number,
-      pointCompleted: Boolean,
-      gender: String,
-      pointChanged: Boolean
-    },
-    label: String,
-    video: Boolean
   },
   ministryPart: [{
     primarySchool:{
@@ -120,18 +43,14 @@ var WeekMeetingSchema   = new Schema(
       assistant: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
       updated: Boolean,
       made: Number,
-      pointCompleted: Boolean,
       gender: String,
-      pointChanged: Boolean
     },
     secondarySchool:{
       student: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
       assistant: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
       updated: Boolean,
       made: Number,
-      pointCompleted: Boolean,
       gender: String,
-      pointChanged: Boolean
     },
     part: String,
     forStudent: Boolean,
