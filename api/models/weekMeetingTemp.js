@@ -56,7 +56,7 @@ var WeekMeetingTempSchema   = new Schema(
       made: Number,
       gender: String,
     },
-    part: String,
+    html: String,
     forStudent: Boolean,
     isTalk: Boolean
   }],

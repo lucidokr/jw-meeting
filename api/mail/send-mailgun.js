@@ -11,29 +11,12 @@ var User = require('../models/user');
 var mailgun = require('mailgun-js')({apiKey: process.env.API_KEY_MAILGUN, domain: process.env.DOMAIN_MAILGUN});
 var fs = require('fs');
 var path = require('path');
-var StudyNumber = require('../models/studyNumber');
+// var StudyNumber = require('../models/studyNumber');
 
 
 var MAIL = {
     template: null,
     templateAssegnation: null,
-    studyNumberList: null,
-
-    getStudyNumberList: function(callback){
-      var that = this;
-      StudyNumber
-      .find()
-      .sort([
-          ['number', 'ascending']
-      ])
-      .exec(function(err, studies) {
-          if (err){
-              console.error('Study Number get error:', err);
-          }
-        that.studyNumberList = studies;
-        callback();
-      });
-    },
 
     getAssegnationTemplate: function(callback) {
         var that = this;
@@ -42,11 +25,7 @@ var MAIL = {
                 return console.log(err);
             }
             that.templateAssegnation = html;
-            if(!that.studyNumberList){
-              getStudyNumberList(callback);
-            }else{
-              callback();
-            }
+            callback();
         });
     },
 
@@ -144,32 +123,14 @@ var MAIL = {
     },
 
     sendAssegnations: function(mails) {
-      function send(){
-        if (mails && mails.length > 0) {
-            var that = this;
-            mails.forEach(function(data) {
-                if (data.school == 1) data.school = "Sala principale";
-                if (data.school == 2) data.school = "Classe supplementare 1";
-
-                var point = "";
-                if(data.point.title && data.point.number){
-                  point = data.point.number + ' - ' + data.point.title;
-                }else{
-                  var study = null;
-                  that.studyNumberList.forEach(function(studyNumber){
-                    if (studyNumber._id+"" == data.point+""){
-                      study = studyNumber;
-                    }
-                  });
-                  if(study){
-                    point = study.number + ' - ' + study.title;
-                  }
-                }
-                that.sendAssegnation(data.mail, data.brother, data.assistant, data.date, point, data.type, data.school);
-            });
-        }
+      if (mails && mails.length > 0) {
+          var that = this;
+          mails.forEach(function(data) {
+              if (data.school == 1) data.school = "Sala principale";
+              if (data.school == 2) data.school = "Classe supplementare 1";
+              that.sendAssegnation(data.mail, data.brother, data.assistant, data.date, "", data.type, data.school);
+          });
       }
-      this.getStudyNumberList(send.bind(this));
     },
 
     sendAssegnation: function(mail, brother, assistant, date, point, type, school) {

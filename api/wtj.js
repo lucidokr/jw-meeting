@@ -34,53 +34,25 @@ router.route('/:year/:month/:dayStart')
                     }
                     result.initialSong = $("#section1 #p3").html();
 
-                    // BEFORE 2019
-                    if(req.params.year.parseInt() <= 2018){
-                      if ($("#section3 #p18").length == 0) {
-                          result.presentationExercise = r($("#section3 #p17").html());
-                          result.initialCall = null;
-                          result.returnVisit = null;
-                          result.bibleStudy = null;
-                      } else {
-                          result.presentationExercise = null;
-                          result.initialCall = r($("#section3 #p17").html());
-                          result.initialCallVideo = false;
-                          if(result.initialCall.split("(")[0].toLowerCase().indexOf("video") != -1){
-                            result.initialCallVideo = true;
-                          }
-                          result.returnVisit = r($("#section3 #p18").html());
-                          result.returnVisitVideo = false;
-                          if(result.returnVisit.split("(")[0].toLowerCase().indexOf("video") != -1){
-                            result.returnVisitVideo = true;
-                          }
-                          result.bibleStudy = r($("#section3 #p19").html());
-                          result.bibleStudyVideo = false;
-                          if(result.bibleStudy.split("(")[0].toLowerCase().indexOf("video") != -1){
-                            result.bibleStudyVideo = true;
-                          }else{
-                            if (result.bibleStudy.indexOf("Discorso:") != -1 || result.bibleStudy.indexOf("Talk:") != -1 ) {
-                                result.isTalk = true;
-                            } else {
-                                result.isTalk = false;
-                            }
-                          }
-                      }
-                    }else if(req.params.year.parseInt() >= 2019){
-                      // AFTER 2019
-                      var parts = $("#section3 p");
-                      result.ministryPart = [];
-                      parts.forEach(function(part){
-                          var forStudent = true, isTalk = false;
-                          var partHtml = r(part.html());
-                          var partHtmlTitle = partHtml.split("(")[0].toLowerCase();
-                          if(partHtmlTitle.indexOf("video") != -1 || partHtmlTitle.indexOf("applicati") != -1)
-                            forStudent = false;
 
-                          if(partHtmlTitle.indexOf("discorso") != -1)
-                            isTalk = true;
+                    // AFTER 2019
+                    var parts = $("#section3 .su");
+                    var partsaaa = $('#section3 p').map(function(val) {
+                      return $(this).html();
+                    }).get();
+                    result.ministryPart = [];
+                    console.log("UUUU:"+partsaaa);
+                    for(var i=0; i<partsaaa.length; i++){
+                      var forStudent = true, isTalk = false;
+                      var partHtml = r(partsaaa[i]);
+                      var partHtmlTitle = partHtml.split("(")[0].toLowerCase();
+                      if(partHtmlTitle.indexOf("video") != -1 || partHtmlTitle.indexOf("applicati") != -1)
+                        forStudent = false;
 
-                          result.ministryPart.push({html: r(part.html()), forStudent: forStudent, isTalk: isTalk});
-                      });
+                      if(partHtmlTitle.indexOf("discorso") != -1)
+                        isTalk = true;
+
+                      result.ministryPart.push({html: partHtml, forStudent: forStudent, isTalk: isTalk});
                     }
 
 

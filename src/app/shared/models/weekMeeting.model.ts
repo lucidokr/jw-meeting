@@ -24,7 +24,7 @@ import { MinistryPart } from "./ministryPart.model";
       label: ''
     };
 
-    ministryPart: Array<MinistryPart>;
+    ministryPart: Array<MinistryPart> = [];
     bibleReading: any = {
       primarySchool:{
         student: null,

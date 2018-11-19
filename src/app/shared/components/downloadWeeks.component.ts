@@ -481,10 +481,7 @@ export class DownloadWeeksDialog implements OnInit{
           cellRef = XLSX.utils.encode_cell({r:countRow, c:1});
           if(draft[cellRef]) draft[cellRef] = {t: 's', v:"Visita del sorvegliante di circoscrizione"};
         }
-        if(week.presentationExercise.enabled)
-          countRow += 12;
-        else
-          countRow += 18;
+        countRow += 18;
 
 
 

@@ -1,8 +1,6 @@
 import { MdDialogRef } from '@angular/material';
 import {Component, OnInit} from '@angular/core';
 import {Student} from "../../../shared/models/student.model";
-import {StudyNumber} from "../../../shared/models/studyNumber.model";
-import {StudyNumberService} from "../../../services/study-number.service";
 import {Brother} from "../../../shared/models/brother.model";
 import {BrotherService} from "../../../services/brother.service";
 import * as moment from "moment";
@@ -14,7 +12,6 @@ import * as moment from "moment";
 })
 export class NewStudentDialog implements OnInit{
 
-  public studyNumberList: Array<StudyNumber>;
   public edit: boolean;
   public enable: boolean = true;
   public enablePoint: boolean = true;
@@ -58,9 +55,7 @@ export class NewStudentDialog implements OnInit{
 
   checkIfAllDisabled(){
     if(this.brother){
-      if(this.brother.student.initialCallEnabled ||
-        this.brother.student.returnVisitEnabled ||
-        this.brother.student.bibleStudyEnabled ||
+      if(this.brother.student.ministryPartEnabled ||
         this.brother.student.talkEnabled
       ){
         if(!this.brother.student.lastDate) this.brother.student.lastDate = moment();
@@ -68,7 +63,6 @@ export class NewStudentDialog implements OnInit{
         this.enable = true;
         // this.enablePoint = true;
       }else{
-        this.brother.student.studyNumber = null;
         this.enablePoint = false;
         if(this.brother.student.bibleReadingEnabled){
           if(!this.brother.student.lastDate) this.brother.student.lastDate = moment();
@@ -91,7 +85,7 @@ export class NewStudentDialog implements OnInit{
     }
   }
 
-  constructor(public dialogRef: MdDialogRef<NewStudentDialog>, private studyNumberService: StudyNumberService, private brotherService:BrotherService) {
+  constructor(public dialogRef: MdDialogRef<NewStudentDialog>, private brotherService:BrotherService) {
     // this.studyNumberService.get()
       // .subscribe(list => this.studyNumberList = list)
   }

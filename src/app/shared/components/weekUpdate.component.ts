@@ -6,12 +6,10 @@ import {LocalDataSource} from "ng2-smart-table";
 import {WeekMeeting} from "../models/weekMeeting.model";
 import {Brother} from "../models/brother.model";
 import {MeetingService} from "../../services/meeting.service";
-import {StudyNumber} from "../models/studyNumber.model";
-import {StudyNumberService} from "../../services/study-number.service";
 import {CONST, CONST_ARR} from "../../constant";
 
 @Component({
-  selector: 'week--update',
+  selector: 'week-update',
   templateUrl: './weekUpdate.component.html',
   styles:['md-select { width:100% }','.updated,.notUpdated{width:100%}','.updated strong{padding-left:30px;}','.containerSchoolPart{width:100%}','.updated .material-icons{ margin-top:-2px;margin-left:-30px; position: absolute;color: green;}']
 
@@ -27,7 +25,7 @@ export class WeekUpdateComponent implements OnInit{
   public SCHOOLS = CONST_ARR.SCHOOLS;
   public snackBarConfig : MdSnackBarConfig = new MdSnackBarConfig();
 
-  public constructor(private meetingService: MeetingService, private snackBar:MdSnackBar, private studyNumberService: StudyNumberService, private dialogService:DialogService) {
+  public constructor(private meetingService: MeetingService, private snackBar:MdSnackBar, private dialogService:DialogService) {
 
 
   }

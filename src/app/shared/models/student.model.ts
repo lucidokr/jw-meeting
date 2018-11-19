@@ -1,4 +1,3 @@
-  import {StudyNumber} from "./studyNumber.model";
   export class Student {
 
     randomDate(start, end) {

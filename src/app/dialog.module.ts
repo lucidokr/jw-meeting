@@ -16,7 +16,6 @@ import {ErrorDialog} from "./shared/components/error.component";
 import {NewBrotherDialog} from "./components/brother/new/new-brother";
 import {NewReaderDialog} from "./components/reader/new/new-reader";
 import {DownloadWeeksDialog} from "./shared/components/downloadWeeks.component";
-import {ChangeNumberDialog} from "./shared/components/changeNumber.component";
 import {ChangePartDialog} from "./shared/components/changePart.component";
 import {SafeHtmlPipe} from "./pipes/safe.pipe";
 import {PipeModule} from "./pipe.module";
@@ -32,7 +31,6 @@ import {PipeModule} from "./pipe.module";
     ConfirmDialog,
     ErrorDialog,
     DownloadWeeksDialog,
-    ChangeNumberDialog,
     ChangePartDialog,
 
     FilterPipe
@@ -54,7 +52,6 @@ import {PipeModule} from "./pipe.module";
     ConfirmDialog,
     ErrorDialog,
     DownloadWeeksDialog,
-    ChangeNumberDialog,
     ChangePartDialog,
 
     FilterPipe
@@ -72,7 +69,6 @@ import {PipeModule} from "./pipe.module";
     ConfirmDialog,
     ErrorDialog,
     DownloadWeeksDialog,
-    ChangeNumberDialog,
     ChangePartDialog
 
   ]

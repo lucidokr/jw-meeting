@@ -22,8 +22,6 @@ import {NewBrotherDialog} from "../components/brother/new/new-brother";
 import {NewReaderDialog} from "../components/reader/new/new-reader";
 import {WeekMeeting} from "../shared/models/weekMeeting.model";
 import {DownloadWeeksDialog} from "../shared/components/downloadWeeks.component";
-import {StudyNumber} from "../shared/models/studyNumber.model";
-import {ChangeNumberDialog} from "../shared/components/changeNumber.component";
 import {ChangePartDialog} from "../shared/components/changePart.component";
 
 
@@ -127,16 +125,6 @@ export class DialogService {
     dialogRef.componentInstance.weeks = weeks;
     dialogRef.componentInstance.fromCreate = fromCreate;
     dialogRef.componentInstance.format = format;
-
-    return dialogRef.afterClosed();
-  }
-
-  public openChangePoint(point: StudyNumber, forBibleReading:boolean): Observable<void>{
-    let dialogRef: MdDialogRef<ChangeNumberDialog>;
-
-    dialogRef = this.dialog.open(ChangeNumberDialog);
-    dialogRef.componentInstance.point = point;
-    dialogRef.componentInstance.forBibleReading = forBibleReading;
 
     return dialogRef.afterClosed();
   }

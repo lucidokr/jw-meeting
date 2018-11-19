@@ -43,7 +43,7 @@ import {GeneralListComponent} from "./shared/components/list.component";
 import {BrotherListComponent} from "./components/brother/list/list-brother.component";
 import {WeekComponent} from "./shared/components/week.component";
 import {ReaderListComponent} from "./components/reader/list/list-reader.component";
-import {WeekStudyNumberUpdateComponent} from "./shared/components/weekStudyNumberUpdate.component";
+import {WeekUpdateComponent} from "./shared/components/weekUpdate.component";
 import {LoginComponent} from "./components/login/login.component";
 import {DownloadRenderComponent} from "./shared/components/downloadRender.component";
 import {ViewRenderComponent} from "./shared/components/viewRender.component";
@@ -61,7 +61,6 @@ import {ServantService} from "./services/servant.service";
 import {ElderService} from "./services/elder.service";
 import {DialogService} from "./services/dialog.service";
 import {WTJService} from "./services/wtj.service";
-import {StudyNumberService} from "./services/study-number.service";
 import {EmitterService} from "./services/emitter.service";
 import {NewPgmService} from "./services/new-pgm.service";
 import {MeetingService} from "./services/meeting.service";
@@ -119,11 +118,11 @@ import {PipeModule} from "./pipe.module";
     BooleanRenderComponent,
     DownloadRenderComponent,
     ViewRenderComponent,
-    WeekStudyNumberUpdateComponent,
     StatisticsComponent,
     NewPgmTempComponent,
     MeetingDetailTempComponent,
     WeekTempComponent,
+    WeekUpdateComponent,
 
     KeysPipe,
 
@@ -137,7 +136,6 @@ import {PipeModule} from "./pipe.module";
     ElderService,
     DialogService,
     WTJService,
-    StudyNumberService,
     EmitterService,
     NewPgmService,
     BrotherService,

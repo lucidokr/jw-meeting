@@ -34,7 +34,6 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
 
   public colorMade = "#22aa24";
   public colorNotMade = "#c00000";
-  public colorMadeWithoutPoint = "#cdcd00";
 
 
   constructor(private emitterService: EmitterService,
@@ -70,13 +69,10 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
   buildChartPart(){
       let histories = this.histories;
       let countMade = 0;
-      let countMadeWithoutPoint = 0;
       let countNotMade = 0;
       for(let history of histories){
-        if(history.made && history.pointCompleted){
+        if(history.made ){
           countMade++
-        }else if(history.made && !history.pointCompleted){
-          countMadeWithoutPoint++;
         }else if(!history.made){
           countNotMade++;
         }
@@ -90,13 +86,9 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
         "type": "pie",
         "theme": "light",
         "dataProvider": [ {
-          "title": "Svolti (Qualità oratoria superata)",
+          "title": "Svolti",
           "value": countMade,
           "color": this.colorMade
-        }, {
-          "title": "Svolti (Qualità oratoria non superata)",
-          "value": countMadeWithoutPoint,
-          "color": this.colorMadeWithoutPoint
         }, {
           "title": "Non svolti",
           "value": countNotMade,
@@ -125,16 +117,14 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
     // arrMonths.push({date: date, month: allMonths[date.month()], year: date.year()});
     for(let i = 11; i>= 0; i--){
       if(!model[i])
-        model[i] ={month:'', made:0, madeWithoutPoint:0, notMade:0}
+        model[i] ={month:'', made:0, notMade:0}
       let date = moment(currentDate.add(-1, 'M'));
       model[i].month = date.month()+1 + "/"+date.year();
       for(let history of histories){
         let historyDate = moment(history.date).day(1);
         if(historyDate.month() == date.month() && historyDate.year() == date.year()){
-          if(history.made && history.pointCompleted){
+          if(history.made){
             model[i].made++
-          }else if(history.made && !history.pointCompleted){
-            model[i].madeWithoutPoint++;
           }else if(!history.made){
             model[i].notMade++;
           }
@@ -163,16 +153,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
         "columnWidth":.6,
         "fillColors":this.colorNotMade
       },{
-        "balloonText": "Svolti (qualità oratoria non superata) <b>[[value]]</b>",
-        "fillAlphas": 0.9,
-        "lineAlpha": 0.2,
-        "title": "Svolti",
-        "type": "column",
-        "valueField": "madeWithoutPoint",
-        "columnWidth":.6,
-        "fillColors":this.colorMadeWithoutPoint
-      },{
-        "balloonText": "Svolti (qualità oratoria superata) <b>[[value]]</b>",
+        "balloonText": "Svolti <b>[[value]]</b>",
         "fillAlphas": 0.9,
         "lineAlpha": 0.2,
         "title": "Svolti",
@@ -216,23 +197,16 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
     let allMonths = moment.months();
 
     let model = [];
-    // let date = moment(currentDate.add(-1, 'M'));
-    // arrMonths.push({date: date, month: allMonths[date.month()], year: date.year()});
-    // for(let i = 0; i < 5; i--){
-    //   if(!model[i])
-    //     model[i] ={month:'', made:0, madeWithoutPoint:0, notMade:0}
-    //   let date = moment(currentDate.add(-1, 'M'));
+
     for(let i in dateArr){
       if(!model[i]){
         let tempDate = moment(dateArr[i]).day(1);
-        model[i] ={week: "Settimana del "+tempDate.date()+"/"+(tempDate.month()+1)+"/"+tempDate.year(), made:0, madeWithoutPoint:0, notMade:0};
+        model[i] ={week: "Settimana del "+tempDate.date()+"/"+(tempDate.month()+1)+"/"+tempDate.year(), made:0, notMade:0};
       }
       for(let history of histories){
         if(history.date.month() == dateArr[i].month() && history.date.year() == dateArr[i].year() && history.date.date() == dateArr[i].date()){
-          if(history.made && history.pointCompleted){
+          if(history.made){
             model[i].made++
-          }else if(history.made && !history.pointCompleted){
-            model[i].madeWithoutPoint++;
           }else if(!history.made){
             model[i].notMade++;
           }
@@ -263,16 +237,7 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
         "columnWidth":.3,
         "fillColors":this.colorNotMade
       },{
-        "balloonText": "Svolti (qualità oratoria non superata) <b>[[value]]</b>",
-        "fillAlphas": 0.9,
-        "lineAlpha": 0.2,
-        "title": "Svolti",
-        "type": "column",
-        "valueField": "madeWithoutPoint",
-        "columnWidth":.3,
-        "fillColors":this.colorMadeWithoutPoint
-      },{
-        "balloonText": "Svolti (qualità oratoria superata) <b>[[value]]</b>",
+        "balloonText": "Svolti <b>[[value]]</b>",
         "fillAlphas": 0.9,
         "lineAlpha": 0.2,
         "title": "Svolti",
@@ -299,7 +264,6 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
     for(let brother of brothers){
       let obj : any = {...brother};
       obj.made = 0;
-      obj.madeWithoutPoint = 0;
       obj.notMade = 0;
       obj.total = 0;
       brothersChart[brother._id] = obj;
@@ -307,10 +271,8 @@ export class StatisticsComponent implements OnInit, AfterViewInit{
 
     for(let history of histories){
       brothersChart[history.student._id].total++;
-      if(history.made && history.pointCompleted){
+      if(history.made ){
         brothersChart[history.student._id].made++;
-      }else if(history.made && !history.pointCompleted){
-        brothersChart[history.student._id].madeWithoutPoint++;
       }else if(!history.made){
         brothersChart[history.student._id].notMade++;
       }

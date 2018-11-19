@@ -1,6 +1,5 @@
 
 import {Student} from "./student.model";
-import {StudyNumber} from "./studyNumber.model";
 export class Prayer {
 
   randomDate(start, end) {
