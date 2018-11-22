@@ -11,7 +11,7 @@
     "start": "node server.js",
     "fe": "ng serve -o",
     "api": "node server.js",
-    "db": "mongod --dbpath ./db",
+    "db": "sudo run-rs -v 4.0.0 --shell",
     "prod": "ng serve -prod",
     "build": "ng build --prod --aot=false --env=prod",
     "heroku": "node server.js",

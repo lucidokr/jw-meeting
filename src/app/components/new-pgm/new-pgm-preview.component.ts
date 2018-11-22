@@ -1081,6 +1081,10 @@ export class NewPgmPreviewComponent implements OnInit{
 
         });
       }
+    },err => {
+      console.log(err)
+      this.loadingInsertPgm = false;
+      this.dialogService.showError("Errore nella creazione del programma. Contattare l'amministratore.")
     })
 
   }
