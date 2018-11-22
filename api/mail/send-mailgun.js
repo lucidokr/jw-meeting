@@ -128,12 +128,12 @@ var MAIL = {
           mails.forEach(function(data) {
               if (data.school == 1) data.school = "Sala principale";
               if (data.school == 2) data.school = "Classe supplementare 1";
-              that.sendAssegnation(data.mail, data.brother, data.assistant, data.date, "", data.type, data.school);
+              that.sendAssegnation(data.mail, data.brother, data.assistant, data.date,  data.type, data.school);
           });
       }
     },
 
-    sendAssegnation: function(mail, brother, assistant, date, point, type, school) {
+    sendAssegnation: function(mail, brother, assistant, date, type, school) {
 
         function send() {
 
@@ -142,7 +142,6 @@ var MAIL = {
                     brother: brother || "Kristian Lucido",
                     assistant: assistant || "",
                     date: date || "10/10/17",
-                    point: point || "6 - Enfasi Orale",
                     type: type || "Lettura biblica",
                     school: school || "Sala principale"
                 };
