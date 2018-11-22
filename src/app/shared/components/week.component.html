@@ -10,10 +10,10 @@
       <div fxFlex="100%" width="100%" fxLayout="row" fxLayoutAlign="center center"  >
         <div class="meetingWorkbook flex-item" fxFlex="100%" fxFlex fxLayout="column" fxLayoutGap="10px">
           <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutAlign="center center">
-            <div class="{{edit ? checkBusyWeek(week, week.president) : ''}}" fxFlex="50%" ><strong>Presidente</strong>: {{week.president.name}} {{week.president.surname}}
-              <i *ngIf="edit" class="material-icons" (click)="change(week, week.president, null, null)">mode_edit</i></div>
+            <div class="{{edit ? checkBusyWeek(week, week.president, null, null, 'president') : ''}}" fxFlex="50%" ><strong>Presidente</strong>: {{week.president.name}} {{week.president.surname}}
+              <i *ngIf="edit" class="material-icons" (click)="change(week, week.president, null, 'president')">mode_edit</i></div>
             <div class="flex-item" fxFlex="50%"><span [innerHTML]="week.initialSong | safeHtml"></span> iniziale:
-              <span class="{{edit ? checkBusyWeek(week, week.initialPrayer) : ''}}">{{week.initialPrayer.name}} {{week.initialPrayer.surname}} <i *ngIf="edit" class="material-icons" (click)="change(week, week.initialPrayer, null, null)">mode_edit</i></span>
+              <span class="{{edit ? checkBusyWeek(week, week.initialPrayer, null, null, 'initialPrayer') : ''}}">{{week.initialPrayer.name}} {{week.initialPrayer.surname}} <i *ngIf="edit" class="material-icons" (click)="change(week, week.initialPrayer, null, 'initialPrayer')">mode_edit</i></span>
             </div>
           </div>
           <div class="treasures" fxLayout="column" fxFlex="100%" fxLayoutGap="10px">
@@ -22,7 +22,7 @@
               <div fxFlex="50%" [innerHTML]="week.talk.label | safeHtml"></div>
               <div fxFlex="25%" fxLayoutAlign="center center"class="{{edit ? checkBusyWeek(week, week.talk, 'brother') : ''}}" >
                 {{week.talk.brother.name}} {{week.talk.brother.surname}}
-                <i *ngIf="edit" class="material-icons" (click)="change(week, week.talk, null, 'brother')">mode_edit</i>
+                <i *ngIf="edit" class="material-icons" (click)="change(week, week.talk, 'brother', 'talk')">mode_edit</i>
               </div>
               <div fxHide.xs fxHide.sm fxFlex="25%" fxLayoutAlign="center center" ></div>
             </div>
@@ -30,7 +30,7 @@
               <div fxFlex="50%" [innerHTML]="week.gems.label | safeHtml"></div>
               <div fxFlex="25%" fxLayoutAlign="center center" class="{{edit ? checkBusyWeek(week, week.gems, 'brother') : ''}}" >
                 {{week.gems.brother.name}} {{week.gems.brother.surname}}
-                <i *ngIf="edit" class="material-icons" (click)="change(week, week.gems, null, 'brother')">mode_edit</i>
+                <i *ngIf="edit" class="material-icons" (click)="change(week, week.gems, 'brother', 'gems')">mode_edit</i>
               </div>
               <div fxHide.xs fxHide.sm fxFlex="25%" fxLayoutAlign="center center" ></div>
             </div>
@@ -41,7 +41,7 @@
                 <span fxFlex fxLayout="row" fxLayoutAlign="center center">
                   <div fxFlex fxLayoutAlign="center center">
                     {{week.bibleReading.primarySchool.student.name}} {{week.bibleReading.primarySchool.student.surname}}&nbsp;
-                      <i *ngIf="edit" class="material-icons" (click)="change(week, week.bibleReading.primarySchool, 'student')">mode_edit</i>
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, week.bibleReading, 'student', 'bibleReading', 'primarySchool')">mode_edit</i>
                   </div>
                 </span>
               </div>
@@ -51,7 +51,7 @@
                     <div fxFlex fxLayoutAlign="center center">
                       {{week.bibleReading.secondarySchool.student.name}} {{week.bibleReading.secondarySchool.student.surname}}&nbsp;
 
-                      <i *ngIf="edit" class="material-icons" (click)="change(week, week.bibleReading.secondarySchool, 'student')">mode_edit</i>
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, week.bibleReading, 'student', 'bibleReading', 'secondarySchool')">mode_edit</i>
                     </div>
                   </span>
               </div>
@@ -68,17 +68,17 @@
                     <div fxFlex class="{{edit ? checkBusyWeek(week, part['primarySchool'], 'student', true) : ''}}">
                       {{part.primarySchool.student.name}} {{part.primarySchool.student.surname}}
 
-                      <i *ngIf="edit" class="material-icons" (click)="change(week, part['primarySchool'], 'student')">mode_edit</i>
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, part, 'student', 'ministryPart', 'primarySchool')">mode_edit</i>
                     </div>
 
-                    <div fxFlex class="assistant {{edit ? checkBusyWeek(week, part['primarySchool'], 'assistant', true) : ''}}"  *ngIf="!part.primarySchool.isTalk">
+                    <div fxFlex class="assistant {{edit ? checkBusyWeek(week, part['primarySchool'], 'assistant', true) : ''}}"  *ngIf="!part.isTalk">
                       <span *ngIf="part.primarySchool.assistant">
                         Ass.: {{part.primarySchool.assistant.name}} {{part.primarySchool.assistant.surname}}
                       </span>
                       <span *ngIf="!part.primarySchool.assistant">
                         Ass.: *** Non trovato ***
                       </span>
-                      <i *ngIf="edit" class="material-icons" (click)="change(week, part['primarySchool'], 'assistant')">mode_edit</i>
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, part, 'assistant', 'ministryPart', 'primarySchool')">mode_edit</i>
                     </div>
 
                   </div>
@@ -90,7 +90,7 @@
                     <div fxFlex class="{{edit ? checkBusyWeek(week, part['secondarySchool'], 'student', true) : ''}}">
                       {{part.secondarySchool.student.name}} {{part.secondarySchool.student.surname}}
 
-                      <i *ngIf="edit" class="material-icons" (click)="change(week, part['secondarySchool'], 'student')">mode_edit</i>
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, part, 'student', 'ministryPart', 'secondarySchool')">mode_edit</i>
                     </div>
 
                     <div fxFlex class="assistant {{edit ? checkBusyWeek(week, part['secondarySchool'], 'assistant', true) : ''}} {{edit ? checkBusyWeek(week, part['secondarySchool'], 'assistant', true) : ''}}" *ngIf="week.secondarySchool && !part.primarySchool.isTalk" >
@@ -100,7 +100,7 @@
                       <span *ngIf="!part.secondarySchool.assistant">
                         Ass.: *** Non trovato ***
                       </span>
-                      <i *ngIf="edit" class="material-icons" (click)="change(week, part['secondarySchool'], 'assistant')">mode_edit</i>
+                      <i *ngIf="edit" class="material-icons" (click)="change(week, part, 'assistant', 'ministryPart', 'secondarySchool')">mode_edit</i>
                     </div>
 
                   </div>
@@ -123,11 +123,11 @@
               <div class="flex-item" fxFlex="50%" [innerHTML]="week.congregationBibleStudy.label | safeHtml"></div>
               <div fxFlex="25%" fxLayout="column" class="{{edit ? checkBusyWeek(week, week.congregationBibleStudy, 'brother') : ''}}">
                 <strong>Conduttore:</strong>
-                <span>{{week.congregationBibleStudy.brother.name}} {{week.congregationBibleStudy.brother.surname}} <i *ngIf="edit" class="material-icons" (click)="change(week, week.congregationBibleStudy, null, 'brother')">mode_edit</i></span>
+                <span>{{week.congregationBibleStudy.brother.name}} {{week.congregationBibleStudy.brother.surname}} <i *ngIf="edit" class="material-icons" (click)="change(week, week.congregationBibleStudy, 'brother', 'congregationBibleStudy')">mode_edit</i></span>
               </div>
               <div fxFlex="25%" fxLayout="column" class="{{edit ? checkBusyWeek(week, week.congregationBibleStudy, 'reader') : ''}}">
                 <strong>Lettore:</strong>
-                <span>{{week.congregationBibleStudy.reader.name}} {{week.congregationBibleStudy.reader.surname}} <i *ngIf="edit" class="material-icons" (click)="change(week, week.congregationBibleStudy, null, 'reader')">mode_edit</i></span>
+                <span>{{week.congregationBibleStudy.reader.name}} {{week.congregationBibleStudy.reader.surname}} <i *ngIf="edit" class="material-icons" (click)="change(week, week.congregationBibleStudy, 'reader', 'congregationBibleStudy')">mode_edit</i></span>
               </div>
             </div>
           </div>
@@ -135,7 +135,7 @@
           <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutAlign="center center">
             <div fxFlex="50%"></div>
             <div fxFlex="50%"><span [innerHTML]="week.finalSong | safeHtml"></span> finale:
-              <span class="{{edit ? checkBusyWeek(week, week.finalPrayer) : ''}}">{{week.finalPrayer.name}} {{week.finalPrayer.surname}}<i *ngIf="edit" class="material-icons" (click)="change(week, week.finalPrayer, null, null)">mode_edit</i></span>
+              <span class="{{edit ? checkBusyWeek(week, week.finalPrayer, null, null, 'finalPrayer') : ''}}">{{week.finalPrayer.name}} {{week.finalPrayer.surname}}<i *ngIf="edit" class="material-icons" (click)="change(week, week.finalPrayer, null, 'finalPrayer')">mode_edit</i></span>
             </div>
           </div>
 

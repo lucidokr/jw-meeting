@@ -44,8 +44,8 @@ export class WeekComponent implements OnChanges {
     }
   }
 
-  public change(week, part, partBrother){
-    this.onChange.emit({week:week, part:part, partBrother:partBrother})
+  public change(week, part, partBrother, partType, school){
+    this.onChange.emit({week:week, part:part, partBrother:partBrother, partType, school})
   }
 
   public checkBusy(student){
@@ -60,9 +60,14 @@ export class WeekComponent implements OnChanges {
     // return this.busyErrorBrother.indexOf(student._id) != -1
   }
 
-  public checkBusyWeek(week, part, brother, forStudent){
+  public checkBusyWeek(week, part, brother, forStudent, partType){
     let busy = false;
-    let b = part[brother];
+    let b = null
+    if(brother){
+      b = part[brother];
+    }else{
+      b = part
+    }
 
     if(b){
       let partList: any = {
@@ -74,16 +79,16 @@ export class WeekComponent implements OnChanges {
         'finalPrayer':null
       }
       for(let p in partList){
-        if(partList[p]){
+        if(partList[p] && partType != p){
           for(let sub of partList[p]){
-            if(p != part && brother != sub){
+            if(brother != sub){
               if(b._id == week[p][sub]._id){
                 busy = true;
               }
             }
           }
         }else{
-          if(p != part){
+          if(partType != p){
             if(b._id == week[p]._id){
               busy = true;
             }
@@ -91,11 +96,19 @@ export class WeekComponent implements OnChanges {
         }
 
       }
-      if(!forStudent) {
+      var checkPart = function(week){
+        let p = week.bibleReading
+        for (let s of this.PART_SCHOOLS) {
+          if (p[s] && (part.html != p.html)) {
+            if (p[s].student && b._id == p[s].student._id) {
+              busy = true;
+            }
+          }
+        }
         for (let p of week.ministryPart) {
           if(p.forStudent){
             for (let school of this.PART_SCHOOLS) {
-              if (p[school]) {
+              if (p[school] && (part.html != p.html)) {
                 if (p[school].student && b._id == p[school].student._id) {
                   busy = true;
                 }
@@ -106,24 +119,12 @@ export class WeekComponent implements OnChanges {
             }
           }
         }
+      }
+      if(!forStudent) {
+        checkPart.bind(this, week);
       }else{
         for(let w of this.weeks) {
-          for (let p of w.ministryPart) {
-            if(p.forStudent){
-              for (let s of this.PART_SCHOOLS) {
-                if (p[s] && (part != p || brother != 'student' || w.date != week.date)) {
-                  if (p[s].student && b._id == p[s].student._id) {
-                    busy = true;
-                  }
-                }
-                if (p[s] && (part != p  || brother != 'assistant' || w.date != week.date)) {
-                  if (p[s].assistant && b._id == p[s].assistant._id) {
-                    busy = true;
-                  }
-                }
-              }
-            }
-          }
+          checkPart.bind(this, w)
         }
       }
       if(busy)

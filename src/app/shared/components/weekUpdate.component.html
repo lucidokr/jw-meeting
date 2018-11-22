@@ -6,8 +6,31 @@
   </md-card-header>
   <md-card-content fxLayout="column" fxFlex="100%" fxLayoutAlign="start center">
     <div class="containerSchoolPart" fxLayout="column"  fxLayoutGap="10px">
+        <div class="containerSchoolPart" fxLayout="column"  fxLayout.xs="column" fxLayoutAlign="start center">
+            <div fxLayout="row" ><h4 [innerHTML]="week.bibleReading.label.split('(')[0] | safeHtml"></h4></div>
+
+              <div class="containerSchoolPart" *ngFor="let school of SCHOOLS" fxLayout="column" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="start center" >
+                      <div *ngIf="!week.bibleReading[school].updated && week.bibleReading[school].student.student" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
+                        <strong fxFlex>
+                          <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
+                          <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
+                          scuola: {{week.bibleReading[school].student.name}} {{week.bibleReading[school].student.surname}}</strong>
+                        <md-radio-group  name="{{week.date.toString()}}{{i}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="week.bibleReading[school].made">
+                          <md-radio-button [value]="0">Non aggiornare</md-radio-button>
+                          <md-radio-button [value]="1">Svolto</md-radio-button>
+                          <md-radio-button [value]="2">Non svolto</md-radio-button>
+                        </md-radio-group>
+                      </div>
+                      <div *ngIf="week.bibleReading[school].updated" fxLayout="column" fxLayoutGap="10px" class="updated">
+                          <strong><i class="material-icons">check_circle</i>Prima scuola: {{week.bibleReading[school].student.name}} {{week.bibleReading[school].student.surname}}</strong>
+                          <span *ngIf="week.bibleReading[school].made==1">Svolto </span>
+                          <span *ngIf="week.bibleReading[school].made==2">Non svolto </span>
+                      </div>
+              </div>
+
+        </div>
       <div class="containerSchoolPart" *ngFor="let part of week.ministryPart; let i = index;" fxLayout="column"  fxLayout.xs="column" fxLayoutAlign="start center">
-          <div fxLayout="row" ><h4 [innerHTML]="part.html.split(':')[0] | safeHtml"></h4></div>
+          <div fxLayout="row" ><h4 [innerHTML]="part.html.split('(')[0] | safeHtml"></h4></div>
           <div fxLayout="row"  *ngIf="!part.forStudent">
               Parte non svolta dagli studenti
           </div>

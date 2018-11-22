@@ -122,7 +122,8 @@
     <div *ngIf="changeMode.partType == 'finalPrayer'">Preghiera finale</div>
     <div *ngIf="changeMode.partType == 'congregationBibleStudy' && changeMode.partBrother == 'reader'">Lettore studio biblico</div>
     <div *ngIf="changeMode.partType == 'congregationBibleStudy' && changeMode.partBrother == 'brother'">Conduttore studio biblico</div>
-    <div *ngIf="changeMode.week[changeMode.partType].label"><span [innerHTML]="changeMode.week[changeMode.partType].label | safeHtml"></span></div>
+    <div *ngIf="changeMode.part.html"><span [innerHTML]="changeMode.part.html | safeHtml"></span></div>
+    <div *ngIf="changeMode.part.label"><span [innerHTML]="changeMode.part.label | safeHtml"></span></div>
   </div>
   <div fxFlex="40%" fxLayout="column" >
     <div>Nuovo fratello per la parte:</div>

@@ -89,7 +89,6 @@ export class DownloadWeeksDialog implements OnInit{
   downloadPDF(){
     var doc = new jsPDF()
 
-    doc.addFont("Roboto", "Roboto", "normal")
     let fonts = doc.getFontList();
     if(fonts.helvetica)
       doc.setFont("helvetica")
@@ -177,13 +176,13 @@ export class DownloadWeeksDialog implements OnInit{
         doc.setFontStyle("normal").setFontSize(9).setTextColor(89, 89, 89)
         let name = this.getSurnameName(week.bibleReading.primarySchool.student)
         doc.text(60, row+16, name);
-        if(week.bibleReading.primarySchool.student.student.bibleReadingPendingStudyNumber)
-          doc.text(62 + this.getTextWidth(doc, name), row+16, week.bibleReading.primarySchool.student.student.bibleReadingPendingStudyNumber.number+"");
+        // if(week.bibleReading.primarySchool.student.student.bibleReadingPendingStudyNumber)
+          // doc.text(62 + this.getTextWidth(doc, name), row+16, week.bibleReading.primarySchool.student.student.bibleReadingPendingStudyNumber.number+"");
         if(week.secondarySchool){
           name = this.getSurnameName(week.bibleReading.secondarySchool.student)
           doc.text(130, row+16, this.getSurnameName(week.bibleReading.secondarySchool.student));
-          if(week.bibleReading.secondarySchool.student.student.bibleReadingPendingStudyNumber)
-            doc.text(132 + this.getTextWidth(doc, name), row+16, week.bibleReading.secondarySchool.student.student.bibleReadingPendingStudyNumber.number+"");
+          // if(week.bibleReading.secondarySchool.student.student.bibleReadingPendingStudyNumber)
+          //   doc.text(132 + this.getTextWidth(doc, name), row+16, week.bibleReading.secondarySchool.student.student.bibleReadingPendingStudyNumber.number+"");
         }
 
         let rowTemp = row+17;
@@ -315,7 +314,7 @@ export class DownloadWeeksDialog implements OnInit{
     let draft = sheets.Bozza;
     let countRow = 0;
 
-  let PART_TYPE_ALL = ['initialCall', 'returnVisit', 'bibleStudy'];
+  // let PART_TYPE_ALL = ['initialCall', 'returnVisit', 'bibleStudy'];
 
   // let week = this.weeks[0];
     for(let i=0; i<this.weeks.length; i++){
@@ -364,6 +363,7 @@ export class DownloadWeeksDialog implements OnInit{
             if(draft[cellRef]) draft[cellRef] = {t: 's', v:this.getSurnameName(week.gems.brother)};
           //
             countRow++;
+            countRow++;
             cellRef = XLSX.utils.encode_cell({r:countRow, c:0});
             if (draft[cellRef]) draft[cellRef] = {t: 's', v:this.getPartSchoolTitle(week.bibleReading.label),s:{font: {sz: 15, bold: true }}};
             for(let school of SCHOOLS) {
@@ -377,37 +377,40 @@ export class DownloadWeeksDialog implements OnInit{
               cellRef = XLSX.utils.encode_cell({r:countRow, c:column});
               if (draft[cellRef]) draft[cellRef].v = this.getSurnameName(week.bibleReading[school].student);
               cellRef = XLSX.utils.encode_cell({r:countRow, c:columnPoint});
-              if (draft[cellRef] && week.bibleReading[school].student.student && week.bibleReading[school].student.student.bibleReadingPendingStudyNumber)
-                draft[cellRef] = {t: 'n', v:week.bibleReading[school].student.student.bibleReadingPendingStudyNumber.number};
+              // if (draft[cellRef] && week.bibleReading[school].student.student && week.bibleReading[school].student.student.bibleReadingPendingStudyNumber)
+              //   draft[cellRef] = {t: 'n', v:week.bibleReading[school].student.student.bibleReadingPendingStudyNumber.number};
             }
           //
         draft[XLSX.utils.encode_cell({r:countRow+1, c:0})] = {v:"Efficaci nel ministero",s:{alignment:{horizontal:'center'}, font: {sz: 18, bold: true }}};
 
-              for(let partType of PART_TYPE_ALL) {
+              for(let partIndex of [0,1,2,3]) {
                 countRow++;
                 countRow++;
-                draft[XLSX.utils.encode_cell({r:countRow, c:0})] = {v:this.getPartSchoolTitle(week[partType].label), s:{font: {sz: 15, bold: true }}};
-                if(!week[partType].video){
-                  for(let school of SCHOOLS) {
-                    let column = 2;
-                    let columnPoint = 4;
-                    if(school == "secondarySchool") {column = 5; columnPoint = 7;}
-                    cellRef = XLSX.utils.encode_cell({r:countRow, c:column});
-                    if(draft[cellRef]) draft[cellRef].v = this.getSurnameName(week[partType][school].student);
-                    cellRef = XLSX.utils.encode_cell({r:countRow, c:columnPoint});
-                    if(draft[cellRef] && week[partType][school].student.student && week[partType][school].student.student.pendingStudyNumber)
-                      draft[cellRef] = {t:'n', v:week[partType][school].student.student.pendingStudyNumber.number};
-                    let tempRow = countRow+1;
-                    cellRef = XLSX.utils.encode_cell({r:tempRow, c:column});
-                    if(week[partType][school].assistant){
-                      if(draft[cellRef]) draft[cellRef] = {t:'s', v:this.getSurnameName(week[partType][school].assistant)};
-                    }
-                    if(week[partType][school].isTalk){
-                      cellRef = XLSX.utils.encode_cell({r:countRow, c:0});
-                      draft[cellRef] = {t:'s', v:this.getPartSchoolTitle(week[partType].label)};
-                      draft[cellRef].s = {font: {sz: 15, bold: true }};
-                    }
+                if(week.ministryPart[partIndex]){
+                  let part = week.ministryPart[partIndex];
+                  draft[XLSX.utils.encode_cell({r:countRow, c:0})] = {v:this.getPartSchoolTitle(part.html), s:{font: {sz: 15, bold: true }}};
+                  if(part.forStudent){
+                    for(let school of SCHOOLS) {
+                      let column = 2;
+                      let columnPoint = 4;
+                      if(school == "secondarySchool") {column = 5; columnPoint = 7;}
+                      cellRef = XLSX.utils.encode_cell({r:countRow, c:column});
+                      if(draft[cellRef]) draft[cellRef].v = this.getSurnameName(part[school].student);
+                      cellRef = XLSX.utils.encode_cell({r:countRow, c:columnPoint});
+                      // if(draft[cellRef] && week[partType][school].student.student && week[partType][school].student.student.pendingStudyNumber)
+                      //   draft[cellRef] = {t:'n', v:week[partType][school].student.student.pendingStudyNumber.number};
+                      let tempRow = countRow+1;
+                      cellRef = XLSX.utils.encode_cell({r:tempRow, c:column});
+                      if(part[school].assistant){
+                        if(draft[cellRef]) draft[cellRef] = {t:'s', v:this.getSurnameName(part[school].assistant)};
+                      }
+                      if(part[school].isTalk){
+                        cellRef = XLSX.utils.encode_cell({r:countRow, c:0});
+                        draft[cellRef] = {t:'s', v:this.getPartSchoolTitle(part.html)};
+                        draft[cellRef].s = {font: {sz: 15, bold: true }};
+                      }
 
+                    }
                   }
                 }
 
@@ -481,7 +484,7 @@ export class DownloadWeeksDialog implements OnInit{
           cellRef = XLSX.utils.encode_cell({r:countRow, c:1});
           if(draft[cellRef]) draft[cellRef] = {t: 's', v:"Visita del sorvegliante di circoscrizione"};
         }
-        countRow += 18;
+        countRow += 20;
 
 
 
@@ -494,6 +497,83 @@ export class DownloadWeeksDialog implements OnInit{
       //   countRow = 15+21;
       // }
     }
+
+    let draftAssegnation = sheets.BozzaAssegnazioni;
+    let countRowAssegnation = 0;
+    let countColumnAssegnation = 0;
+    for(let i=0; i<this.weeks.length; i++){
+      let week = this.weeks[i];
+      if(week.type.meeting && !week.supervisor){
+        let SCHOOLS = ['primarySchool','secondarySchool'];
+        if(!week.secondarySchool)
+          SCHOOLS = ['primarySchool']
+        let cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+        for(let school of SCHOOLS) {
+          cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+          draftAssegnation[cellRef] = {t: 's', v:week.date.format('D MMMM YYYY')};
+          countColumnAssegnation++;
+          cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+          draftAssegnation[cellRef] = {t: 's', v:this.getSurnameName(week.bibleReading[school].student)} ;
+          countColumnAssegnation++;countColumnAssegnation++;
+          cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+          draftAssegnation[cellRef] = {t: 's', v:this.getPartSchoolLesson(week.bibleReading.label)} ;
+          countColumnAssegnation++;
+          cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+          draftAssegnation[cellRef] = {t: 's', v:this.getPartSchoolTitle(week.bibleReading.label)} ;
+          countColumnAssegnation++;
+          cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+          if(school == "primarySchool")
+            draftAssegnation[cellRef] = {t: 'n', v:1} ;
+          else if(school == "secondarySchool")
+            draftAssegnation[cellRef] = {t: 'n', v:2} ;
+
+            countRowAssegnation++;
+          countColumnAssegnation = 0;
+        }
+        for(let part of week.ministryPart){
+          if(part.forStudent){
+            for(let school of SCHOOLS) {
+              cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+              draftAssegnation[cellRef] = {t: 's', v:week.date.format('D MMMM YYYY').toUpperCase()};
+              countColumnAssegnation++;
+              cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+              draftAssegnation[cellRef] = {t: 's', v:this.getSurnameName(part[school].student)} ;
+              countColumnAssegnation++;
+              if(part[school].assistant){
+                cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+                draftAssegnation[cellRef] = {t: 's', v:this.getSurnameName(part[school].assistant)} ;
+                countColumnAssegnation++;
+              }else{
+                countColumnAssegnation++;
+              }
+
+              cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+              draftAssegnation[cellRef] = {t: 's', v:this.getPartSchoolLesson(part.html)} ;
+              countColumnAssegnation++;
+              cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+              draftAssegnation[cellRef] = {t: 's', v:this.getPartSchoolTitle(part.html)} ;
+              countColumnAssegnation++;
+              cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
+              if(school == "primarySchool")
+                draftAssegnation[cellRef] = {t: 'n', v:1} ;
+              else if(school == "secondarySchool")
+                draftAssegnation[cellRef] = {t: 'n', v:2} ;
+
+                countRowAssegnation++;
+              countColumnAssegnation = 0;
+            }
+          }else{
+
+          }
+        }
+      }
+
+
+    }
+
+
+
+
     // if(this.weeks.length == 4){
       for(let i=countRow+1; i<100;i++){
         this.delete_row(draft, i)
@@ -537,20 +617,32 @@ export class DownloadWeeksDialog implements OnInit{
     var div = document.createElement("div");
     div.innerHTML = html;
     var newstr = div.textContent || div.innerText || "";
-    newstr = newstr.substr(0, newstr.length-2);
+    newstr = newstr.substr(0, newstr.length-1);
     return newstr.trim();
   }
 
-  public getPartSchoolTitle(str : string){
+  public getPartSchoolTitle(str : String){
     let html = he.decode(str);
 
     let div = document.createElement("div");
     div.innerHTML = html;
     str = div.textContent || div.innerText || "";
     // str = str.substr(0, str.length-2);
-    let temp = str.split(":")[0];
+    let temp = str.split("(")[0];
     // temp = temp + str.split(")")[1].split(". ")[0];
     return temp.trim();
+  }
+
+  public getPartSchoolLesson(str : String){
+    let html = he.decode(str);
+
+    let div = document.createElement("div");
+    div.innerHTML = html;
+    str = div.textContent || div.innerText || "";
+    // str = str.substr(0, str.length-2);
+    let temp = str.split("(")[2];
+    temp = temp.split(")")[0].replace("th ", "")
+    return temp.trim().toUpperCase();
   }
 
   public delete_row = (ws, row_index) => {

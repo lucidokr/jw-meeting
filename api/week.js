@@ -41,25 +41,352 @@ function sendEmailError(subject, err){
 }
 
 router.route('/')
-    .get(function(req, res) {
-        Week
+    .get(async (req, res) => {
+      try{
+        var weeks = await Week
             .find({ congregation: req.decoded._doc.congregation._id })
             .sort([
                 ['date', 'descending']
             ])
-            .exec(function(err, weeks) {
-                if (err) {
-                    console.error('Week Meeting get error:', err);
-                    return res.send(err);
-                }
-
-                res.json(weeks);
-            });
+            .exec();
+        res.send(weeks)
+      }catch(e){
+        return res.status(500).send(err);
+      }
     })
-    .post(function(req, res) {
+    .post(async (req, res) => {
 
-        var mailAssegnationToSend = [];
-        var mailToSend = [];
+        // var mailAssegnationToSend = [];
+        // var mailToSend = [];
+
+        // for (let week of req.body){
+        //   console.log('Week', JSON.stringify(week));
+        //     if (week.type.meeting && !week.supervisor) {
+        //         console.log('Date', week.date);
+        //         console.log('President', week.president._id);
+        //         console.log('Gems', week.gems.brother._id);
+        //         console.log('Talk', week.talk.brother._id);
+        //         console.log('Initial Prayer', week.initialPrayer._id);
+        //         console.log('Final Prayer', week.finalPrayer._id);
+        //         console.log('Congregation Bible Study', week.congregationBibleStudy.brother._id);
+        //         console.log('Congregation Bible Study Reader', week.congregationBibleStudy.reader._id);
+        //         console.log('Bible reading', week.bibleReading.primarySchool.student._id);
+        //         var toFind = [
+        //             { '_id': week.president._id },
+        //             { '_id': week.gems.brother._id },
+        //             { '_id': week.talk.brother._id },
+        //             { '_id': week.initialPrayer._id },
+        //             { '_id': week.finalPrayer._id },
+        //             { '_id': week.congregationBibleStudy.brother._id },
+        //             { '_id': week.congregationBibleStudy.reader._id },
+        //             { '_id': week.bibleReading.primarySchool.student._id }
+        //         ];
+
+        //         for (var i = 0; i < week.christianLivingPart.length; i++) {
+        //             toFind.push({ '_id': week.christianLivingPart[i].brother._id });
+        //         }
+
+        //         if (week.secondarySchool) {
+        //             toFind.push({ '_id': week.bibleReading.secondarySchool.student._id });
+        //         }
+
+        //         //AFTER 2019
+        //         week.ministryPart.forEach(function(part){
+        //           if(part.forStudent){
+        //             toFind.push({ '_id': part.primarySchool.student._id });
+        //             if(!part.isTalk)
+        //               toFind.push({ '_id': part.primarySchool.assistant._id });
+        //             if (week.secondarySchool) {
+        //               toFind.push({ '_id': part.secondarySchool.student._id });
+        //               if(!part.isTalk)
+        //                 toFind.push({ '_id': part.secondarySchool.assistant._id });
+        //             }
+        //           }
+        //         });
+
+        //         console.log("To find", toFind.length);
+        //         try{
+        //           var brothers = await Brother.find({
+        //               $or: toFind
+        //           })
+        //           .populate('elder')
+        //           .populate('servant')
+        //           .populate('prayer')
+        //           .populate('reader')
+        //           .populate('student')
+        //           .exec()
+
+
+        //           for (let brother of brothers){
+        //             var objToSave = [];
+        //             var date = new Date(week.date);
+        //             // var strDate = date.toLocaleString("it-it", { month: "long" });
+        //             var month = MONTH_NAMES[date.getMonth()];
+        //             var day = DAY_NAMES[date.getDay()-1];
+        //             var strDate = day+" " +date.getDate() + " " + month + " " + date.getFullYear();
+
+        //             if (brother.elder) {
+        //                 if (brother._id == week.president._id) {
+        //                     brother.elder.presidentPrevDate = brother.elder.presidentDate ;
+        //                     brother.elder.presidentDate = week.date;
+        //                 }
+
+        //                 if (brother._id == week.gems.brother._id) {
+        //                     brother.elder.gemsPrevDate = brother.elder.gemsDate;
+        //                     brother.elder.gemsDate = week.date;
+        //                   }
+
+        //                 if (brother._id == week.talk.brother._id) {
+        //                     brother.elder.talkPrevDate = brother.elder.talkDate;
+        //                     brother.elder.talkDate = week.date;
+        //                   }
+
+        //                 if (brother._id == week.congregationBibleStudy.brother._id) {
+        //                     brother.elder.bibleStudyPrevDate = brother.elder.bibleStudyDate;
+        //                     brother.elder.bibleStudyDate = week.date;
+        //                   }
+
+        //                 for (var i = 0; i < week.christianLivingPart.length; i++) {
+        //                     if (brother._id == week.christianLivingPart[i].brother._id) {
+        //                         brother.elder.christianLivingPartPrevDate = brother.elder.christianLivingPartDate;
+        //                         brother.elder.christianLivingPartDate = week.date;
+        //                     }
+        //                 }
+
+        //                 objToSave.push(brother.elder);
+        //             }
+        //             if (brother.servant) {
+        //                 if (brother._id == week.gems.brother._id) {
+        //                     brother.servant.gemsPrevDate = brother.servant.gemsDate;
+        //                     brother.servant.gemsDate = week.date;
+        //                 }
+        //                 if (brother._id == week.talk.brother._id) {
+        //                     brother.servant.talkPrevDate = brother.servant.talkDate;
+        //                     brother.servant.talkDate = week.date;
+        //                 }
+
+        //                 for (var i = 0; i < week.christianLivingPart.length; i++) {
+        //                     if (brother._id == week.christianLivingPart[i].brother._id) {
+        //                         brother.servant.christianLivingPartPrevDate = brother.servant.christianLivingPartDate;
+        //                         brother.servant.christianLivingPartDate = week.date;
+        //                     }
+        //                 }
+        //                 objToSave.push(brother.servant)
+        //             }
+        //             if (brother.prayer) {
+        //                 if (brother._id == week.initialPrayer._id) {
+        //                     brother.prayer.prevDate = brother.prayer.date;
+        //                     brother.prayer.date = week.date;
+        //                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+        //                         mailToSend.push({
+        //                             brother: brother.name+ ' '+ brother.surname,
+        //                             to: brother.email,
+        //                             subject: "Preghiera iniziale - "+strDate,
+        //                             text: "Ti è stata assegnata la preghiera iniziale dell'adunanza che si svolgerà il giorno " + strDate
+        //                         });
+        //                     }
+        //                 }
+
+        //                 if (brother._id == week.finalPrayer._id) {
+        //                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+        //                         mailToSend.push({
+        //                             brother: brother.name+ ' '+ brother.surname,
+        //                             to: brother.email,
+        //                             subject: "Preghiera finale - "+strDate,
+        //                             text: "Ti è stata assegnata la preghiera finale dell'adunanza che si svolgerà il giorno " + strDate
+        //                         });
+        //                     }
+        //                     brother.prayer.prevDate = brother.prayer.date;
+        //                     brother.prayer.date = week.date;
+        //                 }
+
+        //                 objToSave.push(brother.prayer)
+        //             }
+        //             if (brother.reader) {
+        //                 if (brother._id == week.congregationBibleStudy.reader._id) {
+        //                     brother.reader.prevDate = brother.reader.date;
+        //                     brother.reader.date = week.date;
+        //                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+        //                       mailToSend.push({
+        //                           brother: brother.name+ ' '+ brother.surname,
+        //                           to: brother.email,
+        //                           subject: "Lettura dello studio biblico - "+strDate,
+        //                           text: "Ti è stata assegnata la lettura dello studio biblico dell'adunanza che si svolgerà il giorno " + strDate
+        //                       })
+        //                   }
+        //                 }
+
+        //                 objToSave.push(brother.reader)
+
+
+        //             }
+
+        //             if (brother.student) {
+        //                 if (brother._id == week.bibleReading.primarySchool.student._id) {
+        //                     brother.student.lastDate = week.date
+        //                     brother.student.bibleReadingPrevDate = brother.student.bibleReadingDate;
+        //                     brother.student.bibleReadingDate = week.date;
+        //                     brother.student.lastSchool = 1;
+        //                     brother.student.lastPrevSchool = (brother.student.lastSchool == 1 ? 1 : 2);
+        //                     brother.student.bibleReadinglastPrevSchool = (brother.student.bibleReadingLastSchool == 1 ? 1 : 2);
+        //                     brother.student.bibleReadingLastSchool = 1;
+        //                     objToSave.push(brother.student);
+        //                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+        //                         mailAssegnationToSend.push({
+        //                           mail: brother.email,
+        //                           brother: brother.surname + ' ' + brother.name,
+        //                           assistant: null,
+        //                           type: week.bibleReading.label,
+        //                           school: brother.student.lastSchool,
+        //                           date: strDate })
+        //                     }
+        //                 }
+
+        //                 if (week.secondarySchool && brother._id == week.bibleReading.secondarySchool.student._id) {
+        //                     brother.student.lastDate = week.date
+        //                     brother.student.bibleReadingPrevDate = brother.student.bibleReadingDate;
+        //                     brother.student.bibleReadingDate = week.date;
+        //                     brother.student.lastPrevSchool = (brother.student.lastSchool == 1 ? 1 : 2);
+        //                     brother.student.lastSchool = 2;
+        //                     brother.student.bibleReadinglastPrevSchool = (brother.student.bibleReadingLastSchool == 1 ? 1 : 2);
+        //                     brother.student.bibleReadingLastSchool = 2;
+        //                     // brother.student.bibleReadingPendingStudyNumber = brother.student.bibleReadingStudyNumber;
+        //                     objToSave.push(brother.student)
+        //                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+        //                         // console.log("Bible reading study number:"+ brother.student.bibleReadingPendingStudyNumber);
+        //                         mailAssegnationToSend.push({
+        //                           mail: brother.email,
+        //                           brother: brother.surname + ' ' + brother.name,
+        //                           assistant: null,
+        //                           type: week.bibleReading.label,
+        //                           school: brother.student.lastSchool,
+        //                           date: week.date
+        //                         })
+        //                     }
+        //                 }
+        //             }
+
+        //               //AFTER 2019
+        //               var schools = ["primarySchool"];
+        //               if(week.secondarySchool){
+        //                 schools.push("secondarySchool");
+        //               }
+        //               week.ministryPart.forEach(function(part){
+        //                 if(part.forStudent){
+        //                   schools.forEach(function(school) {
+        //                     if (brother._id == part[school].student._id) {
+        //                       brother.student.lastDate = week.date;
+        //                       brother.student.ministryPartPrevDate = brother.student.ministryPartDate;
+        //                       brother.student.ministryPartDate = week.date;
+
+        //                       brother.student.ministryPartLastPrevSchool = (brother.student.lastSchool == 1 ? 1 : 2);;
+        //                       brother.student.ministryPartDate = (school == "primarySchool" ? 1 : 2);
+
+        //                       objToSave.push(brother.student);
+        //                         if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+        //                             console.log("Assistant:"+ part[school].assistant);
+        //                             mailAssegnationToSend.push({
+        //                               mail: brother.email,
+        //                               brother: brother.name + ' ' + brother.surname,
+        //                               assistant: (part[school].assistant ? '<h3>Assistente: '+part[school].assistant.surname + ' ' + part[school].assistant.name+'</h3>' : null),
+        //                               type: part.html,
+        //                               school: brother.student.lastSchool,
+        //                               date: strDate
+        //                             });
+        //                         }
+        //                     }
+        //                     if (!part.isTalk && brother._id == part[school].assistant._id) {
+        //                         brother.student.assistantDate = week.date;
+        //                         brother.student.assistantLastSchool = (school == "primarySchool" ? 1 : 2);
+        //                         objToSave.push(brother.student)
+        //                     }
+        //                   });
+        //                 }
+        //               });
+        //               for(let obj of objToSave){
+        //                 try{
+        //                   await obj.save()
+        //                   console.log("Updated", brother.name + " " + brother.surname)
+        //                 }catch(e){
+        //                   console.error('Week Meeting create - Brother Update error:', err, brother);
+        //                   sendEmailError("Errore salvataggio fratello", err);
+        //                   return res.send(err);
+        //                 }
+        //               }
+        //               console.log("Finish to update", brother.name + " " + brother.surname);
+        //           }
+
+        //           console.log("finish to update week", week.date);
+        //           var tempWeek = new Week(week);
+        //           tempWeek.completed = false;
+
+        //           try{
+        //             await tempWeek.save()
+        //             console.log("Week saved")
+        //           }catch(e){
+        //             console.error('Week Meeting create - Week save error:', err);
+        //             sendEmailError("Errore salvataggio settimana", err);
+        //           }
+
+
+        //         }catch(e){
+        //           console.error('Week Meeting create - Brother Find -  error:', err);
+        //           sendEmailError("Errore ricerca fratelli", err);
+        //           return res.send(err);
+        //         }
+        //       }else {
+        //           var tempWeek = new Week(week);
+        //           tempWeek.completed = true;
+        //           tempWeek.congregation = req.decoded._doc.congregation;
+        //           try{
+        //             await tempWeek.save()
+        //             console.log("Week saved")
+        //           }catch(e){
+        //             console.error('Week Meeting create - Week save error:', err);
+        //             sendEmailError("Errore salvataggio settimana", err);
+        //           }
+        //       }
+        // }
+
+        // var arr = [];
+        // for (var i = 0; i < req.body.length; i++) {
+        //     arr.push({ "_id": req.body[i]._id })
+        // }
+        // await WeekTemp.remove({$or: arr})
+
+        // if (err) {
+        //     console.error('Week Meeting create - Week temp remove error:', err);
+        //     sendEmailError("Errore rimozione settimana temporanea", err);
+        //     return res.send(err);
+        // }
+
+        // res.json({ message: 'All weeks updated!' });
+
+
+        // MAIL.sendAssegnations(mailAssegnationToSend);
+        // MAIL.sendMails(mailToSend);
+        // var date = new Date(req.body[0].date);
+        // var str = MONTH_NAMES[date.getMonth()] + " " + date.getFullYear();
+        // var strName = '';
+        // if (req.decoded && req.decoded._doc && req.decoded._doc.brother && req.decoded._doc.brother.name)
+        //     strName = 'fratello ' + req.decoded._doc.brother.name + ' ' + req.decoded._doc.brother.surname;
+        // else
+        //     strName = "sorvegliante dell'adunanza vita cristiana e ministero";
+
+        // MAIL.sendToRole('Programma Vita Cristiana e Ministero inserito - ' + str,
+        //     'Il ' + strName + ' ha inserito il programma del mese di ' + str,
+        //     req, ['schoolOverseer', 'viewer', 'president'])
+
+
+
+
+
+
+
+
+
+
+
 
         var updateWeek = async function(week, nextWeek) {
             console.log('Week', JSON.stringify(week));
@@ -96,10 +423,12 @@ router.route('/')
                 week.ministryPart.forEach(function(part){
                   if(part.forStudent){
                     toFind.push({ '_id': part.primarySchool.student._id });
-                    toFind.push({ '_id': part.primarySchool.assistant._id });
+                    if(!part.isTalk)
+                      toFind.push({ '_id': part.primarySchool.assistant._id });
                     if (week.secondarySchool) {
                       toFind.push({ '_id': part.secondarySchool.student._id });
-                      toFind.push({ '_id': part.secondarySchool.assistant._id });
+                      if(!part.isTalk)
+                        toFind.push({ '_id': part.secondarySchool.assistant._id });
                     }
                   }
                 });
@@ -265,7 +594,7 @@ router.route('/')
                                     // brother.student.bibleReadingPendingStudyNumber = brother.student.bibleReadingStudyNumber;
                                     objToSave.push(brother.student)
                                     if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                                        console.log("Bible reading study number:"+ brother.student.bibleReadingPendingStudyNumber);
+                                        // console.log("Bible reading study number:"+ brother.student.bibleReadingPendingStudyNumber);
                                         mailAssegnationToSend.push({
                                           mail: brother.email,
                                           brother: brother.surname + ' ' + brother.name,
@@ -287,6 +616,7 @@ router.route('/')
                                 if(part.forStudent){
                                   schools.forEach(function(school) {
                                     if (brother._id == part[school].student._id) {
+                                      brother.student.lastDate = week.date;
                                       brother.student.ministryPartPrevDate = brother.student.ministryPartDate;
                                       brother.student.ministryPartDate = week.date;
 
@@ -300,13 +630,13 @@ router.route('/')
                                               mail: brother.email,
                                               brother: brother.name + ' ' + brother.surname,
                                               assistant: (part[school].assistant ? '<h3>Assistente: '+part[school].assistant.surname + ' ' + part[school].assistant.name+'</h3>' : null),
-                                              type: part.label,
+                                              type: part.html,
                                               school: brother.student.lastSchool,
                                               date: strDate
                                             });
                                         }
                                     }
-                                    if (!part[school].isTalk && brother._id == part[school].assistant._id) {
+                                    if (!part.isTalk && brother._id == part[school].assistant._id) {
                                         brother.student.assistantDate = week.date;
                                         brother.student.assistantLastSchool = (school == "primarySchool" ? 1 : 2);
                                         objToSave.push(brother.student)
@@ -667,7 +997,7 @@ router.route('/:week_id')
                                 week.ministryPart.forEach(function(part){
                                   if(part.forStudent){
                                     schools.forEach(function(school) {
-                                      if (!part[school].updated)
+                                      if (!part[school].updated && part[school].student.student)
                                         completed = false;
                                     });
                                   }

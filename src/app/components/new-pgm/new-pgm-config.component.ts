@@ -113,6 +113,12 @@ export class NewPgmConfigComponent {
   public confirm(){
     this.complete.emit(this.weeks);
   }
+
+  public disableSecondarySchool(ev){
+    this.weeks.forEach(w => {
+      w.secondarySchool = !ev;
+    })
+  }
   //
   // filterBrother(ev){
   //   if(typeof ev == "string"){

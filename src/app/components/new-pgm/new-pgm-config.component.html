@@ -15,7 +15,10 @@
   </div>
 
   <div class="flex-container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start" *ngIf="weeks.length>0">
-
+    <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
+      <span fxFlex="50%"></span>
+      <md-checkbox name="disableAllSecondarySchool" [ngModel]="disableAllSecondarySchool" (ngModelChange)="disableSecondarySchool($event)">Disabilita seconda scuola</md-checkbox>
+    </div>
     <md-card *ngFor="let week of weeks; let i = index" class="weekConfigContainer" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start start" fxLayoutAlign.xs="start"  >
       <md-card-header fxLayout="row" fxLayoutAlign="start start">
         <md-card-title>
@@ -35,7 +38,7 @@
                     <md-checkbox name="primarySchool{{i}}" fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.primarySchool">Prima scuola</md-checkbox>
                     <md-checkbox name="secondarySchool{{i}}"fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.secondarySchool">Seconda scuola</md-checkbox>
                   </div>
-                  <div *ngFor="let part of week.ministryPart; let j = index" fxLayout="row" fxFlex="100%" fxLayoutAlign="center center" >
+                  <div *ngFor="let part of week.ministryPart; let j = index" fxLayout="column" fxFlex="100%" fxLayoutAlign="center center" >
                       <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="center center">
                         <div  fxFlex="50%" [innerHTML]="part.html | safeHtml"></div>
                         <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">

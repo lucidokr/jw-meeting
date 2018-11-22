@@ -145,36 +145,25 @@ export class NewPgmPreviewComponent implements OnInit{
     this.studentList = [].concat(this.studentList).sort((a:Brother,b:Brother) => {return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)});
     this.bibleReadingList = [].concat(this.studentList).sort((a:Brother,b:Brother) => {return (moment(a.student.bibleReadingDate).isBefore(b.student.bibleReadingDate) ? -1 : 1)});
     let countSchoolOverseer = 0;
+    let schoolOverseer;
     for(let i = 0; i < this.elderList.length; i++){
       if(this.elderList[i].elder.schoolOverseer){
-        for (let meeting of meetings){
-          if(meeting.type.meeting && meeting.president && meeting.president != this.elderList[i]._id){
-            countSchoolOverseer++;
-          }
+        schoolOverseer = this.elderList[i];
+      }
+    }
+    if(schoolOverseer.elder.schoolOverseer){
+      for (let meeting of meetings){
+        if(meeting.type.meeting && meeting.president && meeting.president != schoolOverseer._id){
+          countSchoolOverseer++;
         }
-
+        if(meeting.type.meeting && meeting.president && meeting.president === schoolOverseer._id){
+          break;
+        }
       }
     }
     for(let week of this.weeks){
 
       if(week.type.meeting && !week.supervisor){
-
-        let schoolOverseer;
-        for(let i = 0; i < this.elderList.length; i++){
-          // if(week.presentationExercise.enabled){
-          //   if(this.elderList[i].elder.serviceOverseer){
-          //     // serviceOverseer = this.elderList[i];
-          //     week.presentationExercise.brother = this.elderList[i];
-          //   }
-          // }
-
-
-          if(this.elderList[i].elder.schoolOverseer){
-            schoolOverseer = this.elderList[i];
-          }
-        }
-
-
         let arrChristianLivingPartBrother = [];
         for (let part of week.christianLivingPart){
           if(!part.president)
@@ -558,15 +547,16 @@ export class NewPgmPreviewComponent implements OnInit{
 
     }
     var minLastDate = 60
+    let that = this;
     function findweekMinistryPart(forced, minLastDate){
-      for(let week of this.weeks) {
+      for(let week of that.weeks) {
         for(let part of week.ministryPart){
-          findAlgorithm.call(this, week, part, false, minLastDate)
+          findAlgorithm.call(that, week, part, false, minLastDate)
         }
       }
       let weeksCompleted = true;
-      for(let week of this.weeks) {
-        if(!this.checkWeekCompletedAndRemove(week, week.ministryPart, 'student'))
+      for(let week of that.weeks) {
+        if(!that.checkWeekCompletedAndRemove(week, week.ministryPart, 'student'))
           weeksCompleted = false;
       }
       if(!weeksCompleted && minLastDate != 0)
@@ -849,7 +839,7 @@ export class NewPgmPreviewComponent implements OnInit{
     let allParts = CONST_ARR.PART_TYPE
     allParts.push("ministryPart")
 
-    if (allParts.indexOf(partType) == -1) {
+    if (partType != "bibleReading" && partType != "ministryPart") {
       if (partType == "president") {
         tempList = [].concat(this.elderList)
           .filter(brother => (brother.elder && brother.elder.presidentEnabled
@@ -886,17 +876,17 @@ export class NewPgmPreviewComponent implements OnInit{
     }else{
       let partTypeTemp = partType;
 
-      if(partType!='bibleReading'){
+      if(partType=='ministryPart'){
+        if(part.isTalk){
+          partTypeTemp = "talk";
+        }
         tempList = [].concat(this.studentList, this.studentListBusy)
           .filter(brother =>
             brother.student[partTypeTemp+"Enabled"]
             && brother.student[school+"Enabled"]
             && arrChristianLivingPartBrother.indexOf(brother._id) == -1
-            && ((week[partType][school].gender != '' && brother.gender ==  week[partType][school].gender) || week[partType][school].gender == '') )
+            && ((part[school].gender != '' && brother.gender == part[school].gender) || part[school].gender == '') )
       }else{
-        if(part.isTalk){
-          partTypeTemp = "talk";
-        }
         tempList = [].concat(this.studentList, this.studentListBusy)
           .filter(brother =>
             brother.student[partTypeTemp+"Enabled"]
@@ -953,12 +943,14 @@ export class NewPgmPreviewComponent implements OnInit{
         }
       }
       if (allParts.indexOf(partType) == -1) {
+        findBusy(week.bibleReading)
         for (let part of week.ministryPart) {
           findBusy(part)
         }
       }
       if (allParts.indexOf(partType) != -1) {
         for (let w of this.weeks) {
+          findBusy(w.bibleReading)
           for (let part of w.ministryPart) {
             findBusy(part)
           }
