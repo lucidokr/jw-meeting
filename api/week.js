@@ -282,11 +282,19 @@ router.route('/')
                           schools.forEach(function(school) {
                             if (brother._id == part[school].student._id) {
                               brother.student.lastDate = week.date;
-                              brother.student.ministryPartPrevDate = brother.student.ministryPartDate;
-                              brother.student.ministryPartDate = week.date;
+                              if(part[school].isTalk){
+                                brother.student.talkPrevDate = brother.student.talkDate;
+                                brother.student.talkDate = week.date;
 
-                              brother.student.ministryPartLastPrevSchool = (brother.student.lastSchool == 1 ? 1 : 2);;
-                              brother.student.ministryPartDate = (school == "primarySchool" ? 1 : 2);
+                                brother.student.talkLastPrevSchool = (brother.student.talkLastSchool == 1 ? 1 : 2);;
+                                brother.student.talkLastSchool = (school == "primarySchool" ? 1 : 2);
+                              }else{
+                                brother.student.ministryPartPrevDate = brother.student.ministryPartDate;
+                                brother.student.ministryPartDate = week.date;
+
+                                brother.student.ministryPartLastPrevSchool = (brother.student.lastSministryPartLastSchoolchool == 1 ? 1 : 2);;
+                                brother.student.ministryPartLastSchool = (school == "primarySchool" ? 1 : 2);
+                              }
 
                               objToSave.push(brother.student);
                                 if (brother.email && process.env.SEND_ASSEGNATION == "true") {
@@ -579,10 +587,14 @@ router.route('/:week_id')
                         history.made = true;
                     } else if (part[school].made == 2) { //non svolto
                         brother.student.lastDate = brother.student.lastPrevDate;
-                        brother.student.ministryPartDate = brother.student.ministryPartPrevDate;
                         brother.student.lastSchool = brother.student.lastPrevSchool;
-                        brother.student.ministryPartLastSchool = brother.student.ministryPartLastPrevSchool;
-
+                        if(part[school].isTalk){
+                          brother.student.talkLastSchool = brother.student.ministryPartLastPrevSchool;
+                          brother.student.talkDate = brother.student.talkPrevDate;
+                        }else{
+                          brother.student.ministryPartLastSchool = brother.student.ministryPartLastPrevSchool;
+                          brother.student.ministryPartDate = brother.student.ministryPartPrevDate;
+                        }
                         history.made = false;
                     }
                     historiesToSave.push(history);

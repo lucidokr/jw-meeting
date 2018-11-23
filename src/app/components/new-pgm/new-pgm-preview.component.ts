@@ -412,8 +412,14 @@ export class NewPgmPreviewComponent implements OnInit{
       var strPartType = "";
       if(bibleReading)
         strPartType = "bibleReading"
-      else
-        strPartType = "ministryPart"
+      else{
+        if(part.isTalk){
+          strPartType = "talk"
+        }else{
+          strPartType = "ministryPart"
+        }
+      }
+
       // let arrChristianLivingPartBrother = [];
       // for (let part of week.christianLivingPart){
       //   arrChristianLivingPartBrother.push(part.brother._id);
@@ -517,6 +523,15 @@ export class NewPgmPreviewComponent implements OnInit{
             )
           })
           .sort((a:Brother,b:Brother) => {
+            if(part.isTalk){
+              if(!a.student.talkDate)
+                return -1;
+              if(a.student.talkDate.isAfter(b.student.talkDate))
+                return 1;
+              if(a.student.talkDate.isBefore(b.student.talkDate))
+                return -1;
+              return 0;
+            }else{
               if(!a.student.ministryPartDate)
                 return -1;
               if(a.student.ministryPartDate.isAfter(b.student.ministryPartDate))
@@ -524,6 +539,8 @@ export class NewPgmPreviewComponent implements OnInit{
               if(a.student.ministryPartDate.isBefore(b.student.ministryPartDate))
                 return -1;
               return 0;
+            }
+
               // return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)
             });
 

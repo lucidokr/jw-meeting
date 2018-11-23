@@ -34,8 +34,10 @@ var StudentSchema   = new Schema({
 
 
   talkEnabled: Boolean,
-  // talkPrevDate: Date,
-  // talkDate: Date,
+  talkPrevDate: Date,
+  talkDate: Date,
+  talkLastSchool: Number,
+  talkLastPrevSchool: Number,
 
   assistantEnabled: Boolean,
   assistantDate: Date,

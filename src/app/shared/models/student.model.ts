@@ -21,6 +21,10 @@
     bibleReadingLastPrevSchool: number = 1;
 
     talkEnabled: boolean = true;
+    talkDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
+    talkPrevDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
+    talkLastSchool: number = 1;
+    talkLastPrevSchool: number = 1;
 
     assistantEnabled: boolean = true;
     assistantDate: any = this.randomDate(new Date(2017, 2, 1), new Date());
