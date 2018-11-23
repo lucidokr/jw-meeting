@@ -48,7 +48,6 @@ router.route('/')
             .sort([
                 ['date', 'descending']
             ])
-            .exec();
         res.send(weeks)
       }catch(e){
         return res.status(500).send(err);
@@ -120,8 +119,6 @@ router.route('/')
                   .populate('prayer')
                   .populate('reader')
                   .populate('student')
-                  .exec()
-
 
                   for (let brother of brothers){
                     var objToSave = [];
@@ -280,7 +277,7 @@ router.route('/')
                       week.ministryPart.forEach(function(part){
                         if(part.forStudent){
                           schools.forEach(function(school) {
-                            if (brother._id == part[school].student._id) {
+                            if (brother._id == part[school].student._id && brother.student) {
                               brother.student.lastDate = week.date;
                               if(part[school].isTalk){
                                 brother.student.talkPrevDate = brother.student.talkDate;
@@ -309,7 +306,7 @@ router.route('/')
                                     });
                                 }
                             }
-                            if (!part.isTalk && brother._id == part[school].assistant._id) {
+                            if (!part.isTalk && brother._id == part[school].assistant._id && brother.student) {
                                 brother.student.assistantDate = week.date;
                                 brother.student.assistantLastSchool = (school == "primarySchool" ? 1 : 2);
                                 objToSave.push(brother.student)
@@ -407,7 +404,7 @@ router.route('/')
 
 router.route('/pgm/:year/:month')
 
-.get(function(req, res) {
+.get(async (req, res) => {
 
     var startMonth = req.params.month;
     var startYear = req.params.year;
@@ -429,7 +426,8 @@ router.route('/pgm/:year/:month')
 
       // console.log(startYear+ "-" +startMonth)
       // console.log(endYear+ "-" +endMonth)
-    Week
+    try{
+        var weeks = await Week
     // .where('date').gte(new Date(req.params.year, req.params.month, 6)).lte(new Date(req.params.year, req.params.month + 1, 3))
         .find({
             $and: [{
@@ -457,243 +455,236 @@ router.route('/pgm/:year/:month')
         .sort([
             ['date', 'ascending']
         ])
-
-
-    .exec(function(err, weeks) {
-        if (err){
-          sendEmailError("Errore ottenimento programma", err);
-          return res.status(500).send(err);
-        }
         res.json(weeks);
-
-    });
+      }catch(err){
+        sendEmailError("Errore ottenimento programma", err);
+        return res.status(500).send(err);
+      }
 })
 
 router.route('/:week_id')
+.get(async (req, res) =>  {
+  try{
+    var week = await Week.find({ _id: req.params.week_id })
+    .populate('initialPrayer')
+    .populate('finalPrayer')
+    .populate('president')
+    .populate('talk.brother')
+    .populate('gems.brother')
+    .populate({ path: 'bibleReading.primarySchool.student', populate: { path: 'student'} })
+    .populate({ path: 'bibleReading.secondarySchool.student', populate: { path: 'student'} })
+    .populate('congregationBibleStudy.brother')
+    .populate('congregationBibleStudy.reader')
+    .populate('christianLivingPart.brother')
+    .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
+    .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
+    .populate('ministryPart.secondarySchool.assistant')
+    .populate('ministryPart.primarySchool.assistant')
+    if(week.length > 0){
+      res.json(week[0]);
+    }else{
+      res.status(404).send("Week not found");
+    }
+  }catch(e){
+    sendEmailError("Errore ottenimento settimana", err);
+    res.status(500).send(err);
+  }
 
-.get(function(req, res) {
-        Week.find({ _id: req.params.week_id })
-            .populate('initialPrayer')
-            .populate('finalPrayer')
-            .populate('president')
-            .populate('talk.brother')
-            .populate('gems.brother')
-            .populate({ path: 'bibleReading.primarySchool.student', populate: { path: 'student'} })
-            .populate({ path: 'bibleReading.secondarySchool.student', populate: { path: 'student'} })
-            .populate('congregationBibleStudy.brother')
-            .populate('congregationBibleStudy.reader')
-            .populate('christianLivingPart.brother')
-            .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
-            .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
-            .populate('ministryPart.secondarySchool.assistant')
-            .populate('ministryPart.primarySchool.assistant')
+    // var mailAssegnationToSend = [];
+    // var week = week[0];
+    // if(process.env.SEND_ASSEGNATION == "true"){
+    //   var brother = week.bibleReading.primarySchool.student;
+    //   // brother.email = "lucido.kristian@gmail.com";
+    //   if(brother.email){
+    //     mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
+    //   }
+    //   if (!week.presentationExercise.enabled) {
 
+    //       brother = week.bibleReading.secondarySchool.student;
+    //       // brother.email = "lucido.kristian@gmail.com";
+    //       if(brother.email){
+    //         mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
+    //       }
+    //       var arr = ["initialCall", "returnVisit", "bibleStudy"];
+    //       var schools = ["primarySchool", "secondarySchool"];
+    //       arr.forEach(function (partType) {
+    //         schools.forEach(function (school) {
+    //           var brother = week[partType][school].student;
+    //           // brother.email = "lucido.kristian@gmail.com";
+    //             if (brother.email && process.env.SEND_ASSEGNATION == "true" && brother.student) {
+    //               console.log("brother student name: ", brother.surname + ' ' + brother.name);
+    //               console.log("brother student school: ", brother.student.lastSchool);
+    //               var obj = {
+    //                 mail: brother.email,
+    //                 brother: brother.surname + ' ' + brother.name,
+    //                 assistant: '',
+    //                 type: (week[partType][school].isTalk ? 'talk' : partType),
+    //                 school: brother.student.lastSchool,
+    //                 date: week.date,
+    //                 point: brother.student.pendingStudyNumber
+    //               };
+    //               obj.assistant = (week[partType][school].assistant ? week[partType][school].assistant.surname + ' ' + week[partType][school].assistant.name : '')
+    //               mailAssegnationToSend.push(obj)
+    //           }
+    //         })
+    //       })
 
-        .exec(function(err, week) {
-            if (err){
-              sendEmailError("Errore ottenimento settimana", err);
-              res.send(err);
-            }
-            res.json(week[0]);
-            // var mailAssegnationToSend = [];
-            // var week = week[0];
-            // if(process.env.SEND_ASSEGNATION == "true"){
-            //   var brother = week.bibleReading.primarySchool.student;
-            //   // brother.email = "lucido.kristian@gmail.com";
-            //   if(brother.email){
-            //     mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
-            //   }
-            //   if (!week.presentationExercise.enabled) {
+    //   }
+    //   MAIL.sendAssegnations(mailAssegnationToSend);
+    // }
 
-            //       brother = week.bibleReading.secondarySchool.student;
-            //       // brother.email = "lucido.kristian@gmail.com";
-            //       if(brother.email){
-            //         mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
-            //       }
-            //       var arr = ["initialCall", "returnVisit", "bibleStudy"];
-            //       var schools = ["primarySchool", "secondarySchool"];
-            //       arr.forEach(function (partType) {
-            //         schools.forEach(function (school) {
-            //           var brother = week[partType][school].student;
-            //           // brother.email = "lucido.kristian@gmail.com";
-            //             if (brother.email && process.env.SEND_ASSEGNATION == "true" && brother.student) {
-            //               console.log("brother student name: ", brother.surname + ' ' + brother.name);
-            //               console.log("brother student school: ", brother.student.lastSchool);
-            //               var obj = {
-            //                 mail: brother.email,
-            //                 brother: brother.surname + ' ' + brother.name,
-            //                 assistant: '',
-            //                 type: (week[partType][school].isTalk ? 'talk' : partType),
-            //                 school: brother.student.lastSchool,
-            //                 date: week.date,
-            //                 point: brother.student.pendingStudyNumber
-            //               };
-            //               obj.assistant = (week[partType][school].assistant ? week[partType][school].assistant.surname + ' ' + week[partType][school].assistant.name : '')
-            //               mailAssegnationToSend.push(obj)
-            //           }
-            //         })
-            //       })
-
-            //   }
-            //   MAIL.sendAssegnations(mailAssegnationToSend);
-            // }
-        });
     })
-    .put(function(req, res) {
-        // Week.findById(req.params.week_id, function(err, week) {
+    .put(async (req, res) => {
+
+        var session = await Brother.startSession();
+        session.startTransaction()
+        console.log('Start session');
+        const opts = { session };
+
         var week = req.body;
-
-
         var toFind = [];
         var historiesToSave = [];
         var schools = ["primarySchool"];
 
+        // FIND STUDENTS
         if (week.secondarySchool) {
             schools.push("secondarySchool");
         }
         schools.forEach(function(school){
-          if (week.bibleReading[school].made != 0 && !week.bibleReading[school].updated) {
+          if (week.bibleReading[school].made != 0 && !week.bibleReading[school].updated && week.bibleReading[school].student.student) {
             console.log('Student to Find', week.bibleReading[school].student.name);
             toFind.push({ '_id': week.bibleReading[school].student._id })
           }
         });
         week.ministryPart.forEach(function(part){
           schools.forEach(function(school){
-            if (part[school].made != 0 && !part[school].updated) {
+            if (part[school].made != 0 && !part[school].updated && part[school].student.student) {
               console.log('Student to Find', part[school].student.name);
               toFind.push({ '_id': part[school].student._id })
             }
           });
         });
 
-
-
-        Brother.find({
+        // UPDATE STUDENTS
+        try{
+          var brothers = await Brother.find({
                 $or: toFind
-            })
+            }, null, opts)
             .populate('student')
-            .exec(function(err, brothers) {
-                if (err)
-                    res.send(err);
+        }catch(err){
+          session.abortTransaction();
+          return res.status(500).send(err);
+        }
 
-                console.log('Length', brothers.length);
+        console.log('Length', brothers.length);
 
-                async.each(brothers, function(brother, nextBrother) {
-                  var func = function(part, school, bibleReading){
-                    var history = new History();
-                    history.date = week.date;
-                    history.student = part[school].student;
-                    if (part[school].made == 1) { //svolto
-                        history.made = true;
-                    } else if (part[school].made == 2) { //non svolto
-                        brother.student.lastDate = brother.student.lastPrevDate;
-                        brother.student.lastSchool = brother.student.lastPrevSchool;
-                        if(part[school].isTalk){
-                          brother.student.talkLastSchool = brother.student.ministryPartLastPrevSchool;
-                          brother.student.talkDate = brother.student.talkPrevDate;
-                        }else{
-                          brother.student.ministryPartLastSchool = brother.student.ministryPartLastPrevSchool;
-                          brother.student.ministryPartDate = brother.student.ministryPartPrevDate;
-                        }
-                        history.made = false;
-                    }
-                    historiesToSave.push(history);
-                    part[school].updated = true;
-                  };
-                  //AFTER 2019
+        for(let brother of brothers){
+          var func = function(part, school, bibleReading){
+            if(!part[school].student.student){
+              part[school].updated = true;
+            }else{
+              var history = new History();
+              history.date = week.date;
+              history.student = part[school].student;
+              if (part[school].made == 1) { //svolto
+                  history.made = true;
+              } else if (part[school].made == 2) { //non svolto
+                  brother.student.lastDate = brother.student.lastPrevDate;
+                  brother.student.lastSchool = brother.student.lastPrevSchool;
+                  if(part[school].isTalk){
+                    brother.student.talkLastSchool = brother.student.ministryPartLastPrevSchool;
+                    brother.student.talkDate = brother.student.talkPrevDate;
+                  }else{
+                    brother.student.ministryPartLastSchool = brother.student.ministryPartLastPrevSchool;
+                    brother.student.ministryPartDate = brother.student.ministryPartPrevDate;
+                  }
+                  history.made = false;
+              }
+              historiesToSave.push(history);
+              part[school].updated = true;
+            }
+          };
 
-                    schools.forEach(function(school) {
-                      if (brother._id == week.bibleReading[school].student._id) {
-                        func(week.bibleReading, school, true);
-                      }
-                    });
-                    week.ministryPart.forEach(function(part){
-                      if(part.forStudent){
-                        schools.forEach(function(school) {
-                          if (brother._id == part[school].student._id) {
-                            func(part, school, false);
-                          }
-                        });
-                      }
-                    });
+          schools.forEach(function(school) {
+            if (brother._id == week.bibleReading[school].student._id) {
+              func(week.bibleReading, school, true);
+            }
+          });
+          week.ministryPart.forEach(function(part){
+            if(part.forStudent){
+              schools.forEach(function(school) {
+                if (brother._id == part[school].student._id) {
+                  func(part, school, false);
+                }
+              });
+            }
+          });
 
-                    brother.student.save(function(err) {
-                        if (err)
-                            res.send(err);
-                        console.log("Finish to update: ", brother.name + " " + brother.surname)
-                        nextBrother();
-                    });
+          try{
+            await brother.student.save(opts);
+            console.log("Finish to update: ", brother.name + " " + brother.surname)
+          }catch(e){
+            session.abortTransaction();
+            return res.status(500).send(e);
+          }
+        }
 
-                }, function(err) {
-                    if (err) {
-                        console.log('Update week failed');
-                    } else {
-                        async.each(historiesToSave, function(history, nextHistory) {
+          // SAVE HISTORY
+          for(let historyToSave of historiesToSave){
+            try{
+              await historyToSave.save(opts);
+              console.log("History added")
+            }catch(e){
+              console.log('Update week failed');
+              session.abortTransaction();
+              return res.status(500).send(e);
+            }
+          }
+          console.log("finish to update week", week.date);
 
-                            history.save(function(err) {
-                                if (err)
-                                    res.send(err);
-                                console.log("History added")
-                                nextHistory();
-                            });
+          // UPDATE WEEK
+          var tempWeek = new Week(week);
+          var completed = true;
+          schools.forEach(function(school) {
+              if (!week.bibleReading[school].updated)
+                  completed = false;
+          })
+          week.ministryPart.forEach(function(part){
+            if(part.forStudent){
+              schools.forEach(function(school) {
+                if (!part[school].updated && part[school].student.student)
+                  completed = false;
+              });
+            }
+          });
 
-                        }, function(err) {
-                            if (err) {
-                                console.log('Update week failed');
-                            } else {
-                                console.log("finish to update week", week.date);
-                                var tempWeek = new Week(week);
-                                var completed = true;
-                                schools.forEach(function(school) {
-                                    if (!week.bibleReading[school].updated)
-                                        completed = false;
-                                })
-                                week.ministryPart.forEach(function(part){
-                                  if(part.forStudent){
-                                    schools.forEach(function(school) {
-                                      if (!part[school].updated && part[school].student.student)
-                                        completed = false;
-                                    });
-                                  }
-                                });
-
-                                tempWeek.completed = completed;
-                                var w = tempWeek.toObject();
-                                delete w._id;
-                                delete w.__v;
-                                //
-                                Week.findOneAndUpdate({ '_id': req.params.week_id }, w, { upsert: true }, function(err, doc) {
-                                    if (err)
-                                        console.error(err);
-                                    else {
-                                        console.log("Week saved")
-                                        res.send(w);
-                                    }
-                                });
-                                // tempWeek.save(function(err) {
-                                //   if (err)
-                                //     console.error(err);
-                                //   else
-                                //     console.log("Week saved")
-                                // });
-
-                            }
-                        })
-                    }
-                })
-
-                // });
-            });
+          tempWeek.completed = completed;
+          var w = tempWeek.toObject();
+          delete w._id;
+          delete w.__v;
+          //
+          try{
+            var newOpts = opts
+            newOpts.upsert = true;
+            await Week.findOneAndUpdate({ '_id': req.params.week_id }, w, newOpts);
+            console.log("Week saved")
+            await session.commitTransaction();
+            session.endSession();
+            return res.send(w);
+          }catch(e){
+            session.abortTransaction();
+            return res.status(500).send(e);
+          }
     })
-    .delete(function(req, res) {
-        Week.remove({
+    .delete(async (req, res) => {
+      try{
+        await Week.remove({
             _id: req.params.week_id
-        }, function(err, week) {
-            if (err)
-                res.send(err);
-
-            res.json({ message: 'Successfully deleted' });
         });
+        res.json({ message: 'Successfully deleted' });
+      }catch(e){
+        return res.status(500).send(e)
+      }
     });
 
 module.exports = router;
