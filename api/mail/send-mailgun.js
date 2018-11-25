@@ -17,6 +17,7 @@ var path = require('path');
 var MAIL = {
     template: null,
     templateAssegnation: null,
+    templateAssegnationReminder: null,
 
     getAssegnationTemplate: function(callback) {
         var that = this;
@@ -40,6 +41,17 @@ var MAIL = {
           callback()
       });
   },
+
+  getAssegnationReminderTemplate: function(callback) {
+    var that = this;
+    fs.readFile(path.join(__dirname, 'mail-assegnation-reminder.html'), 'utf8', function(err, html) {
+        if (err) {
+            return console.log(err);
+        }
+        that.templateAssegnationReminder = html;
+        callback();
+    });
+},
 
     sendMail: function(mailOptions) {
       mailgun.messages().send(mailOptions, function (error, body) {
@@ -122,6 +134,17 @@ var MAIL = {
 
     },
 
+    sendReminderAssegnations: function(mails) {
+      if (mails && mails.length > 0) {
+          var that = this;
+          mails.forEach(function(data) {
+              if (data.school == 1) data.school = "Sala principale";
+              if (data.school == 2) data.school = "Classe supplementare 1";
+              that.sendReminderAssegnation(data.mail, data.brother, data.assistant, data.date,  data.type, data.school);
+          });
+      }
+    },
+
     sendAssegnations: function(mails) {
       if (mails && mails.length > 0) {
           var that = this;
@@ -176,7 +199,52 @@ var MAIL = {
         // } else {
             // send()
         // }
-    }
+    },
+
+    sendReminderAssegnation: function(mail, brother, assistant, date, type, school) {
+
+      function send() {
+
+          if (!data) {
+              var data = {
+                  brother: brother || "Kristian Lucido",
+                  assistant: assistant || "",
+                  date: date || "10/10/17",
+                  type: type || "Lettura biblica",
+                  school: school || "Sala principale"
+              };
+          }
+
+          var tempMail = this.templateAssegnationReminder;
+          Object.keys(data).forEach(function(k) {
+            if(data[k]){
+              tempMail = tempMail.replace("{{" + k + "}}", data[k])
+            }else{
+              tempMail = tempMail.replace("{{" + k + "}}", "")
+            }
+          });
+
+          var mailOptions = {
+              from: 'Adunanza Vita Cristiana e Ministero <noreply@'+process.env.DOMAIN_MAILGUN+'>',
+              to: mail,
+              subject: 'Assegnazione parte Vita Cristiana e Ministero - ' + data.date,
+              html: tempMail
+          };
+
+
+          if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
+              mailOptions.to = 'kristianl_91@hotmail.it'
+          }
+
+          this.sendMail(mailOptions)
+      }
+
+      // if (!this.template) {
+          this.getAssegnationReminderTemplate(send.bind(this));
+      // } else {
+          // send()
+      // }
+  }
 
 }
 

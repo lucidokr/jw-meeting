@@ -65,7 +65,6 @@ router.route('/')
         var mailToSend = [];
 
         for (let week of req.body){
-          console.log('Week', JSON.stringify(week));
             if (week.type.meeting && !week.supervisor) {
                 console.log('Date', week.date);
                 console.log('President', week.president._id);
@@ -279,7 +278,7 @@ router.route('/')
                           schools.forEach(function(school) {
                             if (brother._id == part[school].student._id && brother.student) {
                               brother.student.lastDate = week.date;
-                              if(part[school].isTalk){
+                              if(part.isTalk){
                                 brother.student.talkPrevDate = brother.student.talkDate;
                                 brother.student.talkDate = week.date;
 
@@ -591,7 +590,7 @@ router.route('/:week_id')
               } else if (part[school].made == 2) { //non svolto
                   brother.student.lastDate = brother.student.lastPrevDate;
                   brother.student.lastSchool = brother.student.lastPrevSchool;
-                  if(part[school].isTalk){
+                  if(part.isTalk){
                     brother.student.talkLastSchool = brother.student.ministryPartLastPrevSchool;
                     brother.student.talkDate = brother.student.talkPrevDate;
                   }else{

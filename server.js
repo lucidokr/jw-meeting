@@ -17,6 +17,7 @@ var app = express();
 var staticRoot = __dirname + '/dist/';
 var router = express.Router();
 var bodyParser = require('body-parser');
+var schedule = require('node-schedule');
 var Brother = require('./api/models/brother');
 
 
@@ -136,4 +137,71 @@ if (process.env.NODE_ENV && process.env.NODE_ENV != "development") {
     setInterval(function() {
         http.get("http://jw-meeting.herokuapp.com");
     }, 1500000);
+}
+
+// JOB FOR SEND ASSEGNATIONS
+if(process.env.SEND_ASSEGNATION == "true"){
+    var j = schedule.scheduleJob({hour: 10, minute: 00, dayOfWeek: 1}, async () => {
+      console.log('Start reminder assegnationsjob');
+
+      try{
+        var weeks = await Week
+          .sort([
+              ['date', 'descending']
+          ])
+      }catch(e){
+        return;
+      }
+
+      var schools = ["primarySchool"];
+      var mailAssegnationReminderToSend = [];
+      for (let week of weeks){
+        var date = new Date(week.date);
+        var month = MONTH_NAMES[date.getMonth()];
+        var day = DAY_NAMES[date.getDay()-1];
+        var strDate = day+" " +date.getDate() + " " + month + " " + date.getFullYear();
+
+        schools = ["primarySchool"];
+        if(week.secondarySchool){
+          schools.push("secondarySchool");
+        }
+        var date = new Date();
+        if(week.date.getTime() < date.getTime() && (week.date.getTime() + (6*24*60*60*1000)) > date.getTime() ){
+          if (week.type.meeting && !week.supervisor) {
+            for(let school of schools){
+              var brother = week.bibleReading[school].student;
+              if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                  mailAssegnationReminderToSend.push({
+                    mail: brother.email,
+                    brother: brother.name + ' ' + brother.surname,
+                    assistant: "",
+                    type: week.bibleReading.label,
+                    school: brother.student.lastSchool,
+                    date: strDate
+                  });
+              }
+              for(let part of week.ministryPart){
+                if(part.forStudent){
+                  var brother = part[school].student;
+                  if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                      mailAssegnationReminderToSend.push({
+                        mail: brother.email,
+                        brother: brother.name + ' ' + brother.surname,
+                        assistant: (part[school].assistant ? '<h3>Assistente: '+part[school].assistant.surname + ' ' + part[school].assistant.name+'</h3>' : null),
+                        type: part.html,
+                        school: brother.student.lastSchool,
+                        date: strDate
+                      });
+                  }
+                }
+              }
+            }
+            if(mailAssegnationReminderToSend.length > 0){
+              MAIL.sendReminderAssegnations(mailAssegnationReminderToSend);
+            }
+          }
+        }
+      }
+
+    });
 }

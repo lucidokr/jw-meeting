@@ -10,7 +10,6 @@ var Reader = require('./models/reader');
 
 router.route('/')
   .get(function(req, res) {
-    console.log(req.decoded._doc);
     Brother
       .find({congregation:req.decoded._doc.congregation._id})
       .or([
@@ -26,7 +25,7 @@ router.route('/')
       .exec(function(err, brothers) {
           if (err){
               console.error('Brothers get error:', err);
-              return res.send(err);
+              return res.status(500).send(err);
           }
 
         res.json(brothers);

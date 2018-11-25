@@ -205,7 +205,7 @@
             </div>
             <div *ngIf="brother.student.talkEnabled" fxLayout="row" fxLayoutAlign="start center">
               <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="talkPrevDate" [(ngModel)]="brother.student.talkPrevDate" name="talkDate"  placeholder="Data penultimo discorso">
+                <input mdInput [mdDatepicker]="talkPrevDate" [(ngModel)]="brother.student.talkPrevDate" name="talkPrevDate"  placeholder="Data penultimo discorso">
                 <button mdSuffix [mdDatepickerToggle]="talkPrevDate"></button>
               </md-input-container>
               <md-datepicker #talkPrevDate></md-datepicker>

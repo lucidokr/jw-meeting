@@ -510,7 +510,7 @@ export class DownloadWeeksDialog implements OnInit{
         let cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
         for(let school of SCHOOLS) {
           cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
-          draftAssegnation[cellRef] = {t: 's', v:week.date.format('D MMMM YYYY')};
+          draftAssegnation[cellRef] = {t: 's', v:week.date.format('D MMMM YYYY').toUpperCase()};
           countColumnAssegnation++;
           cellRef = XLSX.utils.encode_cell({r:countRowAssegnation, c:countColumnAssegnation});
           draftAssegnation[cellRef] = {t: 's', v:this.getSurnameName(week.bibleReading[school].student)} ;
