@@ -4,104 +4,71 @@ var Elder = require('./models/elder');
 var Brother = require('./models/brother');
 
 router.route('/')
-  .get(function(req, res) {
-    Brother
-      .find({congregation:req.decoded._doc.congregation._id, elder: {$exists: true, $ne: null}})
-      .populate('elder')
-      .or([
-        { 'elder.deleted': {$exists:false} },
-        { 'elder.deleted':{$exists:true, $ne:true} }
-      ])
-      .sort([['surname', 'ascending']])
-      .exec(function(err, brothers) {
-          if (err){
-              console.error('Elder get error:', err);
-              return res.send(err);
-          }
+  .get(async (req, res) => {
+    try{
+      var brothers = await Brother
+        .find({congregation:req.decoded._doc.congregation._id, elder: {$exists: true, $ne: null}})
+        .populate('elder')
+        .or([
+          { 'elder.deleted': {$exists:false} },
+          { 'elder.deleted':{$exists:true, $ne:true} }
+        ])
+        .sort([['surname', 'ascending']])
 
-        res.json(brothers);
-      });
+      res.json(brothers);
+    }catch(e){
+      console.error('Elders get error:', e);
+      return res.status(500).send({success:false, error:500, message:"Elders get error", errorCode: e})
+    }
   });
 
 
 router.route('/:brother_id')
 
-  .post(function(req, res) {
+  .post(async(req, res) => {
 
     var elder = new Elder();
-
     elder = Object.assign(elder, req.body);
-
-    elder.save(function(err, elder) {
-        if (err){
-            console.error('Elder create error:', err);
-            return res.send(err);
-        }
-
-      Brother.findById(req.params.brother_id, function(err, brother) {
-          if (err){
-              console.error('Elder create error:', err);
-              return res.send(err);
-          }
-        brother.elder = elder;
-        brother.save(function(err) {
-            if (err){
-                console.error('Elder create error:', err);
-                return res.send(err);
-            }
-          res.json({ message: 'Elder updated!' });
-        });
-
-      });
-    });
-
+    try{
+      await elder.save();
+    }catch(e){
+      console.error('Elder create error:', e);
+      return res.status(500).send({success:false, error:500, message:"Elder create error", errorCode: e})
+    }
+    try{
+      var brother = await Brother.findById(req.params.brother_id)
+      brother.elder = elder;
+      await brother.save();
+      res.json({ success:true, message: 'Elder created!' });
+    }catch(e){
+      console.error('Elder create error:', e);
+      return res.status(500).send({success:false, error:500, message:"Elder create error", errorCode: e})
+    }
   })
-  .put(function(req, res) {
-    Brother.findOne({'_id': req.params.brother_id})
-      .populate('elder')
-      .exec(function(err, brother) {
-          if (err){
-              console.error('Elder update error:', err);
-              return res.send(err);
-          }
-
-        brother.elder = Object.assign(brother.elder, req.body);
-
-        brother.elder.save(function(err) {
-            if (err){
-                console.error('Elder update error:', err);
-                return res.send(err);
-            }
-
-          res.json({ message: 'Elder updated!' });
-        });
-      });
+  .put(async(req, res) =>  {
+    try{
+      var brother = await Brother.findById(req.params.brother_id)
+          .populate('elder')
+      brother.elder = Object.assign(brother.elder, req.body);
+      await brother.elder.save()
+      res.json({ success: true, message: 'Elder updated!' });
+    }catch(e){
+      console.error('Elder update error:', e);
+      return res.status(500).send({success:false, error:500, message:"Elder update error", errorCode: e})
+    }
   })
-  .delete(function(req, res) {
-    Brother.findOne({'_id': req.params.brother_id}).exec(function(err, brother) {
-        if (err){
-            console.error('Elder delete error:', err);
-            return res.send(err);
-        }
-
-      Elder.update({ _id: brother.elder }, { $set: { deleted: true }},function(err) {
-          if (err){
-              console.error('Elder delete error:', err);
-              return res.send(err);
-          }
-        brother.elder = undefined;
-        brother.save(function(err) {
-            if (err){
-                console.error('Elder delete error:', err);
-                return res.send(err);
-            }
-
-          res.json({ message: 'Elder deleted' });
-        });
-      });
-
-
-    });
+  .delete(async(req, res) => {
+    try{
+      var brother = await Brother.findById(req.params.brother_id)
+          .populate('elder')
+      await Elder.update({ _id: brother.elder }, { $set: { deleted: true }})
+      brother.elder = undefined;
+      await brother.save();
+      res.json({ success: true, message: 'Elder deleted!' });
+    }catch(e){
+      console.error('Elder delete error:', e);
+      return res.status(500).send({success:false, error:500, message:"Elder delete error", errorCode: e})
+    }
 
   });
 

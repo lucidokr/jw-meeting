@@ -67,6 +67,11 @@
           <i class="fa fa-bar-chart" aria-hidden="true"></i><span>STATISTICHE</span>
         </a>
       </li>
+      <li class="" *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER  || user.role==USER_ROLE.PRESIDENT ">
+          <a href="/settings" title="Impostazioni della congregazione">
+            <i class="fa fa-cogs" aria-hidden="true"></i><span>IMPOSTAZIONI</span>
+          </a>
+        </li>
     </ul>
     <!--<a [routerLink]="['/login']" class="btn btn-primary">Log in</a>-->
   </div>

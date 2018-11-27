@@ -190,18 +190,6 @@ export class NewPgmTempComponent {
           this.christianLivingPartBrother = list;
           this.christianLivingPartBrotherFiltered = [].concat(list);
 
-          let list2 = res[0].concat(res[1]);
-          list2 = list2.sort((a:any,b:any) => {
-            let objA : any = a.elder || a.servant;
-            let objB : any = b.elder || b.servant;
-            return (moment(objA.presentationExerciseDate).isBefore(objB.presentationExerciseDate) ? -1 : 1)})
-          list2 = list2.filter(brother => {
-            if(brother.servant) return brother.servant.presentationExerciseEnabled
-            if(brother.elder) return brother.elder.presentationExerciseEnabled
-          })
-
-          this.presentationExerciseList = list2
-          this.presentationExerciseListFiltered = [].concat(list2)
           this.loadingMeetingWorkbooks = false;
         });
       }else{

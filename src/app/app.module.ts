@@ -49,6 +49,7 @@ import {DownloadRenderComponent} from "./shared/components/downloadRender.compon
 import {ViewRenderComponent} from "./shared/components/viewRender.component";
 import {StatisticsComponent} from "./components/statistics/statistics.component";
 import {NewPgmTempComponent} from "./components/new-pgm/new-pgm-temp.component";
+import { SettingsComponent } from './components/settings/settings.component';
 
 import {StickyDirective} from "./shared/directives/sticky.directive";
 
@@ -66,6 +67,7 @@ import {NewPgmService} from "./services/new-pgm.service";
 import {MeetingService} from "./services/meeting.service";
 import {ReaderService} from "./services/reader.service";
 import {AuthService} from "./services/auth.service";
+import { CongregationService } from './services/congregation.service';
 
 import {MomentDateAdapter, MOMENT_DATE_FORMATS} from "./shared/moment.adapter";
 
@@ -123,6 +125,7 @@ import {PipeModule} from "./pipe.module";
     MeetingDetailTempComponent,
     WeekTempComponent,
     WeekUpdateComponent,
+    SettingsComponent,
 
     KeysPipe,
 
@@ -142,6 +145,7 @@ import {PipeModule} from "./pipe.module";
     MeetingService,
     ReaderService,
     AuthService,
+    CongregationService,
     AuthGuard,
     {provide: DateAdapter, useClass: MomentDateAdapter },
     {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS},

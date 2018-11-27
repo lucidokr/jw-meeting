@@ -9,8 +9,10 @@ var History = require('./models/history');
 var Reader = require('./models/reader');
 
 router.route('/')
-  .get(function(req, res) {
-    Brother
+  .get(async (req, res) => {
+
+    try{
+    var brothers = await Brother
       .find({congregation:req.decoded._doc.congregation._id})
       .or([
         { 'deleted':{$exists:false} },
@@ -22,102 +24,89 @@ router.route('/')
       .populate('student')
       .populate('prayer')
       .populate('reader')
-      .exec(function(err, brothers) {
-          if (err){
-              console.error('Brothers get error:', err);
-              return res.status(500).send(err);
-          }
-
-        res.json(brothers);
-      });
+      res.json(brothers);
+    }catch(e){
+      console.error('Brothers get error:', e);
+      return res.status(500).send({success:false, error:500, message:"Borthers not found", errorCode: e})
+    }
   })
-  .post(function(req, res) {
+  .post(async (req, res) => {
 
     var brother = new Brother();
     brother = Object.assign(brother, req.body);
     brother.congregation = req.decoded._doc.congregation;
-    brother.save(function(err) {
-        if (err){
-            console.error('Brother create error:', err);
-            return res.send(err);
-        }
-
-      res.json({ message: 'Brother created!' , brother:brother});
-    });
+    try{
+      await brother.save();
+      res.json({ success:true, message: 'Brother created!' , brother:brother});
+    }catch(e){
+      console.error('Brother create error:', e);
+      return res.status(500).send({success:false, error:500, message:"Brother not created", errorCode: e})
+    }
 
   });
 
 router.route('/:brother_id')
 
-  .get(function(req, res) {
-    Brother.findById(req.params.brother_id, function(err, brother) {
-        if (err){
-            console.error('Brother get error:', err);
-            return res.send(err);
-        }
+  .get(async (req, res) => {
+    try{
+      var brother = await Brother.findById(req.params.brother_id)
       res.json(brother);
-    });
+    }catch(e){
+      console.error('Brother find error:', e);
+      return res.status(500).send({success:false, error:500, message:"Brother not found", errorCode: e})
+    }
   })
-  .put(function(req, res) {
-    Brother.findById(req.params.brother_id, function(err, brother) {
+  .put(async (req, res) => {
+    try{
+      var brother = await Brother.findById(req.params.brother_id)
+    }catch(e){
+      console.error('Brother update error:', e);
+      return res.status(500).send({success:false, error:500, message:"Brother not found", errorCode: e})
+    }
+    brother = Object.assign(brother, req.body);
 
-        if (err){
-            console.error('Brother update error:', err);
-            return res.send(err);
-        }
+    try{
+      await brother.save();
+      res.json({ success:true, message: 'Brother updated!' });
+    }catch(e){
+      console.error('Brother update error:', e);
+      return res.status(500).send({success:false, error:500, message:"Brother not updated", errorCode: e})
+    }
 
-      brother = Object.assign(brother, req.body);
-
-      // save the bear
-      brother.save(function(err) {
-          if (err){
-              console.error('Brother update error:', err);
-              return res.send(err);
-          }
-
-        res.json({ message: 'Brother updated!' });
-      });
-
-    });
   })
-  .delete(function(req, res) {
-    // Brother.update({ _id: id }, { $set: { size: 'large' }}, callback);
-    Brother.findById(req.params.brother_id, function(err, brother) {
+  .delete(async (req, res) => {
+    try{
+      var brother = await Brother.findById(req.params.brother_id)
+    }catch(e){
+      console.error('Brother delete error:', e);
+      return res.status(500).send({success:false, error:500, message:"Brother not found", errorCode: e})
+    }
 
-        if (err){
-            console.error('Brother delete error:', err);
-            return res.send(err);
-        }
+    brother.deleted = true;
+    if(brother.student){
+      Student.update({ _id: brother.student }, { $set: { deleted: true }}, function(){console.log("Student deleted")});
+    }
+    if(brother.elder){
+      Elder.update({ _id: brother.elder }, { $set: { deleted: true }}, function(){console.log("Elder deleted")});
+    }
+    if(brother.servant){
+      Servant.update({ _id: brother.servant }, { $set: { deleted: true }}, function(){console.log("Servant deleted")});
+    }
+    if(brother.reader){
+      Reader.update({ _id: brother.reader }, { $set: { deleted: true }}, function(){console.log("Reader deleted")});
+    }
+    if(brother.prayer){
+      Prayer.update({ _id: brother.prayer }, { $set: { deleted: true }}, function(){console.log("Prayer deleted")});
+    }
+    try{
+      await brother.save();
+    }catch(e){
+      console.error('Brother delete error:', e);
+      return res.status(500).send({success:false, error:500, message:"Brother not deleted", errorCode: e})
+    }
 
-      brother.deleted = true;
-      if(brother.student){
-        Student.update({ _id: brother.student }, { $set: { deleted: true }}, function(){console.log("Student deleted")});
-      }
-      if(brother.elder){
-        Elder.update({ _id: brother.elder }, { $set: { deleted: true }}, function(){console.log("Elder deleted")});
-      }
-      if(brother.servant){
-        Servant.update({ _id: brother.servant }, { $set: { deleted: true }}, function(){console.log("Servant deleted")});
-      }
-      if(brother.reader){
-        Reader.update({ _id: brother.reader }, { $set: { deleted: true }}, function(){console.log("Reader deleted")});
-      }
-      if(brother.prayer){
-        Prayer.update({ _id: brother.prayer }, { $set: { deleted: true }}, function(){console.log("Prayer deleted")});
-      }
+    res.json({success:true, message: 'Successfully deleted' });
 
-
-      // save the bear
-      brother.save(function(err) {
-          if (err){
-              console.error('Brother delete error:', err);
-              return res.send(err);
-          }
-
-        res.json({ message: 'Successfully deleted' });
-      });
-
-    });
   });
 
 module.exports = router;

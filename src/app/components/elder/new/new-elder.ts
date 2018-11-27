@@ -36,9 +36,9 @@ import {DialogService} from "../../../services/dialog.service";
               <md-checkbox fxFlex [(ngModel)]="brother.elder.schoolOverseer" name="schoolOverseer" >
                       Sorvegliante della scuola
               </md-checkbox>
-                
+
             </div>
-          
+
             <div fxLayout="row" fxLayoutAlign="start center">
               <md-checkbox fxFlex [(ngModel)]="brother.elder.presidentEnabled" name="presidentEnabled" >
                       Presidente
@@ -51,7 +51,7 @@ import {DialogService} from "../../../services/dialog.service";
                   <md-datepicker #datePresident></md-datepicker>
                 </div>
             </div>
-            
+
             <div fxLayout="row" fxLayoutAlign="start center">
               <md-checkbox fxFlex [(ngModel)]="brother.elder.bibleStudyEnabled" name="bibleStudyEnabled" >
                       Studio biblico di congregazione
@@ -64,7 +64,7 @@ import {DialogService} from "../../../services/dialog.service";
                   <md-datepicker #dateBibleStudy></md-datepicker>
                 </div>
             </div>
-            
+
             <div fxLayout="row" fxLayoutAlign="start center">
               <md-checkbox fxFlex [(ngModel)]="brother.elder.christianLivingPartEnabled" name="christianLivingPartEnabled" >
                       Parti Vita Cristiana
@@ -77,19 +77,7 @@ import {DialogService} from "../../../services/dialog.service";
                 <md-datepicker #dateChristianLivingPart></md-datepicker>
               </div>
             </div>
-            
-            <div fxLayout="row" fxLayoutAlign="start center">
-              <md-checkbox fxFlex [(ngModel)]="brother.elder.presentationExerciseEnabled" name="presentationExerciseEnabled" >
-                      Esercitiamoci
-                  </md-checkbox>
-              <div *ngIf="brother.elder.presentationExerciseEnabled">
-                <md-input-container fxFlex >
-                  <input mdInput [mdDatepicker]="datePresentationExercise" [(ngModel)]="brother.elder.presentationExerciseDate" name="presentationExerciseDate"  placeholder="Data ultima parte Esercitiamoci">
-                  <button mdSuffix [mdDatepickerToggle]="datePresentationExercise"></button>
-                </md-input-container>
-                <md-datepicker #datePresentationExercise></md-datepicker>
-              </div>
-            </div>
+
 
             <div fxLayout="row" fxLayoutAlign="start center">
               <md-checkbox fxFlex [(ngModel)]="brother.elder.talkEnabled" name="talkEnabled" >
@@ -118,13 +106,13 @@ import {DialogService} from "../../../services/dialog.service";
             </div>
 
           </div>
-          
+
             <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-              <button fxLayoutAlign="center center" color="accent" fxLayout="column" md-button 
+              <button fxLayoutAlign="center center" color="accent" fxLayout="column" md-button
                     (click)="dialogRef.close()">Annula</button>
                 <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" md-raised-button [disabled]="!form.form.valid"
                   (click)="dialogRef.close(brother)">Salva</button>
-                  
+
             </div>
       </div>
     </form>

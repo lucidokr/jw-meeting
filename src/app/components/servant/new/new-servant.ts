@@ -28,7 +28,7 @@ import {BrotherService} from "../../../services/brother.service";
             <h3>{{brother.name}} {{brother.surname}}</h3>
           </div>
           <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center" *ngIf="brother && brother.servant">
-          
+
             <div fxLayout="row" fxLayoutAlign="start center">
               <md-checkbox fxFlex [(ngModel)]="brother.servant.christianLivingPartEnabled" name="christianLivingPartEnabled" >
                       Parti Vita Cristiana
@@ -41,20 +41,8 @@ import {BrotherService} from "../../../services/brother.service";
                 <md-datepicker #dateChristianLivingPart></md-datepicker>
               </div>
             </div>
-            
-            <div fxLayout="row" fxLayoutAlign="start center">
-              <md-checkbox fxFlex [(ngModel)]="brother.servant.presentationExerciseEnabled" name="presentationExerciseEnabled" >
-                      Esercitiamoci
-                  </md-checkbox>
-              <div *ngIf="brother.servant.presentationExerciseEnabled">
-                <md-input-container fxFlex >
-                  <input mdInput [mdDatepicker]="datePresentationExercise" [(ngModel)]="brother.servant.presentationExerciseDate" name="presentationExerciseDate"  placeholder="Data ultima parte Esercitiamoci">
-                  <button mdSuffix [mdDatepickerToggle]="datePresentationExercise"></button>
-                </md-input-container>
-                <md-datepicker #datePresentationExercise></md-datepicker>
-              </div>
-            </div>
-          
+
+
             <div fxLayout="row" fxLayoutAlign="start center">
               <md-checkbox fxFlex [(ngModel)]="brother.servant.talkEnabled" name="talkEnabled" >
                       Discorso Tesori
@@ -67,12 +55,12 @@ import {BrotherService} from "../../../services/brother.service";
                     <md-datepicker #dateTalk></md-datepicker>
                   </div>
             </div>
-            
+
             <div fxLayout="row" fxLayoutAlign="start center">
               <md-checkbox fxFlex [(ngModel)]="brother.servant.gemsEnabled" name="gemsEnabled" >
                       Gemme spirituali
                   </md-checkbox>
-                  
+
               <div *ngIf="brother.servant.gemsEnabled">
                 <md-input-container fxFlex >
                   <input mdInput [mdDatepicker]="dateGems" [(ngModel)]="brother.servant.gemsDate" name="talk" placeholder="Data ultime gemme spirituali">
@@ -81,15 +69,15 @@ import {BrotherService} from "../../../services/brother.service";
                 <md-datepicker #dateGems></md-datepicker>
               </div>
             </div>
-            
+
            </div>
-          
+
             <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-              <button fxLayoutAlign="center center" color="accent" fxLayout="column" md-button 
+              <button fxLayoutAlign="center center" color="accent" fxLayout="column" md-button
                     (click)="dialogRef.close()">Annula</button>
                 <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" md-raised-button [disabled]="!form.form.valid"
                   (click)="dialogRef.close(brother)">Salva</button>
-                  
+
             </div>
       </div>
     </form>

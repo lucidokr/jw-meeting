@@ -21,10 +21,6 @@ var ElderSchema   = new Schema({
   christianLivingPartDate: Date,
   christianLivingPartPrevDate: Date,
 
-  presentationExerciseEnabled: Boolean,
-  presentationExerciseDate: Date,
-  presentationExercisePrevDate: Date,
-
   deleted: Boolean
 });
 

@@ -3,105 +3,69 @@ var router = express.Router();
 var Prayer = require('./models/prayer');
 var Brother = require('./models/brother');
 
+/**
+ * API FOR ALL PRAYERS
+ */
 router.route('/')
-  .get(function(req, res) {
-    Brother
-      .find({congregation:req.decoded._doc.congregation._id, prayer: {$exists: true, $ne: null}})
-      .sort([['surname', 'ascending']])
-      .populate('prayer')
-      .or([
-        { 'prayer.deleted': {$exists:false} },
-        { 'prayer.deleted':{$exists:true, $ne:true} }
-      ])
-      .exec(function(err, prayers) {
-          if (err){
-              console.error('Prayer get error:', err);
-              return res.send(err);
-          }
-
-        res.json(prayers);
-      });
+  .get(async (req, res) => {
+    try{
+      var prayers = await Brother
+        .find({congregation:req.decoded._doc.congregation._id, prayer: {$exists: true, $ne: null}})
+        .sort([['surname', 'ascending']])
+        .populate('prayer')
+        .or([
+          { 'prayer.deleted': {$exists:false} },
+          { 'prayer.deleted':{$exists:true, $ne:true} }
+        ])
+      res.json(prayers);
+    }catch(e){
+      console.error('Get prayers error:', e);
+      return res.status(500).send({success:false, error:500, message:"Get prayers error", errorCode: e})
+    }
   });
 
-
+/**
+ * API FOR A SPECIFIC PRAYER
+ */
 router.route('/:brother_id')
-
-  .post(function(req, res) {
-
+  .post(async(req, res) => {
     var prayer = new Prayer();
-
     prayer = Object.assign(prayer, req.body);
-
-    prayer.save(function(err, newPr) {
-        if (err){
-            console.error('Prayer create error:', err);
-            return res.send(err);
-        }
-
-      Brother.findById(req.params.brother_id, function(err, brother) {
-          if (err){
-              console.error('Prayer create error:', err);
-              return res.send(err);
-          }
-        brother.prayer = newPr;
-        brother.save(function(err) {
-            if (err){
-                console.error('Prayer create error:', err);
-                return res.send(err);
-            }
-          res.json({ message: 'Prayer created!' ,brother: brother});
-        });
-
-      });
-    });
-
+    try{
+      await prayer.save()
+      var brother = await Brother.findById(req.params.brother_id)
+      brother.prayer = prayer;
+      await brother.save()
+      res.json({ success: true, message: 'Prayer created!' , brother: brother});
+    }catch(e){
+      console.error('Get prayer error:', e);
+      return res.status(500).send({success:false, error:500, message:"Get prayer error", errorCode: e})
+    }
   })
-  .put(function(req, res) {
-    Brother.findOne({'_id': req.params.brother_id})
-      .populate('prayer')
-      .exec(function(err, brother) {
-          if (err){
-              console.error('Prayer update error:', err);
-              return res.send(err);
-          }
-
-        brother.prayer = Object.assign(brother.prayer, req.body);
-
-        brother.prayer.save(function(err) {
-            if (err){
-                console.error('Prayer update error:', err);
-                return res.send(err);
-            }
-
-          res.json({ message: 'Prayer updated!' });
-        });
-      });
+  .put(async(req, res) => {
+    try{
+      var brother = await Brother.findById(req.params.brother_id)
+        .populate('prayer')
+      brother.prayer = Object.assign(brother.prayer, req.body);
+      await brother.prayer.save()
+      res.json({ success:true, message: 'Prayer updated!' });
+    }catch(e){
+      console.error('Update prayer error:', e);
+      return res.status(500).send({success:false, error:500, message:"Update prayer error", errorCode: e})
+    }
   })
-  .delete(function(req, res) {
-    Brother.findOne({'_id': req.params.brother_id}).exec(function(err, brother) {
-        if (err){
-            console.error('Prayer delete error:', err);
-            return res.send(err);
-        }
-
-      Prayer.update({ _id: brother.prayer }, { $set: { deleted: true }},function(err) {
-          if (err){
-              console.error('Prayer delete error:', err);
-              return res.send(err);
-          }
-        brother.prayer = undefined;
-        brother.save(function(err) {
-            if (err){
-                console.error('Prayer delete error:', err);
-                return res.send(err);
-            }
-          res.json({ message: 'Prayer deleted' });
-        });
-      });
-
-
-    });
-
+  .delete(async(req, res) => {
+    try{
+      var brother = await Brother.findById(req.params.brother_id)
+          .populate('prayer')
+      await Prayer.update({ _id: brother.prayer }, { $set: { deleted: true }})
+      brother.prayer = undefined;
+      await brother.save();
+      res.json({ success: true, message: 'Prayer deleted!' });
+    }catch(e){
+      console.error('Prayer delete error:', e);
+      return res.status(500).send({success:false, error:500, message:"Prayer delete error", errorCode: e})
+    }
   });
 
 

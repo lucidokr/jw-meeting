@@ -140,7 +140,7 @@ var MAIL = {
           mails.forEach(function(data) {
               if (data.school == 1) data.school = "Sala principale";
               if (data.school == 2) data.school = "Classe supplementare 1";
-              that.sendReminderAssegnation(data.mail, data.brother, data.assistant, data.date,  data.type, data.school);
+              that.sendReminderAssegnation(data.mail, data.congregation, data.brother, data.assistant, data.date,  data.type, data.school);
           });
       }
     },
@@ -151,17 +151,18 @@ var MAIL = {
           mails.forEach(function(data) {
               if (data.school == 1) data.school = "Sala principale";
               if (data.school == 2) data.school = "Classe supplementare 1";
-              that.sendAssegnation(data.mail, data.brother, data.assistant, data.date,  data.type, data.school);
+              that.sendAssegnation(data.mail, data.congregation, data.brother, data.assistant, data.date,  data.type, data.school);
           });
       }
     },
 
-    sendAssegnation: function(mail, brother, assistant, date, type, school) {
+    sendAssegnation: function(mail, congregation, brother, assistant, date, type, school) {
 
         function send() {
 
             if (!data) {
                 var data = {
+                    congregation: congregation || "Scorzé",
                     brother: brother || "Kristian Lucido",
                     assistant: assistant || "",
                     date: date || "10/10/17",
@@ -201,12 +202,13 @@ var MAIL = {
         // }
     },
 
-    sendReminderAssegnation: function(mail, brother, assistant, date, type, school) {
+    sendReminderAssegnation: function(mail, congregation, brother, assistant, date, type, school) {
 
       function send() {
 
           if (!data) {
               var data = {
+                congregation: congregation || "Scorzé",
                   brother: brother || "Kristian Lucido",
                   assistant: assistant || "",
                   date: date || "10/10/17",

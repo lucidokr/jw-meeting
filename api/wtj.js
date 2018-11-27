@@ -36,15 +36,14 @@ router.route('/:year/:month/:dayStart')
 
 
                     // AFTER 2019
-                    var parts = $("#section3 .su");
-                    var partsaaa = $('#section3 p').map(function(val) {
+                    var parts = $('#section3 p').map(function(val) {
                       return $(this).html();
                     }).get();
                     result.ministryPart = [];
-                    console.log("UUUU:"+partsaaa);
-                    for(var i=0; i<partsaaa.length; i++){
+                    console.log("UUUU:"+parts);
+                    for(var i=0; i<parts.length; i++){
                       var forStudent = true, isTalk = false;
-                      var partHtml = r(partsaaa[i]);
+                      var partHtml = r(parts[i]);
                       var partHtmlTitle = partHtml.split("(")[0].toLowerCase();
                       if(partHtmlTitle.indexOf("video") != -1 || partHtmlTitle.indexOf("applicati") != -1)
                         forStudent = false;

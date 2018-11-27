@@ -15,93 +15,85 @@ var EXPIRES = 60*60*24*7;
 
 app.set('superSecret', process.env.SECRET);
 router.route('/login')
-  .post(function(req, res) {
+  .post(async (req, res) =>  {
 
-    // find the user
-    User
-    .find({username: req.body.username})
-      .populate('congregation')
-      .populate('brother')
-      .exec(function(err, users) {
+    try{
+      // find the user
+      var user = await User
+      .findOne({username: req.body.username})
+        .populate('congregation')
+        .populate('brother')
+    }catch(e){
+      return res.status(500).send(e)
+    }
 
+    if (!user) {
+      res.status(404).json({ success: false, message: 'Authentication failed. User not found.' });
+    } else if (user) {
+
+      // check if password matches
+      if (user.password != req.body.password) {
+        res.status(403).json({ success: false, message: 'Authentication failed. Wrong password.' });
+      } else {
+
+        // if user is found and password is right
+        // create a token
+        var obj = user;
+        delete obj.password;
+        var token = jwt.sign(obj, app.get('superSecret'), {
+          expiresIn : EXPIRES
+        });
+
+        crypto.randomBytes(256, (err, buf) => {
           if (err) throw err;
 
-          var user = users[0];
-          if (!user) {
-            res.json({ success: false, message: 'Authentication failed. User not found.' });
-          } else if (user) {
+          var refreshToken = buf.toString('hex');
+          refreshTokens[refreshToken] = req.body.username;
 
-            // check if password matches
-            if (user.password != req.body.password) {
-              res.json({ success: false, message: 'Authentication failed. Wrong password.' });
-            } else {
-
-              // if user is found and password is right
-              // create a token
-              var obj = user;
-              delete obj.password;
-              var token = jwt.sign(obj, app.get('superSecret'), {
-                expiresIn : EXPIRES
-              });
-
-              crypto.randomBytes(256, (err, buf) => {
-                if (err) throw err;
-
-                var refreshToken = buf.toString('hex');
-                refreshTokens[refreshToken] = req.body.username;
-
-                // return the information including token as JSON
-                res.json({
-                  success: true,
-                  message: 'Token created!',
-                  token: token,
-                  refreshToken: refreshToken
-                });
-              });
-
-
-
-
-
-            }
-
-          }
-
-    });
-  });
-
-router.route('/refresh')
-  .post(function(req, res) {
-
-    User
-      .find({username: req.body.username})
-      .populate('congregation')
-      .exec(function(err, users) {
-
-        if (err) throw err;
-
-        var user = users[0];
-        var username = req.body.username;
-        var refreshToken = req.body.refreshToken;
-        if(refreshTokens[refreshToken] == username){
-          var obj = user;
-          delete obj.password;
-          var token = jwt.sign(obj, app.get('superSecret'), {
-            expiresIn : EXPIRES
-          });
+          // return the information including token as JSON
           res.json({
             success: true,
-            message: 'Token refreshed!',
+            message: 'Token created!',
             token: token,
             refreshToken: refreshToken
           });
-        }else {
-          res.status(403).send({
-            success: false,
-            message: 'Invalid refresh token'
-          })
-        }
-    });
+        });
+
+      }
+
+    }
+  });
+
+router.route('/refresh')
+  .post(async (req, res) => {
+
+    try{
+    var user = await User
+      .findOne({username: req.body.username})
+      .populate('congregation')
+    }catch(e){
+      return res.status(500).send({success:false, error:500, message:"User not found", errorCode: e})
+    }
+    var username = req.body.username;
+    var refreshToken = req.body.refreshToken;
+    if(refreshTokens[refreshToken] == username){
+      var obj = user;
+      delete obj.password;
+      var token = jwt.sign(obj, app.get('superSecret'), {
+        expiresIn : EXPIRES
+      });
+      res.json({
+        success: true,
+        message: 'Token refreshed!',
+        token: token,
+        refreshToken: refreshToken
+      });
+    }else {
+      res.status(403).send({
+        success: false,
+        message: 'Invalid refresh token'
+      })
+    }
   });
 
 

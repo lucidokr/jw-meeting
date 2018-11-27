@@ -18,7 +18,11 @@ var staticRoot = __dirname + '/dist/';
 var router = express.Router();
 var bodyParser = require('body-parser');
 var schedule = require('node-schedule');
-var Brother = require('./api/models/brother');
+var Week = require('./api/models/weekMeeting');
+const MONTH_NAMES = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
+  "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+];
+const DAY_NAMES = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"];
 
 
 app.use(compression());
@@ -107,7 +111,7 @@ app.use(function(req, res, next) {
 
 // run();
 
-mongoose.connect(process.env.MONGO_DB_URI);
+mongoose.connect(process.env.MONGO_DB_URI,{useNewUrlParser:true});
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 
@@ -124,6 +128,7 @@ router.use('/elder', require('./api/elder'));
 router.use('/servant', require('./api/servant'));
 router.use('/wtj', require('./api/wtj'));
 router.use('/reader', require('./api/reader'));
+router.use('/congregation', require('./api/congregation'));
 
 app.use('/api', router);
 
@@ -141,17 +146,35 @@ if (process.env.NODE_ENV && process.env.NODE_ENV != "development") {
 
 // JOB FOR SEND ASSEGNATIONS
 if(process.env.SEND_ASSEGNATION == "true"){
-    var j = schedule.scheduleJob({hour: 10, minute: 00, dayOfWeek: 1}, async () => {
-      console.log('Start reminder assegnationsjob');
+  console.log('Schedule reminder assegnations job');
+    var j = schedule.scheduleJob({hour: 10, minute: 41, dayOfWeek: 1}, async () => {
+      console.log('---------------------------------');
+      console.log('Start reminder assegnations job');
 
       try{
+        var cutoff = new Date();
+        cutoff.setDate(cutoff.getDate()-6);
         var weeks = await Week
+        .find({
+          date:{
+            $gt: cutoff,
+            $lt: new Date()
+          }
+        })
           .sort([
               ['date', 'descending']
           ])
+          .populate({ path: 'bibleReading.primarySchool.student', populate: { path: 'student'} })
+          .populate({ path: 'bibleReading.secondarySchool.student', populate: { path: 'student'} })
+          .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
+          .populate({ path: 'ministryPart.secondarySchool.student', populate: { path: 'student'} })
+          .populate('ministryPart.secondarySchool.assistant')
+          .populate('ministryPart.primarySchool.assistant')
       }catch(e){
+        console.log("Error on find weeks", e)
         return;
       }
+      console.log("Weeks found:", weeks.length)
 
       var schools = ["primarySchool"];
       var mailAssegnationReminderToSend = [];
@@ -165,12 +188,11 @@ if(process.env.SEND_ASSEGNATION == "true"){
         if(week.secondarySchool){
           schools.push("secondarySchool");
         }
-        var date = new Date();
-        if(week.date.getTime() < date.getTime() && (week.date.getTime() + (6*24*60*60*1000)) > date.getTime() ){
           if (week.type.meeting && !week.supervisor) {
             for(let school of schools){
               var brother = week.bibleReading[school].student;
               if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                  console.log("Reminder to send:", brother.name + ' ' + brother.surname)
                   mailAssegnationReminderToSend.push({
                     mail: brother.email,
                     brother: brother.name + ' ' + brother.surname,
@@ -184,6 +206,7 @@ if(process.env.SEND_ASSEGNATION == "true"){
                 if(part.forStudent){
                   var brother = part[school].student;
                   if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                      console.log("Reminder to send:", brother.name + ' ' + brother.surname)
                       mailAssegnationReminderToSend.push({
                         mail: brother.email,
                         brother: brother.name + ' ' + brother.surname,
@@ -196,12 +219,14 @@ if(process.env.SEND_ASSEGNATION == "true"){
                 }
               }
             }
+            console.log("Mail reminder to send:", mailAssegnationReminderToSend.length)
             if(mailAssegnationReminderToSend.length > 0){
               MAIL.sendReminderAssegnations(mailAssegnationReminderToSend);
             }
           }
-        }
       }
+      console.log('Finish reminder assegnations job');
+      console.log('---------------------------------');
 
     });
 }

@@ -12,7 +12,4 @@ export class Servant {
   christianLivingPartDate: any;
   christianLivingPartPrevDate: any;
 
-  presentationExerciseEnabled: Boolean  = true;
-  presentationExerciseDate: any;
-  presentationExercisePrevDate: any;
 }

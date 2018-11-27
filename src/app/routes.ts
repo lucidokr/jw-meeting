@@ -17,6 +17,7 @@ import {LoginComponent} from "./components/login/login.component";
 import {AuthGuard} from "./guards/auth.guard";
 import {StatisticsComponent} from "./components/statistics/statistics.component";
 import {MeetingDetailTempComponent} from "./components/meeting/detail-temp/detail-meeting-temp.component";
+import { SettingsComponent } from './components/settings/settings.component';
 
 @Component({
   selector: 'app',
@@ -98,6 +99,11 @@ export const routes: Routes = [
   {
     path: 'statistics',
     component: StatisticsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'settings',
+    component: SettingsComponent,
     canActivate: [AuthGuard]
   },
 

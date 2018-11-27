@@ -40,6 +40,9 @@ function sendEmailError(subject, err){
   MAIL.sendMail(mailOptions);
 }
 
+/**
+ * API FOR WEEK MEETING OF A SPECIFIC CONGREGATION
+ */
 router.route('/')
     .get(async (req, res) => {
       try{
@@ -50,7 +53,7 @@ router.route('/')
             ])
         res.send(weeks)
       }catch(e){
-        return res.status(500).send(err);
+        return res.status(500).send({success:false, error:500, message:"Get Week Meeting", errorCode: e})
       }
     })
     .post(async (req, res) => {
@@ -59,6 +62,10 @@ router.route('/')
         session.startTransaction()
         console.log('Start session');
         const opts = { session };
+        var congregationName = "";
+
+        if (req.decoded && req.decoded._doc && req.decoded._doc.congregation && req.decoded._doc.congregation.name)
+            congregationName = req.decoded._doc.congregation.name;
 
 
         var mailAssegnationToSend = [];
@@ -236,6 +243,7 @@ router.route('/')
                             if (brother.email && process.env.SEND_ASSEGNATION == "true") {
                                 mailAssegnationToSend.push({
                                   mail: brother.email,
+                                  congregation: congregationName,
                                   brother: brother.surname + ' ' + brother.name,
                                   assistant: null,
                                   type: week.bibleReading.label,
@@ -258,6 +266,7 @@ router.route('/')
                                 // console.log("Bible reading study number:"+ brother.student.bibleReadingPendingStudyNumber);
                                 mailAssegnationToSend.push({
                                   mail: brother.email,
+                                  congregation: congregationName,
                                   brother: brother.surname + ' ' + brother.name,
                                   assistant: null,
                                   type: week.bibleReading.label,
@@ -297,6 +306,7 @@ router.route('/')
                                     console.log("Assistant:"+ part[school].assistant);
                                     mailAssegnationToSend.push({
                                       mail: brother.email,
+                                      congregation: congregationName,
                                       brother: brother.name + ' ' + brother.surname,
                                       assistant: (part[school].assistant ? '<h3>Assistente: '+part[school].assistant.surname + ' ' + part[school].assistant.name+'</h3>' : null),
                                       type: part.html,
@@ -322,7 +332,7 @@ router.route('/')
                           sendEmailError("Errore salvataggio fratello", e);
                           await session.abortTransaction();
                           session.endSession();
-                          return res.status(500).send(e);
+                          return res.status(500).send({success:false, error:500, message:"Week Meeting create - Brother Update error", errorCode: e})
                         }
                       }
                       console.log("Finish to update", brother.name + " " + brother.surname);
@@ -340,7 +350,7 @@ router.route('/')
                     sendEmailError("Errore salvataggio settimana", e);
                     await session.abortTransaction();
                     session.endSession();
-                    return res.status(500).send(e);
+                    return res.status(500).send({success:false, error:500, message:"Week Meeting create - Week save error", errorCode: e})
                   }
 
 
@@ -349,7 +359,7 @@ router.route('/')
                   sendEmailError("Errore ricerca fratelli", e);
                   await session.abortTransaction();
                   session.endSession();
-                  return res.status(500).send(e);
+                  return res.status(500).send({success:false, error:500, message:"Week Meeting create - Brother Find -  error", errorCode: e})
                 }
               }else {
                   var tempWeek = new Week(week);
@@ -363,7 +373,7 @@ router.route('/')
                     sendEmailError("Errore salvataggio settimana", e);
                     await session.abortTransaction();
                     session.endSession();
-                    return res.status(500).send(e);
+                    return res.status(500).send({success:false, error:500, message:"Week Meeting create - Week save error", errorCode: e})
                   }
               }
         }
@@ -375,12 +385,12 @@ router.route('/')
         try{
           await WeekTemp.remove({$or: arr}, null, opts)
         }catch(e){
-              console.error('Week Meeting create - Week temp remove error:', e);
-              sendEmailError("Errore rimozione settimana temporanea", e);
-              return res.status(500).send(e);
-          }
+            sendEmailError("Errore rimozione settimana temporanea", e);
+            console.error('Delete week meeting temp error:', e);
+            // return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e})
+        }
 
-        res.json({ message: 'All weeks updated!' });
+        res.json({ success: true, message: 'All weeks updated!' });
         await session.commitTransaction();
         session.endSession();
 
@@ -401,10 +411,11 @@ router.route('/')
 
     });
 
+/**
+ * API FOR RETRIEVE ALL WEEK MEETING OF A MONTH PGM
+ */
 router.route('/pgm/:year/:month')
-
-.get(async (req, res) => {
-
+  .get(async (req, res) => {
     var startMonth = req.params.month;
     var startYear = req.params.year;
     var endYear = parseInt(req.params.year);
@@ -422,12 +433,8 @@ router.route('/pgm/:year/:month')
 
     if(endMonth.length == 1)
       endMonth = "0"+endMonth;
-
-      // console.log(startYear+ "-" +startMonth)
-      // console.log(endYear+ "-" +endMonth)
     try{
         var weeks = await Week
-    // .where('date').gte(new Date(req.params.year, req.params.month, 6)).lte(new Date(req.params.year, req.params.month + 1, 3))
         .find({
             $and: [{
                 "date": { $gte: new Date((startYear+"") + "-" + (startMonth+"") + "-02T23:00:00.000+0000") }
@@ -435,17 +442,15 @@ router.route('/pgm/:year/:month')
                 "date": { $lte: new Date((endYear+"") + "-" + (endMonth+"") + "-02T23:00:00.000+0000") }
             }]
         })
-        // .find({})
         .populate('initialPrayer')
         .populate('finalPrayer')
         .populate('president')
         .populate('talk.brother')
         .populate('gems.brother')
-        .populate('presentationExercise.brother')
         .populate({ path: 'bibleReading.primarySchool.student', populate: { path: 'student'} })
         .populate({ path: 'bibleReading.secondarySchool.student', populate: { path: 'student'} })
         .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
-        .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'}})
+        .populate({ path: 'ministryPart.secondarySchool.student', populate: { path: 'student'} })
         .populate('ministryPart.secondarySchool.assistant')
         .populate('ministryPart.primarySchool.assistant')
         .populate('congregationBibleStudy.brother')
@@ -456,83 +461,39 @@ router.route('/pgm/:year/:month')
         ])
         res.json(weeks);
       }catch(err){
-        sendEmailError("Errore ottenimento programma", err);
-        return res.status(500).send(err);
+        console.error('Get pgm error:', e);
+        return res.status(500).send({success:false, error:500, message:"Get pgm error", errorCode: e})
       }
 })
 
+/**
+ * API FOR SPECIFIC WEEK MEETING
+ */
 router.route('/:week_id')
-.get(async (req, res) =>  {
-  try{
-    var week = await Week.find({ _id: req.params.week_id })
-    .populate('initialPrayer')
-    .populate('finalPrayer')
-    .populate('president')
-    .populate('talk.brother')
-    .populate('gems.brother')
-    .populate({ path: 'bibleReading.primarySchool.student', populate: { path: 'student'} })
-    .populate({ path: 'bibleReading.secondarySchool.student', populate: { path: 'student'} })
-    .populate('congregationBibleStudy.brother')
-    .populate('congregationBibleStudy.reader')
-    .populate('christianLivingPart.brother')
-    .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
-    .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
-    .populate('ministryPart.secondarySchool.assistant')
-    .populate('ministryPart.primarySchool.assistant')
-    if(week.length > 0){
-      res.json(week[0]);
-    }else{
-      res.status(404).send("Week not found");
+  .get(async (req, res) =>  {
+    try{
+      var week = await Week.findOne({ _id: req.params.week_id })
+      .populate('initialPrayer')
+      .populate('finalPrayer')
+      .populate('president')
+      .populate('talk.brother')
+      .populate('gems.brother')
+      .populate({ path: 'bibleReading.primarySchool.student', populate: { path: 'student'} })
+      .populate({ path: 'bibleReading.secondarySchool.student', populate: { path: 'student'} })
+      .populate('congregationBibleStudy.brother')
+      .populate('congregationBibleStudy.reader')
+      .populate('christianLivingPart.brother')
+      .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
+      .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
+      .populate('ministryPart.secondarySchool.assistant')
+      .populate('ministryPart.primarySchool.assistant')
+      res.json(week);
+    }catch(e){
+      console.error('Get week meeting error:', e);
+      return res.status(500).send({success:false, error:500, message:"Get week meeting error", errorCode: e})
     }
-  }catch(e){
-    sendEmailError("Errore ottenimento settimana", err);
-    res.status(500).send(err);
-  }
 
-    // var mailAssegnationToSend = [];
-    // var week = week[0];
-    // if(process.env.SEND_ASSEGNATION == "true"){
-    //   var brother = week.bibleReading.primarySchool.student;
-    //   // brother.email = "lucido.kristian@gmail.com";
-    //   if(brother.email){
-    //     mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
-    //   }
-    //   if (!week.presentationExercise.enabled) {
-
-    //       brother = week.bibleReading.secondarySchool.student;
-    //       // brother.email = "lucido.kristian@gmail.com";
-    //       if(brother.email){
-    //         mailAssegnationToSend.push({mail:brother.email, brother: brother.surname+ ' '+brother.name, assistant:'', type:"bibleReading", school:brother.student.lastSchool, date:week.date, point:brother.student.bibleReadingPendingStudyNumber})
-    //       }
-    //       var arr = ["initialCall", "returnVisit", "bibleStudy"];
-    //       var schools = ["primarySchool", "secondarySchool"];
-    //       arr.forEach(function (partType) {
-    //         schools.forEach(function (school) {
-    //           var brother = week[partType][school].student;
-    //           // brother.email = "lucido.kristian@gmail.com";
-    //             if (brother.email && process.env.SEND_ASSEGNATION == "true" && brother.student) {
-    //               console.log("brother student name: ", brother.surname + ' ' + brother.name);
-    //               console.log("brother student school: ", brother.student.lastSchool);
-    //               var obj = {
-    //                 mail: brother.email,
-    //                 brother: brother.surname + ' ' + brother.name,
-    //                 assistant: '',
-    //                 type: (week[partType][school].isTalk ? 'talk' : partType),
-    //                 school: brother.student.lastSchool,
-    //                 date: week.date,
-    //                 point: brother.student.pendingStudyNumber
-    //               };
-    //               obj.assistant = (week[partType][school].assistant ? week[partType][school].assistant.surname + ' ' + week[partType][school].assistant.name : '')
-    //               mailAssegnationToSend.push(obj)
-    //           }
-    //         })
-    //       })
-
-    //   }
-    //   MAIL.sendAssegnations(mailAssegnationToSend);
-    // }
-
-    })
+  })
     .put(async (req, res) => {
 
         var session = await Brother.startSession();
@@ -570,9 +531,10 @@ router.route('/:week_id')
                 $or: toFind
             }, null, opts)
             .populate('student')
-        }catch(err){
+        }catch(e){
           session.abortTransaction();
-          return res.status(500).send(err);
+          console.error('Update week meeting error:', e);
+          return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e})
         }
 
         console.log('Length', brothers.length);
@@ -624,7 +586,8 @@ router.route('/:week_id')
             console.log("Finish to update: ", brother.name + " " + brother.surname)
           }catch(e){
             session.abortTransaction();
-            return res.status(500).send(e);
+            console.error('Update week meeting error:', e);
+            return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e})
           }
         }
 
@@ -672,7 +635,8 @@ router.route('/:week_id')
             return res.send(w);
           }catch(e){
             session.abortTransaction();
-            return res.status(500).send(e);
+            console.error('Update week meeting error:', e);
+            return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e})
           }
     })
     .delete(async (req, res) => {
@@ -680,9 +644,10 @@ router.route('/:week_id')
         await Week.remove({
             _id: req.params.week_id
         });
-        res.json({ message: 'Successfully deleted' });
+        res.json({ success: true, message: 'Successfully deleted' });
       }catch(e){
-        return res.status(500).send(e)
+        console.error('Delete week meeting error:', e);
+        return res.status(500).send({success:false, error:500, message:"Delete week meeting error", errorCode: e})
       }
     });
 
