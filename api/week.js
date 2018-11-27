@@ -383,7 +383,7 @@ router.route('/')
             arr.push({ "_id": req.body[i]._id })
         }
         try{
-          await WeekTemp.remove({$or: arr}, null, opts)
+          await WeekTemp.deleteMany({$or: arr}, null, opts)
         }catch(e){
             sendEmailError("Errore rimozione settimana temporanea", e);
             console.error('Delete week meeting temp error:', e);
@@ -641,7 +641,7 @@ router.route('/:week_id')
     })
     .delete(async (req, res) => {
       try{
-        await Week.remove({
+        await Week.deleteOne({
             _id: req.params.week_id
         });
         res.json({ success: true, message: 'Successfully deleted' });

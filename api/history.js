@@ -67,7 +67,7 @@ router.route('/:student_id')
   })
   .delete(async(req, res) => {
     try{
-      await History.remove({
+      await History.deleteOne({
         _id: req.params.student_id
       });
       res.json({ success: true, message: 'History successfully deleted' });

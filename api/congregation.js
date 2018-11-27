@@ -45,7 +45,7 @@ router.route('/:congregation_id')
   .delete(async(req, res) => {
     try{
       var congregation = await Congregation.findById(req.params.congregation_id)
-      await congregation.remove({'_id': req.params.congregation_id})
+      await congregation.deleteOne({'_id': req.params.congregation_id})
       res.json({ success: true, message: 'Congregation deleted!' });
     }catch(e){
       console.error('Congregation delete error:', e);
