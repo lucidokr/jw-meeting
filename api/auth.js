@@ -72,7 +72,7 @@ router.route('/refresh')
       .findOne({username: req.body.username})
       .populate('congregation')
     }catch(e){
-      return res.status(500).send({success:false, error:500, message:"User not found", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"User not found", errorCode: e.toString()})
     }
     var username = req.body.username;
     var refreshToken = req.body.refreshToken;

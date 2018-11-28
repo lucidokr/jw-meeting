@@ -39,7 +39,7 @@ router.route('/')
         res.json(weeks);
       }catch(e){
         console.error('Get weekTemp error:', e);
-        return res.status(500).send({success:false, error:500, message:"Get weekTemp error", errorCode: e})
+        return res.status(500).send({success:false, error:500, message:"Get weekTemp error", errorCode: e.toString()})
       }
     })
     .post(async(req, res) => {
@@ -52,7 +52,7 @@ router.route('/')
           console.log("Week saved")
         }catch(e){
           console.error('Weeks Meeting Temp update error:', e);
-          return res.status(500).send({success:false, error:500, message:"Weeks Meeting Temp update error", errorCode: e})
+          return res.status(500).send({success:false, error:500, message:"Weeks Meeting Temp update error", errorCode: e.toString()})
         }
       }
       res.json({ message: 'All weeks updated!' });
@@ -89,7 +89,7 @@ router.route('/:week_id')
       res.json(week);
     }catch(e){
       console.error('Get week meeting temp error:', e);
-      return res.status(500).send({success:false, error:500, message:"Get week meeting temp error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Get week meeting temp error", errorCode: e.toString()})
     }
   })
   .put(async(req, res) => {
@@ -99,7 +99,7 @@ router.route('/:week_id')
         res.json({ success: true, message: 'Temp weeks updated!' });
       }catch(e){
         console.error('Update week meeting temp error:', e);
-        return res.status(500).send({success:false, error:500, message:"Update week meeting temp error", errorCode: e})
+        return res.status(500).send({success:false, error:500, message:"Update week meeting temp error", errorCode: e.toString()})
       }
   })
 

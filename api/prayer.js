@@ -20,7 +20,7 @@ router.route('/')
       res.json(prayers);
     }catch(e){
       console.error('Get prayers error:', e);
-      return res.status(500).send({success:false, error:500, message:"Get prayers error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Get prayers error", errorCode: e.toString()})
     }
   });
 
@@ -39,7 +39,7 @@ router.route('/:brother_id')
       res.json({ success: true, message: 'Prayer created!' , brother: brother});
     }catch(e){
       console.error('Get prayer error:', e);
-      return res.status(500).send({success:false, error:500, message:"Get prayer error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Get prayer error", errorCode: e.toString()})
     }
   })
   .put(async(req, res) => {
@@ -51,7 +51,7 @@ router.route('/:brother_id')
       res.json({ success:true, message: 'Prayer updated!' });
     }catch(e){
       console.error('Update prayer error:', e);
-      return res.status(500).send({success:false, error:500, message:"Update prayer error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Update prayer error", errorCode: e.toString()})
     }
   })
   .delete(async(req, res) => {
@@ -64,7 +64,7 @@ router.route('/:brother_id')
       res.json({ success: true, message: 'Prayer deleted!' });
     }catch(e){
       console.error('Prayer delete error:', e);
-      return res.status(500).send({success:false, error:500, message:"Prayer delete error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Prayer delete error", errorCode: e.toString()})
     }
   });
 

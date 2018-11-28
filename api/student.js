@@ -21,7 +21,7 @@ router.route('/')
       res.json(students);
     }catch(e){
       console.error('Get students error:', e);
-      return res.status(500).send({success:false, error:500, message:"Get students error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Get students error", errorCode: e.toString()})
     }
   });
 
@@ -40,7 +40,7 @@ router.route('/:brother_id')
       res.json({ success: true, message: 'Student created!' , brother: brother});
     }catch(e){
       console.error('Create student error:', e);
-      return res.status(500).send({success:false, error:500, message:"Create student error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Create student error", errorCode: e.toString()})
     }
   })
   .put(async(req, res) => {
@@ -52,7 +52,7 @@ router.route('/:brother_id')
       res.json({ success:true, message: 'Student updated!' });
     }catch(e){
       console.error('Update student error:', e);
-      return res.status(500).send({success:false, error:500, message:"Update student error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Update student error", errorCode: e.toString()})
     }
   })
   .delete(async(req, res) => {
@@ -65,7 +65,7 @@ router.route('/:brother_id')
       res.json({ success: true, message: 'Student deleted!' });
     }catch(e){
       console.error('Student delete error:', e);
-      return res.status(500).send({success:false, error:500, message:"Student delete error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Student delete error", errorCode: e.toString()})
     }
   });
 

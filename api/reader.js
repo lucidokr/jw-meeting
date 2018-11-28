@@ -20,7 +20,7 @@ router.route('/')
       res.json(readers);
     }catch(e){
       console.error('Get readers error:', e);
-      return res.status(500).send({success:false, error:500, message:"Get readers error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Get readers error", errorCode: e.toString()})
     }
   });
 
@@ -39,7 +39,7 @@ router.route('/:brother_id')
       res.json({ success: true, message: 'Reader created!' , brother: brother});
     }catch(e){
       console.error('Get reader error:', e);
-      return res.status(500).send({success:false, error:500, message:"Get reader error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Get reader error", errorCode: e.toString()})
     }
   })
   .put(async(req, res) => {
@@ -51,7 +51,7 @@ router.route('/:brother_id')
       res.json({ success:true, message: 'Reader updated!' });
     }catch(e){
       console.error('Update reader error:', e);
-      return res.status(500).send({success:false, error:500, message:"Update reader error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Update reader error", errorCode: e.toString()})
     }
   })
   .delete(async(req, res) => {
@@ -64,7 +64,7 @@ router.route('/:brother_id')
       res.json({ success: true, message: 'Reader deleted!' });
     }catch(e){
       console.error('Reader delete error:', e);
-      return res.status(500).send({success:false, error:500, message:"Reader delete error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Reader delete error", errorCode: e.toString()})
     }
   });
 

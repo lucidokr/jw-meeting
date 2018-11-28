@@ -20,7 +20,7 @@ router.route('/')
       res.json(servants);
     }catch(e){
       console.error('Get servants error:', e);
-      return res.status(500).send({success:false, error:500, message:"Get servants error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Get servants error", errorCode: e.toString()})
     }
   });
 
@@ -39,7 +39,7 @@ router.route('/:brother_id')
       res.json({ success: true, message: 'Servant created!' , brother: brother});
     }catch(e){
       console.error('Create servant error:', e);
-      return res.status(500).send({success:false, error:500, message:"Create servant error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Create servant error", errorCode: e.toString()})
     }
   })
   .put(async(req, res) => {
@@ -51,7 +51,7 @@ router.route('/:brother_id')
       res.json({ success:true, message: 'Servant updated!' });
     }catch(e){
       console.error('Update servant error:', e);
-      return res.status(500).send({success:false, error:500, message:"Update servant error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Update servant error", errorCode: e.toString()})
     }
   })
   .delete(async(req, res) => {
@@ -64,7 +64,7 @@ router.route('/:brother_id')
       res.json({ success: true, message: 'Servant deleted!' });
     }catch(e){
       console.error('Servant delete error:', e);
-      return res.status(500).send({success:false, error:500, message:"Servant delete error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Servant delete error", errorCode: e.toString()})
     }
   });
 

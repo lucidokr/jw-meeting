@@ -49,7 +49,7 @@ export class NewPgmTempComponent {
               private servantService:ServantService,
               private dialogService:DialogService,
               private authService: AuthService) {
-    let currentDate = moment();
+    let currentDate = moment().add(1, 'M');
     let allMonths = moment.months();
 
     let arrMonths = [];

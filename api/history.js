@@ -23,7 +23,7 @@ router.route('/')
         res.json(histories);
     }catch(e){
       console.error('Get histories error:', e);
-      return res.status(500).send({success:false, error:500, message:"Get histories error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Get histories error", errorCode: e.toString()})
     }
   })
   .post(async (req, res) => {
@@ -34,7 +34,7 @@ router.route('/')
       res.json({ success:true, message: 'History created!' });
     }catch(e){
       console.error('Create history error:', e);
-      return res.status(500).send({success:false, error:500, message:"Create history error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Create history error", errorCode: e.toString()})
     }
 
   });
@@ -50,7 +50,7 @@ router.route('/:student_id')
       res.json(histories);
     }catch(e){
       console.error('Get history student error:', e);
-      return res.status(500).send({success:false, error:500, message:"Get history student  error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Get history student  error", errorCode: e.toString()})
     }
   })
   .put(async(req, res) => {
@@ -62,7 +62,7 @@ router.route('/:student_id')
       res.json({success:true, message: 'History updated!' });
     }catch(e){
       console.error('Update history student error:', e);
-      return res.status(500).send({success:false, error:500, message:"Update history student  error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Update history student  error", errorCode: e.toString()})
     }
   })
   .delete(async(req, res) => {
@@ -73,7 +73,7 @@ router.route('/:student_id')
       res.json({ success: true, message: 'History successfully deleted' });
     }catch(e){
       console.error('Delete history student error:', e);
-      return res.status(500).send({success:false, error:500, message:"Delete history student  error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Delete history student  error", errorCode: e.toString()})
     }
   });
 

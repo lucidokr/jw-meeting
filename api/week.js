@@ -53,7 +53,7 @@ router.route('/')
             ])
         res.send(weeks)
       }catch(e){
-        return res.status(500).send({success:false, error:500, message:"Get Week Meeting", errorCode: e})
+        return res.status(500).send({success:false, error:500, message:"Get Week Meeting", errorCode: e.toString()})
       }
     })
     .post(async (req, res) => {
@@ -126,241 +126,241 @@ router.route('/')
                   .populate('reader')
                   .populate('student')
 
-                  for (let brother of brothers){
-                    var objToSave = [];
-                    var date = new Date(week.date);
-                    // var strDate = date.toLocaleString("it-it", { month: "long" });
-                    var month = MONTH_NAMES[date.getMonth()];
-                    var day = DAY_NAMES[date.getDay()-1];
-                    var strDate = day+" " +date.getDate() + " " + month + " " + date.getFullYear();
-
-                    if (brother.elder) {
-                        if (brother._id == week.president._id) {
-                            brother.elder.presidentPrevDate = brother.elder.presidentDate ;
-                            brother.elder.presidentDate = week.date;
-                        }
-
-                        if (brother._id == week.gems.brother._id) {
-                            brother.elder.gemsPrevDate = brother.elder.gemsDate;
-                            brother.elder.gemsDate = week.date;
-                          }
-
-                        if (brother._id == week.talk.brother._id) {
-                            brother.elder.talkPrevDate = brother.elder.talkDate;
-                            brother.elder.talkDate = week.date;
-                          }
-
-                        if (brother._id == week.congregationBibleStudy.brother._id) {
-                            brother.elder.bibleStudyPrevDate = brother.elder.bibleStudyDate;
-                            brother.elder.bibleStudyDate = week.date;
-                          }
-
-                        for (var i = 0; i < week.christianLivingPart.length; i++) {
-                            if (brother._id == week.christianLivingPart[i].brother._id) {
-                                brother.elder.christianLivingPartPrevDate = brother.elder.christianLivingPartDate;
-                                brother.elder.christianLivingPartDate = week.date;
-                            }
-                        }
-
-                        objToSave.push(brother.elder);
-                    }
-                    if (brother.servant) {
-                        if (brother._id == week.gems.brother._id) {
-                            brother.servant.gemsPrevDate = brother.servant.gemsDate;
-                            brother.servant.gemsDate = week.date;
-                        }
-                        if (brother._id == week.talk.brother._id) {
-                            brother.servant.talkPrevDate = brother.servant.talkDate;
-                            brother.servant.talkDate = week.date;
-                        }
-
-                        for (var i = 0; i < week.christianLivingPart.length; i++) {
-                            if (brother._id == week.christianLivingPart[i].brother._id) {
-                                brother.servant.christianLivingPartPrevDate = brother.servant.christianLivingPartDate;
-                                brother.servant.christianLivingPartDate = week.date;
-                            }
-                        }
-                        objToSave.push(brother.servant)
-                    }
-                    if (brother.prayer) {
-                        if (brother._id == week.initialPrayer._id) {
-                            brother.prayer.prevDate = brother.prayer.date;
-                            brother.prayer.date = week.date;
-                            if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                                mailToSend.push({
-                                    brother: brother.name+ ' '+ brother.surname,
-                                    to: brother.email,
-                                    subject: "Preghiera iniziale - "+strDate,
-                                    text: "Ti è stata assegnata la preghiera iniziale dell'adunanza che si svolgerà il giorno " + strDate
-                                });
-                            }
-                        }
-
-                        if (brother._id == week.finalPrayer._id) {
-                            if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                                mailToSend.push({
-                                    brother: brother.name+ ' '+ brother.surname,
-                                    to: brother.email,
-                                    subject: "Preghiera finale - "+strDate,
-                                    text: "Ti è stata assegnata la preghiera finale dell'adunanza che si svolgerà il giorno " + strDate
-                                });
-                            }
-                            brother.prayer.prevDate = brother.prayer.date;
-                            brother.prayer.date = week.date;
-                        }
-
-                        objToSave.push(brother.prayer)
-                    }
-                    if (brother.reader) {
-                        if (brother._id == week.congregationBibleStudy.reader._id) {
-                            brother.reader.prevDate = brother.reader.date;
-                            brother.reader.date = week.date;
-                            if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                              mailToSend.push({
-                                  brother: brother.name+ ' '+ brother.surname,
-                                  to: brother.email,
-                                  subject: "Lettura dello studio biblico - "+strDate,
-                                  text: "Ti è stata assegnata la lettura dello studio biblico dell'adunanza che si svolgerà il giorno " + strDate
-                              })
-                          }
-                        }
-
-                        objToSave.push(brother.reader)
-
-
-                    }
-
-                    if (brother.student) {
-                        if (brother._id == week.bibleReading.primarySchool.student._id) {
-                            brother.student.lastDate = week.date
-                            brother.student.bibleReadingPrevDate = brother.student.bibleReadingDate;
-                            brother.student.bibleReadingDate = week.date;
-                            brother.student.lastSchool = 1;
-                            brother.student.lastPrevSchool = (brother.student.lastSchool == 1 ? 1 : 2);
-                            brother.student.bibleReadinglastPrevSchool = (brother.student.bibleReadingLastSchool == 1 ? 1 : 2);
-                            brother.student.bibleReadingLastSchool = 1;
-                            objToSave.push(brother.student);
-                            if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                                mailAssegnationToSend.push({
-                                  mail: brother.email,
-                                  congregation: congregationName,
-                                  brother: brother.surname + ' ' + brother.name,
-                                  assistant: null,
-                                  type: week.bibleReading.label,
-                                  school: brother.student.lastSchool,
-                                  date: strDate })
-                            }
-                        }
-
-                        if (week.secondarySchool && brother._id == week.bibleReading.secondarySchool.student._id) {
-                            brother.student.lastDate = week.date
-                            brother.student.bibleReadingPrevDate = brother.student.bibleReadingDate;
-                            brother.student.bibleReadingDate = week.date;
-                            brother.student.lastPrevSchool = (brother.student.lastSchool == 1 ? 1 : 2);
-                            brother.student.lastSchool = 2;
-                            brother.student.bibleReadinglastPrevSchool = (brother.student.bibleReadingLastSchool == 1 ? 1 : 2);
-                            brother.student.bibleReadingLastSchool = 2;
-                            // brother.student.bibleReadingPendingStudyNumber = brother.student.bibleReadingStudyNumber;
-                            objToSave.push(brother.student)
-                            if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                                // console.log("Bible reading study number:"+ brother.student.bibleReadingPendingStudyNumber);
-                                mailAssegnationToSend.push({
-                                  mail: brother.email,
-                                  congregation: congregationName,
-                                  brother: brother.surname + ' ' + brother.name,
-                                  assistant: null,
-                                  type: week.bibleReading.label,
-                                  school: brother.student.lastSchool,
-                                  date: week.date
-                                })
-                            }
-                        }
-                    }
-
-                      //AFTER 2019
-                      var schools = ["primarySchool"];
-                      if(week.secondarySchool){
-                        schools.push("secondarySchool");
-                      }
-                      week.ministryPart.forEach(function(part){
-                        if(part.forStudent){
-                          schools.forEach(function(school) {
-                            if (brother._id == part[school].student._id && brother.student) {
-                              brother.student.lastDate = week.date;
-                              if(part.isTalk){
-                                brother.student.talkPrevDate = brother.student.talkDate;
-                                brother.student.talkDate = week.date;
-
-                                brother.student.talkLastPrevSchool = (brother.student.talkLastSchool == 1 ? 1 : 2);;
-                                brother.student.talkLastSchool = (school == "primarySchool" ? 1 : 2);
-                              }else{
-                                brother.student.ministryPartPrevDate = brother.student.ministryPartDate;
-                                brother.student.ministryPartDate = week.date;
-
-                                brother.student.ministryPartLastPrevSchool = (brother.student.lastSministryPartLastSchoolchool == 1 ? 1 : 2);;
-                                brother.student.ministryPartLastSchool = (school == "primarySchool" ? 1 : 2);
-                              }
-
-                              objToSave.push(brother.student);
-                                if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                                    console.log("Assistant:"+ part[school].assistant);
-                                    mailAssegnationToSend.push({
-                                      mail: brother.email,
-                                      congregation: congregationName,
-                                      brother: brother.name + ' ' + brother.surname,
-                                      assistant: (part[school].assistant ? '<h3>Assistente: '+part[school].assistant.surname + ' ' + part[school].assistant.name+'</h3>' : null),
-                                      type: part.html,
-                                      school: brother.student.lastSchool,
-                                      date: strDate
-                                    });
-                                }
-                            }
-                            if (!part.isTalk && brother._id == part[school].assistant._id && brother.student) {
-                                brother.student.assistantDate = week.date;
-                                brother.student.assistantLastSchool = (school == "primarySchool" ? 1 : 2);
-                                objToSave.push(brother.student)
-                            }
-                          });
-                        }
-                      });
-                      for(let obj of objToSave){
-                        try{
-                          await obj.save(opts)
-                          console.log("Updated", brother.name + " " + brother.surname)
-                        }catch(e){
-                          console.error('Week Meeting create - Brother Update error:', e, brother);
-                          sendEmailError("Errore salvataggio fratello", e);
-                          await session.abortTransaction();
-                          session.endSession();
-                          return res.status(500).send({success:false, error:500, message:"Week Meeting create - Brother Update error", errorCode: e})
-                        }
-                      }
-                      console.log("Finish to update", brother.name + " " + brother.surname);
-                  }
-
-                  console.log("finish to update week", week.date);
-                  var tempWeek = new Week(week);
-                  tempWeek.completed = false;
-
-                  try{
-                    await tempWeek.save(opts)
-                    console.log("Week saved")
-                  }catch(e){
-                    console.error('Week Meeting create - Week save error:', e);
-                    sendEmailError("Errore salvataggio settimana", e);
-                    await session.abortTransaction();
-                    session.endSession();
-                    return res.status(500).send({success:false, error:500, message:"Week Meeting create - Week save error", errorCode: e})
-                  }
-
-
                 }catch(e){
                   console.error('Week Meeting create - Brother Find -  error:', e);
                   sendEmailError("Errore ricerca fratelli", e);
                   await session.abortTransaction();
                   session.endSession();
-                  return res.status(500).send({success:false, error:500, message:"Week Meeting create - Brother Find -  error", errorCode: e})
+                  return res.status(500).send({success:false, error:500, message:"Week Meeting create - Brother Find -  error", errorCode: e.toString()})
                 }
+
+                for (let brother of brothers){
+                  var objToSave = [];
+                  var date = new Date(week.date);
+                  // var strDate = date.toLocaleString("it-it", { month: "long" });
+                  var month = MONTH_NAMES[date.getMonth()];
+                  var day = DAY_NAMES[date.getDay()-1];
+                  var strDate = day+" " +date.getDate() + " " + month + " " + date.getFullYear();
+
+                  if (brother.elder) {
+                      if (brother._id == week.president._id) {
+                          brother.elder.presidentPrevDate = brother.elder.presidentDate ;
+                          brother.elder.presidentDate = week.date;
+                      }
+
+                      if (brother._id == week.gems.brother._id) {
+                          brother.elder.gemsPrevDate = brother.elder.gemsDate;
+                          brother.elder.gemsDate = week.date;
+                        }
+
+                      if (brother._id == week.talk.brother._id) {
+                          brother.elder.talkPrevDate = brother.elder.talkDate;
+                          brother.elder.talkDate = week.date;
+                        }
+
+                      if (brother._id == week.congregationBibleStudy.brother._id) {
+                          brother.elder.bibleStudyPrevDate = brother.elder.bibleStudyDate;
+                          brother.elder.bibleStudyDate = week.date;
+                        }
+
+                      for (var i = 0; i < week.christianLivingPart.length; i++) {
+                          if (brother._id == week.christianLivingPart[i].brother._id) {
+                              brother.elder.christianLivingPartPrevDate = brother.elder.christianLivingPartDate;
+                              brother.elder.christianLivingPartDate = week.date;
+                          }
+                      }
+
+                      objToSave.push(brother.elder);
+                  }
+                  if (brother.servant) {
+                      if (brother._id == week.gems.brother._id) {
+                          brother.servant.gemsPrevDate = brother.servant.gemsDate;
+                          brother.servant.gemsDate = week.date;
+                      }
+                      if (brother._id == week.talk.brother._id) {
+                          brother.servant.talkPrevDate = brother.servant.talkDate;
+                          brother.servant.talkDate = week.date;
+                      }
+
+                      for (var i = 0; i < week.christianLivingPart.length; i++) {
+                          if (brother._id == week.christianLivingPart[i].brother._id) {
+                              brother.servant.christianLivingPartPrevDate = brother.servant.christianLivingPartDate;
+                              brother.servant.christianLivingPartDate = week.date;
+                          }
+                      }
+                      objToSave.push(brother.servant)
+                  }
+                  if (brother.prayer) {
+                      if (brother._id == week.initialPrayer._id) {
+                          brother.prayer.prevDate = brother.prayer.date;
+                          brother.prayer.date = week.date;
+                          if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                              mailToSend.push({
+                                  brother: brother.name+ ' '+ brother.surname,
+                                  to: brother.email,
+                                  subject: "Preghiera iniziale - "+strDate,
+                                  text: "Ti è stata assegnata la preghiera iniziale dell'adunanza che si svolgerà il giorno " + strDate
+                              });
+                          }
+                      }
+
+                      if (brother._id == week.finalPrayer._id) {
+                          if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                              mailToSend.push({
+                                  brother: brother.name+ ' '+ brother.surname,
+                                  to: brother.email,
+                                  subject: "Preghiera finale - "+strDate,
+                                  text: "Ti è stata assegnata la preghiera finale dell'adunanza che si svolgerà il giorno " + strDate
+                              });
+                          }
+                          brother.prayer.prevDate = brother.prayer.date;
+                          brother.prayer.date = week.date;
+                      }
+
+                      objToSave.push(brother.prayer)
+                  }
+                  if (brother.reader) {
+                      if (brother._id == week.congregationBibleStudy.reader._id) {
+                          brother.reader.prevDate = brother.reader.date;
+                          brother.reader.date = week.date;
+                          if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                            mailToSend.push({
+                                brother: brother.name+ ' '+ brother.surname,
+                                to: brother.email,
+                                subject: "Lettura dello studio biblico - "+strDate,
+                                text: "Ti è stata assegnata la lettura dello studio biblico dell'adunanza che si svolgerà il giorno " + strDate
+                            })
+                        }
+                      }
+
+                      objToSave.push(brother.reader)
+
+
+                  }
+
+                  if (brother.student) {
+                      if (brother._id == week.bibleReading.primarySchool.student._id) {
+                          brother.student.lastDate = week.date
+                          brother.student.bibleReadingPrevDate = brother.student.bibleReadingDate;
+                          brother.student.bibleReadingDate = week.date;
+                          brother.student.lastSchool = 1;
+                          brother.student.lastPrevSchool = (brother.student.lastSchool == 1 ? 1 : 2);
+                          brother.student.bibleReadinglastPrevSchool = (brother.student.bibleReadingLastSchool == 1 ? 1 : 2);
+                          brother.student.bibleReadingLastSchool = 1;
+                          objToSave.push(brother.student);
+                          if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                              mailAssegnationToSend.push({
+                                mail: brother.email,
+                                congregation: congregationName,
+                                brother: brother.surname + ' ' + brother.name,
+                                assistant: null,
+                                type: week.bibleReading.label,
+                                school: brother.student.lastSchool,
+                                date: strDate })
+                          }
+                      }
+
+                      if (week.secondarySchool && brother._id == week.bibleReading.secondarySchool.student._id) {
+                          brother.student.lastDate = week.date
+                          brother.student.bibleReadingPrevDate = brother.student.bibleReadingDate;
+                          brother.student.bibleReadingDate = week.date;
+                          brother.student.lastPrevSchool = (brother.student.lastSchool == 1 ? 1 : 2);
+                          brother.student.lastSchool = 2;
+                          brother.student.bibleReadinglastPrevSchool = (brother.student.bibleReadingLastSchool == 1 ? 1 : 2);
+                          brother.student.bibleReadingLastSchool = 2;
+                          // brother.student.bibleReadingPendingStudyNumber = brother.student.bibleReadingStudyNumber;
+                          objToSave.push(brother.student)
+                          if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                              // console.log("Bible reading study number:"+ brother.student.bibleReadingPendingStudyNumber);
+                              mailAssegnationToSend.push({
+                                mail: brother.email,
+                                congregation: congregationName,
+                                brother: brother.surname + ' ' + brother.name,
+                                assistant: null,
+                                type: week.bibleReading.label,
+                                school: brother.student.lastSchool,
+                                date: week.date
+                              })
+                          }
+                      }
+                  }
+
+                    //AFTER 2019
+                    var schools = ["primarySchool"];
+                    if(week.secondarySchool){
+                      schools.push("secondarySchool");
+                    }
+                    week.ministryPart.forEach(function(part){
+                      if(part.forStudent){
+                        schools.forEach(function(school) {
+                          if (brother._id == part[school].student._id && brother.student) {
+                            brother.student.lastDate = week.date;
+                            if(part.isTalk){
+                              brother.student.talkPrevDate = brother.student.talkDate;
+                              brother.student.talkDate = week.date;
+
+                              brother.student.talkLastPrevSchool = (brother.student.talkLastSchool == 1 ? 1 : 2);;
+                              brother.student.talkLastSchool = (school == "primarySchool" ? 1 : 2);
+                            }else{
+                              brother.student.ministryPartPrevDate = brother.student.ministryPartDate;
+                              brother.student.ministryPartDate = week.date;
+
+                              brother.student.ministryPartLastPrevSchool = (brother.student.lastSministryPartLastSchoolchool == 1 ? 1 : 2);;
+                              brother.student.ministryPartLastSchool = (school == "primarySchool" ? 1 : 2);
+                            }
+
+                            objToSave.push(brother.student);
+                              if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                                  console.log("Assistant:"+ part[school].assistant);
+                                  mailAssegnationToSend.push({
+                                    mail: brother.email,
+                                    congregation: congregationName,
+                                    brother: brother.name + ' ' + brother.surname,
+                                    assistant: (part[school].assistant ? '<h3>Assistente: '+part[school].assistant.surname + ' ' + part[school].assistant.name+'</h3>' : null),
+                                    type: part.html,
+                                    school: brother.student.lastSchool,
+                                    date: strDate
+                                  });
+                              }
+                          }
+                          if (!part.isTalk && brother._id == part[school].assistant._id && brother.student) {
+                              brother.student.assistantDate = week.date;
+                              brother.student.assistantLastSchool = (school == "primarySchool" ? 1 : 2);
+                              objToSave.push(brother.student)
+                          }
+                        });
+                      }
+                    });
+                    for(let obj of objToSave){
+                      try{
+                        await obj.save(opts)
+                        console.log("Updated", brother.name + " " + brother.surname)
+                      }catch(e){
+                        console.error('Week Meeting create - Brother Update error:', e, brother);
+                        sendEmailError("Errore salvataggio fratello", e);
+                        await session.abortTransaction();
+                        session.endSession();
+                        return res.status(500).send({success:false, error:500, message:"Week Meeting create - Brother Update error", errorCode: e.toString()})
+                      }
+                    }
+                    console.log("Finish to update", brother.name + " " + brother.surname);
+                }
+
+                console.log("finish to update week", week.date);
+                var tempWeek = new Week(week);
+                tempWeek.completed = false;
+
+                try{
+                  await tempWeek.save(opts)
+                  console.log("Week saved")
+                }catch(e){
+                  console.error('Week Meeting create - Week save error:', e);
+                  sendEmailError("Errore salvataggio settimana", e);
+                  await session.abortTransaction();
+                  session.endSession();
+                  return res.status(500).send({success:false, error:500, message:"Week Meeting create - Week save error", errorCode: e.toString()})
+                }
+
               }else {
                   var tempWeek = new Week(week);
                   tempWeek.completed = true;
@@ -373,7 +373,7 @@ router.route('/')
                     sendEmailError("Errore salvataggio settimana", e);
                     await session.abortTransaction();
                     session.endSession();
-                    return res.status(500).send({success:false, error:500, message:"Week Meeting create - Week save error", errorCode: e})
+                    return res.status(500).send({success:false, error:500, message:"Week Meeting create - Week save error", errorCode: e.toString()})
                   }
               }
         }
@@ -387,12 +387,12 @@ router.route('/')
         }catch(e){
             sendEmailError("Errore rimozione settimana temporanea", e);
             console.error('Delete week meeting temp error:', e);
-            // return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e})
+            // return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e.toString()})
         }
-
-        res.json({ success: true, message: 'All weeks updated!' });
         await session.commitTransaction();
         session.endSession();
+        res.json({ success: true, message: 'All weeks updated!' });
+
 
 
         MAIL.sendAssegnations(mailAssegnationToSend);
@@ -462,7 +462,7 @@ router.route('/pgm/:year/:month')
         res.json(weeks);
       }catch(err){
         console.error('Get pgm error:', e);
-        return res.status(500).send({success:false, error:500, message:"Get pgm error", errorCode: e})
+        return res.status(500).send({success:false, error:500, message:"Get pgm error", errorCode: e.toString()})
       }
 })
 
@@ -490,7 +490,7 @@ router.route('/:week_id')
       res.json(week);
     }catch(e){
       console.error('Get week meeting error:', e);
-      return res.status(500).send({success:false, error:500, message:"Get week meeting error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Get week meeting error", errorCode: e.toString()})
     }
 
   })
@@ -534,7 +534,7 @@ router.route('/:week_id')
         }catch(e){
           session.abortTransaction();
           console.error('Update week meeting error:', e);
-          return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e})
+          return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e.toString()})
         }
 
         console.log('Length', brothers.length);
@@ -587,7 +587,7 @@ router.route('/:week_id')
           }catch(e){
             session.abortTransaction();
             console.error('Update week meeting error:', e);
-            return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e})
+            return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e.toString()})
           }
         }
 
@@ -636,7 +636,7 @@ router.route('/:week_id')
           }catch(e){
             session.abortTransaction();
             console.error('Update week meeting error:', e);
-            return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e})
+            return res.status(500).send({success:false, error:500, message:"Update week meeting error", errorCode: e.toString()})
           }
     })
     .delete(async (req, res) => {
@@ -647,7 +647,7 @@ router.route('/:week_id')
         res.json({ success: true, message: 'Successfully deleted' });
       }catch(e){
         console.error('Delete week meeting error:', e);
-        return res.status(500).send({success:false, error:500, message:"Delete week meeting error", errorCode: e})
+        return res.status(500).send({success:false, error:500, message:"Delete week meeting error", errorCode: e.toString()})
       }
     });
 

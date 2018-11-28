@@ -18,7 +18,7 @@ router.route('/')
       res.json(brothers);
     }catch(e){
       console.error('Elders get error:', e);
-      return res.status(500).send({success:false, error:500, message:"Elders get error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Elders get error", errorCode: e.toString()})
     }
   });
 
@@ -33,7 +33,7 @@ router.route('/:brother_id')
       await elder.save();
     }catch(e){
       console.error('Elder create error:', e);
-      return res.status(500).send({success:false, error:500, message:"Elder create error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Elder create error", errorCode: e.toString()})
     }
     try{
       var brother = await Brother.findById(req.params.brother_id)
@@ -42,7 +42,7 @@ router.route('/:brother_id')
       res.json({ success:true, message: 'Elder created!' });
     }catch(e){
       console.error('Elder create error:', e);
-      return res.status(500).send({success:false, error:500, message:"Elder create error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Elder create error", errorCode: e.toString()})
     }
   })
   .put(async(req, res) =>  {
@@ -54,7 +54,7 @@ router.route('/:brother_id')
       res.json({ success: true, message: 'Elder updated!' });
     }catch(e){
       console.error('Elder update error:', e);
-      return res.status(500).send({success:false, error:500, message:"Elder update error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Elder update error", errorCode: e.toString()})
     }
   })
   .delete(async(req, res) => {
@@ -67,7 +67,7 @@ router.route('/:brother_id')
       res.json({ success: true, message: 'Elder deleted!' });
     }catch(e){
       console.error('Elder delete error:', e);
-      return res.status(500).send({success:false, error:500, message:"Elder delete error", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Elder delete error", errorCode: e.toString()})
     }
 
   });

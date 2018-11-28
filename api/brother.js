@@ -27,7 +27,7 @@ router.route('/')
       res.json(brothers);
     }catch(e){
       console.error('Brothers get error:', e);
-      return res.status(500).send({success:false, error:500, message:"Borthers not found", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Borthers not found", errorCode: e.toString()})
     }
   })
   .post(async (req, res) => {
@@ -40,7 +40,7 @@ router.route('/')
       res.json({ success:true, message: 'Brother created!' , brother:brother});
     }catch(e){
       console.error('Brother create error:', e);
-      return res.status(500).send({success:false, error:500, message:"Brother not created", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Brother not created", errorCode: e.toString()})
     }
 
   });
@@ -53,7 +53,7 @@ router.route('/:brother_id')
       res.json(brother);
     }catch(e){
       console.error('Brother find error:', e);
-      return res.status(500).send({success:false, error:500, message:"Brother not found", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Brother not found", errorCode: e.toString()})
     }
   })
   .put(async (req, res) => {
@@ -61,7 +61,7 @@ router.route('/:brother_id')
       var brother = await Brother.findById(req.params.brother_id)
     }catch(e){
       console.error('Brother update error:', e);
-      return res.status(500).send({success:false, error:500, message:"Brother not found", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Brother not found", errorCode: e.toString()})
     }
     brother = Object.assign(brother, req.body);
 
@@ -70,7 +70,7 @@ router.route('/:brother_id')
       res.json({ success:true, message: 'Brother updated!' });
     }catch(e){
       console.error('Brother update error:', e);
-      return res.status(500).send({success:false, error:500, message:"Brother not updated", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Brother not updated", errorCode: e.toString()})
     }
 
   })
@@ -79,7 +79,7 @@ router.route('/:brother_id')
       var brother = await Brother.findById(req.params.brother_id)
     }catch(e){
       console.error('Brother delete error:', e);
-      return res.status(500).send({success:false, error:500, message:"Brother not found", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Brother not found", errorCode: e.toString()})
     }
 
     brother.deleted = true;
@@ -102,7 +102,7 @@ router.route('/:brother_id')
       await brother.save();
     }catch(e){
       console.error('Brother delete error:', e);
-      return res.status(500).send({success:false, error:500, message:"Brother not deleted", errorCode: e})
+      return res.status(500).send({success:false, error:500, message:"Brother not deleted", errorCode: e.toString()})
     }
 
     res.json({success:true, message: 'Successfully deleted' });

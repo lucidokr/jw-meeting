@@ -68,10 +68,15 @@
         </a>
       </li>
       <li class="" *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER  || user.role==USER_ROLE.PRESIDENT ">
-          <a href="/settings" title="Impostazioni della congregazione">
-            <i class="fa fa-cogs" aria-hidden="true"></i><span>IMPOSTAZIONI</span>
-          </a>
-        </li>
+        <a href="/settings" title="Impostazioni della congregazione">
+          <i class="fa fa-cogs" aria-hidden="true"></i><span>IMPOSTAZIONI</span>
+        </a>
+      </li>
+      <li class="" *ngIf="user.role==USER_ROLE.ADMIN">
+        <a href="/users" title="Configurazione utenti">
+          <i class="fa fa-user" aria-hidden="true"></i><span>UTENTI</span>
+        </a>
+      </li>
     </ul>
     <!--<a [routerLink]="['/login']" class="btn btn-primary">Log in</a>-->
   </div>
