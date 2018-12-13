@@ -1,0 +1,184 @@
+{ 
+    "_id" : ObjectId("597f358f8808800a0813f0a8"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-11-28T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-04-25T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f35998808800a0813f0a9"), 
+    "enabled" : false, 
+    "date" : ISODate("2018-03-07T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2017-10-10T22:00:00.000+0000"), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("597f35c18808800a0813f0aa"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-10-31T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-10-31T11:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f35c68808800a0813f0ab"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-10-17T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-10-17T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f35d08808800a0813f0ac"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-12-26T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2017-11-28T23:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f35d88808800a0813f0ad"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-12-19T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-08-08T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f35dc8808800a0813f0ae"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-09-12T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-05-09T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f35e48808800a0813f0af"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-10-03T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-10-03T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f35ef8808800a0813f0b0"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-10-10T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-10-10T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f35f38808800a0813f0b1"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-09-26T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-06-27T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f35f88808800a0813f0b2"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-05-16T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-01-10T11:00:00.000+0000"), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("597f35fe8808800a0813f0b3"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-11-07T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-02-07T11:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f36058808800a0813f0b4"), 
+    "enabled" : true, 
+    "date" : ISODate("2019-01-02T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-08-15T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f36108808800a0813f0b5"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-12-12T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-08-01T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f361a8808800a0813f0b6"), 
+    "enabled" : false, 
+    "date" : ISODate("2017-07-18T09:14:31.650+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("597f361e8808800a0813f0b7"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-12-05T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-07-25T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f363d8808800a0813f0b8"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-08-22T10:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-05-02T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f36458808800a0813f0b9"), 
+    "enabled" : false, 
+    "date" : ISODate("2017-07-09T13:46:57.784+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("597f364a8808800a0813f0ba"), 
+    "enabled" : false, 
+    "date" : ISODate("2017-10-24T22:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("597f36518808800a0813f0bb"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-11-14T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-07-18T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("597f36568808800a0813f0bc"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-03-14T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2017-10-17T22:00:00.000+0000"), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("597f365a8808800a0813f0bd"), 
+    "enabled" : false, 
+    "date" : ISODate("2018-01-31T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2017-09-19T22:00:00.000+0000"), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("59b661164de5fa001254b531"), 
+    "enabled" : true, 
+    "date" : ISODate("2018-11-21T11:00:00.000+0000"), 
+    "__v" : NumberInt(0), 
+    "prevDate" : ISODate("2018-07-04T10:00:00.000+0000")
+}
+{ 
+    "_id" : ObjectId("5ad76c19cdc8f20014eaad2c"), 
+    "enabled" : false, 
+    "prevDate" : ISODate("2018-06-06T10:00:00.000+0000"), 
+    "date" : ISODate("2018-09-05T10:00:00.000+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5ad76c30cdc8f20014eaad2d"), 
+    "enabled" : true, 
+    "prevDate" : ISODate("2018-06-13T10:00:00.000+0000"), 
+    "date" : ISODate("2018-09-19T10:00:00.000+0000"), 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5ad904d735e36d0014fc0a91"), 
+    "enabled" : true, 
+    "prevDate" : ISODate("2018-05-23T10:00:00.000+0000"), 
+    "date" : ISODate("2018-08-29T10:00:00.000+0000"), 
+    "__v" : NumberInt(0)
+}
