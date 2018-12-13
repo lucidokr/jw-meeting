@@ -1,6 +1,6 @@
 {
   "name": "jw-meeting",
-  "version": "1.1.7",
+  "version": "1.2.0",
   "description": "Gestione adunanza Vita cristiana e Ministero",
   "engines": {
     "node": ">=7.6.0"
