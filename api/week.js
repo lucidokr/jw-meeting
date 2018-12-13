@@ -61,7 +61,8 @@ router.route('/')
         var session = await Brother.startSession();
         session.startTransaction()
         console.log('Start session');
-        const opts = { session };
+        // const opts = { session };
+        const opts = {  };
         var congregationName = "";
 
         if (req.decoded && req.decoded._doc && req.decoded._doc.congregation && req.decoded._doc.congregation.name)
@@ -499,7 +500,8 @@ router.route('/:week_id')
         var session = await Brother.startSession();
         session.startTransaction()
         console.log('Start session');
-        const opts = { session };
+        // const opts = { session };
+        const opts = {  };
 
         var week = req.body;
         var toFind = [];
