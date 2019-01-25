@@ -1,6 +1,0 @@
-{ "_id" : { "$oid" : "594d4d49b810b07cdb867dd3" }, "gemsEnabled" : false, "talkEnabled" : false, "__v" : 0 }
-{ "_id" : { "$oid" : "594d4da4b810b07cdb867dd4" }, "gemsEnabled" : false, "talkEnabled" : false, "__v" : 0 }
-{ "_id" : { "$oid" : "594d4daeb810b07cdb867dd5" }, "gemsDate" : { "$date" : "2017-08-30T14:09:13.349+0000" }, "talkDate" : { "$date" : "2017-07-26T15:43:07.543+0000" }, "gemsEnabled" : true, "talkEnabled" : true, "__v" : 0 }
-{ "_id" : { "$oid" : "594d4dc1b810b07cdb867dd6" }, "gemsDate" : { "$date" : "2017-08-09T14:09:13.349+0000" }, "talkDate" : { "$date" : "2017-06-20T22:00:00.000+0000" }, "gemsEnabled" : true, "talkEnabled" : true, "__v" : 0 }
-{ "_id" : { "$oid" : "594d4dceb810b07cdb867dd7" }, "gemsDate" : { "$date" : "2017-08-16T14:09:13.349+0000" }, "talkDate" : { "$date" : "2017-08-09T14:09:13.349+0000" }, "gemsEnabled" : true, "talkEnabled" : true, "__v" : 0 }
-{ "_id" : { "$oid" : "594d4ddfb810b07cdb867dd8" }, "gemsDate" : { "$date" : "2017-07-26T15:43:07.543+0000" }, "talkDate" : { "$date" : "2017-05-08T22:00:00.000+0000" }, "gemsEnabled" : true, "talkEnabled" : true, "__v" : 0 }
