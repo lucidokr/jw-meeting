@@ -30,3 +30,4 @@ testem.log
 .bundle
 db
 api/env.json
+data

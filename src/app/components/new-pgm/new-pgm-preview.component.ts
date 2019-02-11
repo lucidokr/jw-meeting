@@ -123,7 +123,7 @@ export class NewPgmPreviewComponent implements OnInit{
   }
 
   sortAndFind(res:any, meetings:any){
-    meetings = meetings.sort((a:any,b:any) => {return (moment(a.date).isBefore(b.date) ? -1 : 1)});
+    meetings = meetings.sort((a:any,b:any) => {return (moment(a.date).isBefore(b.date) ? 1 : -1)});
     for(let r of res ){
       this[r.type+"List"] = this[r.type+"List"].concat(r.data);
       this[r.type+"ListAll"] = this[r.type+"ListAll"].concat(r.data);
