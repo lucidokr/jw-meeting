@@ -1,0 +1,64 @@
+{ 
+    "_id" : ObjectId("594d4d49b810b07cdb867dd3"), 
+    "gemsEnabled" : false, 
+    "talkEnabled" : false, 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("594d4da4b810b07cdb867dd4"), 
+    "gemsEnabled" : false, 
+    "talkEnabled" : false, 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("594d4daeb810b07cdb867dd5"), 
+    "gemsDate" : ISODate("2018-08-08T10:00:00.000+0000"), 
+    "talkDate" : ISODate("2018-08-01T10:00:00.000+0000"), 
+    "gemsEnabled" : true, 
+    "talkEnabled" : true, 
+    "__v" : NumberInt(0), 
+    "christianLivingPartEnabled" : true, 
+    "presentationExerciseEnabled" : true, 
+    "talkPrevDate" : ISODate("2018-05-23T10:00:00.000+0000"), 
+    "gemsPrevDate" : ISODate("2018-05-09T10:00:00.000+0000"), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("594d4dc1b810b07cdb867dd6"), 
+    "gemsDate" : ISODate("2018-01-24T11:00:00.000+0000"), 
+    "talkDate" : ISODate("2018-01-03T11:00:00.000+0000"), 
+    "gemsEnabled" : false, 
+    "talkEnabled" : false, 
+    "__v" : NumberInt(0), 
+    "christianLivingPartEnabled" : false, 
+    "presentationExerciseEnabled" : false, 
+    "christianLivingPartDate" : ISODate("2017-12-12T23:00:00.000+0000"), 
+    "christianLivingPartPrevDate" : ISODate("2017-12-12T23:00:00.000+0000"), 
+    "gemsPrevDate" : ISODate("2017-10-31T23:00:00.000+0000"), 
+    "talkPrevDate" : ISODate("2017-10-10T23:00:00.000+0000"), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("594d4dceb810b07cdb867dd7"), 
+    "gemsDate" : ISODate("2018-05-16T10:00:00.000+0000"), 
+    "talkDate" : ISODate("2018-05-09T10:00:00.000+0000"), 
+    "gemsEnabled" : true, 
+    "talkEnabled" : true, 
+    "__v" : NumberInt(0), 
+    "christianLivingPartEnabled" : true, 
+    "presentationExerciseEnabled" : true, 
+    "christianLivingPartDate" : ISODate("2017-11-14T23:00:00.000+0000"), 
+    "gemsPrevDate" : ISODate("2018-05-02T10:00:00.000+0000"), 
+    "talkPrevDate" : ISODate("2018-03-07T11:00:00.000+0000"), 
+    "deleted" : true
+}
+{ 
+    "_id" : ObjectId("594d4ddfb810b07cdb867dd8"), 
+    "gemsDate" : ISODate("2019-02-06T11:00:00.000+0000"), 
+    "talkDate" : ISODate("2019-01-23T11:00:00.000+0000"), 
+    "gemsEnabled" : true, 
+    "talkEnabled" : true, 
+    "__v" : NumberInt(0), 
+    "talkPrevDate" : ISODate("2018-11-28T11:00:00.000+0000"), 
+    "gemsPrevDate" : ISODate("2018-12-26T11:00:00.000+0000")
+}
