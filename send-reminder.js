@@ -19,7 +19,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
 async function remind(){
   console.log('Start reminder assegnations job');
 
-  if(new Date().getDay() == 1 && process.env.SEND_ASSEGNATION == "true"){
+  if(/*new Date().getDay() == 1 && */process.env.SEND_ASSEGNATION == "true"){
         try{
           var cutoff = new Date();
           cutoff.setDate(cutoff.getDate()-6);
@@ -97,6 +97,8 @@ async function remind(){
         console.log('Finish reminder assegnations job');
         console.log('---------------------------------');
 
+  }else{
+   console.log('Finish reminder assegnations job: Not a Monday');
   }
 }
 remind()
