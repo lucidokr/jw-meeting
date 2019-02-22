@@ -19,6 +19,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var schedule = require('node-schedule');
 var Week = require('./api/models/weekMeeting');
+var MAIL = require('./api/mail/send-mailgun');
 const MONTH_NAMES = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
   "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
 ];

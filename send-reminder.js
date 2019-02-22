@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 
 var Week = require('./api/models/weekMeeting');
 const MONTH_NAMES = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
@@ -5,6 +6,10 @@ const MONTH_NAMES = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno
 ];
 const DAY_NAMES = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"];
 var MAIL = require('./api/mail/send-mailgun');
+var mongoose = require('mongoose')
+
+
+mongoose.connect(process.env.MONGO_DB_URI,{useNewUrlParser:true});
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
     var config = require('./api/env.json')['development'];
