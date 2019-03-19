@@ -1,6 +1,6 @@
 {
   "name": "jw-meeting",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Gestione adunanza Vita cristiana e Ministero",
   "engines": {
     "node": ">=7.6.0"
@@ -13,7 +13,8 @@
     "api": "node server.js",
     "db": "sudo run-rs -v 4.0.0 --shell",
     "prod": "ng serve -prod",
-    "build": "ng build --prod --aot=false --env=prod",
+    "build-fe": "ng build --prod --aot=false --env=prod",
+    "build": "node server.js",
     "heroku": "node server.js",
     "lint": "tslint \"src/**/*.ts\"",
     "pree2e": "webdriver-manager update",

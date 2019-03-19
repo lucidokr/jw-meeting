@@ -34,6 +34,7 @@ export class NewPgmTempComponent {
     'NO_MINISTRY_PART': {id:1, label:"Adunanza senza parti", meeting:true, disableSchool:true, withSupervisor:true},
     'SPECIAL_MEETING': {id:2, label:"Assemblea speciale di un giorno", meeting:false, disableSchool:false, withSupervisor:false},
     'CONGRESS': {id:3, label:"Congresso di zona", meeting:false, disableSchool:false, withSupervisor:false},
+    'MEMORIAL': {id:4, label:"Commemorazione", meeting:false, disableSchool:false, withSupervisor:false},
   };
   public loadingMeetingWorkbooks: boolean = false;
   public christianLivingPartBrother: Array<Brother> = [];
@@ -133,44 +134,47 @@ export class NewPgmTempComponent {
             let weekMeetingWorkbook = weeksMeetingWorkbook[j];
             if(dateArr[i].unix()==weekMeetingWorkbook.date.unix()){
               let model = new WeekMeeting();
-              model.date = moment(dateArr[i]).add(user.congregation.meetingDay, 'd').add(12, 'h');
-              model.initialSong = weekMeetingWorkbook.initialSong;
-              model.finalSong = weekMeetingWorkbook.finalSong;
-              model.intervalSong = weekMeetingWorkbook.intervalSong;
-              model.congregationBibleStudy.label = weekMeetingWorkbook.congregationBibleStudy;
-              for (let part of weekMeetingWorkbook.christianLivingPart){
-                model.christianLivingPart.push({
-                  label: part,
-                  brother: null
+              if(weekMeetingWorkbook.memorial){
+                model.date = moment(dateArr[i]).add(user.congregation.meetingDay, 'd').add(12, 'h');
+                model.type = this.weekType.MEMORIAL;
+              }else{
+                model.date = moment(dateArr[i]).add(user.congregation.meetingDay, 'd').add(12, 'h');
+                model.initialSong = weekMeetingWorkbook.initialSong;
+                model.finalSong = weekMeetingWorkbook.finalSong;
+                model.intervalSong = weekMeetingWorkbook.intervalSong;
+                model.congregationBibleStudy.label = weekMeetingWorkbook.congregationBibleStudy;
+                for (let part of weekMeetingWorkbook.christianLivingPart){
+                  model.christianLivingPart.push({
+                    label: part,
+                    brother: null
+                  })
+                }
+                model.talk.label = weekMeetingWorkbook.talk;
+                model.gems.label = weekMeetingWorkbook.gems;
+                model.type = this.weekType.STANDARD;
+                model.bibleReading.label = weekMeetingWorkbook.bibleReading;
+                var withoutPart = true;
+                weekMeetingWorkbook.ministryPart.forEach(function(part){
+                  var ministryPart = new MinistryPart()
+                  ministryPart.html = part.html
+                  if(part.forStudent)
+                    withoutPart = false
+                  ministryPart.forStudent = part.forStudent
+                  ministryPart.isTalk = part.isTalk
+                  ministryPart.primarySchool = new SchoolMinistryPart()
+                  ministryPart.secondarySchool = new SchoolMinistryPart()
+                  ministryPart.primarySchool.gender = part.isTalk ? 'M' : '';
+                  ministryPart.secondarySchool.gender = part.isTalk ? 'M' : '';
+
+                  model.ministryPart.push(ministryPart)
                 })
+                if(withoutPart){
+                  model.type = this.weekType.NO_MINISTRY_PART;
+                }
               }
-              model.talk.label = weekMeetingWorkbook.talk;
-              model.gems.label = weekMeetingWorkbook.gems;
-              model.type = this.weekType.STANDARD;
-              model.bibleReading.label = weekMeetingWorkbook.bibleReading;
-              var withoutPart = true;
-              weekMeetingWorkbook.ministryPart.forEach(function(part){
-                var ministryPart = new MinistryPart()
-                ministryPart.html = part.html
-                if(part.forStudent)
-                  withoutPart = false
-                ministryPart.forStudent = part.forStudent
-                ministryPart.isTalk = part.isTalk
-                ministryPart.primarySchool = new SchoolMinistryPart()
-                ministryPart.secondarySchool = new SchoolMinistryPart()
-                ministryPart.primarySchool.gender = part.isTalk ? 'M' : '';
-                ministryPart.secondarySchool.gender = part.isTalk ? 'M' : '';
-
-                model.ministryPart.push(ministryPart)
-              })
-              if(withoutPart){
-                model.type = this.weekType.NO_MINISTRY_PART;
-              }
-
-
-
               this.weeks.push(model)
             }
+
           }
         }
         let obsArr = [

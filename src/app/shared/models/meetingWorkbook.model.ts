@@ -1,4 +1,5 @@
 export class MeetingWorkbook {
+  memorial?: any;
   date: any;
   talk: string;
   gems: string;

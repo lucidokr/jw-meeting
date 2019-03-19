@@ -27,6 +27,16 @@ router.route('/:year/:month/:dayStart')
                         string = string.replace(new RegExp("href=\"/", 'g'), "href=\"https://wol.jw.org/");
                         return string;
                     }
+                    console.log("section2: " + $("#section2").length);
+                    console.log("itemData: " + $(".itemData").html());
+                    if($("#section2").length == 0 && $(".itemData").html().indexOf("Commemorazione") !== -1){
+                      console.log("commemorazione");
+                      result = {
+                        memorial: true
+                      }
+                      return result;
+                    }
+
                     var result = {
                         talk: r($("#section2 #p6").html()),
                         gems: r($("#section2 #p10").html()),
@@ -40,7 +50,6 @@ router.route('/:year/:month/:dayStart')
                       return $(this).html();
                     }).get();
                     result.ministryPart = [];
-                    console.log("UUUU:"+parts);
                     for(var i=0; i<parts.length; i++){
                       var forStudent = true, isTalk = false;
                       var partHtml = r(parts[i]);
