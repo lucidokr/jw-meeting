@@ -241,6 +241,7 @@ router.route('/')
 
                   if (brother.student) {
                       if (brother._id == week.bibleReading.primarySchool.student._id) {
+                          brother.student.lastPrevDate = brother.student.lastDate
                           brother.student.lastDate = week.date
                           brother.student.bibleReadingPrevDate = brother.student.bibleReadingDate;
                           brother.student.bibleReadingDate = week.date;
@@ -262,6 +263,7 @@ router.route('/')
                       }
 
                       if (week.secondarySchool && brother._id == week.bibleReading.secondarySchool.student._id) {
+                          brother.student.lastDate = brother.student.lastDate
                           brother.student.lastDate = week.date
                           brother.student.bibleReadingPrevDate = brother.student.bibleReadingDate;
                           brother.student.bibleReadingDate = week.date;
@@ -295,6 +297,7 @@ router.route('/')
                       if(part.forStudent){
                         schools.forEach(function(school) {
                           if (brother._id == part[school].student._id && brother.student) {
+                            brother.student.lastPrevDate = brother.student.lastDate;
                             brother.student.lastDate = week.date;
                             if(part.isTalk){
                               brother.student.talkPrevDate = brother.student.talkDate;
