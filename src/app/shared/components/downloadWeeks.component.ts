@@ -639,10 +639,7 @@ export class DownloadWeeksDialog implements OnInit{
     let div = document.createElement("div");
     div.innerHTML = html;
     str = div.textContent || div.innerText || "";
-    // str = str.substr(0, str.length-2);
-    let temp = str.split("(")[2];
-    temp = temp.split(")")[0].replace("th ", "")
-    return temp.trim().toUpperCase();
+    return str.split("(th")[1].split(")")[0].trim().toUpperCase();;
   }
 
   public delete_row = (ws, row_index) => {

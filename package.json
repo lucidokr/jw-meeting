@@ -10,6 +10,7 @@
   "scripts": {
     "start": "node server.js",
     "fe": "ng serve -o",
+    "fe:build": "ng build --prod --aot=false --env=prod",
     "api": "node server.js",
     "db": "sudo run-rs -v 4.0.0 --shell",
     "prod": "ng serve -prod",
@@ -83,6 +84,7 @@
     "karma-cli": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
+    "node-sass": "^4.8.1",
     "npm-run-all": "^4.0.2",
     "protractor": "4.0.9",
     "sw-precache": "^5.2.0",

@@ -1,0 +1,483 @@
+{ 
+    "_id" : ObjectId("5cde98262b0a190014a24631"), 
+    "bibleReading" : {
+        "primarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0)
+        }, 
+        "secondarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0)
+        }, 
+        "label" : "  <strong>Lettura biblica </strong>(4&#xA0;min o meno) <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/bc/r6/lp-i/202019202/6/0\" data-bid=\"7-1\" class=\"b\">Gal 4:1-20</a> (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019202/6/0\"><em>th </em>lezione&#xA0;10</a>)"
+    }, 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "date" : ISODate("2019-06-05T10:00:00.000+0000"), 
+    "completed" : false, 
+    "type" : {
+        "id" : NumberInt(0), 
+        "label" : "Adunanza normale", 
+        "meeting" : true, 
+        "disableSchool" : false, 
+        "withSupervisor" : true
+    }, 
+    "supervisor" : false, 
+    "primarySchool" : true, 
+    "secondarySchool" : true, 
+    "initialPrayer" : null, 
+    "finalPrayer" : null, 
+    "president" : null, 
+    "talk" : {
+        "brother" : null, 
+        "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019202/1/0\"><strong>&#x2018;Queste cose hanno un significato simbolico&#x2019; per noi</strong></a><strong>&#x201D; </strong>(10&#xA0;min)"
+    }, 
+    "gems" : {
+        "brother" : null, 
+        "label" : "  <strong>Scaviamo per trovare gemme spirituali </strong>(8&#xA0;min)"
+    }, 
+    "ministryPart" : [
+        {
+            "_id" : ObjectId("5cde98262b0a190014a24633"), 
+            "html" : "  <strong>Applicati alla lettura e all&#x2019;insegnamento </strong>(10&#xA0;min) Trattazione. Fai vedere il video <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/datalink/r6/lp-i?docid=1102019357&amp;data-video=webpubvid%3A%2F%2F%2F%3Fpub%3Dthv%26track%3D6\" class=\"fb\"><em>Spiegazione chiara dei versetti</em></a>, e poi tratta la <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019202/8/0\">lezione&#xA0;6 dell&#x2019;opuscolo <em>Lettura e insegnamento</em></a>.", 
+            "forStudent" : false, 
+            "isTalk" : false, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }
+        }, 
+        {
+            "_id" : ObjectId("5cde98262b0a190014a24632"), 
+            "html" : "  <strong>Discorso </strong>(5&#xA0;min o meno) <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019202/9/0\"><em>w12 </em>15/3 30-31</a>. Tema: Perch&#xE9; i cristiani dovrebbero respingere energicamente la pornografia? (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019202/10/0\"><em>th </em>lezione&#xA0;13</a>)", 
+            "forStudent" : true, 
+            "isTalk" : true, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : "M"
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : "M"
+            }
+        }
+    ], 
+    "christianLivingPart" : [
+        {
+            "_id" : ObjectId("5cde98262b0a190014a24635"), 
+            "label" : "  <strong>Bisogni locali </strong>(8&#xA0;min)", 
+            "brother" : ObjectId("594bdb4e3545c51678fbad0b")
+        }, 
+        {
+            "_id" : ObjectId("5cde98262b0a190014a24634"), 
+            "label" : "  <strong>Risultati raggiunti dall&#x2019;organizzazione </strong>(7&#xA0;min) Fai vedere il video <a target=\"_blank\" href=\"https://data.jw-api.org/mediator/finder?lang=I&amp;item=pub-mwbv_201906_4_VIDEO\" data-video=\"webpubvid://?pub=mwbv&amp;issue=201906&amp;track=4\"><em>Risultati raggiunti dall&#x2019;organizzazione</em></a> di giugno.", 
+            "brother" : null, 
+            "president" : true
+        }
+    ], 
+    "congregationBibleStudy" : {
+        "brother" : null, 
+        "label" : "  <strong>Studio biblico di congregazione </strong>(30&#xA0;min) <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019202/12/0\"><em>jy </em>cap.&#xA0;69</a>", 
+        "reader" : null
+    }, 
+    "initialSong" : "  <a href=\"/it/wol/pc/r6/lp-i/202019202/0/0\">Cantico&#xA0;16</a> e preghiera", 
+    "finalSong" : "  <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019202/13/0\">Cantico&#xA0;40</a> e preghiera", 
+    "intervalSong" : "  <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019202/11/0\">Cantico&#xA0;110</a>", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5cde98272b0a190014a24636"), 
+    "bibleReading" : {
+        "primarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0)
+        }, 
+        "secondarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0)
+        }, 
+        "label" : "  <strong>Lettura biblica </strong>(4&#xA0;min o meno) <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/bc/r6/lp-i/202019204/5/0\" data-bid=\"6-1\" class=\"b\">Ef 1:1-14</a> (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019204/7/0\"><em>th </em>lezione&#xA0;5</a>)"
+    }, 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "date" : ISODate("2019-06-12T10:00:00.000+0000"), 
+    "completed" : false, 
+    "type" : {
+        "id" : NumberInt(0), 
+        "label" : "Adunanza normale", 
+        "meeting" : true, 
+        "disableSchool" : false, 
+        "withSupervisor" : true
+    }, 
+    "supervisor" : false, 
+    "primarySchool" : true, 
+    "secondarySchool" : true, 
+    "initialPrayer" : null, 
+    "finalPrayer" : null, 
+    "president" : null, 
+    "talk" : {
+        "brother" : null, 
+        "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019204/1/0\"><strong>Cos&#x2019;&#xE8; l&#x2019;amministrazione di Geova e cosa realizza</strong></a><strong>&#x201D; </strong>(10&#xA0;min)"
+    }, 
+    "gems" : {
+        "brother" : null, 
+        "label" : "  <strong>Scaviamo per trovare gemme spirituali </strong>(8&#xA0;min)"
+    }, 
+    "ministryPart" : [
+        {
+            "_id" : ObjectId("5cde98272b0a190014a2463a"), 
+            "html" : "  <strong>Video del primo contatto </strong>(4&#xA0;min) Fai vedere il <a target=\"_blank\" href=\"https://data.jw-api.org/mediator/finder?lang=I&amp;item=pub-mwbv_201906_1_VIDEO\" data-video=\"webpubvid://?pub=mwbv&amp;issue=201906&amp;track=1\">video</a> e trattalo con l&#x2019;uditorio.", 
+            "forStudent" : false, 
+            "isTalk" : false, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }
+        }, 
+        {
+            "_id" : ObjectId("5cde98272b0a190014a24639"), 
+            "html" : "  <strong>Primo contatto </strong>(2&#xA0;min o meno) Usa la <a target=\"_blank\" class=\"it\" href=\"https://wol.jw.org/it/wol/tc/r6/lp-i/202019204/0\">conversazione modello</a>. (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019204/8/0\"><em>th </em>lezione&#xA0;1</a>)", 
+            "forStudent" : true, 
+            "isTalk" : false, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }
+        }, 
+        {
+            "_id" : ObjectId("5cde98272b0a190014a24638"), 
+            "html" : "  <strong>Primo contatto </strong>(3&#xA0;min o meno) Inizia con la <a target=\"_blank\" class=\"it\" href=\"https://wol.jw.org/it/wol/tc/r6/lp-i/202019204/1\">conversazione modello</a>. Supera un&#x2019;obiezione comune nel territorio. (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019204/9/0\"><em>th </em>lezione&#xA0;3</a>)", 
+            "forStudent" : true, 
+            "isTalk" : false, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }
+        }, 
+        {
+            "_id" : ObjectId("5cde98272b0a190014a24637"), 
+            "html" : "  <strong>Primo contatto </strong>(3&#xA0;min o meno) Inizia con la <a target=\"_blank\" class=\"it\" href=\"https://wol.jw.org/it/wol/tc/r6/lp-i/202019204/2\">conversazione modello</a>. Presenta una pubblicazione del Kit dell&#x2019;insegnante. (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019204/10/0\"><em>th </em>lezione&#xA0;9</a>)", 
+            "forStudent" : true, 
+            "isTalk" : false, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }
+        }
+    ], 
+    "christianLivingPart" : [
+        {
+            "_id" : ObjectId("5cde98272b0a190014a2463b"), 
+            "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019204/12/0\"><strong>Rendi pi&#xF9; significativo il tuo studio personale</strong></a><strong>&#x201D; </strong>(15&#xA0;min) Trattazione. Fai vedere il video <a target=\"_blank\" href=\"https://data.jw-api.org/mediator/finder?lang=I&amp;item=pub-jwb_201807_6_VIDEO\" data-video=\"webpubvid://?pub=jwb&amp;issue=201807&amp;track=6\"><em>Come mantenere una &#x201C;salda presa&#x201D; grazie allo studio personale</em></a>.", 
+            "brother" : ObjectId("594bdbcc3545c51678fbad0e")
+        }
+    ], 
+    "congregationBibleStudy" : {
+        "brother" : null, 
+        "label" : "  <strong>Studio biblico di congregazione </strong>(30&#xA0;min) <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019204/13/0\"><em>jy </em>cap.&#xA0;70</a>", 
+        "reader" : null
+    }, 
+    "initialSong" : "  <a href=\"/it/wol/pc/r6/lp-i/202019204/0/0\">Cantico 112</a> e preghiera", 
+    "finalSong" : "  <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019204/14/0\">Cantico 144</a> e preghiera", 
+    "intervalSong" : "  <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019204/11/0\">Cantico&#xA0;95</a>", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5cde98272b0a190014a2463c"), 
+    "bibleReading" : {
+        "primarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0)
+        }, 
+        "secondarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0)
+        }, 
+        "label" : "  <strong>Lettura biblica </strong>(4&#xA0;min o meno) <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/bc/r6/lp-i/202019207/6/0\" data-bid=\"7-1\" class=\"b\">Ef 4:17-32</a> (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019207/11/0\"><em>th </em>lezione&#xA0;10</a>)"
+    }, 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "date" : ISODate("2019-06-19T10:00:00.000+0000"), 
+    "completed" : false, 
+    "type" : {
+        "id" : NumberInt(0), 
+        "label" : "Adunanza normale", 
+        "meeting" : true, 
+        "disableSchool" : false, 
+        "withSupervisor" : true
+    }, 
+    "supervisor" : false, 
+    "primarySchool" : true, 
+    "secondarySchool" : true, 
+    "initialPrayer" : null, 
+    "finalPrayer" : null, 
+    "president" : null, 
+    "talk" : {
+        "brother" : null, 
+        "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019207/1/0\"><strong>Indossate la completa armatura di Dio</strong></a><strong>&#x201D; </strong>(10&#xA0;min)"
+    }, 
+    "gems" : {
+        "brother" : null, 
+        "label" : "  <strong>Scaviamo per trovare gemme spirituali </strong>(8&#xA0;min)"
+    }, 
+    "ministryPart" : [
+        {
+            "_id" : ObjectId("5cde98272b0a190014a2463f"), 
+            "html" : "  <strong>Video della prima visita ulteriore </strong>(5&#xA0;min) Fai vedere il <a target=\"_blank\" href=\"https://data.jw-api.org/mediator/finder?lang=I&amp;item=pub-mwbv_201906_2_VIDEO\" data-video=\"webpubvid://?pub=mwbv&amp;issue=201906&amp;track=2\">video</a> e trattalo con l&#x2019;uditorio.", 
+            "forStudent" : false, 
+            "isTalk" : false, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }
+        }, 
+        {
+            "_id" : ObjectId("5cde98272b0a190014a2463e"), 
+            "html" : "  <strong>Prima visita ulteriore </strong>(3&#xA0;min o meno) Usa la <a target=\"_blank\" class=\"it\" href=\"https://wol.jw.org/it/wol/tc/r6/lp-i/202019207/0\">conversazione modello</a>. (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019207/12/0\"><em>th </em>lezione&#xA0;6</a>)", 
+            "forStudent" : true, 
+            "isTalk" : false, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }
+        }, 
+        {
+            "_id" : ObjectId("5cde98272b0a190014a2463d"), 
+            "html" : "  <strong>Prima visita ulteriore </strong>(5&#xA0;min o meno) Inizia con la <a target=\"_blank\" class=\"it\" href=\"https://wol.jw.org/it/wol/tc/r6/lp-i/202019207/1\">conversazione modello</a>. Poi introduci il video <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/datalink/r6/lp-i?docid=502013341&amp;data-video=webpubvid%3A%2F%2F%2F%3Fpub%3Dwsb%26track%3D1\" class=\"fb\"><em>Perch&#xE9; studiare la Bibbia?</em></a> (senza farlo partire) e parlane con la persona. (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019207/14/0\"><em>th </em>lezione&#xA0;8</a>)", 
+            "forStudent" : true, 
+            "isTalk" : false, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }
+        }
+    ], 
+    "christianLivingPart" : [
+        {
+            "_id" : ObjectId("5cde98272b0a190014a24640"), 
+            "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019207/16/0\"><strong>Cosa ne pensa Geova?</strong></a><strong>&#x201D; </strong>(15&#xA0;min) Trattazione. Fai vedere il video <a target=\"_blank\" href=\"https://data.jw-api.org/mediator/finder?lang=I&amp;item=pub-jwbmw_201611_2_VIDEO\" data-video=\"webpubvid://?pub=jwbmw&amp;issue=201611&amp;track=2\"><em>Continuiamo a comprendere qual &#xE8; la volont&#xE0; di Geova </em>(Le 19:18)</a>.", 
+            "brother" : ObjectId("594bdb773545c51678fbad0d")
+        }
+    ], 
+    "congregationBibleStudy" : {
+        "brother" : null, 
+        "label" : "  <strong>Studio biblico di congregazione </strong>(30&#xA0;min) <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019207/17/0\"><em>jy </em>cap.&#xA0;71</a>", 
+        "reader" : null
+    }, 
+    "initialSong" : "  <a href=\"/it/wol/pc/r6/lp-i/202019207/0/0\">Cantico&#xA0;71</a> e preghiera", 
+    "finalSong" : "  <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019207/18/0\">Cantico&#xA0;34</a> e preghiera", 
+    "intervalSong" : "  <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019207/15/0\">Cantico&#xA0;135</a>", 
+    "__v" : NumberInt(0)
+}
+{ 
+    "_id" : ObjectId("5cde98272b0a190014a24641"), 
+    "bibleReading" : {
+        "primarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0)
+        }, 
+        "secondarySchool" : {
+            "student" : null, 
+            "updated" : false, 
+            "made" : NumberInt(0)
+        }, 
+        "label" : "  <strong>Lettura biblica </strong>(4&#xA0;min o meno) <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/bc/r6/lp-i/202019210/5/0\" data-bid=\"6-1\" class=\"b\">Flp 4:10-23</a> (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019210/7/0\"><em>th </em>lezione&#xA0;5</a>)"
+    }, 
+    "congregation" : ObjectId("59ad334be52d8108cc2ca573"), 
+    "date" : ISODate("2019-06-26T10:00:00.000+0000"), 
+    "completed" : false, 
+    "type" : {
+        "id" : NumberInt(0), 
+        "label" : "Adunanza normale", 
+        "meeting" : true, 
+        "disableSchool" : false, 
+        "withSupervisor" : true
+    }, 
+    "supervisor" : false, 
+    "primarySchool" : true, 
+    "secondarySchool" : true, 
+    "initialPrayer" : null, 
+    "finalPrayer" : null, 
+    "president" : null, 
+    "talk" : {
+        "brother" : null, 
+        "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019210/1/0\"><strong>Non siate in ansia per nessuna cosa</strong></a><strong>&#x201D; </strong>(10&#xA0;min)"
+    }, 
+    "gems" : {
+        "brother" : null, 
+        "label" : "  <strong>Scaviamo per trovare gemme spirituali </strong>(8&#xA0;min)"
+    }, 
+    "ministryPart" : [
+        {
+            "_id" : ObjectId("5cde98272b0a190014a24644"), 
+            "html" : "  <strong>Video della seconda visita ulteriore </strong>(5&#xA0;min) Fai vedere il <a target=\"_blank\" href=\"https://data.jw-api.org/mediator/finder?lang=I&amp;item=pub-mwbv_201906_3_VIDEO\" data-video=\"webpubvid://?pub=mwbv&amp;issue=201906&amp;track=3\">video</a> e trattalo con l&#x2019;uditorio.", 
+            "forStudent" : false, 
+            "isTalk" : false, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }
+        }, 
+        {
+            "_id" : ObjectId("5cde98272b0a190014a24643"), 
+            "html" : "  <strong>Seconda visita ulteriore </strong>(3&#xA0;min o meno) Usa la <a target=\"_blank\" class=\"it\" href=\"https://wol.jw.org/it/wol/tc/r6/lp-i/202019210/0\">conversazione modello</a>. (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019210/8/0\"><em>th </em>lezione&#xA0;4</a>)", 
+            "forStudent" : true, 
+            "isTalk" : false, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }
+        }, 
+        {
+            "_id" : ObjectId("5cde98272b0a190014a24642"), 
+            "html" : "  <strong>Studio biblico </strong>(5&#xA0;min o meno) <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019210/9/0\"><em>fg </em>lezione&#xA0;6 parr.&#xA0;3-4</a> (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019210/10/0\"><em>th </em>lezione&#xA0;8</a>)", 
+            "forStudent" : true, 
+            "isTalk" : false, 
+            "primarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }, 
+            "secondarySchool" : {
+                "student" : null, 
+                "assistant" : null, 
+                "updated" : false, 
+                "made" : NumberInt(0), 
+                "gender" : ""
+            }
+        }
+    ], 
+    "christianLivingPart" : [
+        {
+            "_id" : ObjectId("5cde98272b0a190014a24646"), 
+            "label" : "  <strong><em>Chi ha il controllo? Tu o i tuoi dispositivi? </em></strong>(5&#xA0;min) Fai vedere il <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/datalink/r6/lp-i?docid=502016296&amp;data-video=webpubvid%3A%2F%2F%2F%3Fdocid%3D502016296%26track%3D1\" class=\"fb\">video</a>. Poi rispondi alle seguenti domande: Perch&#xE9; i dispositivi elettronici sono utili? Quali effetti negativi ha la dipendenza dai dispositivi elettronici? Come puoi capire se hai sviluppato una dipendenza dai dispositivi elettronici? In quali modi pratici ci si pu&#xF2; &#x201C;[accertare] delle cose pi&#xF9; importanti&#x201D;? (<a target=\"_blank\" href=\"https://wol.jw.org/it/wol/bc/r6/lp-i/202019210/6/0\" data-bid=\"7-1\" class=\"b\">Flp 1:10</a>).", 
+            "brother" : ObjectId("594bdb043545c51678fbad09")
+        }, 
+        {
+            "_id" : ObjectId("5cde98272b0a190014a24645"), 
+            "label" : "  <strong>&#x201C;</strong><a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019210/13/0\"><strong>Scegli in modo saggio i divertimenti</strong></a><strong>&#x201D; </strong>(10&#xA0;min) Trattazione. Fai vedere il video <a target=\"_blank\" href=\"https://data.jw-api.org/mediator/finder?lang=I&amp;item=pub-jwb_201809_3_VIDEO\" data-video=\"webpubvid://?pub=jwb&amp;issue=201809&amp;track=3\"><em>Quali divertimenti dovrei scegliere?</em></a>", 
+            "brother" : ObjectId("594bdb553545c51678fbad0c")
+        }
+    ], 
+    "congregationBibleStudy" : {
+        "brother" : null, 
+        "label" : "  <strong>Studio biblico di congregazione </strong>(30&#xA0;min) <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019210/14/0\"><em>jy </em>cap.&#xA0;72</a>", 
+        "reader" : null
+    }, 
+    "initialSong" : "  <a href=\"/it/wol/pc/r6/lp-i/202019210/0/0\">Cantico&#xA0;33</a> e preghiera", 
+    "finalSong" : "  <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019210/15/0\">Cantico&#xA0;76</a> e preghiera", 
+    "intervalSong" : "  <a target=\"_blank\" href=\"https://wol.jw.org/it/wol/pc/r6/lp-i/202019210/11/0\">Cantico&#xA0;45</a>", 
+    "__v" : NumberInt(0)
+}
