@@ -31,3 +31,4 @@ testem.log
 db
 api/env.json
 data
+dump/**

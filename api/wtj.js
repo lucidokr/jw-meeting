@@ -23,6 +23,7 @@ router.route('/:year/:month/:dayStart')
                 fields: ['data'],
                 parse: function($) {
                     var r = function(string) {
+                        string.trim()
                         string = string.replace(new RegExp("<a ", 'g'), "<a target=\"_blank\" ");
                         string = string.replace(new RegExp("href=\"/", 'g'), "href=\"https://wol.jw.org/");
                         return string;
@@ -37,13 +38,19 @@ router.route('/:year/:month/:dayStart')
                       return result;
                     }
 
+                    var teasureOfGodsWord = $("#section2 ul:first > li")
                     var result = {
-                        talk: r($("#section2 #p6").html()),
-                        gems: r($("#section2 #p10").html()),
-                        bibleReading: r($("#section2 #p15").html())
+                      talk: null,
+                      gems: null,
+                      bibleReading: null
                     }
-                    result.initialSong = $("#section1 #p3").html();
+                    if(teasureOfGodsWord.length > 0){
+                      if(teasureOfGodsWord[0]) result.talk = r($(teasureOfGodsWord[0]).find("p:first").html())
+                      if(teasureOfGodsWord[1]) result.gems = r($(teasureOfGodsWord[1]).find("p:first").html())
+                      if(teasureOfGodsWord[2]) result.bibleReading = r($(teasureOfGodsWord[2]).find("p:first").html())
+                    }
 
+                    result.initialSong = $("#section1 #p3").html();
 
                     // AFTER 2019
                     var parts = $('#section3 p').map(function(val) {

@@ -208,7 +208,7 @@ var MAIL = {
 
           if (!data) {
               var data = {
-                congregation: congregation || "Scorzé",
+                  congregation: congregation || "Scorzé",
                   brother: brother || "Kristian Lucido",
                   assistant: assistant || "",
                   date: date || "10/10/17",
