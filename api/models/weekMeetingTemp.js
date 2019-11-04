@@ -11,6 +11,7 @@ var WeekMeetingTempSchema   = new Schema(
   primarySchool:Boolean,
   secondarySchool:Boolean,
   initialSong:String,
+  weeklyBibleReading:String,
   intervalSong:String,
   finalSong:String,
   initialPrayer: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},

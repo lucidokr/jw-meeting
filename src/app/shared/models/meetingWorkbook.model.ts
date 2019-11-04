@@ -6,6 +6,7 @@ export class MeetingWorkbook {
   bibleReading: string;
   isTalk: boolean;
   initialSong: string;
+  weeklyBibleReading: string;
   finalSong: string;
   intervalSong: string;
   ministryPart : any = [];

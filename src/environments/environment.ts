@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  url: "https://jw-meeting.herokuapp.com/api"
+  url: "http://localhost:3000/api"
 };

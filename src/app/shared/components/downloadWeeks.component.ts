@@ -121,7 +121,7 @@ export class DownloadWeeksDialog implements OnInit{
       doc.setTextColor(255, 255, 255)
         .setFontStyle("normal")
         .setFontSize(13);
-      this.centeredText(doc, week.date.format('dddd D MMMM YYYY'), row+5)
+      this.centeredText(doc, week.date.format('dddd D MMMM YYYY') + " - " + week.weeklyBibleReading, row+5)
       row = row -4;
       if(week.type.meeting && !week.supervisor){
         doc.setFontSize(9)
@@ -330,11 +330,14 @@ export class DownloadWeeksDialog implements OnInit{
       draft[cellRef].s = {alignment:{horizontal:'center'},font: {sz: 20, bold: true }};
 
       cellRef = XLSX.utils.encode_cell({r:countRow, c:7});
-      draft[cellRef] = {t: 's', v:week.date.format('DD/MM/YY')};
       // draft['!ref'] = XLSX.utils.encode_range(range);
 
       if(week.type.meeting && !week.supervisor){
 
+          draft[cellRef] = {t: 's', v:week.date.format('DD/MM/YY')};
+
+          cellRef = XLSX.utils.encode_cell({r:countRow, c:8});
+          draft[cellRef] = {t: 's', v:week.weeklyBibleReading};
     //
              countRow++;
 
@@ -472,6 +475,7 @@ export class DownloadWeeksDialog implements OnInit{
             if(draft[cellRef]) draft[cellRef] = {t: 's', v:this.getSurnameName(week.finalPrayer)};
 
       }else{
+        draft[cellRef] = {t: 's', v:week.date.format('DD/MM/YY')};
         countRow++;
 
         cellRef = XLSX.utils.encode_cell({r:countRow, c:0});

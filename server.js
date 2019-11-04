@@ -112,7 +112,7 @@ app.use(function(req, res, next) {
 
 // run();
 
-mongoose.connect(process.env.MONGO_DB_URI,{useNewUrlParser:true});
+mongoose.connect(process.env.MONGO_DB_URI,{ useNewUrlParser:true, useUnifiedTopology: true });
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ limit: '50mb' }));
 

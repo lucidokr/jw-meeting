@@ -10,6 +10,7 @@ var WeekMeetingSchema   = new Schema(
   supervisor: Boolean,
   primarySchool:Boolean,
   secondarySchool:Boolean,
+  weeklyBibleReading:String,
   initialSong:String,
   intervalSong:String,
   finalSong:String,

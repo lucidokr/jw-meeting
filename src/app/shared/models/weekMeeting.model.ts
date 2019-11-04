@@ -11,6 +11,7 @@ import { MinistryPart } from "./ministryPart.model";
     secondarySchool: boolean = true;
     initialPrayer: any = null;
     finalPrayer: any = null;
+    weeklyBibleReading: string = null;
     initialSong: string;
     finalSong: string;
     intervalSong: string;

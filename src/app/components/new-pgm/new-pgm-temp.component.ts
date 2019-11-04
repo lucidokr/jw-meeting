@@ -139,6 +139,7 @@ export class NewPgmTempComponent {
                 model.type = this.weekType.MEMORIAL;
               }else{
                 model.date = moment(dateArr[i]).add(user.congregation.meetingDay, 'd').add(12, 'h');
+                model.weeklyBibleReading = weekMeetingWorkbook.weeklyBibleReading;
                 model.initialSong = weekMeetingWorkbook.initialSong;
                 model.finalSong = weekMeetingWorkbook.finalSong;
                 model.intervalSong = weekMeetingWorkbook.intervalSong;
