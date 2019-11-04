@@ -23,13 +23,14 @@ router.route('/:year/:month/:dayStart')
                 fields: ['data'],
                 parse: function($) {
                     var r = function(string) {
+                      if(string){
                         string.trim()
                         string = string.replace(new RegExp("<a ", 'g'), "<a target=\"_blank\" ");
                         string = string.replace(new RegExp("href=\"/", 'g'), "href=\"https://wol.jw.org/");
-                        return string;
+                      }
+                      return string;
+
                     }
-                    console.log("section2: " + $("#section2").length);
-                    console.log("itemData: " + $(".itemData").html());
                     if($("#section2").length == 0 && $(".itemData").html().indexOf("Commemorazione") !== -1){
                       console.log("commemorazione");
                       result = {
@@ -38,22 +39,23 @@ router.route('/:year/:month/:dayStart')
                       return result;
                     }
 
-                    var teasureOfGodsWord = $("#section2 ul:first > li")
+                    var teasureOfGodsWord = $("#section2 .pGroup>ul>li")
                     var result = {
                       talk: null,
                       gems: null,
                       bibleReading: null
                     }
                     if(teasureOfGodsWord.length > 0){
-                      if(teasureOfGodsWord[0]) result.talk = r($(teasureOfGodsWord[0]).find("p:first").html())
-                      if(teasureOfGodsWord[1]) result.gems = r($(teasureOfGodsWord[1]).find("p:first").html())
-                      if(teasureOfGodsWord[2]) result.bibleReading = r($(teasureOfGodsWord[2]).find("p:first").html())
+                      if(teasureOfGodsWord[0]) result.talk = r($(teasureOfGodsWord[0]).find("p").first().html())
+                      if(teasureOfGodsWord[1]) result.gems = r($(teasureOfGodsWord[1]).find("p").first().html())
+                      if(teasureOfGodsWord[2]) result.bibleReading = r($(teasureOfGodsWord[2]).find("p").first().html())
                     }
 
+                    result.weeklyBibleReading = r($("#p2>a>strong").html());
                     result.initialSong = $("#section1 #p3").html();
 
                     // AFTER 2019
-                    var parts = $('#section3 p').map(function(val) {
+                    var parts = $('#section3 .pGroup>ul>li').map(function(val) {
                       return $(this).html();
                     }).get();
                     result.ministryPart = [];
