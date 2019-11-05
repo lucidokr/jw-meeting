@@ -565,6 +565,7 @@ export class NewPgmPreviewComponent implements OnInit{
     }
     var minLastDate = 60
     let that = this;
+    let errorToShow = false;
     function findweekMinistryPart(forced, minLastDate){
       for(let week of that.weeks) {
         for(let part of week.ministryPart){
@@ -573,8 +574,11 @@ export class NewPgmPreviewComponent implements OnInit{
       }
       let weeksCompleted = true;
       for(let week of that.weeks) {
-        if(!that.checkWeekCompletedAndRemove(week, week.ministryPart, 'student'))
+        if(!that.checkWeekCompletedAndRemove(week, week.ministryPart, 'student')){
           weeksCompleted = false;
+          errorToShow = true;
+        }
+
       }
       if(!weeksCompleted && minLastDate != 0)
         findweekMinistryPart(!forced, (forced ? minLastDate -30 : minLastDate))
@@ -582,146 +586,7 @@ export class NewPgmPreviewComponent implements OnInit{
 
     findweekMinistryPart(false, minLastDate)
 
-
-
-    /**FOURTH IMPLEMENTATION**/
-
-/*
-    let listBibleReading = [].concat(this.studentList)
-    .filter(brother => brother.student.bibleReadingEnabled && brother.student.lastDate.isBefore(moment(this.weeks[0].date).add(-30, "d")))
-    .sort((a:Brother,b:Brother) => {
-      if(!a.student.bibleReadingDate)
-        return -1;
-      if(a.student.bibleReadingDate.isAfter(b.student.bibleReadingDate))
-        return 1;
-      if(a.student.bibleReadingDate.isBefore(b.student.bibleReadingDate))
-        return -1;
-      return 0;
-      // return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)
-    });
-    for(let brother of listBibleReading) {
-      let partType = ["bibleReading"]
-      // .sort((a:string,b:string) => {return (moment(brother.student[a+"LastDate"]).isBefore(brother.student[b+"LastDate"]) ? -1 : 1)});
-      .sort((a:string,b:string) => {
-        if(!brother.student[a+"Date"])
-          return -1;
-        if(brother.student[a+"Date"].isAfter(brother.student[b+"Date"]))
-          return 1;
-        if(brother.student[a+"Date"].isBefore(brother.student[b+"Date"]))
-          return -1;
-        return 0;
-        // return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)
-      });
-      let inserted = false;
-      for(let part of partType){
-        if(!inserted){
-          for(let week of this.weeks) {
-            if(week.type.meeting && !week.supervisor && !week[part].video){
-              let arrChristianLivingPartBrother = [];
-              for (let part of week.christianLivingPart){
-                arrChristianLivingPartBrother.push(part.brother._id);
-              }
-              if(arrChristianLivingPartBrother.indexOf(brother._id) == -1 && brother._id != week.talk.brother._id && brother._id != week.gems.brother._id){
-                let lastSchoolPart = brother.student[partType + "LastSchool"];
-                if(!week[part].primarySchool.student && brother.student.primarySchoolEnabled &&
-                  ((week[part].primarySchool.gender != '' && brother.gender ==  week[part].primarySchool.gender) || week[part].primarySchool.gender == '' || part == CONST.BIBLE_READING)){
-                  if((!week.secondarySchool && !week.presentationExercise.enabled) || lastSchoolPart == 2 || !lastSchoolPart || week[part].secondarySchool.student){
-                    week[part].primarySchool.student = brother;
-                    brotherToIgnore.push(brother._id);
-                    inserted = true;
-                    break;
-                  }
-                }
-                if(week.secondarySchool
-                  && !week[part].secondarySchool.student
-                  // && (week[part].primarySchool.student && brother._id != week[part].primarySchool.student._id)
-                  && brother.student.secondarySchoolEnabled
-                  && ((week[part].secondarySchool.gender != '' && brother.gender ==  week[part].secondarySchool.gender) || week[part].secondarySchool.gender == '' || part == CONST.BIBLE_READING)){
-                  if(lastSchoolPart == 1 || !lastSchoolPart || week[part].primarySchool.student){
-                    week[part].secondarySchool.student = brother;
-                    brotherToIgnore.push(brother._id);
-                    inserted = true;
-                    break;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-
-    let list = [].concat(this.studentList)
-    .filter(brother => brotherToIgnore.indexOf(brother._id) == -1)
-    .sort((a:Brother,b:Brother) => {
-      if(!a.student.lastDate)
-        return -1;
-      if(a.student.lastDate.isAfter(b.student.lastDate))
-        return 1;
-      if(a.student.lastDate.isBefore(b.student.lastDate))
-        return -1;
-      return 0;
-      // return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)
-    });
-    for(let brother of list) {
-      let partType = [].concat(this.PART_TYPE)
-      .filter(part => brother.student[part+"Enabled"])
-      .sort((a:string,b:string) => {
-        if(!brother.student[a+"Date"])
-          return -1;
-        if(brother.student[a+"Date"].isAfter(brother.student[b+"Date"]))
-          return 1;
-        if(brother.student[a+"Date"].isBefore(brother.student[b+"Date"]))
-          return -1;
-        return 0;
-        // return (moment(a.student.lastDate).isBefore(b.student.lastDate) ? -1 : 1)
-      });
-      let inserted = false;
-      for(let part of partType){
-        if(!inserted){
-          for(let week of this.weeks) {
-            if(week.type.meeting && !week.supervisor && !week[part].video){
-              let arrChristianLivingPartBrother = [];
-              for (let part of week.christianLivingPart){
-                arrChristianLivingPartBrother.push(part.brother._id);
-              }
-              if(arrChristianLivingPartBrother.indexOf(brother._id) == -1 && brother._id != week.talk.brother._id && brother._id != week.gems.brother._id){
-                let lastSchoolPart = brother.student[partType + "LastSchool"];
-                if(!week[part].primarySchool.student && brother.student.primarySchoolEnabled &&
-                  ((week[part].primarySchool.gender != '' && brother.gender ==  week[part].primarySchool.gender) || week[part].primarySchool.gender == '' || part == CONST.BIBLE_READING)){
-                  if((!week.secondarySchool && !week.presentationExercise.enabled) || lastSchoolPart == 2 || !lastSchoolPart || week[part].secondarySchool.student){
-                    week[part].primarySchool.student = brother;
-                    brotherToIgnore.push(brother._id);
-                    inserted = true;
-                    break;
-                  }
-                }
-                if(week.secondarySchool
-                  && !week[part].secondarySchool.student
-                  && (week[part].primarySchool.student && brother._id != week[part].primarySchool.student._id)
-                  && brother.student.secondarySchoolEnabled
-                  && ((week[part].secondarySchool.gender != '' && brother.gender ==  week[part].secondarySchool.gender) || week[part].secondarySchool.gender == '' || part == CONST.BIBLE_READING)){
-                  if(lastSchoolPart == 1 || !lastSchoolPart || week[part].primarySchool.student){
-                    week[part].secondarySchool.student = brother;
-                    brotherToIgnore.push(brother._id);
-                    inserted = true;
-                    break;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-    let weeksCompleted = true;
-    for(let week of this.weeks) {
-      if(!this.checkWeekCompletedAndRemove(week, this.PART_TYPE_ALL, 'student'))
-        weeksCompleted = false;
-    }
-    */
-
-
+    /** ASSISTANT  **/
     for(let week of this.weeks) {
       if(week.type.meeting && !week.supervisor){
         let arrChristianLivingPartBrother = [];
@@ -749,8 +614,7 @@ export class NewPgmPreviewComponent implements OnInit{
             }
           }
           if(!this.checkWeekCompletedAndRemove(week, week.ministryPart, 'assistant')){
-            this.dialogService.showError("Attenzione per alcuni discorsi non sono riuscito a trovare un assistente dello stesso sesso! E' necessaria la modifica manuale").subscribe(res => {})
-
+            errorToShow = true;
           }
         }
 
@@ -782,6 +646,9 @@ export class NewPgmPreviewComponent implements OnInit{
         this.readerList = this.readerList.filter(brother => brother._id != week.congregationBibleStudy.reader._id);
         this.readerList.push(week.congregationBibleStudy.reader)
       }
+    }
+    if(errorToShow){
+      this.dialogService.showError("Attenzione per alcuni discorsi non sono riuscito a trovare uno studente o assistente disponibile! E' necessaria la modifica manuale.").subscribe(res => {})
     }
     this.loading = false;
     this.createIntervalSave();

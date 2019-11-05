@@ -40,7 +40,12 @@
                 <span fxFlex fxHide.gt-sm fxLayoutAlign="center center">Prima scuola</span>
                 <span fxFlex fxLayout="row" fxLayoutAlign="center center">
                   <div fxFlex fxLayoutAlign="center center">
-                    {{week.bibleReading.primarySchool.student.name}} {{week.bibleReading.primarySchool.student.surname}}&nbsp;
+                      <span *ngIf="week.bibleReading.primarySchool.student">
+                          {{week.bibleReading.primarySchool.student.name}} {{week.bibleReading.primarySchool.student.surname}}&nbsp;
+                      </span>
+                      <span *ngIf="!week.bibleReading.primarySchool.student">
+                        *** Non trovato ***
+                      </span>
                       <i *ngIf="edit" class="material-icons" (click)="change(week, week.bibleReading, 'student', 'bibleReading', 'primarySchool')">mode_edit</i>
                   </div>
                 </span>
@@ -49,7 +54,12 @@
                   <span fxFlex *ngIf="week.secondarySchool" fxHide.gt-sm fxLayoutAlign="center center">Seconda scuola</span>
                   <span fxFlex fxLayout="row" *ngIf="week.secondarySchool" fxLayoutAlign="center center">
                     <div fxFlex fxLayoutAlign="center center">
-                      {{week.bibleReading.secondarySchool.student.name}} {{week.bibleReading.secondarySchool.student.surname}}&nbsp;
+                        <span *ngIf="week.bibleReading.secondarySchool.student">
+                            {{week.bibleReading.secondarySchool.student.name}} {{week.bibleReading.secondarySchool.student.surname}}&nbsp;
+                        </span>
+                        <span *ngIf="!week.bibleReading.secondarySchool.student">
+                          *** Non trovato ***
+                        </span>
 
                       <i *ngIf="edit" class="material-icons" (click)="change(week, week.bibleReading, 'student', 'bibleReading', 'secondarySchool')">mode_edit</i>
                     </div>
@@ -66,7 +76,13 @@
                   <span fxFlex fxHide.gt-sm *ngIf="part.forStudent">Prima scuola</span>
                   <div fxFlex  fxLayout="column" fxlayoutAlign="center center" *ngIf="part.forStudent">
                     <div fxFlex class="{{edit ? checkBusyWeek(week, part['primarySchool'], 'student', true) : ''}}">
-                      {{part.primarySchool.student.name}} {{part.primarySchool.student.surname}}
+                      <span *ngIf="part.primarySchool.student">
+                        {{part.primarySchool.student.name}} {{part.primarySchool.student.surname}}
+                      </span>
+                      <span *ngIf="!part.primarySchool.student">
+                        *** Non trovato ***
+                      </span>
+
 
                       <i *ngIf="edit" class="material-icons" (click)="change(week, part, 'student', 'ministryPart', 'primarySchool')">mode_edit</i>
                     </div>
@@ -88,12 +104,17 @@
                   <span fxFlex *ngIf="week.secondarySchool && part.forStudent" fxHide.gt-sm>Seconda scuola</span>
                   <div fxFlex *ngIf="week.secondarySchool && part.forStudent" fxLayout="column" fxLayoutAlign="center center"  >
                     <div fxFlex class="{{edit ? checkBusyWeek(week, part['secondarySchool'], 'student', true) : ''}}">
-                      {{part.secondarySchool.student.name}} {{part.secondarySchool.student.surname}}
+                        <span *ngIf="part.secondarySchool.student">
+                          {{part.secondarySchool.student.name}} {{part.secondarySchool.student.surname}}
+                        </span>
+                        <span *ngIf="!part.secondarySchool.student">
+                          *** Non trovato ***
+                        </span>
 
                       <i *ngIf="edit" class="material-icons" (click)="change(week, part, 'student', 'ministryPart', 'secondarySchool')">mode_edit</i>
                     </div>
 
-                    <div fxFlex class="assistant {{edit ? checkBusyWeek(week, part['secondarySchool'], 'assistant', true) : ''}} {{edit ? checkBusyWeek(week, part['secondarySchool'], 'assistant', true) : ''}}" *ngIf="week.secondarySchool && !part.primarySchool.isTalk" >
+                    <div fxFlex class="assistant {{edit ? checkBusyWeek(week, part['secondarySchool'], 'assistant', true) : ''}} {{edit ? checkBusyWeek(week, part['secondarySchool'], 'assistant', true) : ''}}" *ngIf="week.secondarySchool && !part.isTalk" >
                       <span *ngIf="part.secondarySchool.assistant">
                         Ass.: {{part.secondarySchool.assistant.name}} {{part.secondarySchool.assistant.surname}}
                       </span>
