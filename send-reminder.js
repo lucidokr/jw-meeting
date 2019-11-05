@@ -3,7 +3,6 @@
 var Week = require('./api/models/weekMeeting');
 var Brother = require('./api/models/brother');
 var Student = require('./api/models/student');
-var Week = require('./api/models/week');
 const MONTH_NAMES = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
   "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
 ];
