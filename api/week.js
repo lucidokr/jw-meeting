@@ -368,6 +368,7 @@ router.route('/')
               }else {
                   var tempWeek = new Week(week);
                   tempWeek.completed = true;
+                  tempWeek.reminderSent = false;
                   tempWeek.congregation = req.decoded._doc.congregation;
                   try{
                     await tempWeek.save(opts)

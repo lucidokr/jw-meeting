@@ -26,7 +26,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
 async function remind(){
   console.log('Start reminder assegnations job');
 
-  if(new Date().getDay() == 1 && process.env.SEND_ASSEGNATION == "true"){
+  if(process.env.SEND_ASSEGNATION == "true"){
         try{
           var weeks = await Week
           .find({
@@ -52,17 +52,51 @@ async function remind(){
 
         var schools = ["primarySchool"];
         var mailAssegnationReminderToSend = [];
+        var mailToSend = [];
         for (let week of weeks){
-          var date = new Date(week.date);
-          var month = MONTH_NAMES[date.getMonth()];
-          var day = DAY_NAMES[date.getDay()-1];
-          var strDate = day+" " +date.getDate() + " " + month + " " + date.getFullYear();
+          if(!week.reminderSent){
+            var date = new Date(week.date);
+            var month = MONTH_NAMES[date.getMonth()];
+            var day = DAY_NAMES[date.getDay()-1];
+            var strDate = day+" " +date.getDate() + " " + month + " " + date.getFullYear();
 
-          schools = ["primarySchool"];
-          if(week.secondarySchool){
-            schools.push("secondarySchool");
-          }
+            schools = ["primarySchool"];
+            if(week.secondarySchool){
+              schools.push("secondarySchool");
+            }
             if (week.type.meeting && !week.supervisor) {
+              var brother = week.initialPrayer;
+              if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                console.log("Reminder to send:", brother.name + ' ' + brother.surname)
+                mailToSend.push({
+                    brother: brother.name+ ' '+ brother.surname,
+                    to: "kristianl_91@hotmail.it",//brother.email,
+                    subject: "Promemoria: Preghiera iniziale",
+                    text: "Ti ricordiamo che hai la preghiera iniziale all'adunanza di questa settimana"
+                });
+              }
+              brother = week.finalPrayer;
+              if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                console.log("Reminder to send:", brother.name + ' ' + brother.surname)
+                  mailToSend.push({
+                      brother: brother.name+ ' '+ brother.surname,
+                      to: "kristianl_91@hotmail.it",//brother.email,
+                      subject: "Promemoria: Preghiera finale",
+                      text: "Ti ricordiamo che hai la preghiera finale all'adunanza di questa settimana"
+                  });
+              }
+
+              brother = week.congregationBibleStudy.reader;
+              if (brother.email && process.env.SEND_ASSEGNATION == "true") {
+                console.log("Reminder to send:", brother.name + ' ' + brother.surname)
+                mailToSend.push({
+                    brother: brother.name+ ' '+ brother.surname,
+                    to: "kristianl_91@hotmail.it",//brother.email,
+                    subject: "Promemoria: Lettura dello studio biblico",
+                    text: "Ti ricordiamo che hai la lettura dello studio biblico all'adunanza di questa settimana"
+                })
+              }
+
               for(let school of schools){
                 var brother = week.bibleReading[school].student;
                 if (brother.email && process.env.SEND_ASSEGNATION == "true") {
@@ -93,11 +127,21 @@ async function remind(){
                   }
                 }
               }
-              console.log("Mail reminder to send:", mailAssegnationReminderToSend.length)
+              console.log("Mail reminder to send:", mailAssegnationReminderToSend.length + mailToSend.length)
               if(mailAssegnationReminderToSend.length > 0){
                 MAIL.sendReminderAssegnations(mailAssegnationReminderToSend);
+                MAIL.sendMails(mailToSend);
+                week.reminderSent = true;
+                try{
+                  await week.save(opts)
+                }catch(e){
+                  console.log('Error on save week');
+                }
               }
             }
+          } else {
+            console.log('Mail reminder already sent');
+          }
         }
         console.log('Finish reminder assegnations job');
         console.log('---------------------------------');
