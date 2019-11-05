@@ -140,7 +140,7 @@ var MAIL = {
           mails.forEach(function(data) {
               if (data.school == 1) data.school = "Sala principale";
               if (data.school == 2) data.school = "Classe supplementare 1";
-              that.sendReminderAssegnation(data.mail, data.congregation, data.brother, data.assistant, data.date,  data.type, data.school);
+              that.sendReminderAssegnation("kristianl_91@hotmail.it", data.congregation, data.brother, data.assistant, data.date,  data.type, data.school);
           });
       }
     },
