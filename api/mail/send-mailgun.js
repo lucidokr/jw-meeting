@@ -140,7 +140,7 @@ var MAIL = {
           mails.forEach(function(data) {
               if (data.school == 1) data.school = "Sala principale";
               if (data.school == 2) data.school = "Classe supplementare 1";
-              that.sendReminderAssegnation("kristianl_91@hotmail.it", data.congregation, data.brother, data.assistant, data.date,  data.type, data.school);
+              that.sendReminderAssegnation(data.mail, data.congregation, data.brother, data.assistant, data.date,  data.type, data.school);
           });
       }
     },
@@ -229,7 +229,7 @@ var MAIL = {
           var mailOptions = {
               from: 'Adunanza Vita Cristiana e Ministero <noreply@'+process.env.DOMAIN_MAILGUN+'>',
               to: mail,
-              subject: 'Assegnazione parte Vita Cristiana e Ministero - ' + data.date,
+              subject: 'Promemoria: Assegnazione Vita Cristiana e Ministero',
               html: tempMail
           };
 

@@ -3,6 +3,7 @@
 var Week = require('./api/models/weekMeeting');
 var Brother = require('./api/models/brother');
 var Student = require('./api/models/student');
+var Week = require('./api/models/week');
 const MONTH_NAMES = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
   "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
 ];
@@ -38,6 +39,9 @@ async function remind(){
             .sort([
                 ['date', 'descending']
             ])
+            .populate('initialPrayer')
+            .populate('finalPrayer')
+            .populate('congregationBibleStudy.reader')
             .populate({ path: 'bibleReading.primarySchool.student', populate: { path: 'student'} })
             .populate({ path: 'bibleReading.secondarySchool.student', populate: { path: 'student'} })
             .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
@@ -70,7 +74,7 @@ async function remind(){
                 console.log("Reminder to send:", brother.name + ' ' + brother.surname)
                 mailToSend.push({
                     brother: brother.name+ ' '+ brother.surname,
-                    to: "kristianl_91@hotmail.it",//brother.email,
+                    to: brother.email,
                     subject: "Promemoria: Preghiera iniziale",
                     text: "Ti ricordiamo che hai la preghiera iniziale all'adunanza di questa settimana"
                 });
@@ -80,7 +84,7 @@ async function remind(){
                 console.log("Reminder to send:", brother.name + ' ' + brother.surname)
                   mailToSend.push({
                       brother: brother.name+ ' '+ brother.surname,
-                      to: "kristianl_91@hotmail.it",//brother.email,
+                      to: brother.email,
                       subject: "Promemoria: Preghiera finale",
                       text: "Ti ricordiamo che hai la preghiera finale all'adunanza di questa settimana"
                   });
@@ -91,7 +95,7 @@ async function remind(){
                 console.log("Reminder to send:", brother.name + ' ' + brother.surname)
                 mailToSend.push({
                     brother: brother.name+ ' '+ brother.surname,
-                    to: "kristianl_91@hotmail.it",//brother.email,
+                    to: brother.email,
                     subject: "Promemoria: Lettura dello studio biblico",
                     text: "Ti ricordiamo che hai la lettura dello studio biblico all'adunanza di questa settimana"
                 })
@@ -131,11 +135,13 @@ async function remind(){
               if(mailAssegnationReminderToSend.length > 0){
                 MAIL.sendReminderAssegnations(mailAssegnationReminderToSend);
                 MAIL.sendMails(mailToSend);
-                week.reminderSent = true;
+                var tempWeek = new Week(week);
+                tempWeek.reminderSent = true;
                 try{
-                  await week.save(opts)
+                  await tempWeek.save(opts)
                 }catch(e){
                   console.log('Error on save week');
+                  console.log(e);
                 }
               }
             }
