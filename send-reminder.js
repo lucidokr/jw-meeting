@@ -137,7 +137,7 @@ async function remind(){
                 var tempWeek = new Week(week);
                 tempWeek.reminderSent = true;
                 try{
-                  await tempWeek.save(opts)
+                  await tempWeek.save()
                 }catch(e){
                   console.log('Error on save week');
                   console.log(e);
