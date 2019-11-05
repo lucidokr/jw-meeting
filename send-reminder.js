@@ -11,7 +11,7 @@ var MAIL = require('./api/mail/send-mailgun');
 var mongoose = require('mongoose')
 
 
-mongoose.connect(process.env.MONGO_DB_URI,{useNewUrlParser:true});
+mongoose.connect(process.env.MONGO_DB_URI,{useNewUrlParser:true, useUnifiedTopology: true});
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
     var config = require('./api/env.json')['development'];
@@ -35,8 +35,8 @@ async function remind(){
           var weeks = await Week
           .find({
             date:{
-              $gt: cutoff,
-              $lt: new Date()
+              $gte: new Date(new Date().getTime()-((new Date().getDay()-1)*24*60*60*1000)),
+              $lte: new Date(new Date().getTime()-((new Date().getDay()-7)*24*60*60*1000))
             }
           })
             .sort([
