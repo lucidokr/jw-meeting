@@ -18,6 +18,7 @@ var WeekMeetingSchema   = new Schema(
   finalPrayer: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
   president:{type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
   reminderSent: Boolean,
+  mailSent: Boolean,
   talk: {
     brother: {type: mongoose.Schema.Types.ObjectId, ref: 'Brother'},
     label: String
