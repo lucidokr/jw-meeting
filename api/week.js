@@ -21,14 +21,10 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
     process.env.SEND_ASSEGNATION = config.SEND_ASSEGNATION;
 }
 
-var templateMail = "";
-var transporter = null;
-
 const MONTH_NAMES = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
   "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
 ];
 
-const DAY_NAMES = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"];
 
 function sendEmailError(subject, err){
   var mailOptions = {
@@ -63,14 +59,6 @@ router.route('/')
         console.log('Start session');
         // const opts = { session };
         const opts = {  };
-        var congregationName = "";
-
-        if (req.decoded && req.decoded._doc && req.decoded._doc.congregation && req.decoded._doc.congregation.name)
-            congregationName = req.decoded._doc.congregation.name;
-
-
-        var mailAssegnationToSend = [];
-        var mailToSend = [];
 
         for (let week of req.body){
             if (week.type.meeting && !week.supervisor) {
@@ -138,10 +126,6 @@ router.route('/')
                 for (let brother of brothers){
                   var objToSave = [];
                   var date = new Date(week.date);
-                  // var strDate = date.toLocaleString("it-it", { month: "long" });
-                  var month = MONTH_NAMES[date.getMonth()];
-                  var day = DAY_NAMES[date.getDay()-1];
-                  var strDate = day+" " +date.getDate() + " " + month + " " + date.getFullYear();
 
                   if (brother.elder) {
                       if (brother._id == week.president._id) {
@@ -195,25 +179,9 @@ router.route('/')
                       if (brother._id == week.initialPrayer._id) {
                           brother.prayer.prevDate = brother.prayer.date;
                           brother.prayer.date = week.date;
-                          if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                              mailToSend.push({
-                                  brother: brother.name+ ' '+ brother.surname,
-                                  to: brother.email,
-                                  subject: "Preghiera iniziale - "+strDate,
-                                  text: "Ti è stata assegnata la preghiera iniziale dell'adunanza che si svolgerà il giorno " + strDate
-                              });
-                          }
                       }
 
                       if (brother._id == week.finalPrayer._id) {
-                          if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                              mailToSend.push({
-                                  brother: brother.name+ ' '+ brother.surname,
-                                  to: brother.email,
-                                  subject: "Preghiera finale - "+strDate,
-                                  text: "Ti è stata assegnata la preghiera finale dell'adunanza che si svolgerà il giorno " + strDate
-                              });
-                          }
                           brother.prayer.prevDate = brother.prayer.date;
                           brother.prayer.date = week.date;
                       }
@@ -224,14 +192,6 @@ router.route('/')
                       if (brother._id == week.congregationBibleStudy.reader._id) {
                           brother.reader.prevDate = brother.reader.date;
                           brother.reader.date = week.date;
-                          if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                            mailToSend.push({
-                                brother: brother.name+ ' '+ brother.surname,
-                                to: brother.email,
-                                subject: "Lettura dello studio biblico - "+strDate,
-                                text: "Ti è stata assegnata la lettura dello studio biblico dell'adunanza che si svolgerà il giorno " + strDate
-                            })
-                        }
                       }
 
                       objToSave.push(brother.reader)
@@ -250,16 +210,6 @@ router.route('/')
                           brother.student.bibleReadinglastPrevSchool = (brother.student.bibleReadingLastSchool == 1 ? 1 : 2);
                           brother.student.bibleReadingLastSchool = 1;
                           objToSave.push(brother.student);
-                          if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                              mailAssegnationToSend.push({
-                                mail: brother.email,
-                                congregation: congregationName,
-                                brother: brother.surname + ' ' + brother.name,
-                                assistant: null,
-                                type: week.bibleReading.label,
-                                school: brother.student.lastSchool,
-                                date: strDate })
-                          }
                       }
 
                       if (week.secondarySchool && brother._id == week.bibleReading.secondarySchool.student._id) {
@@ -273,18 +223,6 @@ router.route('/')
                           brother.student.bibleReadingLastSchool = 2;
                           // brother.student.bibleReadingPendingStudyNumber = brother.student.bibleReadingStudyNumber;
                           objToSave.push(brother.student)
-                          if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                              // console.log("Bible reading study number:"+ brother.student.bibleReadingPendingStudyNumber);
-                              mailAssegnationToSend.push({
-                                mail: brother.email,
-                                congregation: congregationName,
-                                brother: brother.surname + ' ' + brother.name,
-                                assistant: null,
-                                type: week.bibleReading.label,
-                                school: brother.student.lastSchool,
-                                date: week.date
-                              })
-                          }
                       }
                   }
 
@@ -314,18 +252,6 @@ router.route('/')
                             }
 
                             objToSave.push(brother.student);
-                              if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                                  console.log("Assistant:"+ part[school].assistant);
-                                  mailAssegnationToSend.push({
-                                    mail: brother.email,
-                                    congregation: congregationName,
-                                    brother: brother.name + ' ' + brother.surname,
-                                    assistant: (part[school].assistant ? '<h3>Assistente: '+part[school].assistant.surname + ' ' + part[school].assistant.name+'</h3>' : null),
-                                    type: part.html,
-                                    school: brother.student.lastSchool,
-                                    date: strDate
-                                  });
-                              }
                           }
                           if (!part.isTalk && brother._id == part[school].assistant._id && brother.student) {
                               brother.student.assistantDate = week.date;
@@ -369,6 +295,7 @@ router.route('/')
                   var tempWeek = new Week(week);
                   tempWeek.completed = true;
                   tempWeek.reminderSent = false;
+                  tempWeek.mailSent = false;
                   tempWeek.congregation = req.decoded._doc.congregation;
                   try{
                     await tempWeek.save(opts)
@@ -400,8 +327,6 @@ router.route('/')
 
 
 
-        MAIL.sendAssegnations(mailAssegnationToSend);
-        MAIL.sendMails(mailToSend);
         var date = new Date(req.body[0].date);
         var str = MONTH_NAMES[date.getMonth()] + " " + date.getFullYear();
         var strName = '';
