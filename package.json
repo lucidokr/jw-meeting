@@ -42,6 +42,8 @@
     "@types/node": "^6.0.42",
     "angular2-fontawesome": "^0.9.3",
     "angular2-masonry": "^0.4.0",
+    "ask-sdk": "^2.7.0",
+    "ask-sdk-express-adapter": "^2.0.0",
     "async": "^2.5.0",
     "body-parser": "^1.17.2",
     "bootstrap-sass": "^3.3.7",

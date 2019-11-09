@@ -14,6 +14,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
 
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var app = express();
+
 var staticRoot = __dirname + '/dist/';
 var router = express.Router();
 var bodyParser = require('body-parser');
@@ -130,6 +131,7 @@ router.use('/servant', require('./api/servant'));
 router.use('/wtj', require('./api/wtj'));
 router.use('/reader', require('./api/reader'));
 router.use('/congregation', require('./api/congregation'));
+router.use('/alexa', require('./api/alexa'));
 
 app.use('/api', router);
 
