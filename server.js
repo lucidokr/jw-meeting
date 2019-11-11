@@ -172,7 +172,7 @@ const PresidentIntentHandler = {
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
       && handlerInput.requestEnvelope.request.intent.name === 'PresidentIntent';
   },
-  handle(handlerInput) {
+  async handle(handlerInput) {
     try{
       var week = await Week
       .findOne({
