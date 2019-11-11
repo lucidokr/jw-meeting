@@ -154,7 +154,6 @@ const Alexa = require('ask-sdk-core');
 
 const LaunchRequestIntentHandler = {
   canHandle(handlerInput) {
-    console.log("LaunchRequest Handler")
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
@@ -170,7 +169,6 @@ const LaunchRequestIntentHandler = {
 
 const PresidentIntentHandler = {
   canHandle(handlerInput) {
-    console.log("President Handler")
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
       && handlerInput.requestEnvelope.request.intent.name === 'PresidentIntent';
   },
@@ -199,7 +197,6 @@ const PresidentIntentHandler = {
 
 const HelpIntentHandler = {
   canHandle(handlerInput) {
-    console.log("Help Handler")
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
       && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
   },
@@ -216,7 +213,6 @@ const HelpIntentHandler = {
 
 const CancelAndStopIntentHandler = {
   canHandle(handlerInput) {
-    console.log("CancelAndStop Handler")
     return handlerInput.requestEnvelope.request.type === 'IntentRequest'
       && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent'
         || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
@@ -234,7 +230,6 @@ const CancelAndStopIntentHandler = {
 
 const SessionEndedRequestHandler = {
   canHandle(handlerInput) {
-    console.log("SessionEnded Handler")
     return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
   },
   handle(handlerInput) {
@@ -246,7 +241,6 @@ const SessionEndedRequestHandler = {
 
 const ErrorHandler = {
   canHandle() {
-    console.log("Error Handler")
     return true;
   },
   handle(handlerInput, error) {
@@ -270,12 +264,6 @@ const skill = Alexa.SkillBuilders.custom()
 )
 .addErrorHandlers(ErrorHandler)
 .create();
-
-console.log(skill)
-
-const adapter = new expressAdapter.ExpressAdapter(skill, true, true);
-
-console.log(adapter)
 
 app.post('/alexa', function(req, res) {
 
