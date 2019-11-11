@@ -56,6 +56,7 @@ app.use(function(req, res, next) {
     var accept = req.accepts('html', 'json', 'xml');
     if (accept !== 'html') {
         if (req.url.indexOf('/login') != -1) return next();
+        if (req.url.indexOf('alexa') != -1) return next();
         var token = req.headers['x-access-token'];
 
         // decode token
