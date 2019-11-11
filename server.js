@@ -57,8 +57,6 @@ app.use(function(req, res, next) {
     if (accept !== 'html') {
         if (req.url.indexOf('/login') != -1) return next();
         if (req.url.indexOf('alexa') != -1){
-          console.log(req)
-          console.log(res)
           return next();
         }
         var token = req.headers['x-access-token'];
@@ -154,7 +152,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV != "development") {
 const expressAdapter = require('ask-sdk-express-adapter')
 const Alexa = require('ask-sdk-core');
 
-const LaunchRequestHandler = {
+const LaunchRequestIntentHandler = {
   canHandle(handlerInput) {
     console.log("LaunchRequest Handler")
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
@@ -251,7 +249,7 @@ const ErrorHandler = {
 
 const skill = Alexa.SkillBuilders.custom()
 .addRequestHandlers(
-  LaunchRequestHandler,
+  LaunchRequestIntentHandler,
   PresidentIntentHandler,
   HelpIntentHandler,
   CancelAndStopIntentHandler,
@@ -266,7 +264,35 @@ const adapter = new expressAdapter.ExpressAdapter(skill, true, true);
 
 console.log(adapter)
 
-app.post('/alexa', adapter.getRequestHandlers());
+app.post('/alexa', function(req, res) {
+
+  if (!skill) {
+
+    skill = Alexa.SkillBuilders.custom()
+    .addRequestHandlers(
+      LaunchRequestIntentHandler,
+      PresidentIntentHandler,
+      HelpIntentHandler,
+      CancelAndStopIntentHandler,
+      SessionEndedRequestHandler,
+    )
+    .addErrorHandlers(ErrorHandler)
+    .create();
+
+  }
+
+  skill.invoke(req.body)
+    .then(function(responseBody) {
+      res.json(responseBody);
+    })
+    .catch(function(error) {
+      console.log(error);
+      res.status(500).send('Error during the request');
+    });
+
+});
+
+// app.post('/alexa', adapter.getRequestHandlers());
 
 app.listen(app.get('port'), function() {
   console.log('app running on port', app.get('port'));
