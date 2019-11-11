@@ -131,14 +131,9 @@ router.use('/servant', require('./api/servant'));
 router.use('/wtj', require('./api/wtj'));
 router.use('/reader', require('./api/reader'));
 router.use('/congregation', require('./api/congregation'));
-router.use('/alexa', require('./api/alexa'));
+// router.use('/alexa', require('./api/alexa'));
 
 app.use('/api', router);
-
-app.listen(app.get('port'), function() {
-    console.log('app running on port', app.get('port'));
-});
-console.log('Magic happens on port ' + app.get('port'));
 
 if (process.env.NODE_ENV && process.env.NODE_ENV != "development") {
     var http = require("http");
@@ -147,91 +142,120 @@ if (process.env.NODE_ENV && process.env.NODE_ENV != "development") {
     }, 1500000);
 }
 
-// JOB FOR SEND ASSEGNATIONS
-/*
-if(process.env.SEND_ASSEGNATION == "true"){
-  console.log('Schedule reminder assegnations job');
-    var j = schedule.scheduleJob({hour: 10, minute: 41, dayOfWeek: 1}, async () => {
-      console.log('---------------------------------');
-      console.log('Start reminder assegnations job');
+/**
+ * ALEXA
+ */
 
-      try{
-        var cutoff = new Date();
-        cutoff.setDate(cutoff.getDate()-6);
-        var weeks = await Week
-        .find({
-          date:{
-            $gt: cutoff,
-            $lt: new Date()
-          }
-        })
-          .sort([
-              ['date', 'descending']
-          ])
-          .populate({ path: 'bibleReading.primarySchool.student', populate: { path: 'student'} })
-          .populate({ path: 'bibleReading.secondarySchool.student', populate: { path: 'student'} })
-          .populate({ path: 'ministryPart.primarySchool.student', populate: { path: 'student'} })
-          .populate({ path: 'ministryPart.secondarySchool.student', populate: { path: 'student'} })
-          .populate('ministryPart.secondarySchool.assistant')
-          .populate('ministryPart.primarySchool.assistant')
-      }catch(e){
-        console.log("Error on find weeks", e)
-        return;
-      }
-      console.log("Weeks found:", weeks.length)
+const expressAdapter = require('ask-sdk-express-adapter')
+const Alexa = require('ask-sdk-core');
 
-      var schools = ["primarySchool"];
-      var mailAssegnationReminderToSend = [];
-      for (let week of weeks){
-        var date = new Date(week.date);
-        var month = MONTH_NAMES[date.getMonth()];
-        var day = DAY_NAMES[date.getDay()-1];
-        var strDate = day+" " +date.getDate() + " " + month + " " + date.getFullYear();
+const LaunchRequestHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
+  },
+  handle(handlerInput) {
+    const speechText = 'Benvenuto nell\'applicazione Vita Cristiana e Ministero di Scorzé!';
 
-        schools = ["primarySchool"];
-        if(week.secondarySchool){
-          schools.push("secondarySchool");
-        }
-          if (week.type.meeting && !week.supervisor) {
-            for(let school of schools){
-              var brother = week.bibleReading[school].student;
-              if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                  console.log("Reminder to send:", brother.name + ' ' + brother.surname)
-                  mailAssegnationReminderToSend.push({
-                    mail: brother.email,
-                    brother: brother.name + ' ' + brother.surname,
-                    assistant: "",
-                    type: week.bibleReading.label,
-                    school: brother.student.lastSchool,
-                    date: strDate
-                  });
-              }
-              for(let part of week.ministryPart){
-                if(part.forStudent){
-                  var brother = part[school].student;
-                  if (brother.email && process.env.SEND_ASSEGNATION == "true") {
-                      console.log("Reminder to send:", brother.name + ' ' + brother.surname)
-                      mailAssegnationReminderToSend.push({
-                        mail: brother.email,
-                        brother: brother.name + ' ' + brother.surname,
-                        assistant: (part[school].assistant ? '<h3>Assistente: '+part[school].assistant.surname + ' ' + part[school].assistant.name+'</h3>' : null),
-                        type: part.html,
-                        school: brother.student.lastSchool,
-                        date: strDate
-                      });
-                  }
-                }
-              }
-            }
-            console.log("Mail reminder to send:", mailAssegnationReminderToSend.length)
-            if(mailAssegnationReminderToSend.length > 0){
-              MAIL.sendReminderAssegnations(mailAssegnationReminderToSend);
-            }
-          }
-      }
-      console.log('Finish reminder assegnations job');
-      console.log('---------------------------------');
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText)
+      .withSimpleCard('Hello World', speechText)
+      .getResponse();
+  }
+};
 
-    });
-}
-*/
+const PresidentIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'PresidentIntent';
+  },
+  handle(handlerInput) {
+    const speechText = 'Il presidente di questa settimana è: ';
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .withSimpleCard('Hello World', speechText)
+      .getResponse();
+  }
+};
+
+const HelpIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
+  },
+  handle(handlerInput) {
+    const speechText = 'Chiedimi una parte';
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText)
+      .withSimpleCard('Hello World', speechText)
+      .getResponse();
+  }
+};
+
+const CancelAndStopIntentHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
+      && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent'
+        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
+  },
+  handle(handlerInput) {
+    const speechText = 'Arrivederci!';
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .withSimpleCard('Hello World', speechText)
+      .withShouldEndSession(true)
+      .getResponse();
+  }
+};
+
+const SessionEndedRequestHandler = {
+  canHandle(handlerInput) {
+    return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
+  },
+  handle(handlerInput) {
+    //any cleanup logic goes here
+    return handlerInput.responseBuilder.getResponse();
+  }
+};
+
+
+const ErrorHandler = {
+  canHandle() {
+    return true;
+  },
+  handle(handlerInput, error) {
+    const speechText = 'Mi dispiace, non sonoriuscito a capire il comando. Prova a chiedermi nuovamente!';
+    console.log(`Error handled: ${error.message}`);
+
+    return handlerInput.responseBuilder
+      .speak(speechText)
+      .reprompt(speechText)
+      .getResponse();
+  },
+};
+
+const skill = Alexa.SkillBuilders.custom()
+.addRequestHandlers(
+  LaunchRequestHandler,
+  PresidentIntentHandler,
+  HelpIntentHandler,
+  CancelAndStopIntentHandler,
+  SessionEndedRequestHandler,
+)
+.addErrorHandlers(ErrorHandler)
+.create();
+
+const adapter = new expressAdapter.ExpressAdapter(skill, true, true);
+
+app.post('/alexa', adapter.getRequestHandlers());
+
+app.listen(app.get('port'), function() {
+  console.log('app running on port', app.get('port'));
+});
+console.log('Magic happens on port ' + app.get('port'));
+
+// app.listen(3000);
