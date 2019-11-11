@@ -260,6 +260,8 @@ const skill = Alexa.SkillBuilders.custom()
 .addErrorHandlers(ErrorHandler)
 .create();
 
+console.log(skill)
+
 const adapter = new expressAdapter.ExpressAdapter(skill, true, true);
 
 console.log(adapter)
