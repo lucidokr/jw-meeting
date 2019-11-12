@@ -290,7 +290,7 @@ app.post('/alexa', async function(req, res) {
     // await asyncVerifyRequestAndDispatch(req.headers, req.body, skill, verifiers);
   try {
     await new expressAdapter.SkillRequestSignatureVerifier().verify(JSON.stringify(req.body), req.headers);
-    await new expressAdapter.TimestampVerifier().verify(req.body);
+    await new expressAdapter.TimestampVerifier().verify(JSON.stringify(req.body));
 
     skill.invoke(req.body)
       .then(function(responseBody) {
