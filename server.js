@@ -301,6 +301,7 @@ app.post('/alexa', async function(req, res) {
         res.status(400).send('Error during the request');
       });
   } catch (err) {
+    console.log(err);
     res.status(400).send('Error during the request');
   }
 
