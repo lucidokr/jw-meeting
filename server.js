@@ -150,6 +150,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV != "development") {
  */
 
 const expressAdapter = require('ask-sdk-express-adapter')
+import { asyncVerifyRequestAndDispatch } from '../util';
 const Alexa = require('ask-sdk-core');
 // const { SkillRequestSignatureVerifier, TimestampVerifier } = require('ask-sdk-express-adapter');
 
@@ -269,37 +270,39 @@ const skill = Alexa.SkillBuilders.custom()
 
 app.post('/alexa', async function(req, res) {
 
-  if (!skill) {
+    if (!skill) {
+      skill = Alexa.SkillBuilders.custom()
+      .addRequestHandlers(
+        LaunchRequestIntentHandler,
+        PresidentIntentHandler,
+        HelpIntentHandler,
+        CancelAndStopIntentHandler,
+        SessionEndedRequestHandler,
+      )
+      .addErrorHandlers(ErrorHandler)
+      .create();
+    }
 
-    skill = Alexa.SkillBuilders.custom()
-    .addRequestHandlers(
-      LaunchRequestIntentHandler,
-      PresidentIntentHandler,
-      HelpIntentHandler,
-      CancelAndStopIntentHandler,
-      SessionEndedRequestHandler,
-    )
-    .addErrorHandlers(ErrorHandler)
-    .create();
-
-  }
-
-  // This code snippet assumes you have already consumed the request body as text and headers
+    // This code snippet assumes you have already consumed the request body as text and headers
+    // let verifiers = [
+    //   new SkillRequestSignatureVerifier(),
+    //   new TimestampVerifier()
+    // ]
+    // await asyncVerifyRequestAndDispatch(req.headers, req.body, skill, verifiers);
   try {
     await new expressAdapter.SkillRequestSignatureVerifier().verify(req.body, req.headers);
     await new expressAdapter.TimestampVerifier().verify(req.body);
 
     skill.invoke(req.body)
-    .then(function(responseBody) {
-      res.json(responseBody);
-    })
-    .catch(function(error) {
-      console.log(error);
-      res.status(500).send('Error during the request');
-    });
-
+      .then(function(responseBody) {
+        res.json(responseBody);
+      })
+      .catch(function(error) {
+        console.log(error);
+        res.status(400).send('Error during the request');
+      });
   } catch (err) {
-    res.status(500).send('Error during the request');
+    res.status(400).send('Error during the request');
   }
 
 
