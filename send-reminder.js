@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
 var Week = require('./api/models/weekMeeting');
+var Brother = require('./api/models/brother');
+var Prayer = require('./api/models/prayer');
+var Reader = require('./api/models/reader');
+var Student = require('./api/models/student');
 const MONTH_NAMES = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
   "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
 ];
@@ -22,6 +26,8 @@ mongoose.connect(process.env.MONGO_DB_URI,{useNewUrlParser:true, useUnifiedTopol
 
 // JOB FOR SEND ASSEGNATIONS
 async function sendMails(){
+
+  console.log('---------------------------------');
   console.log('Start send assegnations mail job');
 
   if(process.env.SEND_ASSEGNATION == "true"){
@@ -76,6 +82,7 @@ async function sendMails(){
               if (brother.email) {
                 console.log("Assegnation to send:", brother.name + ' ' + brother.surname)
                 mailToSend.push({
+                    congregation: congregationName,
                     brother: brother.name+ ' '+ brother.surname,
                     to: brother.email,
                     subject: "Preghiera iniziale - "+strDate,
@@ -86,6 +93,7 @@ async function sendMails(){
               if (brother.email) {
                 console.log("Assegnation to send:", brother.name + ' ' + brother.surname)
                   mailToSend.push({
+                    congregation: congregationName,
                     brother: brother.name+ ' '+ brother.surname,
                     to: brother.email,
                     subject: "Preghiera finale - "+strDate,
@@ -97,6 +105,7 @@ async function sendMails(){
               if (brother.email) {
                 console.log("Assegnation to send:", brother.name + ' ' + brother.surname)
                 mailToSend.push({
+                    congregation: congregationName,
                     brother: brother.name+ ' '+ brother.surname,
                     to: brother.email,
                     subject: "Lettura dello studio biblico - "+strDate,
@@ -159,16 +168,18 @@ async function sendMails(){
           }
         }
         console.log('Finish send assegnations mail job');
-        console.log('---------------------------------');
 
   }else{
    console.log('Finish send assegnations mail job: configuration not enabled');
   }
+  console.log('---------------------------------');
 }
 
 
 // JOB FOR SEND ASSEGNATIONS
 async function remind(){
+
+  console.log('---------------------------------');
   console.log('Start reminder assegnations job');
 
   if(process.env.SEND_ASSEGNATION == "true"){
@@ -201,6 +212,10 @@ async function remind(){
         var schools = ["primarySchool"];
         var mailAssegnationReminderToSend = [];
         var mailToSend = [];
+        var congregationName = "";
+          if (week.congregation && week.congregation.name)
+            congregationName = week.congregation.name;
+
         for (let week of weeks){
           if(!week.reminderSent){
             var date = new Date(week.date);
@@ -217,6 +232,7 @@ async function remind(){
               if (brother.email) {
                 console.log("Reminder to send:", brother.name + ' ' + brother.surname)
                 mailToSend.push({
+                    congregation: congregationName,
                     brother: brother.name+ ' '+ brother.surname,
                     to: brother.email,
                     subject: "Promemoria: Preghiera iniziale",
@@ -227,6 +243,7 @@ async function remind(){
               if (brother.email) {
                 console.log("Reminder to send:", brother.name + ' ' + brother.surname)
                   mailToSend.push({
+                      congregation: congregationName,
                       brother: brother.name+ ' '+ brother.surname,
                       to: brother.email,
                       subject: "Promemoria: Preghiera finale",
@@ -238,6 +255,7 @@ async function remind(){
               if (brother.email) {
                 console.log("Reminder to send:", brother.name + ' ' + brother.surname)
                 mailToSend.push({
+                    congregation: congregationName,
                     brother: brother.name+ ' '+ brother.surname,
                     to: brother.email,
                     subject: "Promemoria: Lettura dello studio biblico",
@@ -250,6 +268,7 @@ async function remind(){
                 if (brother.email) {
                     console.log("Reminder to send:", brother.name + ' ' + brother.surname)
                     mailAssegnationReminderToSend.push({
+                      congregation: congregationName,
                       mail: brother.email,
                       brother: brother.name + ' ' + brother.surname,
                       assistant: "",
@@ -264,6 +283,7 @@ async function remind(){
                     if (brother.email) {
                         console.log("Reminder to send:", brother.name + ' ' + brother.surname)
                         mailAssegnationReminderToSend.push({
+                          congregation: congregationName,
                           mail: brother.email,
                           brother: brother.name + ' ' + brother.surname,
                           assistant: (part[school].assistant ? '<h3>Assistente: '+part[school].assistant.surname + ' ' + part[school].assistant.name+'</h3>' : null),
@@ -298,11 +318,12 @@ async function remind(){
           }
         }
         console.log('Finish reminder assegnations job');
-        console.log('---------------------------------');
 
   }else{
    console.log('Finish reminder assegnations job: configuration not enabled');
   }
+
+  console.log('---------------------------------');
 }
 
 async function startJob(){

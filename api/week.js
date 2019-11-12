@@ -325,8 +325,6 @@ router.route('/')
         session.endSession();
         res.json({ success: true, message: 'All weeks updated!' });
 
-
-
         var date = new Date(req.body[0].date);
         var str = MONTH_NAMES[date.getMonth()] + " " + date.getFullYear();
         var strName = '';
