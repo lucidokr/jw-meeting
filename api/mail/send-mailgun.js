@@ -66,12 +66,12 @@ var MAIL = {
         if (list && list.length > 0) {
             var that = this;
             list.forEach(function(data) {
-                that.sendToEmailAddress(data.brother, data.subject, data.text, data.to)
+                that.sendToEmailAddress(data.brother, data.subject, data.text, data.to, data.congregation)
             });
         }
     },
 
-    sendToEmailAddress: function(brother, subject, text, to) {
+    sendToEmailAddress: function(brother, subject, text, to, congregation) {
 
         // if (!this.transporter) {
         //     this.createTransporter();
@@ -82,7 +82,7 @@ var MAIL = {
               from: 'Adunanza Vita Cristiana e Ministero <noreply@'+process.env.DOMAIN_MAILGUN+'>',
               to: to,
               subject: subject,
-              html: that.template.replace("{{brother}}", brother).replace("{{message}}", text),
+              html: that.template.replace("{{brother}}", brother).replace("{{message}}", text).replace("{{congregation}}", congregation),
           };
 
           if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
@@ -121,7 +121,7 @@ var MAIL = {
                         from: 'Adunanza Vita Cristiana e Ministero <noreply@'+process.env.DOMAIN_MAILGUN+'>',
                         to: arr.join(","),
                         subject: subject,
-                        html: that.template.replace("{{brother}}", "").replace("{{message}}", text),
+                        html: that.template.replace("{{brother}}", "").replace("{{message}}", text).replace("{{congregation}}",req.decoded._doc.congregation.name),
                     };
 
                       if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
