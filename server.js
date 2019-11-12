@@ -288,11 +288,8 @@ app.post('/alexa', async function(req, res) {
   try {
     await new expressAdapter.SkillRequestSignatureVerifier().verify(req.body, req.headers);
     await new expressAdapter.TimestampVerifier().verify(req.body);
-  } catch (err) {
-    res.status(500).send('Error during the request');
-  }
 
-  skill.invoke(req.body)
+    skill.invoke(req.body)
     .then(function(responseBody) {
       res.json(responseBody);
     })
@@ -300,6 +297,12 @@ app.post('/alexa', async function(req, res) {
       console.log(error);
       res.status(500).send('Error during the request');
     });
+
+  } catch (err) {
+    res.status(500).send('Error during the request');
+  }
+
+
 
 });
 
