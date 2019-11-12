@@ -150,7 +150,6 @@ if (process.env.NODE_ENV && process.env.NODE_ENV != "development") {
  */
 
 const expressAdapter = require('ask-sdk-express-adapter')
-import { asyncVerifyRequestAndDispatch } from '../util';
 const Alexa = require('ask-sdk-core');
 // const { SkillRequestSignatureVerifier, TimestampVerifier } = require('ask-sdk-express-adapter');
 
