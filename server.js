@@ -286,7 +286,7 @@ app.post('/alexa', async function(req, res) {
 
   // This code snippet assumes you have already consumed the request body as text and headers
   try {
-    await new expressAdapter.SkillRequestSignatureVerifier().verify(req.body, req.header);
+    await new expressAdapter.SkillRequestSignatureVerifier().verify(req.body, req.headers);
     await new expressAdapter.TimestampVerifier().verify(req.body);
   } catch (err) {
     res.status(500).send('Error during the request');
