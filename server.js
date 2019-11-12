@@ -151,6 +151,8 @@ if (process.env.NODE_ENV && process.env.NODE_ENV != "development") {
 
 const expressAdapter = require('ask-sdk-express-adapter')
 const Alexa = require('ask-sdk-core');
+// const { SkillRequestSignatureVerifier, TimestampVerifier } = require('ask-sdk-express-adapter');
+
 
 const LaunchRequestIntentHandler = {
   canHandle(handlerInput) {
@@ -280,6 +282,14 @@ app.post('/alexa', function(req, res) {
     .addErrorHandlers(ErrorHandler)
     .create();
 
+  }
+
+  // This code snippet assumes you have already consumed the request body as text and headers
+  try {
+    await new expressAdapter.SkillRequestSignatureVerifier().verify(req.body, req.header);
+    await new expressAdapter.TimestampVerifier().verify(req.body);
+  } catch (err) {
+    res.status(500).send('Error during the request');
   }
 
   skill.invoke(req.body)
