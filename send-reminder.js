@@ -310,7 +310,7 @@ async function remind(){
 }
 
 async function startJob(){
-  // await sendMails();
+  await sendMails();
   await remind()
 }
 
