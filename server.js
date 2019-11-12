@@ -267,7 +267,7 @@ const skill = Alexa.SkillBuilders.custom()
 .addErrorHandlers(ErrorHandler)
 .create();
 
-app.post('/alexa', function(req, res) {
+app.post('/alexa', async function(req, res) {
 
   if (!skill) {
 
