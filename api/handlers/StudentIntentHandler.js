@@ -38,7 +38,7 @@ module.exports = {
 
     for(var i = 0; i++; i < week.ministryPart.length){
       if(week.ministryPart[i].forStudent)
-        speechText += ';'+getPartTitle(week.ministryPart[i].html) + ": "+ week.ministryPart[i].primarySchool.student.name + week.ministryPart[i].primarySchool.student.surname
+        speechText += ', '+getPartTitle(week.ministryPart[i].html) + ": "+ week.ministryPart[i].primarySchool.student.name + week.ministryPart[i].primarySchool.student.surname
     }
     console.log(speechText);
 
