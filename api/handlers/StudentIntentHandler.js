@@ -32,7 +32,7 @@ module.exports = {
 
     week.ministryPart.forEach(function(part){
       if(part.forStudent){
-        speechText += ', '+getPartTitle(part.html) + ": "+ part.primarySchool.student.name + part.primarySchool.student.surname
+        speechText += ', '+getPartTitle(part.html) + ": "+ part.primarySchool.student.name +' '+ part.primarySchool.student.surname
       }
     });
 
