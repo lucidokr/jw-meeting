@@ -1,5 +1,6 @@
 
 const Week = require('../models/weekMeeting');
+const Student = require('../models/student');
 
 module.exports = {
   canHandle(handlerInput) {
@@ -36,10 +37,12 @@ module.exports = {
     console.log(week.ministryPart);
     console.log(week.ministryPart.length);
 
-    for(var i = 0; i++; i < week.ministryPart.length){
-      if(week.ministryPart[i].forStudent)
-        speechText += ', '+getPartTitle(week.ministryPart[i].html) + ": "+ week.ministryPart[i].primarySchool.student.name + week.ministryPart[i].primarySchool.student.surname
-    }
+    week.ministryPart.forEach(function(part){
+      if(part.forStudent){
+        speechText += ', '+getPartTitle(part.html) + ": "+ part.primarySchool.student.name + part.primarySchool.student.surname
+      }
+    });
+
     console.log(speechText);
 
     return handlerInput.responseBuilder
