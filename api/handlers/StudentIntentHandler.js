@@ -10,7 +10,7 @@ module.exports = {
   },
   async handle(handlerInput) {
     function getPartTitle(str){
-      return h2p(str).split(":")[0];
+      return h2p(str).split("(")[0];
     }
 
     try{
@@ -29,16 +29,12 @@ module.exports = {
       return;
     }
     let speechText = "Lettura biblica: "+ week.bibleReading.primarySchool.student.name +' '+ week.bibleReading.primarySchool.student.surname;
-    console.log(week.ministryPart);
-    console.log(week.ministryPart.length);
 
     week.ministryPart.forEach(function(part){
       if(part.forStudent){
         speechText += ', '+getPartTitle(part.html) + ": "+ part.primarySchool.student.name + part.primarySchool.student.surname
       }
     });
-
-    console.log(speechText);
 
     return handlerInput.responseBuilder
       .speak(speechText)
