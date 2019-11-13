@@ -24,7 +24,7 @@ module.exports = {
 
     return handlerInput.responseBuilder
       .speak(speechText)
-      .withSimpleCard('Lettore studio biblico di questa settimana', week.congregationBibleStudy.reader.name + ' ' + wweek.congregationBibleStudy.reader.surname)
+      .withSimpleCard('Lettore studio biblico di questa settimana', week.congregationBibleStudy.reader.name + ' ' + week.congregationBibleStudy.reader.surname)
       .getResponse();
   }
 };

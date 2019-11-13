@@ -32,9 +32,9 @@ module.exports = {
       console.log("Error on find weeks", e)
       return;
     }
-    let speechText = "Lettura biblica: "+ week.bibleReading.primarySchool.student.name + week.bibleReading.primarySchool.student.surname
-    for(var i = 0; i++; i < week.ministryPart){
-      speechText += getPartTitle(week.ministryPart[i].label) + ": "+ week.ministryPart[i].primarySchool.student.name + week.ministryPart[i].primarySchool.student.surname
+    let speechText = "Lettura biblica: "+ week.bibleReading.primarySchool.student.name +' '+ week.bibleReading.primarySchool.student.surname
+    for(var i = 0; i++; i < week.ministryPart.length){
+      speechText += ';'+getPartTitle(week.ministryPart[i].label) + ": "+ week.ministryPart[i].primarySchool.student.name + week.ministryPart[i].primarySchool.student.surname
     }
 
     return handlerInput.responseBuilder
