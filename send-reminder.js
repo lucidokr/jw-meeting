@@ -212,11 +212,11 @@ async function remind(){
         var schools = ["primarySchool"];
         var mailAssegnationReminderToSend = [];
         var mailToSend = [];
-        var congregationName = "";
-          if (week.congregation && week.congregation.name)
-            congregationName = week.congregation.name;
 
         for (let week of weeks){
+          var congregationName = "";
+          if (week.congregation && week.congregation.name)
+            congregationName = week.congregation.name;
           if(!week.reminderSent){
             var date = new Date(week.date);
             var month = MONTH_NAMES[date.getMonth()];
