@@ -52,6 +52,7 @@
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
     "he": "^1.1.1",
+    "html2plaintext": "^2.1.2",
     "jsonwebtoken": "^7.4.2",
     "jspdf": "^1.3.5",
     "mailcomposer": "^4.0.2",

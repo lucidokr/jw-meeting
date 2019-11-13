@@ -1,7 +1,7 @@
 
 const Week = require('../models/weekMeeting');
 const Student = require('../models/student');
-const he = require('he');
+var h2p = require('html2plaintext')
 
 module.exports = {
   canHandle(handlerInput) {
@@ -10,13 +10,7 @@ module.exports = {
   },
   async handle(handlerInput) {
     function getPartTitle(str){
-      var html = he.decode(str);
-      html = html.split("(")[0];
-      var div = document.createElement("div");
-      div.innerHTML = html;
-      var newstr = div.textContent || div.innerText || "";
-      newstr = newstr.substr(0, newstr.length-1);
-      return newstr.trim();
+      return h2p(str).split(":")[0];
     }
 
     try{
