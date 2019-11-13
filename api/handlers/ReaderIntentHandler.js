@@ -20,7 +20,7 @@ module.exports = {
       return;
     }
 
-    const speechText = 'Il lettore dello studio biblico di questa settimana è: ' +week.congregationBibleStudy.reader.name + ' ' + wweek.congregationBibleStudy.reader.surname;
+    const speechText = 'Il lettore dello studio biblico di questa settimana è: ' +week.congregationBibleStudy.reader.name + ' ' + week.congregationBibleStudy.reader.surname;
 
     return handlerInput.responseBuilder
       .speak(speechText)
