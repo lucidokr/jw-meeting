@@ -3,7 +3,7 @@ module.exports = {
     return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
   },
   handle(handlerInput) {
-    const speechText = 'Benvenuto nell\'applicazione JW Meeting!';
+    const speechText = 'Benvenuto nel programma adunanza Vita Cristiana e Ministero!';
 
     return handlerInput.responseBuilder
       .speak(speechText)
