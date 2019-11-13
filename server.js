@@ -162,6 +162,19 @@ const PresidentIntentHandler = require('./api/handlers/PresidentIntentHandler.js
 const ReaderIntentHandler = require('./api/handlers/ReaderIntentHandler.js');
 const StudentIntentHandler = require('./api/handlers/StudentIntentHandler.js');
 
+const skill = Alexa.SkillBuilders.custom()
+.addRequestHandlers(
+  LaunchRequestIntentHandler,
+  PresidentIntentHandler,
+  ReaderIntentHandler,
+  StudentIntentHandler,
+  HelpIntentHandler,
+  CancelAndStopIntentHandler,
+  SessionEndedRequestHandler,
+)
+.addErrorHandlers(ErrorHandler)
+.create();
+
 app.post('/alexa', async function(req, res) {
 
     if (!skill) {
