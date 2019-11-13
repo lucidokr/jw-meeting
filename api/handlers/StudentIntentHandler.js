@@ -1,7 +1,7 @@
 
 const Week = require('../models/weekMeeting');
 const Student = require('../models/student');
-import * as he from 'he';
+const he = require('he');
 
 module.exports = {
   canHandle(handlerInput) {
