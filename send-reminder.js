@@ -123,7 +123,7 @@ async function sendMails(){
                       brother: brother.name + ' ' + brother.surname,
                       assistant: "",
                       type: week.bibleReading.label,
-                      school: brother.student.lastSchool,
+                      school: (brother.student ? brother.student.lastSchool : 1),
                       date: strDate
                     });
                 }
@@ -138,7 +138,7 @@ async function sendMails(){
                           brother: brother.name + ' ' + brother.surname,
                           assistant: (part[school].assistant ? '<h3>Assistente: '+part[school].assistant.surname + ' ' + part[school].assistant.name+'</h3>' : null),
                           type: part.html,
-                          school: brother.student.lastSchool,
+                          school: (brother.student ? brother.student.lastSchool : 1),
                           date: strDate
                         });
                     }
@@ -273,7 +273,7 @@ async function remind(){
                       brother: brother.name + ' ' + brother.surname,
                       assistant: "",
                       type: week.bibleReading.label,
-                      school: brother.student.lastSchool,
+                      school: (brother.student ? brother.student.lastSchool : 1),
                       date: strDate
                     });
                 }
@@ -288,7 +288,7 @@ async function remind(){
                           brother: brother.name + ' ' + brother.surname,
                           assistant: (part[school].assistant ? '<h3>Assistente: '+part[school].assistant.surname + ' ' + part[school].assistant.name+'</h3>' : null),
                           type: part.html,
-                          school: brother.student.lastSchool,
+                          school: (brother.student ? brother.student.lastSchool : 1),
                           date: strDate
                         });
                     }
