@@ -153,113 +153,21 @@ const expressAdapter = require('ask-sdk-express-adapter')
 const Alexa = require('ask-sdk-core');
 // const { SkillRequestSignatureVerifier, TimestampVerifier } = require('ask-sdk-express-adapter');
 
-
-const LaunchRequestIntentHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'LaunchRequest';
-  },
-  handle(handlerInput) {
-    const speechText = 'Benvenuto nell\'applicazione Vita Cristiana e Ministero di Scorzé!';
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
-      .getResponse();
-  }
-};
-
-const PresidentIntentHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'PresidentIntent';
-  },
-  async handle(handlerInput) {
-    try{
-      var week = await Week
-      .findOne({
-        date:{
-          $gte: new Date(new Date().getTime()-((new Date().getDay()-1)*24*60*60*1000)),
-          $lte: new Date(new Date().getTime()-((new Date().getDay()-7)*24*60*60*1000))
-        }
-      }).populate('president')
-    }catch(e){
-      console.log("Error on find weeks", e)
-      return;
-    }
-
-    const speechText = 'Il presidente di questa settimana è: ' +week.president.name + ' ' + week.president.surname;
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .withSimpleCard('Hello World', speechText)
-      .getResponse();
-  }
-};
-
-const HelpIntentHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && handlerInput.requestEnvelope.request.intent.name === 'AMAZON.HelpIntent';
-  },
-  handle(handlerInput) {
-    const speechText = 'Chiedimi una parte';
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .withSimpleCard('Hello World', speechText)
-      .getResponse();
-  }
-};
-
-const CancelAndStopIntentHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'IntentRequest'
-      && (handlerInput.requestEnvelope.request.intent.name === 'AMAZON.CancelIntent'
-        || handlerInput.requestEnvelope.request.intent.name === 'AMAZON.StopIntent');
-  },
-  handle(handlerInput) {
-    const speechText = 'Arrivederci!';
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .withSimpleCard('Hello World', speechText)
-      .withShouldEndSession(true)
-      .getResponse();
-  }
-};
-
-const SessionEndedRequestHandler = {
-  canHandle(handlerInput) {
-    return handlerInput.requestEnvelope.request.type === 'SessionEndedRequest';
-  },
-  handle(handlerInput) {
-    //any cleanup logic goes here
-    return handlerInput.responseBuilder.getResponse();
-  }
-};
-
-
-const ErrorHandler = {
-  canHandle() {
-    return true;
-  },
-  handle(handlerInput, error) {
-    const speechText = 'Mi dispiace, non sonoriuscito a capire il comando. Prova a chiedermi nuovamente!';
-    console.log(`Error handled: ${error.message}`);
-
-    return handlerInput.responseBuilder
-      .speak(speechText)
-      .reprompt(speechText)
-      .getResponse();
-  },
-};
+const LaunchRequestIntentHandler = require('./api/handlers/LaunchRequestIntentHandler.js');
+const HelpIntentHandler = require('./api/handlers/HelpIntentHandler.js');
+const CancelAndStopIntentHandler = require('./api/handlers/CancelAndStopIntentHandler.js');
+const SessionEndedRequestHandler = require('./api/handlers/SessionEndedRequestHandler.js');
+const ErrorHandler = require('./api/handlers/ErrorHandler.js');
+const PresidentIntentHandler = require('./api/handlers/PresidentIntentHandler.js');
+const ReaderIntentHandler = require('./api/handlers/ReaderIntentHandler.js');
+const StudentIntentHandler = require('./api/handlers/StudentIntentHandler.js');
 
 const skill = Alexa.SkillBuilders.custom()
 .addRequestHandlers(
   LaunchRequestIntentHandler,
   PresidentIntentHandler,
+  ReaderIntentHandler,
+  StudentIntentHandler,
   HelpIntentHandler,
   CancelAndStopIntentHandler,
   SessionEndedRequestHandler,
@@ -274,6 +182,8 @@ app.post('/alexa', async function(req, res) {
       .addRequestHandlers(
         LaunchRequestIntentHandler,
         PresidentIntentHandler,
+        ReaderIntentHandler,
+        StudentIntentHandler,
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
@@ -281,13 +191,6 @@ app.post('/alexa', async function(req, res) {
       .addErrorHandlers(ErrorHandler)
       .create();
     }
-
-    // This code snippet assumes you have already consumed the request body as text and headers
-    // let verifiers = [
-    //   new SkillRequestSignatureVerifier(),
-    //   new TimestampVerifier()
-    // ]
-    // await asyncVerifyRequestAndDispatch(req.headers, req.body, skill, verifiers);
   try {
     await new expressAdapter.SkillRequestSignatureVerifier().verify(JSON.stringify(req.body), req.headers);
     await new expressAdapter.TimestampVerifier().verify(JSON.stringify(req.body));
@@ -308,8 +211,6 @@ app.post('/alexa', async function(req, res) {
 
 
 });
-
-// app.post('/alexa', adapter.getRequestHandlers());
 
 app.listen(app.get('port'), function() {
   console.log('app running on port', app.get('port'));
