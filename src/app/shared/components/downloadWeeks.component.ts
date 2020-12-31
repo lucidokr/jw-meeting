@@ -610,8 +610,13 @@ export class DownloadWeeksDialog implements OnInit{
 
   public getSongNumber(str : string){
     let songArr = str.split(">");
-    let temp = songArr[1].split("<");
-    // let str2 = he.decode(temp[0]);
+    let songStr = "";
+    for(var i=0; i<songArr.length; i++){
+      if(songArr[i].indexOf("Cantico") != -1){
+        songStr = songArr[i]
+      }
+    }
+    let temp = songStr.split("<");
     return temp[0].replace("&#xA0;",' ').replace("Cantico ", '');
   }
 
