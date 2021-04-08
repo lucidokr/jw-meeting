@@ -1,6 +1,7 @@
 import { DateAdapter, MdDateFormats } from '@angular/material';
 import { isMoment, Moment } from 'moment';
 import * as moment from 'moment';
+import { Injectable } from "@angular/core";
 
 export const MOMENT_DATE_FORMATS: MdDateFormats = {
   parse: {
@@ -19,6 +20,7 @@ for (let date = 1; date <= 31; date ++) {
   dateNames.push(String(date));
 }
 
+@Injectable()
 export class MomentDateAdapter extends DateAdapter<Moment> {
 
   private localeData = moment.localeData();

@@ -30,12 +30,9 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
-  {
-    path: '',
+  { path: '',
     redirectTo: '/home',
-    pathMatch: 'full',
-    canActivate: [AuthGuard]
-  },
+    pathMatch: 'full' },
   {
     path: 'home',
     component: HomeComponent,
@@ -109,4 +106,4 @@ export const routes: Routes = [
 
 ];
 
-export const routing = RouterModule.forRoot(routes);
+export const routing = RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' });
