@@ -77,7 +77,6 @@
     "zone.js": "^0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1102.8",
     "@types/jasmine": "2.5.38",
     "gulp": "^3.9.1",
     "jasmine-core": "2.5.2",
