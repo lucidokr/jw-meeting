@@ -63,10 +63,10 @@ router.route('/:year/:month/:dayStart')
                       var forStudent = true, isTalk = false;
                       var partHtml = r(parts[i]);
                       var partHtmlTitle = partHtml.split("(")[0].toLowerCase();
-                      if(partHtmlTitle.indexOf("video") != -1 || partHtmlTitle.indexOf("applicati") != -1)
+                      if(partHtmlTitle.indexOf("video") != -1 || partHtmlTitle.indexOf("applicati") != -1 || partHtml.indexOf("Trattazione") != -1 )
                         forStudent = false;
 
-                      if(partHtmlTitle.indexOf("discorso") != -1)
+                      if(partHtmlTitle.indexOf("discorso") != -1 || partHtml.indexOf("Trattazione") != -1 )
                         isTalk = true;
 
                       result.ministryPart.push({html: partHtml, forStudent: forStudent, isTalk: isTalk});

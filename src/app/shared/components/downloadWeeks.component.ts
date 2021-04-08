@@ -648,7 +648,12 @@ export class DownloadWeeksDialog implements OnInit{
     let div = document.createElement("div");
     div.innerHTML = html;
     str = div.textContent || div.innerText || "";
-    return str.split("(th")[1].split(")")[0].trim().toUpperCase();;
+    let arrStr = str.split("(th");
+    if(arrStr.length > 1){
+      return arrStr[1].split(")")[0].trim().toUpperCase();;
+    }else{
+      return ''
+    }
   }
 
   public delete_row = (ws, row_index) => {
