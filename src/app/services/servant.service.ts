@@ -6,11 +6,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpInterceptor} from "../shared/http-interceptor.service";
 import {environment} from "../../environments/environment";
-import {Prayer} from "../shared/models/prayer.model";
-import {MdDialog} from "@angular/material";
-import {Servant} from "../shared/models/servant.model";
-
-import * as moment from 'moment';
 import {Brother} from "../shared/models/brother.model";
 
 @Injectable()

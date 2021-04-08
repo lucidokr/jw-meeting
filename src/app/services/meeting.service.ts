@@ -6,9 +6,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpInterceptor} from "../shared/http-interceptor.service";
 import {environment} from "../../environments/environment";
-import {Prayer} from "../shared/models/prayer.model";
-import {MdDialog} from "@angular/material";
-import {Brother} from "../shared/models/brother.model";
 import {WeekMeeting} from "../shared/models/weekMeeting.model";
 
 

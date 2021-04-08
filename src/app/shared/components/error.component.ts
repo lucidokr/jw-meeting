@@ -1,7 +1,7 @@
 /**
  * Created by lucidokr on 19/06/17.
  */
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Component } from '@angular/core';
 
 @Component({
@@ -22,7 +22,7 @@ export class ErrorDialog {
 
   message:string;
 
-  constructor(public dialogRef: MdDialogRef<ErrorDialog>) {
+  constructor(public dialogRef: MatDialogRef<ErrorDialog>) {
   }
 
 

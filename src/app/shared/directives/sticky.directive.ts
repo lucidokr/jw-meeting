@@ -1,5 +1,5 @@
 import {Directive, ElementRef, HostListener, Input, Inject} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, fromEvent} from 'rxjs';
 
 @Directive({
     selector: '[sticky]'
@@ -16,7 +16,7 @@ export class StickyDirective {
     }
 
     subscribeForScrollEvent() {
-      let obs = Observable.fromEvent(window, 'scroll');
+      let obs = fromEvent(window, 'scroll');
       obs.subscribe((e) => this.handleScrollEvent(e));
         // var obs = Observable.fromEvent(window, 'scroll');
         // obs.subscribe((e) => this.handleScrollEvent(e));

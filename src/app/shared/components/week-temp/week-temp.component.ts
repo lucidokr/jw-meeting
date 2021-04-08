@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnChanges, SimpleChange} from '@angular/core';
 import {Router} from "@angular/router";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 import {LocalDataSource} from "ng2-smart-table";
 import {WeekMeeting} from "../../models/weekMeeting.model";
 import {DialogService} from "../../../services/dialog.service";
@@ -30,7 +30,7 @@ export class WeekTempComponent{
   public elderList: Array<Brother>;
   public elderListFiltered: Array<Brother>;
 
-  public snackBarConfig : MdSnackBarConfig = new MdSnackBarConfig();
+  public snackBarConfig : MatSnackBarConfig = new MatSnackBarConfig();
 
   public loading: boolean = false;
   public edited: boolean = false;
@@ -39,7 +39,7 @@ export class WeekTempComponent{
                      private servantService:ServantService,
                      private elderService:ElderService,
                       private meetingService: MeetingService,
-                      private snackBar: MdSnackBar) {
+                      private snackBar: MatSnackBar) {
 
     this.snackBarConfig.duration = 3000;
   }

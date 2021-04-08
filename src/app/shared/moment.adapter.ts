@@ -1,9 +1,9 @@
-import { DateAdapter, MdDateFormats } from '@angular/material';
+import { DateAdapter, MatDateFormats } from '@angular/material/datepicker';
 import { isMoment, Moment } from 'moment';
 import * as moment from 'moment';
 import { Injectable } from "@angular/core";
 
-export const MOMENT_DATE_FORMATS: MdDateFormats = {
+export const MOMENT_DATE_FORMATS: MatDateFormats = {
   parse: {
     dateInput: 'll'
   },

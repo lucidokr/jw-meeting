@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 import {HttpInterceptor} from "../shared/http-interceptor.service";
 import {environment} from "../../environments/environment";
 import {Prayer} from "../shared/models/prayer.model";
-import {MdDialog, MdDialogRef} from "@angular/material";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {NewPrayerDialog} from "../components/prayer/new/new-prayer";
 import {Servant} from "../shared/models/servant.model";
 import {NewServantDialog} from "../components/servant/new/new-servant";
@@ -28,13 +28,13 @@ import {ChangePartDialog} from "../shared/components/changePart.component";
 @Injectable()
 export class DialogService {
   constructor(
-    private dialog: MdDialog
+    private dialog: MatDialog
   ) {
   }
 
   public confirm(message:string): Observable<Servant> {
 
-    let dialogRef: MdDialogRef<ConfirmDialog>;
+    let dialogRef: MatDialogRef<ConfirmDialog>;
 
     dialogRef = this.dialog.open(ConfirmDialog);
     dialogRef.componentInstance.message = message;
@@ -44,7 +44,7 @@ export class DialogService {
 
   public showError(message: string): Observable<any> {
 
-    let dialogRef: MdDialogRef<ErrorDialog>;
+    let dialogRef: MatDialogRef<ErrorDialog>;
 
     dialogRef = this.dialog.open(ErrorDialog);
     dialogRef.componentInstance.message = message;
@@ -54,7 +54,7 @@ export class DialogService {
 
   public openPrayer(brother:Brother, edit:boolean): Observable<Prayer> {
 
-    let dialogRef: MdDialogRef<NewPrayerDialog>;
+    let dialogRef: MatDialogRef<NewPrayerDialog>;
 
     dialogRef = this.dialog.open(NewPrayerDialog);
     dialogRef.componentInstance.brother = brother;
@@ -65,7 +65,7 @@ export class DialogService {
 
   public openServant(brother:Brother, edit:boolean): Observable<Servant> {
 
-    let dialogRef: MdDialogRef<NewServantDialog>;
+    let dialogRef: MatDialogRef<NewServantDialog>;
 
     dialogRef = this.dialog.open(NewServantDialog);
     dialogRef.componentInstance.brother = brother;
@@ -76,7 +76,7 @@ export class DialogService {
 
   public openStudent(brother:Brother, edit:boolean): Observable<Student> {
 
-    let dialogRef: MdDialogRef<NewStudentDialog>;
+    let dialogRef: MatDialogRef<NewStudentDialog>;
 
     dialogRef = this.dialog.open(NewStudentDialog);
     dialogRef.componentInstance.brother = brother;
@@ -87,7 +87,7 @@ export class DialogService {
 
   public openElder(brother:Brother, edit:boolean): Observable<Brother> {
 
-    let dialogRef: MdDialogRef<NewElderDialog>;
+    let dialogRef: MatDialogRef<NewElderDialog>;
 
     dialogRef = this.dialog.open(NewElderDialog);
     dialogRef.componentInstance.brother = brother;
@@ -98,7 +98,7 @@ export class DialogService {
 
   public openBrother(brother:Brother, edit:boolean): Observable<Brother> {
 
-    let dialogRef: MdDialogRef<NewBrotherDialog>;
+    let dialogRef: MatDialogRef<NewBrotherDialog>;
 
     dialogRef = this.dialog.open(NewBrotherDialog);
     dialogRef.componentInstance.brother = brother || new Brother();
@@ -109,7 +109,7 @@ export class DialogService {
 
   public openReader(brother:Brother, edit:boolean): Observable<Brother> {
 
-    let dialogRef: MdDialogRef<NewReaderDialog>;
+    let dialogRef: MatDialogRef<NewReaderDialog>;
 
     dialogRef = this.dialog.open(NewReaderDialog);
     dialogRef.componentInstance.brother = brother || new Brother();
@@ -119,7 +119,7 @@ export class DialogService {
   }
 
   public openDownloadWeeksDialog(weeks: Array<WeekMeeting>, fromCreate: Boolean, format: string): Observable<void>{
-    let dialogRef: MdDialogRef<DownloadWeeksDialog>;
+    let dialogRef: MatDialogRef<DownloadWeeksDialog>;
 
     dialogRef = this.dialog.open(DownloadWeeksDialog);
     dialogRef.componentInstance.weeks = weeks;
@@ -130,7 +130,7 @@ export class DialogService {
   }
 
   public openChangePart(part: any, list: Array<Brother>, t: string): Observable<void>{
-    let dialogRef: MdDialogRef<ChangePartDialog>;
+    let dialogRef: MatDialogRef<ChangePartDialog>;
 
     dialogRef = this.dialog.open(ChangePartDialog);
     dialogRef.componentInstance.part = part;

@@ -3,7 +3,7 @@ import {Router, ActivatedRoute} from "@angular/router";
 import {DialogService} from "../../../services/dialog.service";
 import {EmitterService} from "../../../services/emitter.service";
 import {DateRenderComponent} from "../../../shared/components/dateRender.component";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {GeneralListComponent} from "../../../shared/components/list.component";
 import {StudentService} from "../../../services/student.service";
 import {Student} from "../../../shared/models/student.model";
@@ -41,7 +41,7 @@ export class StudentDetailComponent extends GeneralListComponent{
                            public router:Router,
                            public route:ActivatedRoute,
                            public emitterService: EmitterService,
-                           public snackBar: MdSnackBar) {
+                           public snackBar: MatSnackBar) {
     super(dialogService, router, snackBar);
 
     this.service = historyService;

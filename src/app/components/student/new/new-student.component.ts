@@ -1,4 +1,4 @@
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import {Component, OnInit} from '@angular/core';
 import {Student} from "../../../shared/models/student.model";
 import {Brother} from "../../../shared/models/brother.model";
@@ -85,7 +85,7 @@ export class NewStudentDialog implements OnInit{
     }
   }
 
-  constructor(public dialogRef: MdDialogRef<NewStudentDialog>, private brotherService:BrotherService) {
+  constructor(public dialogRef: MatDialogRef<NewStudentDialog>, private brotherService:BrotherService) {
     // this.studyNumberService.get()
       // .subscribe(list => this.studyNumberList = list)
   }

@@ -4,7 +4,7 @@ import {Router} from "@angular/router";
 import {DialogService} from "../../../services/dialog.service";
 import {EmitterService} from "../../../services/emitter.service";
 import {DateRenderComponent} from "../../../shared/components/dateRender.component";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {BooleanRenderComponent} from "../../../shared/components/booleanRender.component";
 import {GeneralListComponent} from "../../../shared/components/list.component";
 import {Elder} from "../../../shared/models/elder.model";
@@ -62,7 +62,7 @@ export class MeetingListComponent extends GeneralListComponent{
                            public router:Router,
                            public emitterService: EmitterService,
                            public authService: AuthService,
-                           public snackBar: MdSnackBar) {
+                           public snackBar: MatSnackBar) {
     super(dialogService, router, snackBar);
 
     this.user = authService.getUser();

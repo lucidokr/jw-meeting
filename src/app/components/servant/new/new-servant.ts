@@ -1,4 +1,4 @@
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Component } from '@angular/core';
 import {Prayer} from "../../../shared/models/prayer.model";
 import {Servant} from "../../../shared/models/servant.model";
@@ -91,7 +91,7 @@ export class NewServantDialog {
   public edit: boolean;
   public loading;
 
-  constructor(public dialogRef: MdDialogRef<NewServantDialog>, private brotherService:BrotherService) {
+  constructor(public dialogRef: MatDialogRef<NewServantDialog>, private brotherService:BrotherService) {
 
 
   }

@@ -1,4 +1,4 @@
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import {Component, OnInit} from '@angular/core';
 import {WeekMeeting} from "../models/weekMeeting.model";
 import * as moment from 'moment';
@@ -45,7 +45,7 @@ export class DownloadWeeksDialog implements OnInit{
   public dateArr: Array<any> = []
 
 
-  constructor(public dialogRef: MdDialogRef<DownloadWeeksDialog>, private meetingService:MeetingService, private router:Router) {
+  constructor(public dialogRef: MatDialogRef<DownloadWeeksDialog>, private meetingService:MeetingService, private router:Router) {
     // this.xls = XLSX.readFile('http://localhost:4200/assets/xls/pgm-vcm.xlsx')
 
   }

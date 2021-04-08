@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnChanges, SimpleChange, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 import {DialogService} from "../../services/dialog.service";
 import {LocalDataSource} from "ng2-smart-table";
 import {WeekMeeting} from "../models/weekMeeting.model";
@@ -23,9 +23,9 @@ export class WeekUpdateComponent implements OnInit{
   public CONST = CONST;
   public PART_TYPE = CONST_ARR.PART_TYPE;
   public SCHOOLS = CONST_ARR.SCHOOLS;
-  public snackBarConfig : MdSnackBarConfig = new MdSnackBarConfig();
+  public snackBarConfig : MatSnackBarConfig = new MatSnackBarConfig();
 
-  public constructor(private meetingService: MeetingService, private snackBar:MdSnackBar, private dialogService:DialogService) {
+  public constructor(private meetingService: MeetingService, private snackBar:MatSnackBar, private dialogService:DialogService) {
 
 
   }

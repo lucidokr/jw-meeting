@@ -1,4 +1,4 @@
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import {Component, OnInit} from '@angular/core';
 import {Brother} from "../../../shared/models/brother.model";
 import {BrotherService} from "../../../services/brother.service";
@@ -55,7 +55,7 @@ export class NewReaderDialog implements OnInit{
   public edit: boolean;
   public loading;
 
-  constructor(public dialogRef: MdDialogRef<NewReaderDialog>, private brotherService:BrotherService) {
+  constructor(public dialogRef: MatDialogRef<NewReaderDialog>, private brotherService:BrotherService) {
 
 
   }

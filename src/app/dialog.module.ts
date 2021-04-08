@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {MdButtonModule, MdInputModule, MdDatepickerModule, MdCheckboxModule, MdRadioModule, MdSidenavModule, MdSelectModule, MdCardModule, MdAutocompleteModule, MdTabsModule} from '@angular/material';
+import {MatButtonModule, MatInputModule, MatDatepickerModule, MatCheckboxModule, MatRadioModule, MatSidenavModule, MatSelectModule, MatCardModule, MatAutocompleteModule, MatTabsModule} from '@angular/material';
 
 import {NewPrayerDialog} from "./components/prayer/new/new-prayer";
 import {NewServantDialog} from "./components/servant/new/new-servant";
@@ -37,7 +37,7 @@ import {PipeModule} from "./pipe.module";
   ],
   imports: [
     BrowserModule,
-    MdButtonModule, MdInputModule, MdDatepickerModule, MdCheckboxModule, MdRadioModule, MdSidenavModule, MdSelectModule, MdCardModule, MdAutocompleteModule, MdTabsModule,
+    MatButtonModule, MatInputModule, MatDatepickerModule, MatCheckboxModule, MatRadioModule, MatSidenavModule, MatSelectModule, MatCardModule, MatAutocompleteModule, MatTabsModule,
     FormsModule,
     FlexLayoutModule,
     PipeModule

@@ -2,27 +2,16 @@
  * Created by lucidokr on 06/04/17.
  */
 
-import { Injectable } from '@angular/core';
-import {
-  HttpClient,
-  RequestOptions,
-  RequestOptionsArgs,
-  Response,
-  Headers,
-  Request, XHRBackend, ConnectionBackend, URLSearchParams
-} from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/Rx';
-import * as moment from 'moment';
-import {Router} from "@angular/router";
-
-
+ import { Injectable } from '@angular/core';
+ import { HttpInterceptor, HttpEvent, HttpResponse, HttpRequest, HttpHandler } from '@angular/common/http';
+ import { Observable } from 'rxjs';
+ 
 @Injectable()
-export class HttpInterceptor extends HttpClient {
+export class MyInterceptor extends HttpInterceptor {
 
   sessionId : string;
   constructor(backend: XHRBackend, defaultOptions: RequestOptions, private router: Router) {
-    super(backend, defaultOptions);
+    super(backend, defaultOptions, router);
 
   }
 
@@ -62,6 +51,10 @@ export class HttpInterceptor extends HttpClient {
   loadingModal : any = null;
   authCount: number = 0;
   authCountMax : number = 3;
+
+  intercept(httpRequest: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(httpRequest);
+  }
 
   intercept(callback: any, url: string | Request, body: string, options?: RequestOptionsArgs): Observable<any> {
 
@@ -127,6 +120,6 @@ export class HttpInterceptor extends HttpClient {
 
 }
 
-export function HttpInterceptorFactory(connectionBackend: XHRBackend, requestOptions: RequestOptions, router:Router): Http {
+export function HttpInterceptorFactory(connectionBackend: XHRBackend, requestOptions: RequestOptions, router:Router): HttpClient {
   return new HttpInterceptor(connectionBackend, requestOptions, router);
 }

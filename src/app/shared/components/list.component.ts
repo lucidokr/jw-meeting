@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 import {DialogService} from "../../services/dialog.service";
 import {LocalDataSource} from "ng2-smart-table";
 
@@ -43,12 +43,12 @@ export class GeneralListComponent {
   source: any = new LocalDataSource(this.data);
   loading: boolean;
 
-  snackBarConfig : MdSnackBarConfig = new MdSnackBarConfig();
+  snackBarConfig : MatSnackBarConfig = new MatSnackBarConfig();
 
   public constructor(
                             public dialogService: DialogService,
                            public router:Router,
-                           public snackBar: MdSnackBar) {
+                           public snackBar: MatSnackBar) {
 
     this.snackBarConfig.duration = 3000;
 

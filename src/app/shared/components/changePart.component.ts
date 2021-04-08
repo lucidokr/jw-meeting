@@ -1,4 +1,4 @@
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import {Component, OnInit} from '@angular/core';
 import {Brother} from "../models/brother.model";
 
@@ -37,7 +37,7 @@ export class ChangePartDialog implements OnInit{
   public newBrother: Brother;
 
 
-  constructor(public dialogRef: MdDialogRef<ChangePartDialog> ) {
+  constructor(public dialogRef: MatDialogRef<ChangePartDialog> ) {
 
   }
 

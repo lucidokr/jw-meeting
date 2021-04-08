@@ -5,9 +5,9 @@ import { FormsModule } from '@angular/forms';
 import {HttpClientModule, RequestOptions, XHRBackend} from '@angular/http';
 import {routing, RootComponent} from './routes';
 import {
-  MdButtonModule, MdInputModule, MdDatepickerModule, MdCheckboxModule, MdRadioModule, MdSidenavModule,
-  MdSelectModule, MdCardModule, MdAutocompleteModule, MdTabsModule, MdIconModule, MdNativeDateModule, MdSnackBarModule,
-  MdSlideToggleModule, DateAdapter, MD_DATE_FORMATS, MdGridListModule, MdProgressBarModule
+  MdButtonModule, MatInputModule, MatDatepickerModule, MatCheckboxModule, MatRadioModule, MatSidenavModule,
+  MdSelectModule, MatCardModule, MatAutocompleteModule, MatTabsModule, MatIconModule, MatNativeDateModule, MatSnackBarModule,
+  MdSlideToggleModule, DateAdapter, MD_DATE_FORMATS, MatGridListModule, MatProgressBarModule
 } from '@angular/material';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -85,7 +85,7 @@ import {PipeModule} from "./pipe.module";
     FormsModule,
     routing,
     HttpClientModule,
-    MdButtonModule, MdInputModule, MdDatepickerModule, MdCheckboxModule, MdRadioModule, MdSidenavModule, MdSelectModule, MdCardModule, MdAutocompleteModule, MdTabsModule, MdIconModule, MdNativeDateModule, MdSnackBarModule, MdSlideToggleModule, MdGridListModule, MdProgressBarModule,
+    MdButtonModule, MatInputModule, MatDatepickerModule, MatCheckboxModule, MatRadioModule, MatSidenavModule, MatSelectModule, MatCardModule, MatAutocompleteModule, MatTabsModule, MatIconModule, MatNativeDateModule, MatSnackBarModule, MatSlideToggleModule, MatGridListModule, MatProgressBarModule,
     DialogModule,
     FlexLayoutModule,
     Ng2SmartTableModule,

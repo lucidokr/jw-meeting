@@ -1,4 +1,4 @@
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Component } from '@angular/core';
 import {Prayer} from "../../../shared/models/prayer.model";
 import {Elder} from "../../../shared/models/elder.model";
@@ -52,7 +52,7 @@ export class NewBrotherDialog {
   public brother: Brother;
   public edit: boolean;
 
-  constructor(public dialogRef: MdDialogRef<NewBrotherDialog>) {
+  constructor(public dialogRef: MatDialogRef<NewBrotherDialog>) {
 
   }
 }

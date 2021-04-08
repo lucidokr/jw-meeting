@@ -7,7 +7,7 @@ import {WeekMeeting} from "../../shared/models/weekMeeting.model";
 import {EmitterService} from "../../services/emitter.service";
 import {NewPgmService} from "../../services/new-pgm.service";
 import {AuthService} from "../../services/auth.service";
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 import {USER_ROLE} from "../../constant";
 import {User} from "../../shared/models/user.model";
 
@@ -22,11 +22,11 @@ export class NewPgmComponent {
   public user : User;
   public USER_ROLE = USER_ROLE;
 
-  snackBarConfig : MdSnackBarConfig = new MdSnackBarConfig();
+  snackBarConfig : MatSnackBarConfig = new MatSnackBarConfig();
 
 
   constructor(private router:Router,
-              private snackBar:MdSnackBar,
+              private snackBar:MatSnackBar,
               private emitterService:EmitterService,
               private newPgmService: NewPgmService,
               private authService: AuthService) {

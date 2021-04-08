@@ -6,12 +6,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {HttpInterceptor} from "../shared/http-interceptor.service";
 import {environment} from "../../environments/environment";
-import {Prayer} from "../shared/models/prayer.model";
-import {MdDialog} from "@angular/material";
-import {Elder} from "../shared/models/elder.model";
 import {Brother} from "../shared/models/brother.model";
-import {Student} from "../shared/models/student.model";
-import {StudentService} from "./student.service";
 
 var ObjectId = function(str){return {_id:str}}
 var ISODate = function(str){return str}

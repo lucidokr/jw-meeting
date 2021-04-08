@@ -2,7 +2,8 @@ import {Component, Input, OnInit, EventEmitter, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {StudentService} from "../../services/student.service";
 import * as moment from 'moment';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import {map} from 'rxjs/operators';
 
 import "rxjs/add/operator/timeout";
 import {WeekMeeting} from "../../shared/models/weekMeeting.model";
@@ -96,13 +97,13 @@ export class NewPgmPreviewComponent implements OnInit{
   ngOnInit(){
     this.loading = true;
     let arr = [
-      this.prayerService.get().map(json => {return {type:'prayer', data:json}}),
-      this.elderService.get().map(json => {return {type:'elder', data:json}}),
-      this.servantService.get().map(json => {return {type:'servant', data:json}}),
-      this.studentService.get().map(json => {return {type:'student', data:json}}),
-      this.readerService.get().map(json => {return {type:'reader', data:json}})
+      this.prayerService.get().pipe(map(json => {return {type:'prayer', data:json}})),
+      this.elderService.get().pipe(map(json => {return {type:'elder', data:json}})),
+      this.servantService.get().pipe(map(json => {return {type:'servant', data:json}})),
+      this.studentService.get().pipe(map(json => {return {type:'student', data:json}})),
+      this.readerService.get().pipe(map(json => {return {type:'reader', data:json}}))
     ];
-    Observable.forkJoin(arr)
+    forkJoin(arr)
       .subscribe((res:any)=> {
         this.meetingService.get().subscribe(meetings => {
           this.sortAndFind(res, meetings)

@@ -1,6 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnChanges, SimpleChange} from '@angular/core';
 import {Router} from "@angular/router";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {DialogService} from "../../services/dialog.service";
 import {LocalDataSource} from "ng2-smart-table";
 import {WeekMeeting} from "../models/weekMeeting.model";

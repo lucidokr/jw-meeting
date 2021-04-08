@@ -6,7 +6,7 @@ import {WTJService} from "../../services/wtj.service";
 import {WeekMeeting} from "../../shared/models/weekMeeting.model";
 import {EmitterService} from "../../services/emitter.service";
 import {NewPgmService} from "../../services/new-pgm.service";
-import {Observable} from "rxjs";
+import {Observable, forkJoin} from "rxjs";
 import {Brother} from "../../shared/models/brother.model";
 import {ElderService} from "../../services/elder.service";
 import {ServantService} from "../../services/servant.service";
@@ -182,7 +182,7 @@ export class NewPgmTempComponent {
           this.elderService.get(),
           this.servantService.get()
         ];
-        Observable.forkJoin(obsArr).subscribe(res => {
+        forkJoin(obsArr).subscribe(res => {
           let list = res[0].concat(res[1]);
           list = list.sort((a:any,b:any) => {
             let objA : any = a.elder || a.servant;

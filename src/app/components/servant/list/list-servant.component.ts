@@ -6,7 +6,7 @@ import {ServantService} from "../../../services/servant.service";
 import {Servant} from "../../../shared/models/servant.model";
 import {EmitterService} from "../../../services/emitter.service";
 import {DateRenderComponent} from "../../../shared/components/dateRender.component";
-import {MdSnackBar} from "@angular/material";
+import {MatSnackBar} from "@angular/material/snack-bar";
 import {BooleanRenderComponent} from "../../../shared/components/booleanRender.component";
 import {GeneralListComponent} from "../../../shared/components/list.component";
 
@@ -60,7 +60,7 @@ export class ServantListComponent extends GeneralListComponent{
                            public dialogService: DialogService,
                            public router:Router,
                            public emitterService: EmitterService,
-                           public snackBar: MdSnackBar) {
+                           public snackBar: MatSnackBar) {
     super(dialogService, router, snackBar);
 
     this.service = servantService;

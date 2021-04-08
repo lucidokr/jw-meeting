@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { Congregation } from 'app/shared/models/congregation.model';
 import { EmitterService } from 'app/services/emitter.service';
 import { CongregationService } from 'app/services/congregation.service';
-import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -15,11 +15,11 @@ import { MdSnackBar, MdSnackBarConfig } from '@angular/material';
 export class SettingsComponent{
   public days = []
   public congregation: Congregation = null;
-  public snackBarConfig : MdSnackBarConfig = new MdSnackBarConfig();
+  public snackBarConfig : MatSnackBarConfig = new MatSnackBarConfig();
 
 
   constructor(private emitterService: EmitterService,private congregationService:CongregationService,
-    public snackBar: MdSnackBar) {
+    public snackBar: MatSnackBar) {
     this.days = moment.weekdays(true)
     this.congregation = JSON.parse(localStorage.getItem("user")).congregation;
 

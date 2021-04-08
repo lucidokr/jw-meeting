@@ -1,7 +1,7 @@
 /**
  * Created by lucidokr on 19/06/17.
  */
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Component } from '@angular/core';
 
 @Component({
@@ -23,6 +23,6 @@ export class ConfirmDialog {
 
   message: string = "Confermi?";
 
-  constructor(public dialogRef: MdDialogRef<ConfirmDialog>) {
+  constructor(public dialogRef: MatDialogRef<ConfirmDialog>) {
   }
 }

@@ -3,7 +3,8 @@
  */
 import {Injectable} from '@angular/core';
 
-import {Observable} from 'rxjs';
+import {Observable, forkJoin} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {HttpInterceptor} from "../shared/http-interceptor.service";
 import {MeetingWorkbook} from "../shared/models/meetingWorkbook.model";
 import {environment} from "../../environments/environment";
@@ -45,7 +46,7 @@ export class WTJService {
     for(let date of dates){
       obsArr.push(this.getMeetingWorkbook(date))
     }
-    return Observable.forkJoin(obsArr).map((res: Array<MeetingWorkbook>) => {
+    return forkJoin(obsArr).pipe(map((res: Array<MeetingWorkbook>) => {
       let flagValid = true;
       if(res && res.length > 0){
         res.forEach(function(r){
@@ -58,7 +59,7 @@ export class WTJService {
         return res;
       else
         return null;
-      });
+      }));
   }
 
 

@@ -1,4 +1,4 @@
-import { MdDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import {Component, OnInit} from '@angular/core';
 import {Prayer} from "../../../shared/models/prayer.model";
 import {Elder} from "../../../shared/models/elder.model";
@@ -126,7 +126,7 @@ export class NewElderDialog implements OnInit{
   public edit: boolean;
   public loading;
 
-  constructor(public dialogRef: MdDialogRef<NewElderDialog>, private brotherService:BrotherService) {
+  constructor(public dialogRef: MatDialogRef<NewElderDialog>, private brotherService:BrotherService) {
 
 
   }
