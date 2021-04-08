@@ -4,7 +4,7 @@
 
 import { Injectable } from '@angular/core';
 import {
-  Http,
+  HttpClient,
   RequestOptions,
   RequestOptionsArgs,
   Response,
@@ -18,7 +18,7 @@ import {Router} from "@angular/router";
 
 
 @Injectable()
-export class HttpInterceptor extends Http {
+export class HttpInterceptor extends HttpClient {
 
   sessionId : string;
   constructor(backend: XHRBackend, defaultOptions: RequestOptions, private router: Router) {

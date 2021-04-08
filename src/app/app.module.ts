@@ -2,7 +2,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import {HttpModule, RequestOptions, XHRBackend} from '@angular/http';
+import {HttpClientModule, RequestOptions, XHRBackend} from '@angular/http';
 import {routing, RootComponent} from './routes';
 import {
   MdButtonModule, MdInputModule, MdDatepickerModule, MdCheckboxModule, MdRadioModule, MdSidenavModule,
@@ -84,7 +84,7 @@ import {PipeModule} from "./pipe.module";
     BrowserAnimationsModule,
     FormsModule,
     routing,
-    HttpModule,
+    HttpClientModule,
     MdButtonModule, MdInputModule, MdDatepickerModule, MdCheckboxModule, MdRadioModule, MdSidenavModule, MdSelectModule, MdCardModule, MdAutocompleteModule, MdTabsModule, MdIconModule, MdNativeDateModule, MdSnackBarModule, MdSlideToggleModule, MdGridListModule, MdProgressBarModule,
     DialogModule,
     FlexLayoutModule,
