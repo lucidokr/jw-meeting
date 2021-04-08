@@ -4,8 +4,8 @@
 import {Injectable} from '@angular/core';
 
 import {WeekMeeting} from "../shared/models/weekMeeting.model";
-import {HttpInterceptor} from "../shared/http-interceptor.service";
 import {environment} from "../../environments/environment";
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable()
@@ -14,7 +14,7 @@ export class NewPgmService {
   public newPgm: Array<WeekMeeting> = [];
 
   constructor(
-    private http: HttpInterceptor
+    private http: HttpClient
   ) {
   }
 

@@ -4,7 +4,7 @@
 import {Injectable} from '@angular/core';
 
 import {Observable} from 'rxjs';
-import {HttpInterceptor} from "../shared/http-interceptor.service";
+import { HttpClient } from '@angular/common/http';
 import {environment} from "../../environments/environment";
 import {Brother} from "../shared/models/brother.model";
 
@@ -1784,14 +1784,14 @@ export class BrotherService {
 
 
   constructor(
-    private http: HttpInterceptor
+    private http: HttpClient
   ) {
 
   }
 
 
 
-  get(): Observable<Array<Brother>> {
+  get(): Observable<Brother[]> {
     return this.http.get(environment.url + "/brother", null)
   }
 

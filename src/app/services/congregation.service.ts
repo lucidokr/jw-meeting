@@ -4,7 +4,7 @@
 import {Injectable} from '@angular/core';
 
 import {Observable} from 'rxjs';
-import {HttpInterceptor} from "../shared/http-interceptor.service";
+import { HttpClient } from '@angular/common/http';
 import {environment} from "../../environments/environment";
 import { Congregation } from 'app/shared/models/congregation.model';
 
@@ -13,7 +13,7 @@ import { Congregation } from 'app/shared/models/congregation.model';
 export class CongregationService {
   private url:string = "/congregation"
   constructor(
-    private http: HttpInterceptor,
+    private http: HttpClient,
   ) {
   }
 

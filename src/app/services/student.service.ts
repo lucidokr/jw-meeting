@@ -4,17 +4,17 @@
 import {Injectable} from '@angular/core';
 
 import {Observable} from 'rxjs';
-import {HttpInterceptor} from "../shared/http-interceptor.service";
 import {Student} from "../shared/models/student.model";
 import {environment} from "../../environments/environment";
 import {Brother} from "../shared/models/brother.model";
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable()
 export class StudentService {
   url:string = "/student";
   constructor(
-    private http: HttpInterceptor
+    private http: HttpClient
   ) {
   }
 

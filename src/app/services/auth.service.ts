@@ -4,7 +4,7 @@
 import {Injectable} from '@angular/core';
 
 import {Observable, Subject} from 'rxjs';
-import {HttpInterceptor} from "../shared/http-interceptor.service";
+import { HttpClient } from '@angular/common/http';
 import {MeetingWorkbook} from "../shared/models/meetingWorkbook.model";
 import {environment} from "../../environments/environment";
 import * as moment from "moment";
@@ -20,7 +20,7 @@ export class AuthService {
   public refreshTimeout : any = null;
   private _user: User = null;
   constructor(
-    private http: HttpInterceptor,
+    private http: HttpClient,
   ) {
     let expires, user;
     if(localStorage.getItem("expires")) {

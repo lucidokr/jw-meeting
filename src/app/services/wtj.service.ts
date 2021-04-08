@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 
 import {Observable, forkJoin} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {HttpInterceptor} from "../shared/http-interceptor.service";
+import { HttpClient } from '@angular/common/http';
 import {MeetingWorkbook} from "../shared/models/meetingWorkbook.model";
 import {environment} from "../../environments/environment";
 import * as moment from "moment";
@@ -14,7 +14,7 @@ import * as moment from "moment";
 @Injectable()
 export class WTJService {
   constructor(
-    private http: HttpInterceptor,
+    private http: HttpClient,
   ) {
   }
 
@@ -31,7 +31,8 @@ export class WTJService {
     //   dateEndStr = dateEnd.date() + "-" + dateEnd.format("MMMM")
     // }
     return this.http.get(environment.url+"/wtj/"+date.year()+"/"+(date.format('MM'))+"/"+dateStartStr/*+"/"+dateEndStr*/, null)
-      .map(json => {
+    .pipe(
+      map(json => {
         if(json.data){
           let data = json.data;
           data.date = moment(date);
@@ -39,6 +40,7 @@ export class WTJService {
         }else
           return null
       })
+      )
   }
 
   getMeetingWorkbooks(dates:Array<any>): Observable<Array<MeetingWorkbook>> {

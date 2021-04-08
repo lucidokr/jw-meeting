@@ -2,13 +2,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import {HttpClientModule, RequestOptions, XHRBackend} from '@angular/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {routing, RootComponent} from './routes';
-import {
-  MdButtonModule, MatInputModule, MatDatepickerModule, MatCheckboxModule, MatRadioModule, MatSidenavModule,
-  MdSelectModule, MatCardModule, MatAutocompleteModule, MatTabsModule, MatIconModule, MatNativeDateModule, MatSnackBarModule,
-  MdSlideToggleModule, DateAdapter, MD_DATE_FORMATS, MatGridListModule, MatProgressBarModule
-} from '@angular/material';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
@@ -17,7 +12,6 @@ import 'moment/locale/it';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AmChartsModule } from "@amcharts/amcharts3-angular";
 import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
-import {Router} from "@angular/router";
 
 import {DialogModule} from "./dialog.module";
 
@@ -53,7 +47,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 
 import {StickyDirective} from "./shared/directives/sticky.directive";
 
-import {HttpInterceptor, HttpInterceptorFactory} from "./shared/http-interceptor.service";
+import {JwmInterceptor} from "./shared/jwm-interceptor.service";
 import {BrotherService} from "./services/brother.service";
 import {HistoryService} from "./services/history.service";
 import {StudentService} from "./services/student.service";
@@ -77,15 +71,16 @@ import {AuthGuard} from "./guards/auth.guard";
 import {WeekTempComponent} from "./shared/components/week-temp/week-temp.component";
 import {MeetingDetailTempComponent} from "./components/meeting/detail-temp/detail-meeting-temp.component";
 import {PipeModule} from "./pipe.module";
+import { MaterialModule } from './material.module';
 
 @NgModule({
   imports: [
-    BrowserModule,
+  BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
+    MaterialModule,
     routing,
     HttpClientModule,
-    MdButtonModule, MatInputModule, MatDatepickerModule, MatCheckboxModule, MatRadioModule, MatSidenavModule, MatSelectModule, MatCardModule, MatAutocompleteModule, MatTabsModule, MatIconModule, MatNativeDateModule, MatSnackBarModule, MatSlideToggleModule, MatGridListModule, MatProgressBarModule,
     DialogModule,
     FlexLayoutModule,
     Ng2SmartTableModule,
@@ -147,13 +142,9 @@ import {PipeModule} from "./pipe.module";
     AuthService,
     CongregationService,
     AuthGuard,
-    {provide: DateAdapter, useClass: MomentDateAdapter },
-    {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS},
-    {
-      provide: HttpInterceptor,
-      useFactory: HttpInterceptorFactory,
-      deps: [XHRBackend, RequestOptions, Router, DialogService]
-    }
+    // {provide: DateAdapter, useClass: MomentDateAdapter },
+    // {provide: MD_DATE_FORMATS, useValue: MOMENT_DATE_FORMATS},
+    { provide: HTTP_INTERCEPTORS, useClass: JwmInterceptor, multi: true }
     ],
   entryComponents: [
     DateRenderComponent,
