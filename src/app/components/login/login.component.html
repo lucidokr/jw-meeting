@@ -14,22 +14,22 @@
   </div>
 </div>
 
-<md-card class="login">
+<mat-card class="login">
   <div fxLayout="row" fxLayoutAlign="center center">
     <h3>Login</h3>
   </div>
-  <md-card-content>
+  <mat-card-content>
     <form #loginForm="ngForm" fxLayout="column" fxLayoutAlign="center center">
-      <md-input-container>
-        <input mdInput type="text" name="username" [(ngModel)]="username" required placeholder="Username">
-      </md-input-container>
-      <md-input-container>
-        <input mdInput type="password" name="password" [(ngModel)]="password" required placeholder="Password">
-      </md-input-container>
+      <mat-form-field>
+        <input matInput type="text" name="username" [(ngModel)]="username" required placeholder="Username">
+      </mat-form-field>
+      <mat-form-field >
+        <input matInput type="password" name="password" [(ngModel)]="password" required placeholder="Password">
+      </mat-form-field>
       <label class="error" *ngIf="message">{{message}}</label>
-      <button *ngIf="!loading" md-raised-button [disabled]="!loginForm.form.valid" (click)="login()">Login</button>
+      <button *ngIf="!loading" mat-raised-button [disabled]="!loginForm.form.valid" (click)="login()">Login</button>
       <loader *ngIf="loading"></loader>
     </form>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>
 

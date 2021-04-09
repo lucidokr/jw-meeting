@@ -18,19 +18,19 @@ export class PrayerService {
   }
 
   get(): Observable<Array<Brother>> {
-    return this.http.get(environment.url + this.url, null)
+    return this.http.get<Array<Brother>>(environment.url + this.url, {responseType: 'json'})
   }
 
   add(brother: Brother): Observable<string> {
-    return this.http.post(environment.url + this.url +"/"+brother._id, brother.prayer, null)
+    return this.http.post<string>(environment.url + this.url +"/"+brother._id, brother.prayer, {responseType: 'json'})
   }
 
   edit(brother: Brother): Observable<string> {
-    return this.http.put(environment.url + this.url +"/"+brother._id, brother.prayer, null)
+    return this.http.put<string>(environment.url + this.url +"/"+brother._id, brother.prayer, {responseType: 'json'})
   }
 
   delete(brotherId: string): Observable<boolean> {
-    return this.http.delete(environment.url + this.url +"/"+brotherId, null)
+    return this.http.delete<boolean>(environment.url + this.url +"/"+brotherId, {responseType: 'json'})
   }
 
 

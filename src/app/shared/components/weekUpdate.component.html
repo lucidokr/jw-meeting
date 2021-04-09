@@ -1,10 +1,10 @@
-<md-card *ngIf="!week.completed" class="updatePointCard">
-  <md-card-header *ngIf="fromHome">
+<mat-card *ngIf="!week.completed" class="updatePointCard">
+  <mat-card-header *ngIf="fromHome">
     <div fxLayout="row">
       <h3>AGGIORNAMENTO PARTI</h3>
     </div>
-  </md-card-header>
-  <md-card-content fxLayout="column" fxFlex="100%" fxLayoutAlign="start center">
+  </mat-card-header>
+  <mat-card-content fxLayout="column" fxFlex="100%" fxLayoutAlign="start center">
     <div class="containerSchoolPart" fxLayout="column"  fxLayoutGap="10px">
         <div class="containerSchoolPart" fxLayout="column"  fxLayout.xs="column" fxLayoutAlign="start center">
             <div fxLayout="row" ><h4 [innerHTML]="week.bibleReading.label.split('(')[0] | safeHtml"></h4></div>
@@ -15,11 +15,11 @@
                           <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
                           <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
                           scuola: {{week.bibleReading[school].student.name}} {{week.bibleReading[school].student.surname}}</strong>
-                        <md-radio-group  name="{{week.date.toString()}}{{i}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="week.bibleReading[school].made">
-                          <md-radio-button [value]="0">Non aggiornare</md-radio-button>
-                          <md-radio-button [value]="1">Svolto</md-radio-button>
-                          <md-radio-button [value]="2">Non svolto</md-radio-button>
-                        </md-radio-group>
+                        <mat-radio-group  name="{{week.date.toString()}}{{i}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="week.bibleReading[school].made">
+                          <mat-radio-button [value]="0">Non aggiornare</mat-radio-button>
+                          <mat-radio-button [value]="1">Svolto</mat-radio-button>
+                          <mat-radio-button [value]="2">Non svolto</mat-radio-button>
+                        </mat-radio-group>
                       </div>
                       <div *ngIf="week.bibleReading[school].updated" fxLayout="column" fxLayoutGap="10px" class="updated">
                           <strong><i class="material-icons">check_circle</i>Prima scuola: {{week.bibleReading[school].student.name}} {{week.bibleReading[school].student.surname}}</strong>
@@ -53,11 +53,11 @@
                         <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
                         <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
                         scuola: {{part[school].student.name}} {{part[school].student.surname}}</strong>
-                      <md-radio-group  name="{{week.date.toString()}}{{i}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="part[school].made">
-                        <md-radio-button [value]="0">Non aggiornare</md-radio-button>
-                        <md-radio-button [value]="1">Svolto</md-radio-button>
-                        <md-radio-button [value]="2">Non svolto</md-radio-button>
-                      </md-radio-group>
+                      <mat-radio-group  name="{{week.date.toString()}}{{i}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="part[school].made">
+                        <mat-radio-button [value]="0">Non aggiornare</mat-radio-button>
+                        <mat-radio-button [value]="1">Svolto</mat-radio-button>
+                        <mat-radio-button [value]="2">Non svolto</mat-radio-button>
+                      </mat-radio-group>
                     </div>
                     <div *ngIf="part[school].updated" fxLayout="column" fxLayoutGap="10px" class="updated">
                         <strong><i class="material-icons">check_circle</i>Prima scuola: {{part[school].student.name}} {{part[school].student.surname}}</strong>
@@ -71,12 +71,12 @@
 
       </div>
     </div>
-    <button *ngIf="!loading" md-raised-button (click)="confirm()">Conferma</button>
+    <button *ngIf="!loading" mat-raised-button (click)="confirm()">Conferma</button>
     <loader *ngIf="loading"></loader>
-  </md-card-content>
-</md-card>
-<md-card *ngIf="week.completed" class="updatePointCard">
-  <md-card-content fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
+  </mat-card-content>
+</mat-card>
+<mat-card *ngIf="week.completed" class="updatePointCard">
+  <mat-card-content fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
     Adunanza della settimana corrente completata
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>

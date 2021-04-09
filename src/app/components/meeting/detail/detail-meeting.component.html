@@ -1,18 +1,18 @@
 <div *ngIf="!loading">
-  <md-tab-group>
-    <md-tab *ngIf="!week.completed && (user.role==USER_ROLE.SCHOOL_OVERSEER || user.role==USER_ROLE.PRESIDENT)">
+  <mat-tab-group>
+    <mat-tab *ngIf="!week.completed && (user.role==USER_ROLE.SCHOOL_OVERSEER || user.role==USER_ROLE.PRESIDENT)">
       <ng-template md-tab-label>
         AGGIORNAMENTO PARTI
       </ng-template>
       <week-update fromHome="false" [week]="week"></week-update>
-    </md-tab>
-    <md-tab>
+    </mat-tab>
+    <mat-tab>
       <ng-template md-tab-label>
         DETTAGLIO
       </ng-template>
       <week [edit]="false" [week]="week"></week>
-    </md-tab>
-  </md-tab-group>
+    </mat-tab>
+  </mat-tab-group>
 
 
 

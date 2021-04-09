@@ -1,11 +1,11 @@
 
 
 <div fxLayout="row" fxLayoutAlign="center center"><h3>{{date.format('dddd D MMMM YYYY')}}</h3></div>
-<md-card class="counter">
-  <md-card-header>
+<mat-card class="counter">
+  <mat-card-header>
       <h3>Congregazione di {{user.congregation.name}}</h3>
-  </md-card-header>
-  <md-card-content>
+  </mat-card-header>
+  <mat-card-content>
     <loader *ngIf="loadingCount"></loader>
     <div *ngIf="!loadingCount" class="counter-container">
       <div *ngFor="let obj of count" class="counter" [style.width]="getCounterWidth()">
@@ -13,8 +13,8 @@
         <label class="number">{{obj.count}}</label>
       </div>
     </div>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>
 <loader *ngIf="loadingMeeting"></loader>
 <div *ngIf="!loadingMeeting && currentWeek && (user.role==USER_ROLE.SCHOOL_OVERSEER || user.role==USER_ROLE.PRESIDENT)" fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px">
   <week-update *ngIf="user.role==USER_ROLE.SCHOOL_OVERSEER" fromHome="true" fxFlex="100%" [week]="currentWeek"></week-update>

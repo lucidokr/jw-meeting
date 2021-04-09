@@ -11,14 +11,14 @@ import {BrotherService} from "../../../services/brother.service";
     <form #newPrayerForm="ngForm" >
       <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
           <div *ngIf="!loading && brotherList && brotherList.length>0 && !edit">
-            <md-input-container fxFlex class="brother-autocomplete">
-              <input type="text" mdInput [mdAutocomplete]="auto" [(ngModel)]="brother" [value]="(brother && brother.name && brother.surname ? brother.name + ' '+brother.surname: '')" (ngModelChange)="filterBrother($event)" name="brother" placeholder="Seleziona fratello">
-            </md-input-container>
-            <md-autocomplete #auto="mdAutocomplete"  name="brotherAutocomplete" placeholder="Seleziona fratello">
-               <md-option (onSelectionChange)="newPrayer(b)" *ngFor="let b of brotherListFiltered" [value]="b">
+            <mat-input-container fxFlex class="brother-autocomplete">
+              <input type="text" matInput [mdAutocomplete]="auto" [(ngModel)]="brother" [value]="(brother && brother.name && brother.surname ? brother.name + ' '+brother.surname: '')" (ngModelChange)="filterBrother($event)" name="brother" placeholder="Seleziona fratello">
+            </mat-input-container>
+            <mat-autocomplete #auto="mdAutocomplete"  name="brotherAutocomplete" placeholder="Seleziona fratello">
+               <mat-option (onSelectionChange)="newPrayer(b)" *ngFor="let b of brotherListFiltered" [value]="b">
                   {{b.surname}} {{b.name}}
-               </md-option>
-            </md-autocomplete>
+               </mat-option>
+            </mat-autocomplete>
           </div>
           <div *ngIf="!loading && brotherList && brotherList.length == 0 && !edit">
             Nessun fratello da aggiungere
@@ -27,20 +27,20 @@ import {BrotherService} from "../../../services/brother.service";
             <h3>{{brother.name}} {{brother.surname}}</h3>
           </div>
           <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" *ngIf="brother && brother.prayer">
-            <md-checkbox [(ngModel)]="brother.prayer.enabled" name="enabled" >
+            <mat-checkbox [(ngModel)]="brother.prayer.enabled" name="enabled" >
                     Abilitato
-            </md-checkbox>
-            <md-input-container fxFlex >
-              <input mdInput [mdDatepicker]="date" [(ngModel)]="brother.prayer.date" name="date"  placeholder="Data ultima preghiera">
+            </mat-checkbox>
+            <mat-input-container fxFlex >
+              <input matInput [mdDatepicker]="date" [(ngModel)]="brother.prayer.date" name="date"  placeholder="Data ultima preghiera">
               <button mdSuffix [mdDatepickerToggle]="date"></button>
-            </md-input-container>
-            <md-datepicker #date></md-datepicker>
+            </mat-input-container>
+            <mat-datepicker #date></mat-datepicker>
             
           </div>
           <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
                 <button fxLayoutAlign="center center" fxLayout="column" md-button 
                 (click)="dialogRef.close()">Annula</button>
-                <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" md-raised-button [disabled]="!newPrayerForm.form.valid"
+                <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!newPrayerForm.form.valid"
                 (click)="dialogRef.close(brother)">Salva</button>
           </div>
       </div>

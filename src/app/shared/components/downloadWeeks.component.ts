@@ -28,9 +28,9 @@ declare var XLSX:any;
       <br>
       All'apertura del file bozza vi potrà dare errori voi cliccate su "Apri e ripristina" e successivamente su "Elimina". <br></strong></span>
       <div fxLayout="row" fxLayoutAlign="center center">
-        <button fxFlex md-raised-button (click)="close()">Annulla</button>
-        <button *ngIf="format=='XLS'" FxFlex md-raised-button (click)="download()">Download </button>
-        <button *ngIf="format=='PDF'" FxFlex md-raised-button (click)="downloadPDF()">Download</button>
+        <button fxFlex mat-raised-button (click)="close()">Annulla</button>
+        <button *ngIf="format=='XLS'" FxFlex mat-raised-button (click)="download()">Download </button>
+        <button *ngIf="format=='PDF'" FxFlex mat-raised-button (click)="downloadPDF()">Download</button>
       </div>
     </div>
     `,

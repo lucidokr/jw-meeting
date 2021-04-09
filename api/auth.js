@@ -16,21 +16,27 @@ var EXPIRES = 60*60*24*7;
 app.set('superSecret', process.env.SECRET);
 router.route('/login')
   .post(async (req, res) =>  {
-
+    console.log('b')
     try{
       // find the user
       var user = await User
       .findOne({username: req.body.username})
         .populate('congregation')
         .populate('brother')
+
+    console.log('c')
     }catch(e){
       return res.status(500).send(e)
     }
 
+    console.log('d')
     if (!user) {
+
+    console.log('e')
       res.status(404).json({ success: false, message: 'Authentication failed. User not found.' });
     } else if (user) {
 
+      console.log(user)
       // check if password matches
       if (user.password != req.body.password) {
         res.status(403).json({ success: false, message: 'Authentication failed. Wrong password.' });
@@ -49,7 +55,6 @@ router.route('/login')
 
           var refreshToken = buf.toString('hex');
           refreshTokens[refreshToken] = req.body.username;
-
           // return the information including token as JSON
           res.json({
             success: true,

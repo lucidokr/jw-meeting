@@ -1,32 +1,32 @@
 
 
-<md-card>
-  <md-card-content>
+<mat-card>
+  <mat-card-content>
     <div id="chart"></div>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>
 
-<md-card>
-  <md-card-content>
+<mat-card>
+  <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="end center">
-      <md-select [(ngModel)]="selectedYear" (ngModelChange)="buildChartByYear();" placeholder="Seleziona anno">
-        <md-option [value]="year" *ngFor="let year of years">{{year}}</md-option>
-      </md-select>
+      <mat-select [(ngModel)]="selectedYear" (ngModelChange)="buildChartByYear();" placeholder="Seleziona anno">
+        <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
+      </mat-select>
     </div>
       <div id="chartByYear"></div>
 
     <div fxLayout="row" fxLayoutAlign="end center">
-      <md-select [(ngModel)]="selectedMonth" (ngModelChange)="buildChartByMonth()" placeholder="Seleziona mese">
-        <md-option *ngFor="let month of months;let i=index" [value]="i">{{month}}</md-option>
-      </md-select>
+      <mat-select [(ngModel)]="selectedMonth" (ngModelChange)="buildChartByMonth()" placeholder="Seleziona mese">
+        <mat-option *ngFor="let month of months;let i=index" [value]="i">{{month}}</mat-option>
+      </mat-select>
     </div>
     <div id="chartByMonth"></div>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>
 
-<md-card>
-  <md-card-header><h2>Andamento parti per fratello</h2></md-card-header>
-  <md-card-content>
+<mat-card>
+  <mat-card-header><h2>Andamento parti per fratello</h2></mat-card-header>
+  <mat-card-content>
     <div width="100%" fxFlexFill fxLayoutGap="20px" fxLayout="column" fxLayoutAlign="center center">
       <div width="100%" fxFlexFill fxLayoutGap="15px" fxLayout="row" fxLayoutAlign="center center" class="headerChartByBrother">
         <div fxFlex="30%" ><h4>Nome e cognome</h4></div>
@@ -41,12 +41,12 @@
         <div fxFlex="20%" fxLayout="row" fxLayoutAlign="center center">
 
           <div fxFlexFill *ngIf="obj.v.total != 0" fxLayoutGap="15px" fxLayout="row" fxLayoutAlign="center center">
-            <md-progress-bar
+            <mat-progress-bar
               fxFlex="70%"
               mode="determinate"
               color="warn"
               value="{{getPercent(obj.v.total, obj.v.made)}}">
-            </md-progress-bar>
+            </mat-progress-bar>
             <div fxFlex="30%" fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center">
               {{obj.v.made}}
               <span> ({{getPercent(obj.v.total, obj.v.made)}}%)</span>
@@ -55,12 +55,12 @@
         </div>
         <div fxFlex="20%" fxLayout="row" fxLayoutAlign="center center" >
           <div fxFlexFill *ngIf="obj.v.total != 0" fxLayoutGap="15px" fxLayout="row" fxLayoutAlign="center center">
-            <md-progress-bar
+            <mat-progress-bar
               fxFlex="70%"
               color="accent"
               mode="determinate"
               value="{{getPercent(obj.v.total, obj.v.madeWithoutPoint)}}">
-            </md-progress-bar>
+            </mat-progress-bar>
             <div fxFlex="30%" fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center">
               {{obj.v.madeWithoutPoint}}
               <span > ({{getPercent(obj.v.total, obj.v.madeWithoutPoint)}}%)</span>
@@ -69,11 +69,11 @@
         </div>
         <div fxFlex="20%"  fxLayout="row" fxLayoutAlign="center center">
           <div fxFlexFill *ngIf="obj.v.total != 0" fxLayoutGap="15px" fxLayout="row" fxLayoutAlign="center center">
-            <md-progress-bar
+            <mat-progress-bar
               fxFlex="70%"
               mode="determinate"
               value="{{getPercent(obj.v.total, obj.v.notMade)}}">
-            </md-progress-bar>
+            </mat-progress-bar>
             <div fxFlex="30%" fxLayoutGap="10px" fxLayout="row" fxLayoutAlign="center center">
               {{obj.v.notMade}}
               <span> ({{getPercent(obj.v.total, obj.v.madeWithoutPoint)}}%)</span>
@@ -82,5 +82,5 @@
         </div>
       </div>
     </div>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>

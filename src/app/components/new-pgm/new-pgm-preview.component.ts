@@ -5,7 +5,7 @@ import * as moment from 'moment';
 import { Observable, forkJoin } from 'rxjs';
 import {map} from 'rxjs/operators';
 
-import "rxjs/add/operator/timeout";
+import {timeout} from 'rxjs/operators'
 import {WeekMeeting} from "../../shared/models/weekMeeting.model";
 import {EmitterService} from "../../services/emitter.service";
 import {ServantService} from "../../services/servant.service";

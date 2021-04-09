@@ -1,4 +1,4 @@
-import {Component, OnInit, HostListener} from '@angular/core';
+import {Component, OnInit, HostListener, AfterContentInit} from '@angular/core';
 import {AmChartsService} from "@amcharts/amcharts3-angular";
 import {BrotherService} from "../../services/brother.service";
 import {MeetingService} from "../../services/meeting.service";
@@ -15,7 +15,7 @@ import {User} from "../../shared/models/user.model";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements AfterContentInit{
   public currentWeek: WeekMeeting;
   public date: any;
   private count: any;
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit{
     this.user = authService.getUser();
   }
 
-  ngOnInit(){
+  ngAfterContentInit(){
     this.emitterService.get("change_header_subtitle")
       .emit('Home');
     this.date = moment();

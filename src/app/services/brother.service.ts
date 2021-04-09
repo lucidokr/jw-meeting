@@ -1792,19 +1792,19 @@ export class BrotherService {
 
 
   get(): Observable<Brother[]> {
-    return this.http.get(environment.url + "/brother", null)
+    return this.http.get<Brother[]>(environment.url + "/brother", {responseType: 'json'})
   }
 
   add(brother: Brother): Observable<any> {
-    return this.http.post(environment.url + "/brother", brother, null)
+    return this.http.post<any>(environment.url + "/brother", brother, {responseType: 'json'})
   }
 
   edit(brother: Brother): Observable<string> {
-    return this.http.put(environment.url + "/brother/"+brother._id, brother, null)
+    return this.http.put<string>(environment.url + "/brother/"+brother._id, brother, {responseType: 'json'})
   }
 
   delete(brotherId: string): Observable<boolean> {
-    return this.http.delete(environment.url + "/brother/"+brotherId, null)
+    return this.http.delete<boolean>(environment.url + "/brother/"+brotherId, {responseType: 'json'})
   }
 
 

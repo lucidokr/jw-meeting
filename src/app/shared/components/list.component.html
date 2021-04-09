@@ -1,8 +1,8 @@
-<md-card class="card-table">
-    <md-card-content *ngIf="!loading">
-        <md-input-container fxFlex class="search-container">
-            <input mdInput class="search" type="text" placeholder="Cerca..." [ngModel]="searchValue" (ngModelChange)="onSearch($event)"/>
-        </md-input-container>
+<mat-card class="card-table">
+    <mat-card-content *ngIf="!loading">
+        <mat-input-container fxFlex class="search-container">
+            <input matInput class="search" type="text" placeholder="Cerca..." [ngModel]="searchValue" (ngModelChange)="onSearch($event)"/>
+        </mat-input-container>
         <div class="table-wrapper">
             <div class="table-container">
                 <ng2-smart-table
@@ -15,9 +15,9 @@
             </div>
         </div>
         <div class="add-button" (click)="add($event)"><i class="material-icons">add</i></div>
-    </md-card-content>
-    <md-card-content *ngIf="loading">
+    </mat-card-content>
+    <mat-card-content *ngIf="loading">
         <loader></loader>
-    </md-card-content>
+    </mat-card-content>
 
-</md-card>
+</mat-card>

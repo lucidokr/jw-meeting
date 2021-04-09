@@ -11,14 +11,14 @@
     <week class="weekConfigContainer" *ngFor="let week of weeks; let i = index" [edit]="true" [week] = "week" [weeks] = "weeks" [busyErrorBrother] = "busyErrorBrother" (onChange)="change($event)" ></week>
   </div>
 
-  <!--<md-card class="weekConfigContainer" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start start" fxLayoutAlign.xs="start" *ngFor="let week of weeks; let i = index" >-->
-    <!--<md-card-header fxLayout="row" fxLayoutAlign="start start">-->
-      <!--<md-card-title>-->
+  <!--<mat-card class="weekConfigContainer" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start start" fxLayoutAlign.xs="start" *ngFor="let week of weeks; let i = index" >-->
+    <!--<mat-card-header fxLayout="row" fxLayoutAlign="start start">-->
+      <!--<mat-card-title>-->
         <!--<span>{{week.date.format('dddd D MMMM YYYY')}} - {{week.type.label}}</span>-->
         <!--<span  class="flex-item" *ngIf="week.supervisor">Visita del sorvegliante</span>-->
-      <!--</md-card-title>-->
-    <!--</md-card-header>-->
-    <!--<md-card-content fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" *ngIf="!loading">-->
+      <!--</mat-card-title>-->
+    <!--</mat-card-header>-->
+    <!--<mat-card-content fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" *ngIf="!loading">-->
       <!--<div class="weekPreview" fxFlex="100%" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start" *ngIf="week.type.meeting" >-->
         <!--<div fxFlex="100%" width="100%" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start" >-->
           <!--<div class="meetingWorkbook flex-item" fxFlex="100%" fxFlex fxLayout="column" fxLayoutGap="15px">-->
@@ -106,9 +106,9 @@
         <!--</div>-->
 
       <!--</div>-->
-    <!--</md-card-content>-->
-  <!--</md-card>-->
-  <button *ngIf="!loadingInsertPgm" md-raised-button [disabled]="busyErrorBrother.length != 0" (click)="confirm()">Conferma</button>
+    <!--</mat-card-content>-->
+  <!--</mat-card>-->
+  <button *ngIf="!loadingInsertPgm" mat-raised-button [disabled]="busyErrorBrother.length != 0" (click)="confirm()">Conferma</button>
   <loader *ngIf="loadingInsertPgm"></loader>
 </div>
 
@@ -128,34 +128,34 @@
   <div fxFlex="40%" fxLayout="column" >
     <div>Nuovo fratello per la parte:</div>
     <div>
-      <md-input-container fxFlex="100%" class="brother-change-autocomplete">
-        <input type="text" mdInput [mdAutocomplete]="auto" (ngModelChange)="filterBrother($event)" [(ngModel)]="changeMode.newBrother" [value]="getValue(changeMode.newBrother)" name="brotherToChange" placeholder="Seleziona fratello">
-      </md-input-container>
-      <md-autocomplete #auto="mdAutocomplete"  name="brotherChangeAutocomplete" placeholder="Seleziona fratello">
-        <md-option *ngFor="let b of changeMode.listFiltered" [ngClass]="{'elder':b.elder}" [value]="b" (onSelectionChange)="changeMode.busyError = false">
+      <mat-input-container fxFlex="100%" class="brother-change-autocomplete">
+        <input type="text" matInput [mdAutocomplete]="auto" (ngModelChange)="filterBrother($event)" [(ngModel)]="changeMode.newBrother" [value]="getValue(changeMode.newBrother)" name="brotherToChange" placeholder="Seleziona fratello">
+      </mat-input-container>
+      <mat-autocomplete #auto="mdAutocomplete"  name="brotherChangeAutocomplete" placeholder="Seleziona fratello">
+        <mat-option *ngFor="let b of changeMode.listFiltered" [ngClass]="{'elder':b.elder}" [value]="b" (onSelectionChange)="changeMode.busyError = false">
           {{b.surname}} {{b.name}}
           <span *ngIf="b.elder && b.elder[changeMode.dateParam]"> - {{b.elder[changeMode.dateParam].format('DD-MM-YYYY')}}</span>
           <span *ngIf="b.reader && b.reader[changeMode.dateParam]"> - {{b.reader[changeMode.dateParam].format('DD-MM-YYYY')}}</span>
           <span *ngIf="b.prayer && b.prayer[changeMode.dateParam]"> - {{b.prayer[changeMode.dateParam].format('DD-MM-YYYY')}}</span>
           <span *ngIf="b.servant && b.servant[changeMode.dateParam]"> - {{b.servant[changeMode.dateParam].format('DD-MM-YYYY')}}</span>
           <span *ngIf="b.student && b.student[changeMode.dateParam]"> - {{b.student[changeMode.dateParam].format('DD-MM-YYYY')}}</span>
-        </md-option>
-        <!--<md-option class="elder" (onSelectionChange)="changeMode.busyError = false" *ngFor="let b of elderListFiltered" [style.display]="(changeMode.partType != 'gems' && changeMode.partType != 'talk' && changeMode.partType != 'bibleReading' ? 'block':'none')" [value]="b">-->
+        </mat-option>
+        <!--<mat-option class="elder" (onSelectionChange)="changeMode.busyError = false" *ngFor="let b of elderListFiltered" [style.display]="(changeMode.partType != 'gems' && changeMode.partType != 'talk' && changeMode.partType != 'bibleReading' ? 'block':'none')" [value]="b">-->
           <!--{{b.surname}} {{b.name}}-->
-        <!--</md-option>-->
-        <md-option (onSelectionChange)="changeMode.busyError = true" class="busy" *ngFor="let b of changeMode.busyListFiltered" [value]="b">
+        <!--</mat-option>-->
+        <mat-option (onSelectionChange)="changeMode.busyError = true" class="busy" *ngFor="let b of changeMode.busyListFiltered" [value]="b">
           {{b.surname}} {{b.name}} - Occupato
-        </md-option>
+        </mat-option>
 
-      </md-autocomplete>
+      </mat-autocomplete>
       <span class="error" *ngIf="changeMode.busyError">
         Attenzione è stato scelto un fratello già impegnato in un'altra parte in questo programma
       </span>
     </div>
   </div>
   <div fxFlex="20%" fxLayout="column" fxlayoutGap="30px">
-    <button md-raised-button (click)="confirmChange()">Conferma</button>
-    <button md-raised-button (click)="disableChangeMode()">Annulla</button>
+    <button mat-raised-button (click)="confirmChange()">Conferma</button>
+    <button mat-raised-button (click)="disableChangeMode()">Annulla</button>
   </div>
 
 

@@ -1,6 +1,6 @@
 // Override bootstrap sass variables here(above import)
-$icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
-@import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
+// $icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
+// @import '../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss';
 
 @import '~@angular/material/theming';
 
@@ -67,7 +67,7 @@ label{
 }
 
 new-student-dialog{
-  md-input-container { margin:0 10px; }
+  mat-form-field { margin:0 10px; }
   .new-student-container > div {margin:10px 0}
   .mat-tab-body-wrapper{padding:20px;}
 }

@@ -13,14 +13,14 @@ import {DialogService} from "../../../services/dialog.service";
     <form #form="ngForm" fxLayout="column" fxLayoutAlign="center center" >
       <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center">
           <div *ngIf="!loading && brotherList && brotherList.length>0 && !edit">
-            <md-input-container fxFlex class="brother-autocomplete">
-              <input type="text" mdInput [mdAutocomplete]="auto" [(ngModel)]="brother" (ngModelChange)="filterBrother($event)" [value]="(brother && brother.name && brother.surname ? brother.name + ' '+brother.surname: '')" name="brother" placeholder="Seleziona fratello">
-            </md-input-container>
-            <md-autocomplete #auto="mdAutocomplete"  name="brotherAutocomplete" placeholder="Seleziona fratello">
-               <md-option (onSelectionChange)="newElder(b)" *ngFor="let b of brotherListFiltered" [value]="b">
+            <mat-input-container fxFlex class="brother-autocomplete">
+              <input type="text" matInput [mdAutocomplete]="auto" [(ngModel)]="brother" (ngModelChange)="filterBrother($event)" [value]="(brother && brother.name && brother.surname ? brother.name + ' '+brother.surname: '')" name="brother" placeholder="Seleziona fratello">
+            </mat-input-container>
+            <mat-autocomplete #auto="mdAutocomplete"  name="brotherAutocomplete" placeholder="Seleziona fratello">
+               <mat-option (onSelectionChange)="newElder(b)" *ngFor="let b of brotherListFiltered" [value]="b">
                   {{b.surname}} {{b.name}}
-               </md-option>
-            </md-autocomplete>
+               </mat-option>
+            </mat-autocomplete>
           </div>
           <div *ngIf="!loading && brotherList && brotherList.length == 0 && !edit">
             Nessun fratello da aggiungere
@@ -30,78 +30,78 @@ import {DialogService} from "../../../services/dialog.service";
           </div>
           <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center" *ngIf="brother && brother.elder">
             <div fxLayout="row" fxLayoutAlign="start center">
-              <md-checkbox fxFlex [(ngModel)]="brother.elder.serviceOverseer" name="serviceOverseer" >
+              <mat-checkbox fxFlex [(ngModel)]="brother.elder.serviceOverseer" name="serviceOverseer" >
                       Sorvegliante del servizio
-              </md-checkbox>
-              <md-checkbox fxFlex [(ngModel)]="brother.elder.schoolOverseer" name="schoolOverseer" >
+              </mat-checkbox>
+              <mat-checkbox fxFlex [(ngModel)]="brother.elder.schoolOverseer" name="schoolOverseer" >
                       Sorvegliante della scuola
-              </md-checkbox>
+              </mat-checkbox>
 
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start center">
-              <md-checkbox fxFlex [(ngModel)]="brother.elder.presidentEnabled" name="presidentEnabled" >
+              <mat-checkbox fxFlex [(ngModel)]="brother.elder.presidentEnabled" name="presidentEnabled" >
                       Presidente
-              </md-checkbox>
+              </mat-checkbox>
                 <div *ngIf="brother.elder.presidentEnabled">
-                  <md-input-container fxFlex  >
-                    <input mdInput [mdDatepicker]="datePresident" [(ngModel)]="brother.elder.presidentDate" name="president" placeholder="Data ultimo presidente">
+                  <mat-input-container fxFlex  >
+                    <input matInput [mdDatepicker]="datePresident" [(ngModel)]="brother.elder.presidentDate" name="president" placeholder="Data ultimo presidente">
                     <button mdSuffix [mdDatepickerToggle]="datePresident"></button>
-                  </md-input-container>
-                  <md-datepicker #datePresident></md-datepicker>
+                  </mat-input-container>
+                  <mat-datepicker #datePresident></mat-datepicker>
                 </div>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start center">
-              <md-checkbox fxFlex [(ngModel)]="brother.elder.bibleStudyEnabled" name="bibleStudyEnabled" >
+              <mat-checkbox fxFlex [(ngModel)]="brother.elder.bibleStudyEnabled" name="bibleStudyEnabled" >
                       Studio biblico di congregazione
-              </md-checkbox>
+              </mat-checkbox>
                 <div *ngIf="brother.elder.bibleStudyEnabled">
-                  <md-input-container fxFlex  >
-                    <input mdInput [mdDatepicker]="dateBibleStudy" [(ngModel)]="brother.elder.bibleStudyDate" name="bibleStudy" placeholder="Data ultimo studio biblico">
+                  <mat-input-container fxFlex  >
+                    <input matInput [mdDatepicker]="dateBibleStudy" [(ngModel)]="brother.elder.bibleStudyDate" name="bibleStudy" placeholder="Data ultimo studio biblico">
                     <button mdSuffix [mdDatepickerToggle]="dateBibleStudy"></button>
-                  </md-input-container>
-                  <md-datepicker #dateBibleStudy></md-datepicker>
+                  </mat-input-container>
+                  <mat-datepicker #dateBibleStudy></mat-datepicker>
                 </div>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start center">
-              <md-checkbox fxFlex [(ngModel)]="brother.elder.christianLivingPartEnabled" name="christianLivingPartEnabled" >
+              <mat-checkbox fxFlex [(ngModel)]="brother.elder.christianLivingPartEnabled" name="christianLivingPartEnabled" >
                       Parti Vita Cristiana
-                  </md-checkbox>
+                  </mat-checkbox>
               <div *ngIf="brother.elder.christianLivingPartEnabled">
-                <md-input-container fxFlex >
-                  <input mdInput [mdDatepicker]="dateChristianLivingPart" [(ngModel)]="brother.elder.christianLivingPartDate" name="christianLivingPartDate"  placeholder="Data ultimo parte Vita cristiana">
+                <mat-input-container fxFlex >
+                  <input matInput [mdDatepicker]="dateChristianLivingPart" [(ngModel)]="brother.elder.christianLivingPartDate" name="christianLivingPartDate"  placeholder="Data ultimo parte Vita cristiana">
                   <button mdSuffix [mdDatepickerToggle]="dateChristianLivingPart"></button>
-                </md-input-container>
-                <md-datepicker #dateChristianLivingPart></md-datepicker>
+                </mat-input-container>
+                <mat-datepicker #dateChristianLivingPart></mat-datepicker>
               </div>
             </div>
 
 
             <div fxLayout="row" fxLayoutAlign="start center">
-              <md-checkbox fxFlex [(ngModel)]="brother.elder.talkEnabled" name="talkEnabled" >
+              <mat-checkbox fxFlex [(ngModel)]="brother.elder.talkEnabled" name="talkEnabled" >
                       Discorso Tesori
-                  </md-checkbox>
+                  </mat-checkbox>
               <div *ngIf="brother.elder.talkEnabled">
-                <md-input-container fxFlex >
-                  <input mdInput [mdDatepicker]="dateTalk" [(ngModel)]="brother.elder.talkDate" name="talk"  placeholder="Data ultimo discorso">
+                <mat-input-container fxFlex >
+                  <input matInput [mdDatepicker]="dateTalk" [(ngModel)]="brother.elder.talkDate" name="talk"  placeholder="Data ultimo discorso">
                   <button mdSuffix [mdDatepickerToggle]="dateTalk"></button>
-                </md-input-container>
-                <md-datepicker #dateTalk></md-datepicker>
+                </mat-input-container>
+                <mat-datepicker #dateTalk></mat-datepicker>
               </div>
             </div>
 
             <div fxLayout="row" fxLayoutAlign="start center">
-              <md-checkbox fxFlex [(ngModel)]="brother.elder.gemsEnabled" name="gemsEnabled" >
+              <mat-checkbox fxFlex [(ngModel)]="brother.elder.gemsEnabled" name="gemsEnabled" >
                       Gemme spirituali
-                  </md-checkbox>
+                  </mat-checkbox>
               <div *ngIf="brother.elder.gemsEnabled">
-                <md-input-container fxFlex >
-                  <input mdInput [mdDatepicker]="dateGems" [(ngModel)]="brother.elder.gemsDate" name="gems" placeholder="Data ultime gemme spirituali">
+                <mat-input-container fxFlex >
+                  <input matInput [mdDatepicker]="dateGems" [(ngModel)]="brother.elder.gemsDate" name="gems" placeholder="Data ultime gemme spirituali">
                   <button mdSuffix [mdDatepickerToggle]="dateGems"></button>
-                </md-input-container>
-                <md-datepicker #dateGems></md-datepicker>
+                </mat-input-container>
+                <mat-datepicker #dateGems></mat-datepicker>
               </div>
             </div>
 
@@ -110,7 +110,7 @@ import {DialogService} from "../../../services/dialog.service";
             <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
               <button fxLayoutAlign="center center" color="accent" fxLayout="column" md-button
                     (click)="dialogRef.close()">Annula</button>
-                <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" md-raised-button [disabled]="!form.form.valid"
+                <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!form.form.valid"
                   (click)="dialogRef.close(brother)">Salva</button>
 
             </div>

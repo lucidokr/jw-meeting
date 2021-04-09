@@ -20,31 +20,31 @@ export class MeetingService {
   }
 
   get(): Observable<Array<WeekMeeting>> {
-    return this.http.get(environment.url + this.url, null)
+    return this.http.get<Array<WeekMeeting>>(environment.url + this.url, {responseType:'json'})
   }
 
   getPgm(year, month):Observable<Array<WeekMeeting>> {
-    return this.http.get(environment.url + this.url + "/pgm/"+year+"/"+(parseInt(month)+1), null)
+    return this.http.get<Array<WeekMeeting>>(environment.url + this.url + "/pgm/"+year+"/"+(parseInt(month)+1), {responseType:'json'})
   }
 
   getTemp(): Observable<Array<WeekMeeting>> {
-    return this.http.get(environment.url + "/tempWeek", null)
+    return this.http.get<Array<WeekMeeting>>(environment.url + "/tempWeek", {responseType:'json'})
   }
 
   getMeeting(meetingId:string): Observable<WeekMeeting> {
-    return this.http.get(environment.url + this.url+"/"+meetingId, null)
+    return this.http.get<WeekMeeting>(environment.url + this.url+"/"+meetingId, {responseType:'json'})
   }
 
   getMeetingTemp(meetingId:string): Observable<WeekMeeting> {
-    return this.http.get(environment.url +"/tempWeek/"+meetingId, null)
+    return this.http.get<WeekMeeting>(environment.url +"/tempWeek/"+meetingId, {responseType:'json'})
   }
 
   updateMeeting(meetingId:string, week:WeekMeeting): Observable<void> {
-    return this.http.put(environment.url + this.url+"/"+meetingId, week, null)
+    return this.http.put<void>(environment.url + this.url+"/"+meetingId, week, {responseType:'json'})
   }
 
-  updateMeetingTemp(meetingId:string, week:WeekMeeting): Observable<void> {
-    return this.http.put(environment.url + "/tempWeek/"+meetingId, week, null)
+  updateMeetingTemp(meetingId:string, week:WeekMeeting): Observable<any> {
+    return this.http.put<any>(environment.url + "/tempWeek/"+meetingId, week, {responseType:'json'})
   }
 
 

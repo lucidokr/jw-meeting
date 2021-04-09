@@ -4,6 +4,7 @@
 import {Injectable} from '@angular/core';
 
 import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {Student} from "../shared/models/student.model";
 import {environment} from "../../environments/environment";
 import {Brother} from "../shared/models/brother.model";
@@ -19,19 +20,19 @@ export class StudentService {
   }
 
   get(): Observable<Array<Brother>> {
-    return this.http.get(environment.url + this.url, null)
+    return this.http.get<Brother[]>(environment.url + this.url, {responseType:'json'})
   }
 
   add(brother: Brother): Observable<string> {
-    return this.http.post(environment.url + this.url +"/"+brother._id, brother.student, null)
+    return this.http.post<string>(environment.url + this.url +"/"+brother._id, brother.student, {responseType:'json'})
   }
 
   edit(brother: Brother): Observable<string> {
-    return this.http.put(environment.url + this.url +"/"+brother._id, brother.student, null)
+    return this.http.put<string>(environment.url + this.url +"/"+brother._id, brother.student, {responseType:'json'})
   }
 
   delete(brotherId: string): Observable<boolean> {
-    return this.http.delete(environment.url + this.url +"/"+brotherId, null)
+    return this.http.delete<boolean>(environment.url + this.url +"/"+brotherId, {responseType:'json'})
   }
 
 

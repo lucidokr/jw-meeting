@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, Inject, ElementRef, ViewChild, AfterContentChecked,
-  EventEmitter, HostListener
+  EventEmitter, HostListener, AfterContentInit
 } from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
 import * as moment from 'moment';
@@ -15,7 +15,7 @@ import {User} from "../shared/models/user.model";
   templateUrl: './container.component.html',
   styleUrls: ['./container.component.scss']
 })
-export class ContainerComponent implements AfterContentChecked, OnInit {
+export class ContainerComponent implements AfterContentInit {
 
   login:boolean = false;
 
@@ -59,7 +59,7 @@ export class ContainerComponent implements AfterContentChecked, OnInit {
     this.authService.logout(true);
   }
 
-  ngOnInit() {
+  ngAfterContentInit() {
     if(location.href.indexOf("login")==-1){
       this.height = window.innerHeight - 112;
       moment.locale('it');
@@ -71,8 +71,5 @@ export class ContainerComponent implements AfterContentChecked, OnInit {
       this.subtitle = subtitle;
     })
   }
-
-  ngAfterContentChecked(): void {
-   }
 
 }

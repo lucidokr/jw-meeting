@@ -1,11 +1,11 @@
-<md-card class="weekConfigContainer" fxLayout="column"  fxLayoutAlign="start start">
-  <md-card-header fxLayout="row" fxLayoutAlign="start start">
-    <md-card-title>
+<mat-card class="weekConfigContainer" fxLayout="column"  fxLayoutAlign="start start">
+  <mat-card-header fxLayout="row" fxLayoutAlign="start start">
+    <mat-card-title>
       <span>{{week.date.format('dddd D MMMM YYYY')}} - {{week.type.label}}</span>
       <h3  class="flex-item" *ngIf="week.supervisor">Visita del sorvegliante</h3>
-    </md-card-title>
-  </md-card-header>
-  <md-card-content class="width100" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="width100" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
     <div class="weekPreview" fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" *ngIf="week.type.meeting && !week.supervisor" >
       <div fxFlex="100%" width="100%" fxLayout="row" fxLayoutAlign="center center"  >
         <div class="meetingWorkbook flex-item" fxFlex="100%" fxFlex fxLayout="column" fxLayoutGap="10px">
@@ -165,5 +165,5 @@
       </div>
 
     </div>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>

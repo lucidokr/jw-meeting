@@ -1,14 +1,14 @@
 <form #configForm="ngForm">
   <div *ngIf="arrMonths && arrMonths.length > 0" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center">
     <!--<span fxFlex>Scegli il numero di settimane per il programma:</span>-->
-    <!--<md-select fxFlex placeholder="Settimane" [(ngModel)]="weekNumber" (ngModelChange)="newArray($event)" name="weekNumber">-->
-      <!--<md-option [value]="4">4 settimane</md-option>-->
-      <!--<md-option [value]="5">5 settimane</md-option>-->
-    <!--</md-select>-->
+    <!--<mat-select fxFlex placeholder="Settimane" [(ngModel)]="weekNumber" (ngModelChange)="newArray($event)" name="weekNumber">-->
+      <!--<mat-option [value]="4">4 settimane</mat-option>-->
+      <!--<mat-option [value]="5">5 settimane</mat-option>-->
+    <!--</mat-select>-->
     <h3>Configurazione programma</h3>
-    <md-select fxFlex fxLayoutGap="20px" placeholder="Seleziona mese" [(ngModel)]="month" (ngModelChange)="findWeeks($event)" name="month">
-      <md-option *ngFor="let m of arrMonths" [value]="m" >{{m.month}} {{m.year}}</md-option>
-    </md-select>
+    <mat-select fxFlex fxLayoutGap="20px" placeholder="Seleziona mese" [(ngModel)]="month" (ngModelChange)="findWeeks($event)" name="month">
+      <mat-option *ngFor="let m of arrMonths" [value]="m" >{{m.month}} {{m.year}}</mat-option>
+    </mat-select>
   </div>
   <div *ngIf="arrMonths && arrMonths.length == 0" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center">
     <h3>Il coordinatore non ha ancora inserito il programma successivo.</h3>
@@ -16,17 +16,17 @@
 
   <div class="flex-container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start" *ngIf="weeks.length>0">
     <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-      <md-checkbox name="disableAllSecondarySchool" [ngModel]="disableAllSecondarySchool" (ngModelChange)="disableSecondarySchool($event)">Disabilita seconda scuola per tutto il programma</md-checkbox>
+      <mat-checkbox name="disableAllSecondarySchool" [ngModel]="disableAllSecondarySchool" (ngModelChange)="disableSecondarySchool($event)">Disabilita seconda scuola per tutto il programma</mat-checkbox>
     </div>
-    <md-card *ngFor="let week of weeks; let i = index" class="weekConfigContainer" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start start" fxLayoutAlign.xs="start"  >
-      <md-card-header fxLayout="row" fxLayoutAlign="start start">
-        <md-card-title>
+    <mat-card *ngFor="let week of weeks; let i = index" class="weekConfigContainer" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start start" fxLayoutAlign.xs="start"  >
+      <mat-card-header fxLayout="row" fxLayoutAlign="start start">
+        <mat-card-title>
           <span>{{week.date.format('dddd D MMMM YYYY')}}</span>
           <span *ngIf="week.supervisor"> - Visita del sorvegliante</span>
           <span > - {{week.type.label}}</span>
-        </md-card-title>
-      </md-card-header>
-      <md-card-content fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" *ngIf="!week.supervisor">
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" *ngIf="!week.supervisor">
         <div class="weekConfig" fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" *ngIf="week.type.meeting " >
           <div fxFlex="100%" width="100%" fxLayout="row" fxLayoutAlign="center center" *ngIf="!week.type.disableSchool">
             <div class="meetingWorkbook" fxFlex="100%" fxFlex fxLayout="column">
@@ -34,8 +34,8 @@
                 <h3 >EFFICACI NEL MINISTERO</h3>
                   <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
                     <span fxFlex="50%"></span>
-                    <md-checkbox name="primarySchool{{i}}" fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.primarySchool">Prima scuola</md-checkbox>
-                    <md-checkbox name="secondarySchool{{i}}"fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.secondarySchool">Seconda scuola</md-checkbox>
+                    <mat-checkbox name="primarySchool{{i}}" fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.primarySchool">Prima scuola</mat-checkbox>
+                    <mat-checkbox name="secondarySchool{{i}}"fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.secondarySchool">Seconda scuola</mat-checkbox>
                   </div>
                   <div *ngFor="let part of week.ministryPart; let j = index" fxLayout="column" fxFlex="100%" fxLayoutAlign="center center" >
                       <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="center center">
@@ -43,21 +43,21 @@
                         <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
                           <div fxHide.gt-sm *ngIf="part.forStudent" >Prima scuola</div>
                           <div fxLayout="column" *ngIf="part.forStudent">
-                            <md-radio-group name="configMinistryPartPrimarySchool{{i}}{{j}}" fxLayout="column" class="radio-group" [(ngModel)]="part.primarySchool.gender" *ngIf="week.primarySchool">
-                              <md-radio-button value="F">Solo sorelle</md-radio-button>
-                              <md-radio-button value="M">Solo fratelli</md-radio-button>
-                              <md-radio-button value="">Entrambi</md-radio-button>
-                            </md-radio-group>
+                            <mat-radio-group name="configMinistryPartPrimarySchool{{i}}{{j}}" fxLayout="column" class="radio-group" [(ngModel)]="part.primarySchool.gender" *ngIf="week.primarySchool">
+                              <mat-radio-button value="F">Solo sorelle</mat-radio-button>
+                              <mat-radio-button value="M">Solo fratelli</mat-radio-button>
+                              <mat-radio-button value="">Entrambi</mat-radio-button>
+                            </mat-radio-group>
                           </div>
                         </div>
                         <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
                           <div fxHide.gt-sm *ngIf="week.secondarySchool && !week.supervisor && part.forStudent">Seconda scuola</div>
                           <div fxLayout="column" *ngIf="part.forStudent">
-                            <md-radio-group name="configMinistryPartSecondarySchool{{i}}{{j}}" fxLayout="column" class="radio-group" [(ngModel)]="part.secondarySchool.gender" *ngIf="week.secondarySchool && !week.supervisor">
-                              <md-radio-button value="F">Solo sorelle</md-radio-button>
-                              <md-radio-button value="M">Solo fratelli</md-radio-button>
-                              <md-radio-button value="">Entrambi</md-radio-button>
-                            </md-radio-group>
+                            <mat-radio-group name="configMinistryPartSecondarySchool{{i}}{{j}}" fxLayout="column" class="radio-group" [(ngModel)]="part.secondarySchool.gender" *ngIf="week.secondarySchool && !week.supervisor">
+                              <mat-radio-button value="F">Solo sorelle</mat-radio-button>
+                              <mat-radio-button value="M">Solo fratelli</mat-radio-button>
+                              <mat-radio-button value="">Entrambi</mat-radio-button>
+                            </mat-radio-group>
                           </div>
                         </div>
                       </div>
@@ -68,8 +68,8 @@
           </div>
 
         </div>
-      </md-card-content>
-    </md-card>
-    <button type="button" md-raised-button [disabled]="!configForm.form.valid" (click)="confirm()">Conferma</button>
+      </mat-card-content>
+    </mat-card>
+    <button type="button" mat-raised-button [disabled]="!configForm.form.valid" (click)="confirm()">Conferma</button>
   </div>
 </form>

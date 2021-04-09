@@ -11,7 +11,6 @@ import * as moment from 'moment';
 import 'moment/locale/it';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AmChartsModule } from "@amcharts/amcharts3-angular";
-import { Angular2FontawesomeModule } from 'angular2-fontawesome/angular2-fontawesome'
 
 import {DialogModule} from "./dialog.module";
 
@@ -63,7 +62,7 @@ import {ReaderService} from "./services/reader.service";
 import {AuthService} from "./services/auth.service";
 import { CongregationService } from './services/congregation.service';
 
-import {MomentDateAdapter, MOMENT_DATE_FORMATS} from "./shared/moment.adapter";
+// import {MomentDateAdapter, MOMENT_DATE_FORMATS} from "./shared/moment.adapter";
 
 import {SafeHtmlPipe} from "./pipes/safe.pipe";
 import {KeysPipe} from "./pipes/keys.pipe";
@@ -85,7 +84,6 @@ import { MaterialModule } from './material.module';
     FlexLayoutModule,
     Ng2SmartTableModule,
     AmChartsModule,
-    Angular2FontawesomeModule,
     PipeModule
   ],
   declarations: [

@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
           {{message}}
             <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
               
-                <button fxLayoutAlign="center center" fxLayout="column" md-raised-button
+                <button fxLayoutAlign="center center" fxLayout="column" mat-raised-button
                   (click)="dialogRef.close()">OK</button>
                   
             </div>

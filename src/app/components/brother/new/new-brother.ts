@@ -8,38 +8,38 @@ import {DialogService} from "../../../services/dialog.service";
 
 @Component({
   selector: 'new-brother-dialog',
-  styles: ['md-input-container { width:400px; }'],
+  styles: ['mat-form-field { width:400px; }'],
   template: `
     <form #form="ngForm" fxLayout="column" fxLayoutAlign="center center" >
       <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center">
           
           <div>
-            <md-input-container fxFlex >
-              <input mdInput [(ngModel)]="brother.name" name="name" placeholder="Nome" required>
-            </md-input-container>
+            <mat-input-container fxFlex >
+              <input matInput [(ngModel)]="brother.name" name="name" placeholder="Nome" required>
+            </mat-input-container>
           </div>
           <div>
-            <md-input-container fxFlex >
-              <input mdInput [(ngModel)]="brother.surname" name="surname" placeholder="Cognome" required>
-            </md-input-container>
+            <mat-input-container fxFlex >
+              <input matInput [(ngModel)]="brother.surname" name="surname" placeholder="Cognome" required>
+            </mat-input-container>
           </div>
           <div>
-            <md-input-container fxFlex >
-              <input mdInput [(ngModel)]="brother.email" name="email" placeholder="E-mail">
-            </md-input-container>
+            <mat-input-container fxFlex >
+              <input matInput [(ngModel)]="brother.email" name="email" placeholder="E-mail">
+            </mat-input-container>
           </div>
           <div>
-            <md-select [(ngModel)]="brother.gender" name="gender" placeholder="Sesso" required>
-              <md-option value="M">Maschio</md-option>
-              <md-option value="F">Femmina</md-option>
-            </md-select>
+            <mat-select [(ngModel)]="brother.gender" name="gender" placeholder="Sesso" required>
+              <mat-option value="M">Maschio</mat-option>
+              <mat-option value="F">Femmina</mat-option>
+            </mat-select>
           </div>
           
           
             <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
               <button fxLayoutAlign="center center" color="accent" fxLayout="column" md-button 
                     (click)="dialogRef.close()">Annula</button>
-                <button fxLayoutAlign="center center" fxLayout="column" md-raised-button [disabled]="!form.form.valid"
+                <button fxLayoutAlign="center center" fxLayout="column" mat-raised-button [disabled]="!form.form.valid"
                   (click)="dialogRef.close(brother)">Salva</button>
                   
             </div>

@@ -1,28 +1,28 @@
 
 
-<md-card>
-  <md-card-content>
+<mat-card>
+  <mat-card-content>
     <div fxLayout="column" fxFlex="100%" fxLayoutGap="20px" fxLayoutAlign="start start" fxFlexFill>
 
 
       <h2>IMPOSTAZIONI DELLA CONGREGAZIONE</h2>
 
       <div fxLayout="row" >
-        <md-select fxFlex="100%" [(ngModel)]="congregation.meetingDay"  placeholder="Seleziona giorno dell'adunanza">
-            <md-option *ngFor="let day of days;let i=index" [value]="i">{{day}}</md-option>
-        </md-select>
+        <mat-select fxFlex="100%" [(ngModel)]="congregation.meetingDay"  placeholder="Seleziona giorno dell'adunanza">
+            <mat-option *ngFor="let day of days;let i=index" [value]="i">{{day}}</mat-option>
+        </mat-select>
       </div>
 
       <div fxLayout="row" fxFlex="50%" fxFlexFill>
-        <md-input-container fxFlex="50%" >
-            <input mdInput type="text" placeholder="Nome della congregazione" [(ngModel)]="congregation.name" />
-          </md-input-container>
+        <mat-input-container fxFlex="50%" >
+            <input matInput type="text" placeholder="Nome della congregazione" [(ngModel)]="congregation.name" />
+          </mat-input-container>
       </div>
       <div fxLayout="row" fxFlex="50%" fxFlexFill>
-        <button fxLayoutAlign="center center" fxLayout="column" md-raised-button
+        <button fxLayoutAlign="center center" fxLayout="column" mat-raised-button
                     (click)="save()">Salva</button>
       </div>
     </div>
-  </md-card-content>
-</md-card>
+  </mat-card-content>
+</mat-card>
 

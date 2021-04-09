@@ -4,6 +4,7 @@
 import {Injectable} from '@angular/core';
 
 import {Observable, Subject} from 'rxjs';
+import {catchError, map} from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import {MeetingWorkbook} from "../shared/models/meetingWorkbook.model";
 import {environment} from "../../environments/environment";
@@ -50,31 +51,33 @@ export class AuthService {
   }
 
   login(username:string, password:string): Observable<string> {
-    return this.http.post(environment.url+"/auth/login", {username:username, password:password}, null)
-      .map(json => {
-        if(json.success){
-          let token = json.token;
-          let refreshToken = json.refreshToken;
-          let arr = token.split(".");
-          if(arr[1]){
-            let obj = JSON.parse(atob(arr[1]));
-            localStorage.setItem("expires", ""+(obj.exp * 1000));
-            localStorage.setItem("user", JSON.stringify(obj._doc));
+    return this.http.post<any>(environment.url+"/auth/login", {username:username, password:password}).pipe(
+        map(json => {
+          if(json.success){
+            let token = json.token;
+            let refreshToken = json.refreshToken;
+            let arr = token.split(".");
+            if(arr[1]){
+              let obj = JSON.parse(atob(arr[1]));
+              localStorage.setItem("expires", ""+(obj.exp * 1000));
+              localStorage.setItem("user", JSON.stringify(obj._doc));
+            }
+            localStorage.setItem("token", token);
+            localStorage.setItem("refreshToken", refreshToken);
+            this.setRefreshToken(localStorage.getItem("expires"));
+            return json.token;
+
+
+          }else{
+            this.logout(false);
+            return null;
           }
-          localStorage.setItem("token", token);
-          localStorage.setItem("refreshToken", refreshToken);
-          this.setRefreshToken(localStorage.getItem("expires"));
-          return json.token;
-
-
-        }else{
+        }),
+        catchError(err => {
           this.logout(false);
           return null;
-        }
-      }).catch(err => {
-        this.logout(false);
-        return null;
-      })
+        })
+      )
   }
 
   logout(withReload){
@@ -107,8 +110,9 @@ export class AuthService {
   }
 
   refreshToken(username, refreshToken){
-    return this.http.post(environment.url+"/auth/refresh", {username:username, refreshToken:refreshToken}, null)
-      .map(json => {
+    return this.http.post<any>(environment.url+"/auth/refresh", {username:username, refreshToken:refreshToken}, {responseType: 'json'})
+    .pipe(
+      map(json => {
         if(json.success){
           let token = json.token;
           let refreshToken = json.refreshToken;
@@ -127,10 +131,11 @@ export class AuthService {
           this.logout(true);
           return null;
         }
-      }).catch(err => {
+      }),
+      catchError(err => {
         this.logout(true);
         return null;
-      })
+      }))
   }
 
 

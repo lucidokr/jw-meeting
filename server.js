@@ -2,6 +2,7 @@ var express = require('express'),
     path = require('path'),
     fs = require('fs');
 var compression = require('compression');
+const cors = require('cors');
 var mongoose = require('mongoose')
 if (!process.env.NODE_ENV || process.env.NODE_ENV == "development") {
     var config = require('./api/env.json')['development'];
@@ -28,6 +29,7 @@ const DAY_NAMES = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", 
 
 
 app.use(compression());
+app.use(cors())
 app.set('superSecret', process.env.SECRET);
 app.set('port', (process.env.PORT || 3000));
 app.use(express.static(staticRoot));
@@ -48,14 +50,16 @@ if (process.env.NODE_ENV === 'production') {
 router.use('/auth', require('./api/auth'));
 
 app.use(function(req, res, next) {
+    console.log('a')
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, x-access-token, Content-Length, X-Requested-With');
 
     // if the request is not html then move along
     var accept = req.accepts('html', 'json', 'xml');
+    console.log(accept)
     if (accept !== 'html') {
-        if (req.url.indexOf('/login') != -1) return next();
+        if (req.url.indexOf('/login') != -1){ console.log('accept'); return next();}
         if (req.url.indexOf('alexa') != -1){
           return next();
         }
@@ -149,68 +153,68 @@ if (process.env.NODE_ENV && process.env.NODE_ENV != "development") {
  * ALEXA
  */
 
-const expressAdapter = require('ask-sdk-express-adapter')
-const Alexa = require('ask-sdk-core');
-// const { SkillRequestSignatureVerifier, TimestampVerifier } = require('ask-sdk-express-adapter');
+// const expressAdapter = require('ask-sdk-express-adapter')
+// const Alexa = require('ask-sdk-core');
+// // const { SkillRequestSignatureVerifier, TimestampVerifier } = require('ask-sdk-express-adapter');
 
-const LaunchRequestIntentHandler = require('./api/handlers/LaunchRequestIntentHandler.js');
-const HelpIntentHandler = require('./api/handlers/HelpIntentHandler.js');
-const CancelAndStopIntentHandler = require('./api/handlers/CancelAndStopIntentHandler.js');
-const SessionEndedRequestHandler = require('./api/handlers/SessionEndedRequestHandler.js');
-const ErrorHandler = require('./api/handlers/ErrorHandler.js');
-const PresidentIntentHandler = require('./api/handlers/PresidentIntentHandler.js');
-const ReaderIntentHandler = require('./api/handlers/ReaderIntentHandler.js');
-const StudentIntentHandler = require('./api/handlers/StudentIntentHandler.js');
+// const LaunchRequestIntentHandler = require('./api/handlers/LaunchRequestIntentHandler.js');
+// const HelpIntentHandler = require('./api/handlers/HelpIntentHandler.js');
+// const CancelAndStopIntentHandler = require('./api/handlers/CancelAndStopIntentHandler.js');
+// const SessionEndedRequestHandler = require('./api/handlers/SessionEndedRequestHandler.js');
+// const ErrorHandler = require('./api/handlers/ErrorHandler.js');
+// const PresidentIntentHandler = require('./api/handlers/PresidentIntentHandler.js');
+// const ReaderIntentHandler = require('./api/handlers/ReaderIntentHandler.js');
+// const StudentIntentHandler = require('./api/handlers/StudentIntentHandler.js');
 
-const skill = Alexa.SkillBuilders.custom()
-.addRequestHandlers(
-  LaunchRequestIntentHandler,
-  PresidentIntentHandler,
-  ReaderIntentHandler,
-  StudentIntentHandler,
-  HelpIntentHandler,
-  CancelAndStopIntentHandler,
-  SessionEndedRequestHandler,
-)
-.addErrorHandlers(ErrorHandler)
-.create();
+// const skill = Alexa.SkillBuilders.custom()
+// .addRequestHandlers(
+//   LaunchRequestIntentHandler,
+//   PresidentIntentHandler,
+//   ReaderIntentHandler,
+//   StudentIntentHandler,
+//   HelpIntentHandler,
+//   CancelAndStopIntentHandler,
+//   SessionEndedRequestHandler,
+// )
+// .addErrorHandlers(ErrorHandler)
+// .create();
 
-app.post('/alexa', async function(req, res) {
+// app.post('/alexa', async function(req, res) {
 
-    if (!skill) {
-      skill = Alexa.SkillBuilders.custom()
-      .addRequestHandlers(
-        LaunchRequestIntentHandler,
-        PresidentIntentHandler,
-        ReaderIntentHandler,
-        StudentIntentHandler,
-        HelpIntentHandler,
-        CancelAndStopIntentHandler,
-        SessionEndedRequestHandler,
-      )
-      .addErrorHandlers(ErrorHandler)
-      .create();
-    }
-  try {
-    await new expressAdapter.SkillRequestSignatureVerifier().verify(JSON.stringify(req.body), req.headers);
-    await new expressAdapter.TimestampVerifier().verify(JSON.stringify(req.body));
+//     if (!skill) {
+//       skill = Alexa.SkillBuilders.custom()
+//       .addRequestHandlers(
+//         LaunchRequestIntentHandler,
+//         PresidentIntentHandler,
+//         ReaderIntentHandler,
+//         StudentIntentHandler,
+//         HelpIntentHandler,
+//         CancelAndStopIntentHandler,
+//         SessionEndedRequestHandler,
+//       )
+//       .addErrorHandlers(ErrorHandler)
+//       .create();
+//     }
+//   try {
+//     await new expressAdapter.SkillRequestSignatureVerifier().verify(JSON.stringify(req.body), req.headers);
+//     await new expressAdapter.TimestampVerifier().verify(JSON.stringify(req.body));
 
-    skill.invoke(req.body)
-      .then(function(responseBody) {
-        res.json(responseBody);
-      })
-      .catch(function(error) {
-        console.log(error);
-        res.status(400).send('Error during the request');
-      });
-  } catch (err) {
-    console.log(err);
-    res.status(400).send('Error during the request');
-  }
+//     skill.invoke(req.body)
+//       .then(function(responseBody) {
+//         res.json(responseBody);
+//       })
+//       .catch(function(error) {
+//         console.log(error);
+//         res.status(400).send('Error during the request');
+//       });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(400).send('Error during the request');
+//   }
 
 
 
-});
+// });
 
 app.listen(app.get('port'), function() {
   console.log('app running on port', app.get('port'));

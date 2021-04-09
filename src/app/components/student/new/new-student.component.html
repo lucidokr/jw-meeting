@@ -1,14 +1,14 @@
 <form #form="ngForm" fxLayout="column" fxLayoutAlign="center center" >
   <div fxLayout="column" fxLayoutAlign="center center" class="new-student-container">
     <div *ngIf="!loading && brotherList && brotherList.length>0 && !edit">
-      <md-input-container fxFlex class="brother-autocomplete">
-        <input type="text" mdInput [mdAutocomplete]="auto" [(ngModel)]="brother" (ngModelChange)="filterBrother($event)" [value]="(brother && brother.name && brother.surname ? brother.name + ' '+brother.surname: '')" name="brother" placeholder="Seleziona fratello">
-      </md-input-container>
-      <md-autocomplete #auto="mdAutocomplete"  name="brotherAutocomplete" placeholder="Seleziona fratello">
-        <md-option (onSelectionChange)="newStudent(b)" *ngFor="let b of brotherListFiltered" [value]="b">
+      <mat-input-container fxFlex class="brother-autocomplete">
+        <input type="text" matInput [mdAutocomplete]="auto" [(ngModel)]="brother" (ngModelChange)="filterBrother($event)" [value]="(brother && brother.name && brother.surname ? brother.name + ' '+brother.surname: '')" name="brother" placeholder="Seleziona fratello">
+      </mat-input-container>
+      <mat-autocomplete #auto="mdAutocomplete"  name="brotherAutocomplete" placeholder="Seleziona fratello">
+        <mat-option (onSelectionChange)="newStudent(b)" *ngFor="let b of brotherListFiltered" [value]="b">
           {{b.surname}} {{b.name}}
-        </md-option>
-      </md-autocomplete>
+        </mat-option>
+      </mat-autocomplete>
     </div>
     <div *ngIf="!loading && brotherList && brotherList.length == 0 && !edit">
       Nessun fratello da aggiungere
@@ -17,225 +17,225 @@
       <h3>{{brother.name}} {{brother.surname}}</h3>
     </div>
     <div class="flex-container"  fxLayout="column" fxLayoutAlign="start start" *ngIf="brother && brother.student">
-      <md-tab-group>
-        <md-tab *ngIf="enable">
+      <mat-tab-group>
+        <mat-tab *ngIf="enable">
           <ng-template md-tab-label>
             GENERALE
           </ng-template>
           <div fxLayout="column" fxLayoutGap="25px" fxLayoutAlign="center center" >
             <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
-              <md-checkbox fxFlex [(ngModel)]="brother.student.primarySchoolEnabled" name="primarySchoolEnabled" >
+              <mat-checkbox fxFlex [(ngModel)]="brother.student.primarySchoolEnabled" name="primarySchoolEnabled" >
                 Abilitato alla prima scuola
-              </md-checkbox>
-              <md-checkbox fxFlex [(ngModel)]="brother.student.secondarySchoolEnabled" name="secondarySchoolEnabled" >
+              </mat-checkbox>
+              <mat-checkbox fxFlex [(ngModel)]="brother.student.secondarySchoolEnabled" name="secondarySchoolEnabled" >
                 Abilitato alla seconda scuola
-              </md-checkbox>
+              </mat-checkbox>
             </div>
             <div fxLayout="row" fxLayoutGap="15px" fxLayoutAlign="center center">
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="lastDate" [(ngModel)]="brother.student.lastDate" name="lastDate"  placeholder="Data ultimo discorso">
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="lastDate" [(ngModel)]="brother.student.lastDate" name="lastDate"  placeholder="Data ultimo discorso">
                 <button mdSuffix [mdDatepickerToggle]="lastDate"></button>
-              </md-input-container>
-              <md-datepicker #lastDate></md-datepicker>
-              <md-input-container fxFlex>
-                <input mdInput [mdDatepicker]="prevLastDate" [(ngModel)]="brother.student.lastPrevDate" name="lastPrevDate"  placeholder="Data penultimo discorso">
+              </mat-input-container>
+              <mat-datepicker #lastDate></mat-datepicker>
+              <mat-input-container fxFlex>
+                <input matInput [mdDatepicker]="prevLastDate" [(ngModel)]="brother.student.lastPrevDate" name="lastPrevDate"  placeholder="Data penultimo discorso">
                 <button mdSuffix [mdDatepickerToggle]="prevLastDate"></button>
-              </md-input-container>
-              <md-datepicker #prevLastDate></md-datepicker>
-              <md-select fxFlex required [(ngModel)]="brother.student.lastSchool" name="lastSchool" placeholder="Scuola dell'ultimo discorso">
-                <md-option [value]="1" >Prima scuola</md-option>
-                <md-option [value]="2" >Seconda scuola</md-option>
-              </md-select>
+              </mat-input-container>
+              <mat-datepicker #prevLastDate></mat-datepicker>
+              <mat-select fxFlex required [(ngModel)]="brother.student.lastSchool" name="lastSchool" placeholder="Scuola dell'ultimo discorso">
+                <mat-option [value]="1" >Prima scuola</mat-option>
+                <mat-option [value]="2" >Seconda scuola</mat-option>
+              </mat-select>
 
             </div>
             <!-- <div fxLayout="row" fxFlex="100" class="qualityOratoryContainer" fxLayoutGap="15px" fxLayoutAlign="center center">
-              <md-select *ngIf="enablePoint" class="qualityOratory" fxFlex="100" required  [(ngModel)]="brother.student.studyNumber._id" (ngModelChange)="copyStudyNumber($event, 'studyNumber')" name="studyNumber" placeholder="Qualità oratoria">
-                <md-option [value]="studyNumber._id" *ngFor="let studyNumber of studyNumberList">{{studyNumber.number}} - {{studyNumber.title}}</md-option>
-              </md-select>
+              <mat-select *ngIf="enablePoint" class="qualityOratory" fxFlex="100" required  [(ngModel)]="brother.student.studyNumber._id" (ngModelChange)="copyStudyNumber($event, 'studyNumber')" name="studyNumber" placeholder="Qualità oratoria">
+                <mat-option [value]="studyNumber._id" *ngFor="let studyNumber of studyNumberList">{{studyNumber.number}} - {{studyNumber.title}}</mat-option>
+              </mat-select>
             </div> -->
 
 
           </div>
-        </md-tab>
-        <md-tab *ngIf="brother.gender == 'M'" >
+        </mat-tab>
+        <mat-tab *ngIf="brother.gender == 'M'" >
           <ng-template md-tab-label>
             LB
           </ng-template>
           <div fxLayout="column" fxLayoutGap="15px"  fxLayoutAlign="center center">
-            <md-checkbox fxFlex [(ngModel)]="brother.student.bibleReadingEnabled" (ngModelChange)="disableBibleReading($event)" name="bibleReadingEnabled" >
+            <mat-checkbox fxFlex [(ngModel)]="brother.student.bibleReadingEnabled" (ngModelChange)="disableBibleReading($event)" name="bibleReadingEnabled" >
               Abilitato a svolgere la lettura biblica
-            </md-checkbox>
+            </mat-checkbox>
             <div *ngIf="brother.student.bibleReadingEnabled" fxLayout="row" fxLayoutAlign="start center">
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="bibleReadingDate" [(ngModel)]="brother.student.bibleReadingDate" name="bibleReadingDate"  placeholder="Data ultima lettura biblica">
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="bibleReadingDate" [(ngModel)]="brother.student.bibleReadingDate" name="bibleReadingDate"  placeholder="Data ultima lettura biblica">
                 <button mdSuffix [mdDatepickerToggle]="bibleReadingDate"></button>
-              </md-input-container>
-              <md-datepicker #bibleReadingDate></md-datepicker>
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="bibleReadingPrevDate" [(ngModel)]="brother.student.bibleReadingPrevDate" name="bibleReadingPrevDate"  placeholder="Data penultima lettura biblica">
+              </mat-input-container>
+              <mat-datepicker #bibleReadingDate></mat-datepicker>
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="bibleReadingPrevDate" [(ngModel)]="brother.student.bibleReadingPrevDate" name="bibleReadingPrevDate"  placeholder="Data penultima lettura biblica">
                 <button mdSuffix [mdDatepickerToggle]="bibleReadingPrevDate"></button>
-              </md-input-container>
-              <md-datepicker #bibleReadingPrevDate></md-datepicker>
-              <md-select fxFlex required [(ngModel)]="brother.student.bibleReadingLastSchool" name="bibleReadingLastSchool" placeholder="Scuola dell'ultima lettura biblica">
-                <md-option [value]="1" >Prima scuola</md-option>
-                <md-option [value]="2" >Seconda scuola</md-option>
-              </md-select>
+              </mat-input-container>
+              <mat-datepicker #bibleReadingPrevDate></mat-datepicker>
+              <mat-select fxFlex required [(ngModel)]="brother.student.bibleReadingLastSchool" name="bibleReadingLastSchool" placeholder="Scuola dell'ultima lettura biblica">
+                <mat-option [value]="1" >Prima scuola</mat-option>
+                <mat-option [value]="2" >Seconda scuola</mat-option>
+              </mat-select>
             </div>
           </div>
-        </md-tab>
-        <md-tab>
+        </mat-tab>
+        <mat-tab>
           <ng-template md-tab-label>
             Parti
           </ng-template>
           <div fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="center center">
-            <md-checkbox fxFlex [(ngModel)]="brother.student.ministryPartEnabled" (ngModelChange)="checkIfAllDisabled()" name="ministryPartEnabled" >
+            <mat-checkbox fxFlex [(ngModel)]="brother.student.ministryPartEnabled" (ngModelChange)="checkIfAllDisabled()" name="ministryPartEnabled" >
               Abilitato a svolgere le parti del Ministero
-            </md-checkbox>
+            </mat-checkbox>
             <div *ngIf="brother.student.ministryPartEnabled" fxLayout="row" fxLayoutAlign="start center">
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="ministryPartDate" [(ngModel)]="brother.student.ministryPartDate" name="ministryPartDate"  placeholder="Data ultima parte">
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="ministryPartDate" [(ngModel)]="brother.student.ministryPartDate" name="ministryPartDate"  placeholder="Data ultima parte">
                 <button mdSuffix [mdDatepickerToggle]="ministryPartDate"></button>
-              </md-input-container>
-              <md-datepicker #ministryPartDate></md-datepicker>
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="ministryPartPrevDate" [(ngModel)]="brother.student.ministryPartPrevDate" name="ministryPartPrevDate"  placeholder="Data penultima parte">
+              </mat-input-container>
+              <mat-datepicker #ministryPartDate></mat-datepicker>
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="ministryPartPrevDate" [(ngModel)]="brother.student.ministryPartPrevDate" name="ministryPartPrevDate"  placeholder="Data penultima parte">
                 <button mdSuffix [mdDatepickerToggle]="ministryPartPrevDate"></button>
-              </md-input-container>
-              <md-datepicker #ministryPartPrevDate></md-datepicker>
-              <md-select fxFlex required [(ngModel)]="brother.student.ministryPartLastSchool" name="ministryPartLastSchool" placeholder="Scuola dell'ultima parte">
-                <md-option [value]="1" >Prima scuola</md-option>
-                <md-option [value]="2" >Seconda scuola</md-option>
-              </md-select>
+              </mat-input-container>
+              <mat-datepicker #ministryPartPrevDate></mat-datepicker>
+              <mat-select fxFlex required [(ngModel)]="brother.student.ministryPartLastSchool" name="ministryPartLastSchool" placeholder="Scuola dell'ultima parte">
+                <mat-option [value]="1" >Prima scuola</mat-option>
+                <mat-option [value]="2" >Seconda scuola</mat-option>
+              </mat-select>
             </div>
           </div>
-        </md-tab>
-        <!-- <md-tab>
+        </mat-tab>
+        <!-- <mat-tab>
           <ng-template md-tab-label>
             PC
           </ng-template>
           <div fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="center center">
-            <md-checkbox fxFlex [(ngModel)]="brother.student.initialCallEnabled" (ngModelChange)="checkIfAllDisabled()" name="initialCallEnabled" >
+            <mat-checkbox fxFlex [(ngModel)]="brother.student.initialCallEnabled" (ngModelChange)="checkIfAllDisabled()" name="initialCallEnabled" >
               Abilitato a svolgere il primo contatto
-            </md-checkbox>
+            </mat-checkbox>
             <div *ngIf="brother.student.initialCallEnabled" fxLayout="row" fxLayoutAlign="start center">
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="initialCallDate" [(ngModel)]="brother.student.initialCallDate" name="initialCallDate"  placeholder="Data ultimo primo contatto">
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="initialCallDate" [(ngModel)]="brother.student.initialCallDate" name="initialCallDate"  placeholder="Data ultimo primo contatto">
                 <button mdSuffix [mdDatepickerToggle]="initialCallDate"></button>
-              </md-input-container>
-              <md-datepicker #initialCallDate></md-datepicker>
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="initialCallPrevDate" [(ngModel)]="brother.student.initialCallPrevDate" name="initialCallPrevDate"  placeholder="Data penultimo primo contatto">
+              </mat-input-container>
+              <mat-datepicker #initialCallDate></mat-datepicker>
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="initialCallPrevDate" [(ngModel)]="brother.student.initialCallPrevDate" name="initialCallPrevDate"  placeholder="Data penultimo primo contatto">
                 <button mdSuffix [mdDatepickerToggle]="initialCallPrevDate"></button>
-              </md-input-container>
-              <md-datepicker #initialCallPrevDate></md-datepicker>
-              <md-select fxFlex required [(ngModel)]="brother.student.initialCallLastSchool" name="initialCallLastSchool" placeholder="Scuola dell'ultimo primo contatto">
-                <md-option [value]="1" >Prima scuola</md-option>
-                <md-option [value]="2" >Seconda scuola</md-option>
-              </md-select>
+              </mat-input-container>
+              <mat-datepicker #initialCallPrevDate></mat-datepicker>
+              <mat-select fxFlex required [(ngModel)]="brother.student.initialCallLastSchool" name="initialCallLastSchool" placeholder="Scuola dell'ultimo primo contatto">
+                <mat-option [value]="1" >Prima scuola</mat-option>
+                <mat-option [value]="2" >Seconda scuola</mat-option>
+              </mat-select>
             </div>
           </div>
-        </md-tab> -->
-        <!-- <md-tab>
+        </mat-tab> -->
+        <!-- <mat-tab>
           <ng-template md-tab-label>
             VU
           </ng-template>
           <div fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="center center">
-            <md-checkbox fxFlex [(ngModel)]="brother.student.returnVisitEnabled" (ngModelChange)="checkIfAllDisabled()" name="returnVisitEnabled" >
+            <mat-checkbox fxFlex [(ngModel)]="brother.student.returnVisitEnabled" (ngModelChange)="checkIfAllDisabled()" name="returnVisitEnabled" >
               Abilitato a svolgere la visita ulteriore
-            </md-checkbox>
+            </mat-checkbox>
             <div *ngIf="brother.student.returnVisitEnabled" fxLayout="row" fxLayoutAlign="start center">
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="returnVisitDate" [(ngModel)]="brother.student.returnVisitDate" name="returnVisitDate"  placeholder="Data ultima visita ulteriore">
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="returnVisitDate" [(ngModel)]="brother.student.returnVisitDate" name="returnVisitDate"  placeholder="Data ultima visita ulteriore">
                 <button mdSuffix [mdDatepickerToggle]="returnVisitDate"></button>
-              </md-input-container>
-              <md-datepicker #returnVisitDate></md-datepicker>
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="returnVisitPrevDate" [(ngModel)]="brother.student.returnVisitPrevDate" name="returnVisitPrevDate"  placeholder="Data penultima visita ulteriore">
+              </mat-input-container>
+              <mat-datepicker #returnVisitDate></mat-datepicker>
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="returnVisitPrevDate" [(ngModel)]="brother.student.returnVisitPrevDate" name="returnVisitPrevDate"  placeholder="Data penultima visita ulteriore">
                 <button mdSuffix [mdDatepickerToggle]="returnVisitPrevDate"></button>
-              </md-input-container>
-              <md-datepicker #returnVisitPrevDate></md-datepicker>
-              <md-select fxFlex required [(ngModel)]="brother.student.returnVisitLastSchool" name="returnVisitLastSchool" placeholder="Scuola dell'ultima visita ulteriore">
-                <md-option [value]="1" >Prima scuola</md-option>
-                <md-option [value]="2" >Seconda scuola</md-option>
-              </md-select>
+              </mat-input-container>
+              <mat-datepicker #returnVisitPrevDate></mat-datepicker>
+              <mat-select fxFlex required [(ngModel)]="brother.student.returnVisitLastSchool" name="returnVisitLastSchool" placeholder="Scuola dell'ultima visita ulteriore">
+                <mat-option [value]="1" >Prima scuola</mat-option>
+                <mat-option [value]="2" >Seconda scuola</mat-option>
+              </mat-select>
             </div>
           </div>
-        </md-tab> -->
-        <!-- <md-tab>
+        </mat-tab> -->
+        <!-- <mat-tab>
           <ng-template md-tab-label>
             SB
           </ng-template>
           <div fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="center center" >
-            <md-checkbox fxFlex [(ngModel)]="brother.student.bibleStudyEnabled" (ngModelChange)="checkIfAllDisabled()" name="bibleStudyEnabled" >
+            <mat-checkbox fxFlex [(ngModel)]="brother.student.bibleStudyEnabled" (ngModelChange)="checkIfAllDisabled()" name="bibleStudyEnabled" >
               Abilitato a svolgere lo studio biblico
-            </md-checkbox>
+            </mat-checkbox>
             <div *ngIf="brother.student.bibleStudyEnabled" fxLayout="row" fxLayoutAlign="start center">
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="bibleStudyDate" [(ngModel)]="brother.student.bibleStudyDate" name="bibleStudyDate"  placeholder="Data ultimo studio biblico">
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="bibleStudyDate" [(ngModel)]="brother.student.bibleStudyDate" name="bibleStudyDate"  placeholder="Data ultimo studio biblico">
                 <button mdSuffix [mdDatepickerToggle]="bibleStudyDate"></button>
-              </md-input-container>
-              <md-datepicker #bibleStudyDate></md-datepicker>
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="bibleStudyPrevDate" [(ngModel)]="brother.student.bibleStudyPrevDate" name="bibleStudyPrevDate"  placeholder="Data penultimo studio biblico">
+              </mat-input-container>
+              <mat-datepicker #bibleStudyDate></mat-datepicker>
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="bibleStudyPrevDate" [(ngModel)]="brother.student.bibleStudyPrevDate" name="bibleStudyPrevDate"  placeholder="Data penultimo studio biblico">
                 <button mdSuffix [mdDatepickerToggle]="bibleStudyPrevDate"></button>
-              </md-input-container>
-              <md-datepicker #bibleStudyPrevDate></md-datepicker>
-              <md-select fxFlex required [(ngModel)]="brother.student.bibleStudyLastSchool" name="bibleStudyLastSchool" placeholder="Scuola dell'ultimo studio biblico">
-                <md-option [value]="1" >Prima scuola</md-option>
-                <md-option [value]="2" >Seconda scuola</md-option>
-              </md-select>
+              </mat-input-container>
+              <mat-datepicker #bibleStudyPrevDate></mat-datepicker>
+              <mat-select fxFlex required [(ngModel)]="brother.student.bibleStudyLastSchool" name="bibleStudyLastSchool" placeholder="Scuola dell'ultimo studio biblico">
+                <mat-option [value]="1" >Prima scuola</mat-option>
+                <mat-option [value]="2" >Seconda scuola</mat-option>
+              </mat-select>
             </div>
           </div>
-        </md-tab> -->
-        <md-tab *ngIf="brother.gender == 'M'">
+        </mat-tab> -->
+        <mat-tab *ngIf="brother.gender == 'M'">
           <ng-template md-tab-label>
             DISC
           </ng-template>
           <div  fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="center center">
-            <md-checkbox fxFlex [(ngModel)]="brother.student.talkEnabled" (ngModelChange)="checkIfAllDisabled()" name="talkEnabled" >
+            <mat-checkbox fxFlex [(ngModel)]="brother.student.talkEnabled" (ngModelChange)="checkIfAllDisabled()" name="talkEnabled" >
 
               Abilitato a svolgere discorsi
-            </md-checkbox>
+            </mat-checkbox>
             <div *ngIf="brother.student.talkEnabled" fxLayout="row" fxLayoutAlign="start center">
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="talkDate" [(ngModel)]="brother.student.talkDate" name="talkDate"  placeholder="Data ultimo discorso">
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="talkDate" [(ngModel)]="brother.student.talkDate" name="talkDate"  placeholder="Data ultimo discorso">
                 <button mdSuffix [mdDatepickerToggle]="talkDate"></button>
-              </md-input-container>
-              <md-datepicker #talkDate></md-datepicker>
+              </mat-input-container>
+              <mat-datepicker #talkDate></mat-datepicker>
             </div>
             <div *ngIf="brother.student.talkEnabled" fxLayout="row" fxLayoutAlign="start center">
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="talkPrevDate" [(ngModel)]="brother.student.talkPrevDate" name="talkPrevDate"  placeholder="Data penultimo discorso">
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="talkPrevDate" [(ngModel)]="brother.student.talkPrevDate" name="talkPrevDate"  placeholder="Data penultimo discorso">
                 <button mdSuffix [mdDatepickerToggle]="talkPrevDate"></button>
-              </md-input-container>
-              <md-datepicker #talkPrevDate></md-datepicker>
+              </mat-input-container>
+              <mat-datepicker #talkPrevDate></mat-datepicker>
             </div>
           </div>
-        </md-tab>
-        <md-tab>
+        </mat-tab>
+        <mat-tab>
           <ng-template md-tab-label>
             ASS
           </ng-template>
           <div fxLayout="column" fxLayoutGap="15px" fxLayoutAlign="center center">
-            <md-checkbox fxFlex [(ngModel)]="brother.student.assistantEnabled" name="assistantEnabled" >
+            <mat-checkbox fxFlex [(ngModel)]="brother.student.assistantEnabled" name="assistantEnabled" >
               Assistente
-            </md-checkbox>
+            </mat-checkbox>
             <div *ngIf="brother.student.assistantEnabled" fxLayout="row" fxLayoutAlign="start center">
-              <md-input-container fxFlex >
-                <input mdInput [mdDatepicker]="assistantDate" [(ngModel)]="brother.student.assistantDate" name="assistantDate"  placeholder="Data ultimo assistente">
+              <mat-input-container fxFlex >
+                <input matInput [mdDatepicker]="assistantDate" [(ngModel)]="brother.student.assistantDate" name="assistantDate"  placeholder="Data ultimo assistente">
                 <button mdSuffix [mdDatepickerToggle]="assistantDate"></button>
-              </md-input-container>
-              <md-datepicker #assistantDate></md-datepicker>
+              </mat-input-container>
+              <mat-datepicker #assistantDate></mat-datepicker>
             </div>
           </div>
-        </md-tab>
-      </md-tab-group>
+        </mat-tab>
+      </mat-tab-group>
     </div>
 
     <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
       <button fxLayoutAlign="center center" color="accent" fxLayout="column" md-button
               (click)="dialogRef.close()">Annula</button>
-      <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" md-raised-button [disabled]="!form.form.valid"
+      <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!form.form.valid"
               (click)="dialogRef.close(brother)">Salva</button>
 
     </div>

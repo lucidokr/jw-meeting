@@ -18,11 +18,11 @@ export class HistoryService {
   }
 
   getHistory(): Observable<Array<History>> {
-    return this.http.get(environment.url + this.url, null)
+    return this.http.get<Array<History>>(environment.url + this.url, {responseType: 'json'})
   }
 
   getHistoryByStudent(studentId: string): Observable<Array<History>> {
-    return this.http.get(environment.url + this.url+"/"+studentId, null)
+    return this.http.get<Array<History>>(environment.url + this.url+"/"+studentId, {responseType: 'json'})
   }
 
 

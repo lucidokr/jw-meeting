@@ -33,7 +33,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
             MatDialogModule,
             MatSidenavModule,
             MatTabsModule,
-            MatDatepickerModule
+            MatDatepickerModule,
             FlexLayoutModule,
             MatIconModule,
             MatProgressSpinnerModule],
@@ -50,7 +50,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
             MatDialogModule,
             MatSidenavModule,
             MatTabsModule,
-            MatDatepickerModule
+            MatDatepickerModule,
             FlexLayoutModule,
             MatIconModule,
             MatProgressSpinnerModule],
