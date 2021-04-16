@@ -14,16 +14,16 @@
   </div>
   <loader *ngIf="loadingMeetingWorkbooks"></loader>
 
-  <div class="flex-container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start" *ngIf="weeks.length>0 && !loadingMeetingWorkbooks">
+  <div class="flex-container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start" *ngIf="weeks.length>0 && !loadingMeetingWorkbooks" fxLayoutGap="20px">
 
     <mat-card *ngFor="let week of weeks; let i = index" class="weekConfigContainer" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start start" fxLayoutAlign.xs="start"  >
       <mat-card-header fxLayout="row" fxLayoutAlign="start start">
-        <mat-card-title>
+        <mat-card-title fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="20px">
           <span>{{week.date.format('dddd D MMMM YYYY')}}</span>
           <mat-checkbox color="primary" name="supervisor{{i}}"  [(ngModel)]="week.supervisor" (ngModelChange)="changeDate(week)">Visita del sorvegliante</mat-checkbox>
         </mat-card-title>
       </mat-card-header>
-      <mat-card-content fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" *ngIf="!week.supervisor">
+      <mat-card-content fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" *ngIf="!week.supervisor" fxFlexFill>
         <mat-radio-group color="primary" name="weekType{{i}}" class="radio-group" fxLayout.xs="column" fxLayout.sm="column"  fxLayoutGap="10px" [(ngModel)]="week.type">
           <mat-radio-button *ngFor="let keys of weekType | keys" [value]="keys.v" [hidden]="week.supervisor && !keys.v.withSupervisor">{{keys.v.label}}</mat-radio-button>
         </mat-radio-group>
@@ -35,34 +35,31 @@
                 <h3 >VITA CRISTIANA</h3>
                 <div *ngFor="let part of week.christianLivingPart; let j = index" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px" fxFlex="100%" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
                   <div fxFlex="50%" [innerHTML]="part.label | safeHtml"></div>
-                  <div fxFlex="25%" fxLayout="column">
+                  <div fxFlex="50%" fxLayout="column">
                     <mat-checkbox color="primary" name="christianLivingPart{{i}}{{j}}-president" [(ngModel)]="part.president" fxFlex="25%">Fatta dal presidente</mat-checkbox>
                     <div *ngIf="!part.president">
                       <mat-form-field fxFlex class="brother-autocomplete" >
                         <input name="christianLivingPart{{i}}{{j}}" type="text" matInput [matAutocomplete]="auto" [(ngModel)]="part.brother" (ngModelChange)="filterBrother($event)" [value]="(part.brother && part.brother.name && part.brother.surname ? part.brother.name + ' '+part.brother.surname: '')" name="brother" placeholder="Seleziona fratello" required>
+                        <mat-autocomplete  #auto="matAutocomplete" name="brotherAutocomplete" placeholder="Seleziona fratello">
+                          <mat-option *ngFor="let b of christianLivingPartBrotherFiltered" [value]="b" (onSelectionChange)="resetFilter()">
+                            {{b.surname}} {{b.name}}
+                            <span *ngIf="b.servant && b.servant.christianLivingPartDate"> - {{b.servant.christianLivingPartDate.format('DD/MM/YY')}}</span>
+                            <span *ngIf="b.elder && b.elder.christianLivingPartDate"> - {{b.elder.christianLivingPartDate.format('DD/MM/YY')}}</span>
+  
+                          </mat-option>
+                        </mat-autocomplete>
                       </mat-form-field>
-                      <mat-autocomplete  #auto="matAutocomplete" name="brotherAutocomplete" placeholder="Seleziona fratello">
-                        <mat-option *ngFor="let b of christianLivingPartBrotherFiltered" [value]="b" (onSelectionChange)="resetFilter()">
-                          {{b.surname}} {{b.name}}
-                          <span *ngIf="b.servant && b.servant.christianLivingPartDate"> - {{b.servant.christianLivingPartDate.format('DD/MM/YY')}}</span>
-                          <span *ngIf="b.elder && b.elder.christianLivingPartDate"> - {{b.elder.christianLivingPartDate.format('DD/MM/YY')}}</span>
-
-                        </mat-option>
-                      </mat-autocomplete>
+                      
                     </div>
                   </div>
-                  <div fxFlex="25%" fxLayout="column"></div>
                 </div>
               </div>
 
             </div>
           </div>
-
-
-
         </div>
       </mat-card-content>
     </mat-card>
-    <button type="button" mat-raised-button [disabled]="!configForm.form.valid" (click)="confirm()">Conferma</button>
+    <button type="button" mat-raised-button [disabled]="!configForm.form.valid" (click)="confirm()" color="primary" class="large">Conferma</button>
   </div>
 </form>

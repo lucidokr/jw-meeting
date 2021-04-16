@@ -2,7 +2,9 @@
 <div class="flex-container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
   <div fxFlex="100%" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start center" fxLayoutAlign.xs="start" class="previewHeader">
     <div (click)="backToConfig()">
-      <i class="material-icons">keyboard_arrow_left</i>
+      <button mat-icon-button (click)="delete(element)">
+        <i class="material-icons">arrow_back</i>
+      </button>
       Torna alla configurazione
     </div>
     <h3>Anteprima adunanza</h3>
@@ -108,7 +110,7 @@
       <!--</div>-->
     <!--</mat-card-content>-->
   <!--</mat-card>-->
-  <button *ngIf="!loadingInsertPgm" mat-raised-button [disabled]="busyErrorBrother.length != 0" (click)="confirm()">Conferma</button>
+  <button *ngIf="!loadingInsertPgm" mat-raised-button [disabled]="busyErrorBrother.length != 0" (click)="confirm()" color="primary" class="large">Conferma</button>
   <loader *ngIf="loadingInsertPgm"></loader>
 </div>
 

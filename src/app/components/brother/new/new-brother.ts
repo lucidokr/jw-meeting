@@ -41,7 +41,7 @@ import {DialogService} from "../../../services/dialog.service";
             <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start" fxLayoutGap="20px">
               <button fxLayoutAlign="center center" color="accent" fxLayout="column" mat-raised-button
                     (click)="dialogRef.close()">Annulla</button>
-                <button fxLayoutAlign="center center" fxLayout="column" mat-raised-button [disabled]="!form.form.valid"
+                <button fxLayoutAlign="center center" fxLayout="column" mat-raised-button [disabled]="!form.form.valid" color="primary"
                   (click)="dialogRef.close(brother)">Salva</button>
                   
             </div>

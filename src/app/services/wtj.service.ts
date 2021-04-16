@@ -30,11 +30,11 @@ export class WTJService {
     //   dateStartStr = dateStart.date() + "-" + dateStart.format("MMMM")
     //   dateEndStr = dateEnd.date() + "-" + dateEnd.format("MMMM")
     // }
-    return this.http.get<MeetingWorkbook>(environment.url+"/wtj/"+date.year()+"/"+(date.format('MM') +"/"+dateStartStr/*+"/"+dateEndStr*/, {responseType:'json'}))
+    return this.http.get<any>(environment.url+"/wtj/"+date.year()+"/"+date.format('MM') +"/"+dateStartStr/*+"/"+dateEndStr*/, {responseType:'json'})
     .pipe(
       map(res => {
         if(res){
-          let data = res;
+          let data = res.data;
           data.date = moment(date);
           return data;
         }else

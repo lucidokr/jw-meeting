@@ -4,7 +4,7 @@
     <h2>Adunanza {{week && week.date.format('D MMMM YYYY')}}</h2>
   </div>
   <mat-tab-group>
-    <mat-tab *ngIf="!week.completed && (user.role==USER_ROLE.SCHOOL_OVERSEER || user.role==USER_ROLE.PRESIDENT)">
+    <mat-tab *ngIf="!loading && week && !week.completed && (user.role==USER_ROLE.SCHOOL_OVERSEER || user.role==USER_ROLE.PRESIDENT)">
       <ng-template mat-tab-label>
         AGGIORNAMENTO PARTI
       </ng-template>

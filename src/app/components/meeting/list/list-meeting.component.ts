@@ -25,8 +25,8 @@ import {USER_ROLE} from "../../../constant";
   templateUrl: './list-meeting.component.html'
 })
 export class MeetingListComponent extends GeneralListComponent<WeekMeeting>{
-  columns = ['date', 'type', 'completed', 'temporary', 'actions']
-  columnsPresident = ['date', 'type', 'temporary', 'actions']
+  columns = ['date', 'type', 'completed',  'actions']
+  columnsPresident = ['date', 'type', 'actions']
   columnsViewer = ['date', 'type', 'actions']
   // columns = {
   //   date: {
@@ -76,32 +76,6 @@ export class MeetingListComponent extends GeneralListComponent<WeekMeeting>{
       this.displayedColumns = this.columnsViewer;
     }
     this.service = meetingService;
-    // this.model.actions = {
-    //   columnTitle: "Azioni",
-    //   add:true,
-    //   position: 'right',
-    //   custom:[
-    //     {
-    //       name: 'view',
-    //       title: '<fa><i class="fa fa-eye fa-lg"></i></fa>',
-    //     },
-    //     {
-    //       name: 'downloadXLS',
-    //       title: '<span class="action-download-container"><fa><i class="fa fa-download fa-lg"></i></fa><span class="action-download-label">XLS</span></span>',
-    //     },
-    //     {
-    //       name: 'downloadPDF',
-    //       title: '<span class="action-download-container"><fa><i class="fa fa-download fa-lg"></i></fa><span class="action-download-label">PDF</span></span>',
-    //     }
-
-    //   ]
-    // };
-
-    // this.emitterService.get("change_header_subtitle")
-    //   .emit('Adunanze');
-    // this.type = "Fratello per le preghiere";
-    // this.dialogMethod = dialogService.openPrayer.bind(this.dialogService);
-    // this.baseModel = Prayer;
     this.load();
 
   }
@@ -153,8 +127,8 @@ export class MeetingListComponent extends GeneralListComponent<WeekMeeting>{
   //   }
   // }
 
-  public showTemp(ev){
-    this.router.navigateByUrl(location.pathname + "/temp/" + ev.data._id)
+  public showTemp(data){
+    this.router.navigateByUrl(location.pathname + "/temp/" + data._id)
   }
 
   public view(data : any){

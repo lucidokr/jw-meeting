@@ -27,7 +27,7 @@
         <input matInput type="password" name="password" [(ngModel)]="password" required placeholder="Password">
       </mat-form-field>
       <label class="error" *ngIf="message">{{message}}</label>
-      <button *ngIf="!loading" mat-raised-button [disabled]="!loginForm.form.valid" (click)="login()">Login</button>
+      <button *ngIf="!loading" mat-raised-button [disabled]="!loginForm.form.valid" (click)="login()" color="primary">Login</button>
       <loader *ngIf="loading"></loader>
     </form>
   </mat-card-content>

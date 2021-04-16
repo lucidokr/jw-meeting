@@ -1,5 +1,6 @@
+
+<h2>Lista Adunanze</h2>
 <mat-card class="card-table">
-    <h2>Lista Adunanze</h2>
     <mat-card-content *ngIf="!loading" fxLayout="column">
         <mat-form-field fxFlex class="search-container">
             <input matInput #search class="search" type="text" placeholder="Cerca..." [ngModel]="searchValue" (ngModelChange)="onSearch($event)"/>
@@ -14,7 +15,7 @@
                   
                     <ng-container matColumnDef="type">
                       <th mat-header-cell *matHeaderCellDef> Tipo </th>
-                      <td mat-cell *matCellDef="let row"> {{row.type.label + (row.supervisor ?' - Visita del sorvegliante di circoscrizione':'')}}</td>
+                      <td mat-cell *matCellDef="let row"> <b>{{(row.temp ?' [BOZZA] ':'')}} </b>{{row.type.label + (row.supervisor ?' - Visita del sorvegliante di circoscrizione':'')}}</td>
                     </ng-container>
 
                     <ng-container matColumnDef="completed">
@@ -22,17 +23,25 @@
                       <td mat-cell *matCellDef="let row"> <boolean-render [checked] = "row.completed"></boolean-render> </td>
                     </ng-container>
 
-                    <ng-container matColumnDef="temporary">
-                      <th mat-header-cell *matHeaderCellDef> Completa </th>
-                      <td mat-cell *matCellDef="let row"> <boolean-render [checked] = "!row.temp"></boolean-render></td>
-                    </ng-container>
+                    <!-- <ng-container matColumnDef="temporary">
+                      <th mat-header-cell *matHeaderCellDef> Bozza </th>
+                      <td mat-cell *matCellDef="let row"> <boolean-render [checked] = "row.temp"></boolean-render></td>
+                    </ng-container> -->
 
                     <ng-container matColumnDef="actions">
                       <th mat-header-cell *matHeaderCellDef> Azioni </th>
                       <td mat-cell *matCellDef="let row" fxLayout="row" fxLayoutAlign="center center"> 
-                        <span (click)="show(row)" ><fa  ><i class="fa fa-eye fa-lg"></i></fa></span>
-                        <span (click)="download(row, 'XLS')" class="action-download-container" fxLayout="column" fxLayoutAlign="center center"><fa><i class="fa fa-download fa-lg"></i></fa>XLS</span>
-                        <span (click)="download(row, 'PDF')" class="action-download-container" fxLayout="column" fxLayoutAlign="center center"><fa><i class="fa fa-download fa-lg"></i></fa>PDF</span>
+                        <button mat-icon-button (click)="view(row)" >
+                            <i class="material-icons">visibility</i>
+                          </button>
+                          <button mat-icon-button (click)="download(row, 'XLS')" fxLayout="column" class="file">
+                            <i class="material-icons">file_download</i>
+                            XLS
+                          </button>
+                          <button mat-icon-button (click)="download(row, 'PDF')" cxLayout="column" class="file">
+                            <i class="material-icons">file_download</i>
+                            PDF
+                          </button>
                       </td>
                     </ng-container>
                   

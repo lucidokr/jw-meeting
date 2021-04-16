@@ -21,7 +21,7 @@ export class ContainerComponent implements AfterContentInit {
 
   height:number;
 
-  subtitle:string;
+  // subtitle:string;
   sidenavOpen: boolean = false;
   headerTitleEmitter: EventEmitter<string>;
 

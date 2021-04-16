@@ -10,6 +10,7 @@ import {ElderService} from "../../../services/elder.service";
 
 import * as moment from 'moment';
 import {MeetingService} from "../../../services/meeting.service";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'week-temp',
@@ -39,7 +40,8 @@ export class WeekTempComponent{
                      private servantService:ServantService,
                      private elderService:ElderService,
                       private meetingService: MeetingService,
-                      private snackBar: MatSnackBar) {
+                      private snackBar: MatSnackBar,
+                      private location: Location) {
 
     this.snackBarConfig.duration = 3000;
   }
@@ -72,6 +74,7 @@ export class WeekTempComponent{
     this.dialogService.openChangePart(part, list, t)
         .subscribe(newBrother =>{
           if(newBrother != null){
+            part.president = false;
             part.brother = newBrother;
             this.edited = true;
           }
@@ -94,6 +97,10 @@ export class WeekTempComponent{
         })
       }
     });
+  }
+
+  back(){
+    this.location.back();
   }
 
 }

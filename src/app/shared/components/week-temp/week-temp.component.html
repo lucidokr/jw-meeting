@@ -1,16 +1,15 @@
+<div fxLayout="row" fxLayoutGap="50px" fxLayoutAlign="start center">
+  <button mat-icon-button (click)="back()"><i class="material-icons">arrow_back</i></button>
+  <h2>Adunanza {{week && week.date.format('D MMMM YYYY')}} - {{week.type.label}}</h2>
+  <h3  class="flex-item" *ngIf="week.supervisor">Visita del sorvegliante</h3>
+</div>
 <mat-card class="weekConfigContainer" fxLayout="column"  fxLayoutAlign="start start">
-  <mat-card-header fxLayout="row" fxLayoutAlign="start start">
-    <mat-card-title>
-      <span>{{week.date.format('dddd D MMMM YYYY')}} - {{week.type.label}}</span>
-      <h3  class="flex-item" *ngIf="week.supervisor">Visita del sorvegliante</h3>
-    </mat-card-title>
-  </mat-card-header>
-  <mat-card-content fxLayout="column" fxLayoutAlign="center center">
-    <div class="weekPreview" fxFlex="100%" fxLayout="column" fxLayoutAlign="center center" *ngIf="week.type.meeting && !week.supervisor" >
-      <div fxFlex="100%" width="100%" fxLayout="row" fxLayoutAlign="center center"  >
-        <div class="meetingWorkbook flex-item" fxFlex="100%" fxFlex fxLayout="column" fxLayoutGap="10px">
+  
+  <mat-card-content fxFlexFill fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
+    <div class="weekPreview" fxFlexFill fxLayout="column" fxLayoutAlign="center center" *ngIf="week.type.meeting && !week.supervisor" >
+        <div class="meetingWorkbook flex-item" fxFlexFill fxLayout="column" fxLayoutGap="10px">
 
-          <div class="effective" fxLayout="column" fxFlex="100%" fxLayoutGap="10px" *ngIf="week.presentationExercise.enabled">
+          <!-- <div class="effective" fxLayout="column" fxFlex="100%" fxLayoutGap="10px" *ngIf="week.presentationExercise.enabled">
             <h3>EFFICACI NEL MINISTERO</h3>
             <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%"  fxLayoutGap="5px" fxLayoutAlign="center center" *ngIf="week.presentationExercise.enabled">
               <div fxFlex="50%" class="descriptionPart" [innerHTML]="week.presentationExercise.label | safeHtml"></div>
@@ -21,14 +20,20 @@
               <div fxFlex="25%" ></div>
             </div>
 
-          </div>
-          <div class="living" fxLayout="column" fxFlex="100%" fxLayoutGap="10px">
+          </div> -->
+          <div class="living" fxLayout="column" fxFlexFill fxLayoutGap="10px">
             <h3 >VITA CRISTIANA</h3>
             <div *ngFor="let part of week.christianLivingPart" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column"  fxLayoutGap="10px" fxFlex="100%" fxLayoutAlign="center center">
               <div class="flex-item" fxFlex="50%" [innerHTML]="part.label | safeHtml"></div>
-              <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
-                {{part.brother.name}} {{part.brother.surname}}
-                <i *ngIf="edit" class="material-icons" (click)="changePart(part, 'christianLivingPart')">mode_edit</i>
+              <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center" >
+                <span *ngIf="!part.president">
+                  {{part.brother.name}} {{part.brother.surname}}
+                  <button mat-icon-button (click)="changePart(part, 'christianLivingPart')"><i *ngIf="edit" class="material-icons">mode_edit</i></button>
+                </span>
+                <span *ngIf="part.president">
+                  Svolta dal presidente
+                  <button mat-icon-button (click)="changePart(part, 'christianLivingPart')"><i *ngIf="edit" class="material-icons">mode_edit</i></button>
+                </span>
               </div>
               <div fxFlex="25%" fxLayout="column"></div>
             </div>
@@ -37,10 +42,11 @@
 
 
         </div>
-      </div>
 
     </div>
-    <button *ngIf="!loading" type="button" mat-raised-button [disabled]="!edited" (click)="editMeeting()">Salva</button>
     <loader *ngIf="loading"></loader>
   </mat-card-content>
 </mat-card>
+<div fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="10px">
+  <button *ngIf="!loading" type="button" mat-raised-button [disabled]="!edited" (click)="editMeeting()" color="primary" class="large">Salva</button>
+</div>

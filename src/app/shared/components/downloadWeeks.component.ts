@@ -15,7 +15,7 @@ declare var XLSX:any;
 @Component({
   selector: 'download-weeks',
   template: `
-    <div fxLayout="column" fxLayoutAlign="center center">
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
       <span *ngIf="fromCreate">Programma correttamente creato</span>
       <span *ngIf="format=='XLS'">Vuoi scaricare il programma in formato Excel delle seguenti adunanze?</span>
       <span *ngIf="format=='PDF'">Vuoi scaricare il programma in formato PDF delle seguenti adunanze?</span>
@@ -27,10 +27,10 @@ declare var XLSX:any;
       Per ottenere il programma bisogna copiare il contenuto della prima pagina del file Vita-Cristiana-Ministero-Bozza-(mese-anno).xlsx nel primo foglio del file Vita-Cristiana-Ministero-(mese-anno).xlsm <u> avendo cura di non cambiare foglio prima di aver copiato e copiare il contenuto del primo foglio dalla prima cella in alto a destra</u><br>
       <br>
       All'apertura del file bozza vi potrà dare errori voi cliccate su "Apri e ripristina" e successivamente su "Elimina". <br></strong></span>
-      <div fxLayout="row" fxLayoutAlign="center center">
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="20px">
         <button fxFlex mat-raised-button (click)="close()">Annulla</button>
-        <button *ngIf="format=='XLS'" FxFlex mat-raised-button (click)="download()">Download </button>
-        <button *ngIf="format=='PDF'" FxFlex mat-raised-button (click)="downloadPDF()">Download</button>
+        <button *ngIf="format=='XLS'" FxFlex mat-raised-button (click)="download()" color="primary">Download </button>
+        <button *ngIf="format=='PDF'" FxFlex mat-raised-button (click)="downloadPDF()" color="primary">Download</button>
       </div>
     </div>
     `,
