@@ -21,40 +21,43 @@ import {User} from "../../../shared/models/user.model";
 import {USER_ROLE} from "../../../constant";
 
 @Component({
-  selector: 'prayer-list',
+  selector: 'meeting-list',
   templateUrl: './list-meeting.component.html'
 })
-export class MeetingListComponent extends GeneralListComponent{
-  columns = {
-    date: {
-      title: 'Data',
-      type: 'custom',
-      renderComponent: DateRenderComponent
-    },
-    type:{
-      title: 'Tipo',
-      valuePrepareFunction: function(cell, row){
+export class MeetingListComponent extends GeneralListComponent<WeekMeeting>{
+  columns = ['date', 'type', 'completed', 'temporary', 'actions']
+  columnsPresident = ['date', 'type', 'temporary', 'actions']
+  columnsViewer = ['date', 'type', 'actions']
+  // columns = {
+  //   date: {
+  //     title: 'Data',
+  //     type: 'custom',
+  //     renderComponent: DateRenderComponent
+  //   },
+  //   type:{
+  //     title: 'Tipo',
+  //     valuePrepareFunction: function(cell, row){
 
-        return row.type.label + (row.supervisor?' - Visita del sorvegliante di circoscrizione':'');
-      },
-    },
-    completed:{
-      title: 'Completata',
-      valuePrepareFunction: function(cell, row){
-        return row.completed;
-      },
-      type: 'custom',
-      renderComponent: BooleanRenderComponent
-    },
-    temporary : {
-      title: 'Completa',
-      valuePrepareFunction: function(cell, row){
-        return !row.temp;
-      },
-      type: 'custom',
-      renderComponent: BooleanRenderComponent
-    }
-  };
+  //       return row.type.label + (row.supervisor?' - Visita del sorvegliante di circoscrizione':'');
+  //     },
+  //   },
+  //   completed:{
+  //     title: 'Completata',
+  //     valuePrepareFunction: function(cell, row){
+  //       return row.completed;
+  //     },
+  //     type: 'custom',
+  //     renderComponent: BooleanRenderComponent
+  //   },
+  //   temporary : {
+  //     title: 'Completa',
+  //     valuePrepareFunction: function(cell, row){
+  //       return !row.temp;
+  //     },
+  //     type: 'custom',
+  //     renderComponent: BooleanRenderComponent
+  //   }
+  // };
   public user : User;
 
   public constructor(      public meetingService: MeetingService,
@@ -66,40 +69,36 @@ export class MeetingListComponent extends GeneralListComponent{
     super(dialogService, router, snackBar);
 
     this.user = authService.getUser();
+    this.displayedColumns = this.columns;
     if(this.user.role == USER_ROLE.PRESIDENT){
-      delete this.columns.completed;
+      this.displayedColumns = this.columnsPresident;
     }else if(this.user.role == USER_ROLE.VIEWER){
-      delete this.columns.completed;
-      delete this.columns.temporary;
+      this.displayedColumns = this.columnsViewer;
     }
     this.service = meetingService;
-    this.model.columns = this.columns;
-    this.model.actions = {
-      columnTitle: "Azioni",
-      add:true,
-      position: 'right',
-      custom:[
-        {
-          name: 'view',
-          title: '<fa><i class="fa fa-eye fa-lg"></i></fa>',
-        },
-        {
-          name: 'downloadXLS',
-          title: '<span class="action-download-container"><fa><i class="fa fa-download fa-lg"></i></fa><span class="action-download-label">XLS</span></span>',
-        },
-        {
-          name: 'downloadPDF',
-          title: '<span class="action-download-container"><fa><i class="fa fa-download fa-lg"></i></fa><span class="action-download-label">PDF</span></span>',
-        }
+    // this.model.actions = {
+    //   columnTitle: "Azioni",
+    //   add:true,
+    //   position: 'right',
+    //   custom:[
+    //     {
+    //       name: 'view',
+    //       title: '<fa><i class="fa fa-eye fa-lg"></i></fa>',
+    //     },
+    //     {
+    //       name: 'downloadXLS',
+    //       title: '<span class="action-download-container"><fa><i class="fa fa-download fa-lg"></i></fa><span class="action-download-label">XLS</span></span>',
+    //     },
+    //     {
+    //       name: 'downloadPDF',
+    //       title: '<span class="action-download-container"><fa><i class="fa fa-download fa-lg"></i></fa><span class="action-download-label">PDF</span></span>',
+    //     }
 
-      ]
-    };
-    this.model.edit = null;
-    this.model.delete = null;
-    this.model.show.enabled = true;
-    this.model.noDataMessage = "Nessuna adunanza aggiunta";
-    this.emitterService.get("change_header_subtitle")
-      .emit('Adunanze');
+    //   ]
+    // };
+
+    // this.emitterService.get("change_header_subtitle")
+    //   .emit('Adunanze');
     // this.type = "Fratello per le preghiere";
     // this.dialogMethod = dialogService.openPrayer.bind(this.dialogService);
     // this.baseModel = Prayer;
@@ -130,37 +129,44 @@ export class MeetingListComponent extends GeneralListComponent{
           }
           this.data = weeks.concat(arr);
           this.data = this.data.sort((a:any,b:any) => {return (moment(a.date).isAfter(b.date) ? -1 : 1)});
-          this.source = new LocalDataSource(this.data);
+          this.dataSource.data = this.data;
         })
       }else{
         this.loading = false;
         this.data = weeks;
-        this.source = new LocalDataSource(this.data);
+        this.dataSource.data = this.data;
       }
     })
   }
 
-  public onCustom(ev:any){
-    if(ev.action == "view"){
-      if(ev.data.temp){
-        this.showTemp(ev)
-      }else{
-        this.show(ev)
-      }
-    }else if(ev.action == "downloadXLS"){
-      this.download(ev, "XLS")
-    }else if(ev.action == "downloadPDF"){
-      this.download(ev, "PDF")
-    }
-  }
+  // public onCustom(data : any){
+  //   if(ev.action == "view"){
+  //     if(ev.data.temp){
+  //       this.showTemp(ev)
+  //     }else{
+  //       this.show(ev)
+  //     }
+  //   }else if(ev.action == "downloadXLS"){
+  //     this.download(ev, "XLS")
+  //   }else if(ev.action == "downloadPDF"){
+  //     this.download(ev, "PDF")
+  //   }
+  // }
 
   public showTemp(ev){
     this.router.navigateByUrl(location.pathname + "/temp/" + ev.data._id)
   }
 
-  public download(ev: any, format: string){
+  public view(data : any){
+    if(data.temp){
+      this.showTemp(data)
+    }else{
+      this.show(data)
+    }
+  }
 
-    let week = ev.data;
+  public download(week: any, format: string){
+
     if(!week.temp){
     // let dateArr = [];
 

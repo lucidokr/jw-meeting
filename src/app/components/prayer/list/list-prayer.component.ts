@@ -13,33 +13,34 @@ import {Prayer} from "../../../shared/models/prayer.model";
 
 @Component({
   selector: 'prayer-list',
-  templateUrl: '../../../shared/components/list.component.html'
+  templateUrl: 'list-prayer.component.html'
 })
-export class PrayerListComponent extends GeneralListComponent{
-  columns = {
-    surname: {
-      title: 'Cognome'
-    },
-    name: {
-      title: 'Nome'
-    },
-    enabled: {
-      title: 'Abilitato',
-      valuePrepareFunction: function(cell, row){
-        return row.prayer.enabled;
-      },
-      type: 'custom',
-      renderComponent: BooleanRenderComponent
-    },
-    date: {
-      title: 'Data',
-      valuePrepareFunction: function(cell, row){
-        return row.prayer.date;
-      },
-      type: 'custom',
-      renderComponent: DateRenderComponent
-    },
-  };
+export class PrayerListComponent extends GeneralListComponent<Prayer>{
+  columns = ['name', 'enabled', 'date', 'actions']
+  // columns = {
+  //   surname: {
+  //     title: 'Cognome'
+  //   },
+  //   name: {
+  //     title: 'Nome'
+  //   },
+  //   enabled: {
+  //     title: 'Abilitato',
+  //     valuePrepareFunction: function(cell, row){
+  //       return row.prayer.enabled;
+  //     },
+  //     type: 'custom',
+  //     renderComponent: BooleanRenderComponent
+  //   },
+  //   date: {
+  //     title: 'Data',
+  //     valuePrepareFunction: function(cell, row){
+  //       return row.prayer.date;
+  //     },
+  //     type: 'custom',
+  //     renderComponent: DateRenderComponent
+  //   },
+  // };
 
   public constructor(      public prayerService: PrayerService,
                            public dialogService: DialogService,
@@ -49,13 +50,14 @@ export class PrayerListComponent extends GeneralListComponent{
     super(dialogService, router, snackBar);
 
     this.service = prayerService;
-    this.model.columns = this.columns;
-    this.model.noDataMessage = "Nessun fratello per le preghiere aggiunto";
-    this.emitterService.get("change_header_subtitle")
-      .emit('Preghiere');
+    this.displayedColumns = this.columns;
+    // this.model.columns = this.columns;
+    // this.model.noDataMessage = "Nessun fratello per le preghiere aggiunto";
+    // this.emitterService.get("change_header_subtitle")
+    //   .emit('Preghiere');
     this.type = "Fratello per le preghiere";
     this.dialogMethod = dialogService.openPrayer.bind(this.dialogService);
-    this.baseModel = Prayer;
+    // this.baseModel = Prayer;
     this.load();
 
   }

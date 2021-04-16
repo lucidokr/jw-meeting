@@ -15,26 +15,27 @@ import {BooleanRenderComponent} from "../../../shared/components/booleanRender.c
   selector: 'student-list',
   templateUrl: './detail-student.component.html'
 })
-export class StudentDetailComponent extends GeneralListComponent{
-  columns = {
-    lastDate: {
-      title: 'Data',
-      valuePrepareFunction: function(cell, row){
-        if(row.date)
-          return row.date;
-        else
-          return null
-      },
-      type: 'custom',
-      renderComponent: DateRenderComponent
-    },
-    made: {
-      title: 'Svolto',
-      type: 'custom',
-      renderComponent: BooleanRenderComponent
-    }
+export class StudentDetailComponent extends GeneralListComponent<Student>{
+  columns = ['date', 'done']
+  // columns = {
+  //   lastDate: {
+  //     title: 'Data',
+  //     valuePrepareFunction: function(cell, row){
+  //       if(row.date)
+  //         return row.date;
+  //       else
+  //         return null
+  //     },
+  //     type: 'custom',
+  //     renderComponent: DateRenderComponent
+  //   },
+  //   made: {
+  //     title: 'Svolto',
+  //     type: 'custom',
+  //     renderComponent: BooleanRenderComponent
+  //   }
 
-  };
+  // };
 
   public constructor(      public historyService: HistoryService,
                            public dialogService: DialogService,
@@ -45,18 +46,19 @@ export class StudentDetailComponent extends GeneralListComponent{
     super(dialogService, router, snackBar);
 
     this.service = historyService;
-    this.model.columns = this.columns;
-    this.model.show.enabled = false;
-    this.model.edit = null;
-    this.model.delete = null;
-    this.model.hideSubHeader = true;
-    this.model.actions = null;
-    this.model.noDataMessage = "Nessuno storico";
-    this.emitterService.get("change_header_subtitle")
-      .emit('Studente');
+    this.displayedColumns = this.columns;
+    // this.model.columns = this.columns;
+    // this.model.show.enabled = false;
+    // this.model.edit = null;
+    // this.model.delete = null;
+    // this.model.hideSubHeader = true;
+    // this.model.actions = null;
+    // this.model.noDataMessage = "Nessuno storico";
+    // this.emitterService.get("change_header_subtitle")
+    //   .emit('Studente');
     this.type = "Studente";
     this.dialogMethod = dialogService.openStudent.bind(this.dialogService);
-    this.baseModel = Student;
+    // this.baseModel = Student;
     this.route.params.subscribe(params => {
       if(params["studentId"]){
         this.loadCustom(params["studentId"]);
@@ -71,7 +73,7 @@ export class StudentDetailComponent extends GeneralListComponent{
       this.emitterService.get("change_header_subtitle")
         .emit("Studente: "+res[0].student.surname + " " + res[0].student.name);
       this.data = res;
-      this.source = new LocalDataSource(this.data);
+      this.dataSource.data = this.data;
     })
   }
 

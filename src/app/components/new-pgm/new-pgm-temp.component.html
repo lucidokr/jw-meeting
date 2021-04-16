@@ -6,9 +6,11 @@
       <!--<mat-option [value]="5">5 settimane</mat-option>-->
     <!--</mat-select>-->
     <h3>Configurazione programma</h3>
-    <mat-select fxFlex fxLayoutGap="20px" placeholder="Seleziona mese" [(ngModel)]="month" (ngModelChange)="findWeeks($event)" name="month">
-      <mat-option *ngFor="let m of arrMonths" [value]="m" >{{m.month}} {{m.year}}</mat-option>
-    </mat-select>
+    <mat-form-field>
+      <mat-select fxFlex fxLayoutGap="20px" placeholder="Seleziona mese" [(ngModel)]="month" (ngModelChange)="findWeeks($event)" name="month">
+        <mat-option *ngFor="let m of arrMonths" [value]="m" >{{m.month}} {{m.year}}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <loader *ngIf="loadingMeetingWorkbooks"></loader>
 
@@ -18,11 +20,11 @@
       <mat-card-header fxLayout="row" fxLayoutAlign="start start">
         <mat-card-title>
           <span>{{week.date.format('dddd D MMMM YYYY')}}</span>
-          <mat-checkbox name="supervisor{{i}}"  [(ngModel)]="week.supervisor" (ngModelChange)="changeDate(week)">Visita del sorvegliante</mat-checkbox>
+          <mat-checkbox color="primary" name="supervisor{{i}}"  [(ngModel)]="week.supervisor" (ngModelChange)="changeDate(week)">Visita del sorvegliante</mat-checkbox>
         </mat-card-title>
       </mat-card-header>
       <mat-card-content fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" *ngIf="!week.supervisor">
-        <mat-radio-group name="weekType{{i}}" class="radio-group" fxLayout.xs="column" fxLayout.sm="column"  fxLayoutGap="10px" [(ngModel)]="week.type">
+        <mat-radio-group color="primary" name="weekType{{i}}" class="radio-group" fxLayout.xs="column" fxLayout.sm="column"  fxLayoutGap="10px" [(ngModel)]="week.type">
           <mat-radio-button *ngFor="let keys of weekType | keys" [value]="keys.v" [hidden]="week.supervisor && !keys.v.withSupervisor">{{keys.v.label}}</mat-radio-button>
         </mat-radio-group>
 
@@ -34,12 +36,12 @@
                 <div *ngFor="let part of week.christianLivingPart; let j = index" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px" fxFlex="100%" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
                   <div fxFlex="50%" [innerHTML]="part.label | safeHtml"></div>
                   <div fxFlex="25%" fxLayout="column">
-                    <mat-checkbox name="christianLivingPart{{i}}{{j}}-president" [(ngModel)]="part.president" fxFlex="25%">Fatta dal presidente</mat-checkbox>
+                    <mat-checkbox color="primary" name="christianLivingPart{{i}}{{j}}-president" [(ngModel)]="part.president" fxFlex="25%">Fatta dal presidente</mat-checkbox>
                     <div *ngIf="!part.president">
-                      <mat-input-container fxFlex class="brother-autocomplete" >
-                        <input name="christianLivingPart{{i}}{{j}}" type="text" matInput [mdAutocomplete]="auto" [(ngModel)]="part.brother" (ngModelChange)="filterBrother($event)" [value]="(part.brother && part.brother.name && part.brother.surname ? part.brother.name + ' '+part.brother.surname: '')" name="brother" placeholder="Seleziona fratello" required>
-                      </mat-input-container>
-                      <mat-autocomplete  #auto="mdAutocomplete" name="brotherAutocomplete" placeholder="Seleziona fratello">
+                      <mat-form-field fxFlex class="brother-autocomplete" >
+                        <input name="christianLivingPart{{i}}{{j}}" type="text" matInput [matAutocomplete]="auto" [(ngModel)]="part.brother" (ngModelChange)="filterBrother($event)" [value]="(part.brother && part.brother.name && part.brother.surname ? part.brother.name + ' '+part.brother.surname: '')" name="brother" placeholder="Seleziona fratello" required>
+                      </mat-form-field>
+                      <mat-autocomplete  #auto="matAutocomplete" name="brotherAutocomplete" placeholder="Seleziona fratello">
                         <mat-option *ngFor="let b of christianLivingPartBrotherFiltered" [value]="b" (onSelectionChange)="resetFilter()">
                           {{b.surname}} {{b.name}}
                           <span *ngIf="b.servant && b.servant.christianLivingPartDate"> - {{b.servant.christianLivingPartDate.format('DD/MM/YY')}}</span>

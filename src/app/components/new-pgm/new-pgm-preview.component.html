@@ -128,10 +128,10 @@
   <div fxFlex="40%" fxLayout="column" >
     <div>Nuovo fratello per la parte:</div>
     <div>
-      <mat-input-container fxFlex="100%" class="brother-change-autocomplete">
-        <input type="text" matInput [mdAutocomplete]="auto" (ngModelChange)="filterBrother($event)" [(ngModel)]="changeMode.newBrother" [value]="getValue(changeMode.newBrother)" name="brotherToChange" placeholder="Seleziona fratello">
-      </mat-input-container>
-      <mat-autocomplete #auto="mdAutocomplete"  name="brotherChangeAutocomplete" placeholder="Seleziona fratello">
+      <mat-form-field fxFlex="100%" class="brother-change-autocomplete">
+        <input type="text" matInput [matAutocomplete]="auto" (ngModelChange)="filterBrother($event)" [(ngModel)]="changeMode.newBrother" [value]="getValue(changeMode.newBrother)" name="brotherToChange" placeholder="Seleziona fratello">
+      </mat-form-field>
+      <mat-autocomplete #auto="matAutocomplete"  name="brotherChangeAutocomplete" placeholder="Seleziona fratello">
         <mat-option *ngFor="let b of changeMode.listFiltered" [ngClass]="{'elder':b.elder}" [value]="b" (onSelectionChange)="changeMode.busyError = false">
           {{b.surname}} {{b.name}}
           <span *ngIf="b.elder && b.elder[changeMode.dateParam]"> - {{b.elder[changeMode.dateParam].format('DD-MM-YYYY')}}</span>
@@ -154,7 +154,7 @@
     </div>
   </div>
   <div fxFlex="20%" fxLayout="column" fxlayoutGap="30px">
-    <button mat-raised-button (click)="confirmChange()">Conferma</button>
+    <button mat-raised-button color="primary" (click)="confirmChange()">Conferma</button>
     <button mat-raised-button (click)="disableChangeMode()">Annulla</button>
   </div>
 

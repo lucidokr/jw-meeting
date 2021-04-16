@@ -14,31 +14,33 @@ import {DialogService} from "../../../services/dialog.service";
       <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center">
           
           <div>
-            <mat-input-container fxFlex >
+            <mat-form-field fxFlex >
               <input matInput [(ngModel)]="brother.name" name="name" placeholder="Nome" required>
-            </mat-input-container>
+            </mat-form-field>
           </div>
           <div>
-            <mat-input-container fxFlex >
+            <mat-form-field fxFlex >
               <input matInput [(ngModel)]="brother.surname" name="surname" placeholder="Cognome" required>
-            </mat-input-container>
+            </mat-form-field>
           </div>
           <div>
-            <mat-input-container fxFlex >
+            <mat-form-field fxFlex >
               <input matInput [(ngModel)]="brother.email" name="email" placeholder="E-mail">
-            </mat-input-container>
+            </mat-form-field>
           </div>
           <div>
+          <mat-form-field fxFlex >
             <mat-select [(ngModel)]="brother.gender" name="gender" placeholder="Sesso" required>
               <mat-option value="M">Maschio</mat-option>
               <mat-option value="F">Femmina</mat-option>
             </mat-select>
+            </mat-form-field>
           </div>
           
           
-            <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-              <button fxLayoutAlign="center center" color="accent" fxLayout="column" md-button 
-                    (click)="dialogRef.close()">Annula</button>
+            <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start" fxLayoutGap="20px">
+              <button fxLayoutAlign="center center" color="accent" fxLayout="column" mat-raised-button
+                    (click)="dialogRef.close()">Annulla</button>
                 <button fxLayoutAlign="center center" fxLayout="column" mat-raised-button [disabled]="!form.form.valid"
                   (click)="dialogRef.close(brother)">Salva</button>
                   

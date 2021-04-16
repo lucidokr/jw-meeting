@@ -152,7 +152,7 @@ export class NewPgmPreviewComponent implements OnInit{
         schoolOverseer = this.elderList[i];
       }
     }
-    if(schoolOverseer.elder.schoolOverseer){
+    if(schoolOverseer && schoolOverseer.elder.schoolOverseer){
       for (let meeting of meetings){
         if(meeting.type.meeting && meeting.president && meeting.president != schoolOverseer._id){
           countSchoolOverseer++;
@@ -173,7 +173,7 @@ export class NewPgmPreviewComponent implements OnInit{
 
         /**PRESIDENT**/
         // if(!week.president){
-        if(countSchoolOverseer >= 2 && arrChristianLivingPartBrother.indexOf(schoolOverseer._id) == -1 && schoolOverseer.elder.presidentEnabled){
+        if(schoolOverseer && countSchoolOverseer >= 2 && arrChristianLivingPartBrother.indexOf(schoolOverseer._id) == -1 && schoolOverseer.elder.presidentEnabled){
           week.president = schoolOverseer;
           countSchoolOverseer = 0;
         }else{

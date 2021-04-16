@@ -1,16 +1,26 @@
 <mat-card class="card-table">
-    <mat-card-content *ngIf="!loading">
-      <mat-input-container fxFlex class="search-container">
+    <mat-card-content *ngIf="!loading" fxLayout="column">
+      <mat-form-field fxFlex class="search-container">
         <input matInput #search class="search" type="text" placeholder="Cerca..." [ngModel]="searchValue" (ngModelChange)="onSearch($event)"/>
-      </mat-input-container>
+      </mat-form-field>
       <div class="table-wrapper">
         <div class="table-container">
-          <ng2-smart-table
-            [settings]="model"
-            (edit)="edit($event)"
-            (delete)="delete($event)"
-            [source]="source">
-          </ng2-smart-table>
+          <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">  
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef> Data </th>
+              <td mat-cell *matCellDef="let row"> <date-render [date] = "row.date"></date-render> </td>
+            </ng-container>
+          
+            <ng-container matColumnDef="done">
+              <th mat-header-cell *matHeaderCellDef> Svolto </th>
+              <td mat-cell *matCellDef="let row"> <boolean-render [checked] = "row.made"></boolean-render></td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator #paginator [pageSizeOptions]="[20, 30, 50]" showFirstLastButtons></mat-paginator>
         </div>
       </div>
     </mat-card-content>

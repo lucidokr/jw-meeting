@@ -12,65 +12,10 @@ import {Brother} from "../../../shared/models/brother.model";
 
 @Component({
   selector: 'elder-list',
-  templateUrl: '../../../shared/components/list.component.html'
+  templateUrl: 'list-elder.component.html'
 })
-export class ElderListComponent extends GeneralListComponent{
-  columns = {
-    surname: {
-      title: 'Cognome',
-
-    },
-    name: {
-      title: 'Nome'
-    },
-    presidentEnabled: {
-      title: 'Presidente',
-      type: 'custom',
-      valuePrepareFunction: function(cell, row){
-        return row.elder.presidentEnabled;
-      },
-      renderComponent: BooleanRenderComponent
-    },
-    // presidentDate: {
-    //   title: 'Data presidente',
-    //   type: 'custom',
-    //   renderComponent: DateRenderComponent
-    // },
-    talkEnabled: {
-      title: 'Discorso Tesori',
-      type: 'custom',
-      valuePrepareFunction: function(cell, row){
-        return row.elder.talkEnabled;
-      },
-      renderComponent: BooleanRenderComponent
-    },
-    // talkDate: {
-    //   title: 'Data discorso',
-    //   type: 'custom',
-    //   renderComponent: DateRenderComponent
-    // },
-    gemsEnabled: {
-      title: 'Gemme spirituali',
-      type: 'custom',
-      valuePrepareFunction: function(cell, row){
-        return row.elder.gemsEnabled;
-      },
-      renderComponent: BooleanRenderComponent
-    },
-    bibleStudyEnabledEnabled: {
-      title: 'Studio biblico',
-      type: 'custom',
-      valuePrepareFunction: function(cell, row){
-        return row.elder.bibleStudyEnabled;
-      },
-      renderComponent: BooleanRenderComponent
-    },
-    // gemsDate: {
-    //   title: 'Data gemme',
-    //   type: 'custom',
-    //   renderComponent: DateRenderComponent
-    // },
-  };
+export class ElderListComponent extends GeneralListComponent<Elder>{
+  columns = ['name', 'president', 'teasure', 'gems', 'bibleStudy', 'actions']
 
   public constructor(      public elderService: ElderService,
                            public dialogService: DialogService,
@@ -79,14 +24,10 @@ export class ElderListComponent extends GeneralListComponent{
                            public snackBar: MatSnackBar) {
     super(dialogService, router, snackBar);
 
+    this.displayedColumns = this.columns;
     this.service = elderService;
-    this.model.columns = this.columns;
-    this.model.noDataMessage = "Nessun anziano aggiunto";
-    this.emitterService.get("change_header_subtitle")
-      .emit('Anziani di congregazione');
     this.type = "Anziano di congregazione";
     this.dialogMethod = dialogService.openElder.bind(this.dialogService);
-    this.baseModel = Brother;
     this.load();
 
   }

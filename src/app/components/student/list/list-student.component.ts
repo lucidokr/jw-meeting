@@ -10,30 +10,30 @@ import {Student} from "../../../shared/models/student.model";
 
 @Component({
   selector: 'student-list',
-  templateUrl: '../../../shared/components/list.component.html'
+  templateUrl: 'list-student.component.html'
 })
-export class StudentListComponent extends GeneralListComponent{
-  columns = {
-    surname: {
-      title: 'Cognome',
-      filter: false,
-    },
-    name: {
-      title: 'Nome'
-    },
-    lastDate: {
-      title: 'Data ultimo discorso',
-      valuePrepareFunction: function(cell, row){
-        if(row.student.lastDate)
-          return row.student.lastDate;
-        else
-          return null
-      },
-      type: 'custom',
-      renderComponent: DateRenderComponent
-    }
-
-  };
+export class StudentListComponent extends GeneralListComponent<Student>{
+  columns = ['name', 'lastDate', 'actions']
+  // columns = {
+  //   surname: {
+  //     title: 'Cognome',
+  //     filter: false,
+  //   },
+  //   name: {
+  //     title: 'Nome'
+  //   },
+  //   lastDate: {
+  //     title: 'Data ultimo discorso',
+  //     valuePrepareFunction: function(cell, row){
+  //       if(row.student.lastDate)
+  //         return row.student.lastDate;
+  //       else
+  //         return null
+  //     },
+  //     type: 'custom',
+  //     renderComponent: DateRenderComponent
+  //   }
+  // };
 
   public constructor(      public studentService: StudentService,
                            public dialogService: DialogService,
@@ -43,14 +43,15 @@ export class StudentListComponent extends GeneralListComponent{
     super(dialogService, router, snackBar);
 
     this.service = studentService;
-    this.model.columns = this.columns;
-    this.model.show.enabled = true;
-    this.model.noDataMessage = "Nessuno studente aggiunto";
-    this.emitterService.get("change_header_subtitle")
-      .emit('Studenti');
+    this.displayedColumns = this.columns;
+    // this.model.columns = this.columns;
+    // this.model.show.enabled = true;
+    // this.model.noDataMessage = "Nessuno studente aggiunto";
+    // this.emitterService.get("change_header_subtitle")
+    //   .emit('Studenti');
     this.type = "Studente";
     this.dialogMethod = dialogService.openStudent.bind(this.dialogService);
-    this.baseModel = Student;
+    // this.baseModel = Student;
     this.load();
 
   }

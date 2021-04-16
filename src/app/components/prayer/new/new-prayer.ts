@@ -9,12 +9,12 @@ import {BrotherService} from "../../../services/brother.service";
   styles: ['.mat-checkbox { margin-right: 22px; }'],
     template: `
     <form #newPrayerForm="ngForm" >
-      <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
+      <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start" fxLayoutGap="20px">
           <div *ngIf="!loading && brotherList && brotherList.length>0 && !edit">
-            <mat-input-container fxFlex class="brother-autocomplete">
-              <input type="text" matInput [mdAutocomplete]="auto" [(ngModel)]="brother" [value]="(brother && brother.name && brother.surname ? brother.name + ' '+brother.surname: '')" (ngModelChange)="filterBrother($event)" name="brother" placeholder="Seleziona fratello">
-            </mat-input-container>
-            <mat-autocomplete #auto="mdAutocomplete"  name="brotherAutocomplete" placeholder="Seleziona fratello">
+            <mat-form-field fxFlex class="brother-autocomplete">
+              <input type="text" matInput [matAutocomplete]="auto" [(ngModel)]="brother" [value]="(brother && brother.name && brother.surname ? brother.name + ' '+brother.surname: '')" (ngModelChange)="filterBrother($event)" name="brother" placeholder="Seleziona fratello">
+            </mat-form-field>
+            <mat-autocomplete #auto="matAutocomplete"  name="brotherAutocomplete" placeholder="Seleziona fratello">
                <mat-option (onSelectionChange)="newPrayer(b)" *ngFor="let b of brotherListFiltered" [value]="b">
                   {{b.surname}} {{b.name}}
                </mat-option>
@@ -26,21 +26,21 @@ import {BrotherService} from "../../../services/brother.service";
           <div *ngIf="brother && edit" fxFlex>
             <h3>{{brother.name}} {{brother.surname}}</h3>
           </div>
-          <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" *ngIf="brother && brother.prayer">
-            <mat-checkbox [(ngModel)]="brother.prayer.enabled" name="enabled" >
+          <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center" *ngIf="brother && brother.prayer" fxLayoutGap="20px">
+            <mat-checkbox color="primary" [(ngModel)]="brother.prayer.enabled" name="enabled" >
                     Abilitato
             </mat-checkbox>
-            <mat-input-container fxFlex >
-              <input matInput [mdDatepicker]="date" [(ngModel)]="brother.prayer.date" name="date"  placeholder="Data ultima preghiera">
-              <button mdSuffix [mdDatepickerToggle]="date"></button>
-            </mat-input-container>
+            <mat-form-field fxFlex >
+              <input matInput [matDatepicker]="date" [(ngModel)]="brother.prayer.date" name="date"  placeholder="Data ultima preghiera">
+              <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+            </mat-form-field>
             <mat-datepicker #date></mat-datepicker>
             
           </div>
-          <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-                <button fxLayoutAlign="center center" fxLayout="column" md-button 
-                (click)="dialogRef.close()">Annula</button>
-                <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!newPrayerForm.form.valid"
+          <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start" fxLayoutGap="20px">
+                <button fxLayoutAlign="center center" fxLayout="column" mat-raised-button 
+                (click)="dialogRef.close()">Annulla</button>
+                <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!newPrayerForm.form.valid" color="primary"
                 (click)="dialogRef.close(brother)">Salva</button>
           </div>
       </div>

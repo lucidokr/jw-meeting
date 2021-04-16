@@ -15,33 +15,34 @@ import {ReaderService} from "../../../services/reader.service";
 
 @Component({
   selector: 'reader-list',
-  templateUrl: '../../../shared/components/list.component.html'
+  templateUrl: 'list-reader.component.html'
 })
-export class ReaderListComponent extends GeneralListComponent{
-  columns = {
-    surname: {
-      title: 'Cognome'
-    },
-    name: {
-      title: 'Nome'
-    },
-    enabled: {
-      title: 'Abilitato',
-      valuePrepareFunction: function(cell, row){
-        return row.reader.enabled;
-      },
-      type: 'custom',
-      renderComponent: BooleanRenderComponent
-    },
-    date: {
-      title: 'Data',
-      valuePrepareFunction: function(cell, row){
-        return row.reader.date;
-      },
-      type: 'custom',
-      renderComponent: DateRenderComponent
-    },
-  };
+export class ReaderListComponent extends GeneralListComponent<Reader>{
+  columns = ['name', 'enabled', 'date', 'actions']
+  // columns = {
+  //   surname: {
+  //     title: 'Cognome'
+  //   },
+  //   name: {
+  //     title: 'Nome'
+  //   },
+  //   enabled: {
+  //     title: 'Abilitato',
+  //     valuePrepareFunction: function(cell, row){
+  //       return row.reader.enabled;
+  //     },
+  //     type: 'custom',
+  //     renderComponent: BooleanRenderComponent
+  //   },
+  //   date: {
+  //     title: 'Data',
+  //     valuePrepareFunction: function(cell, row){
+  //       return row.reader.date;
+  //     },
+  //     type: 'custom',
+  //     renderComponent: DateRenderComponent
+  //   },
+  // };
 
   public constructor(      public readerService: ReaderService,
                            public dialogService: DialogService,
@@ -51,13 +52,14 @@ export class ReaderListComponent extends GeneralListComponent{
     super(dialogService, router, snackBar);
 
     this.service = readerService;
-    this.model.columns = this.columns;
-    this.model.noDataMessage = "Nessun lettore aggiunto";
-    this.emitterService.get("change_header_subtitle")
-      .emit('Lettori');
+    this.displayedColumns = this.columns;
+    // this.model.columns = this.columns;
+    // this.model.noDataMessage = "Nessun lettore aggiunto";
+    // this.emitterService.get("change_header_subtitle")
+    //   .emit('Lettori');
     this.type = "Lettore";
     this.dialogMethod = dialogService.openReader.bind(this.dialogService);
-    this.baseModel = Reader;
+    // this.baseModel = Reader;
     this.load();
 
   }

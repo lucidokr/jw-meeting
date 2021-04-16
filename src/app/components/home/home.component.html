@@ -7,8 +7,8 @@
   </mat-card-header>
   <mat-card-content>
     <loader *ngIf="loadingCount"></loader>
-    <div *ngIf="!loadingCount" class="counter-container">
-      <div *ngFor="let obj of count" class="counter" [style.width]="getCounterWidth()">
+    <div *ngIf="!loadingCount" class="counter-container" fxLayout="row" fxLayoutAlign="center center">
+      <div *ngFor="let obj of count" class="counter" [style.width]="getCounterWidth()" fxLayout="column" fxLayoutAlign="center center">
         <label class="category">{{obj.label}}</label>
         <label class="number">{{obj.count}}</label>
       </div>

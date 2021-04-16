@@ -6,9 +6,11 @@
       <!--<mat-option [value]="5">5 settimane</mat-option>-->
     <!--</mat-select>-->
     <h3>Configurazione programma</h3>
-    <mat-select fxFlex fxLayoutGap="20px" placeholder="Seleziona mese" [(ngModel)]="month" (ngModelChange)="findWeeks($event)" name="month">
-      <mat-option *ngFor="let m of arrMonths" [value]="m" >{{m.month}} {{m.year}}</mat-option>
-    </mat-select>
+    <mat-form-field fxFlex >
+      <mat-select fxFlex fxLayoutGap="20px" placeholder="Seleziona mese" [(ngModel)]="month" (ngModelChange)="findWeeks($event)" name="month">
+        <mat-option *ngFor="let m of arrMonths" [value]="m" >{{m.month}} {{m.year}}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
   <div *ngIf="arrMonths && arrMonths.length == 0" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center">
     <h3>Il coordinatore non ha ancora inserito il programma successivo.</h3>
@@ -16,7 +18,7 @@
 
   <div class="flex-container" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start" *ngIf="weeks.length>0">
     <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-      <mat-checkbox name="disableAllSecondarySchool" [ngModel]="disableAllSecondarySchool" (ngModelChange)="disableSecondarySchool($event)">Disabilita seconda scuola per tutto il programma</mat-checkbox>
+      <mat-checkbox color="primary" name="disableAllSecondarySchool" [ngModel]="disableAllSecondarySchool" (ngModelChange)="disableSecondarySchool($event)">Disabilita seconda scuola per tutto il programma</mat-checkbox>
     </div>
     <mat-card *ngFor="let week of weeks; let i = index" class="weekConfigContainer" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start start" fxLayoutAlign.xs="start"  >
       <mat-card-header fxLayout="row" fxLayoutAlign="start start">
@@ -34,8 +36,8 @@
                 <h3 >EFFICACI NEL MINISTERO</h3>
                   <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayout.xs="column" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
                     <span fxFlex="50%"></span>
-                    <mat-checkbox name="primarySchool{{i}}" fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.primarySchool">Prima scuola</mat-checkbox>
-                    <mat-checkbox name="secondarySchool{{i}}"fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.secondarySchool">Seconda scuola</mat-checkbox>
+                    <mat-checkbox color="primary" name="primarySchool{{i}}" fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.primarySchool">Prima scuola</mat-checkbox>
+                    <mat-checkbox color="primary" name="secondarySchool{{i}}"fxFlex="25%"  *ngIf="!week.type.disableSchool" [(ngModel)]="week.secondarySchool">Seconda scuola</mat-checkbox>
                   </div>
                   <div *ngFor="let part of week.ministryPart; let j = index" fxLayout="column" fxFlex="100%" fxLayoutAlign="center center" >
                       <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxFlex="100%" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="center center">
@@ -43,7 +45,7 @@
                         <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
                           <div fxHide.gt-sm *ngIf="part.forStudent" >Prima scuola</div>
                           <div fxLayout="column" *ngIf="part.forStudent">
-                            <mat-radio-group name="configMinistryPartPrimarySchool{{i}}{{j}}" fxLayout="column" class="radio-group" [(ngModel)]="part.primarySchool.gender" *ngIf="week.primarySchool">
+                            <mat-radio-group color="primary" name="configMinistryPartPrimarySchool{{i}}{{j}}" fxLayout="column" class="radio-group" [(ngModel)]="part.primarySchool.gender" *ngIf="week.primarySchool">
                               <mat-radio-button value="F">Solo sorelle</mat-radio-button>
                               <mat-radio-button value="M">Solo fratelli</mat-radio-button>
                               <mat-radio-button value="">Entrambi</mat-radio-button>
@@ -53,7 +55,7 @@
                         <div fxFlex="25%" fxLayout="row" fxLayoutAlign="center center">
                           <div fxHide.gt-sm *ngIf="week.secondarySchool && !week.supervisor && part.forStudent">Seconda scuola</div>
                           <div fxLayout="column" *ngIf="part.forStudent">
-                            <mat-radio-group name="configMinistryPartSecondarySchool{{i}}{{j}}" fxLayout="column" class="radio-group" [(ngModel)]="part.secondarySchool.gender" *ngIf="week.secondarySchool && !week.supervisor">
+                            <mat-radio-group color="primary" name="configMinistryPartSecondarySchool{{i}}{{j}}" fxLayout="column" class="radio-group" [(ngModel)]="part.secondarySchool.gender" *ngIf="week.secondarySchool && !week.supervisor">
                               <mat-radio-button value="F">Solo sorelle</mat-radio-button>
                               <mat-radio-button value="M">Solo fratelli</mat-radio-button>
                               <mat-radio-button value="">Entrambi</mat-radio-button>
@@ -70,6 +72,6 @@
         </div>
       </mat-card-content>
     </mat-card>
-    <button type="button" mat-raised-button [disabled]="!configForm.form.valid" (click)="confirm()">Conferma</button>
+    <button color="primary" type="button" mat-raised-button [disabled]="!configForm.form.valid" (click)="confirm()">Conferma</button>
   </div>
 </form>

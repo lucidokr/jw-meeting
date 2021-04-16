@@ -9,16 +9,20 @@
 <mat-card>
   <mat-card-content>
     <div fxLayout="row" fxLayoutAlign="end center">
-      <mat-select [(ngModel)]="selectedYear" (ngModelChange)="buildChartByYear();" placeholder="Seleziona anno">
-        <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
-      </mat-select>
+      <mat-form-field>
+        <mat-select [(ngModel)]="selectedYear" (ngModelChange)="buildChartByYear();" placeholder="Seleziona anno">
+          <mat-option [value]="year" *ngFor="let year of years">{{year}}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
       <div id="chartByYear"></div>
 
     <div fxLayout="row" fxLayoutAlign="end center">
-      <mat-select [(ngModel)]="selectedMonth" (ngModelChange)="buildChartByMonth()" placeholder="Seleziona mese">
-        <mat-option *ngFor="let month of months;let i=index" [value]="i">{{month}}</mat-option>
-      </mat-select>
+      <mat-form-field>
+        <mat-select [(ngModel)]="selectedMonth" (ngModelChange)="buildChartByMonth()" placeholder="Seleziona mese">
+          <mat-option *ngFor="let month of months;let i=index" [value]="i">{{month}}</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <div id="chartByMonth"></div>
   </mat-card-content>

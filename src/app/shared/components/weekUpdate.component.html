@@ -1,10 +1,10 @@
-<mat-card *ngIf="!week.completed" class="updatePointCard">
+<mat-card *ngIf="!week.completed" class="updatePointCard" fxLayout="column">
   <mat-card-header *ngIf="fromHome">
     <div fxLayout="row">
       <h3>AGGIORNAMENTO PARTI</h3>
     </div>
   </mat-card-header>
-  <mat-card-content fxLayout="column" fxFlex="100%" fxLayoutAlign="start center">
+  <mat-card-content fxLayout="column" fxFlex="100%" fxLayoutAlign="start center" >
     <div class="containerSchoolPart" fxLayout="column"  fxLayoutGap="10px">
         <div class="containerSchoolPart" fxLayout="column"  fxLayout.xs="column" fxLayoutAlign="start center">
             <div fxLayout="row" ><h4 [innerHTML]="week.bibleReading.label.split('(')[0] | safeHtml"></h4></div>
@@ -15,7 +15,7 @@
                           <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
                           <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
                           scuola: {{week.bibleReading[school].student.name}} {{week.bibleReading[school].student.surname}}</strong>
-                        <mat-radio-group  name="{{week.date.toString()}}{{i}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="week.bibleReading[school].made">
+                        <mat-radio-group color="primary"  name="{{week.date.toString()}}{{i}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="week.bibleReading[school].made">
                           <mat-radio-button [value]="0">Non aggiornare</mat-radio-button>
                           <mat-radio-button [value]="1">Svolto</mat-radio-button>
                           <mat-radio-button [value]="2">Non svolto</mat-radio-button>
@@ -53,7 +53,7 @@
                         <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
                         <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
                         scuola: {{part[school].student.name}} {{part[school].student.surname}}</strong>
-                      <mat-radio-group  name="{{week.date.toString()}}{{i}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="part[school].made">
+                      <mat-radio-group color="primary" name="{{week.date.toString()}}{{i}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="part[school].made">
                         <mat-radio-button [value]="0">Non aggiornare</mat-radio-button>
                         <mat-radio-button [value]="1">Svolto</mat-radio-button>
                         <mat-radio-button [value]="2">Non svolto</mat-radio-button>
@@ -71,7 +71,7 @@
 
       </div>
     </div>
-    <button *ngIf="!loading" mat-raised-button (click)="confirm()">Conferma</button>
+    <button *ngIf="!loading" mat-raised-button (click)="confirm()" color="primary">Conferma</button>
     <loader *ngIf="loading"></loader>
   </mat-card-content>
 </mat-card>

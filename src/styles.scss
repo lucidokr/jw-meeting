@@ -16,7 +16,7 @@ $bluJW: #a8291f;
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue.
 $candy-app-primary: mat-palette($mat-red, 800, 400, 900);
-$candy-app-accent:  mat-palette($mat-orange, A200, A100, A400);
+$candy-app-accent:  mat-palette($mat-gray, A200, A100, A400);
 
 // The warn palette is optional (defaults to red).
 $candy-app-warn:    mat-palette($mat-green);
@@ -34,6 +34,8 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 body{
   background: #F7F7F7;
   color: #212121;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
 }
 
 h1{
@@ -53,17 +55,6 @@ input {
 
 label{
   font-weight: normal;
-}
-
-.mat-button, .mat-icon-button, .mat-raised-button {
-  color: white !important;
-  background: $bluJW;
-  margin: 10px !important;
-  cursor:pointer;
-  &:hover{
-    background: lighten($bluJW, 20%);
-    cursor: pointer;
-  }
 }
 
 new-student-dialog{
@@ -86,103 +77,120 @@ new-student-dialog{
   }
 }
 
-md-card{
+mat-card{
   width: 100%;
   margin:10px 0;
+  h2{
+    padding-top: 20px;
+    padding-left: 20px;
+  }
 }
 
-ng2-smart-table{
-  font-size: 18px !important;
-  .ng2-smart-actions{
-    color:black;
-    width: 140px;
+table{
+  width: 100%;
+  .mat-column-actions{
     padding: 10px 0px !important;
-    a{
-      float:left;
-      padding:10px;
-      color:black;
-      &:hover{
-        text-decoration:none;
-        color:#7E7E7E;
-      }
-      @media screen and (max-width:640px){
-      }
-
-      .action-download-container{
-        position:relative;
-      }
-      .action-download-label{
-        font-size: 13px;
-        position: absolute;
-        margin-left: -21px;
-        margin-top: 17px;
-      }
-
+    span{
+      padding: 0 10px;
     }
-  }
-  tr{
-    border-top: 1px solid #EEEEEE;
-    cursor:pointer;
-    td, th{
-      padding: 8px 0px 8px 14px !important;
-    }
-    &:hover{
-      background:#EEEEEE;
-    }
-  }
-  .ng2-smart-titles, .ng2-smart-filters{
-    border:none;
-    cursor: auto;
-    a{
-      color:#212121;
-      text-decoration:none;
-      &:hover{
-        text-decoration: none;
-      }
-      &.asc, &.desc{
-        &::after{
-          content: '\E5DB' !important;
-          font-family: 'Material Icons';
-          border:none !important;
-        }
-      }
-      &.desc{
-        &::after{
-          -webkit-transform: none !important;
-          transform: none !important;
-          margin-bottom: -2px;
-          content: '\E5D8' !important;
-          font-family: 'Material Icons';
-          border:none !important;
-        }
-      }
-    }
-    &:hover{
-      background: transparent
-    }
-  }
-  .ng2-smart-pagination-nav{
-    text-align:center;
-    .ng2-smart-page-link{
-      color: $bluJW;
-      &:hover{
-        cursor: pointer;
-        color: $bluJW;
-      }
-    }
-    .active{
-      .ng2-smart-page-link{
-        color:white;
-        background-color: $bluJW;
-        border-color: $bluJW;
-        &:hover{
-          cursor: pointer;
-          color: white;
-        }
-      }
+    i{
+      cursor: pointer;
     }
   }
 }
+
+// ng2-smart-table{
+//   font-size: 18px !important;
+//   .ng2-smart-actions{
+//     color:black;
+//     width: 140px;
+//     padding: 10px 0px !important;
+//     a{
+//       float:left;
+//       padding:10px;
+//       color:black;
+//       &:hover{
+//         text-decoration:none;
+//         color:#7E7E7E;
+//       }
+//       @media screen and (max-width:640px){
+//       }
+
+//       .action-download-container{
+//         position:relative;
+//       }
+//       .action-download-label{
+//         font-size: 13px;
+//         position: absolute;
+//         margin-left: -21px;
+//         margin-top: 17px;
+//       }
+
+//     }
+//   }
+//   tr{
+//     border-top: 1px solid #EEEEEE;
+//     cursor:pointer;
+//     td, th{
+//       padding: 8px 0px 8px 14px !important;
+//     }
+//     &:hover{
+//       background:#EEEEEE;
+//     }
+//   }
+//   .ng2-smart-titles, .ng2-smart-filters{
+//     border:none;
+//     cursor: auto;
+//     a{
+//       color:#212121;
+//       text-decoration:none;
+//       &:hover{
+//         text-decoration: none;
+//       }
+//       &.asc, &.desc{
+//         &::after{
+//           content: '\E5DB' !important;
+//           font-family: 'Material Icons';
+//           border:none !important;
+//         }
+//       }
+//       &.desc{
+//         &::after{
+//           -webkit-transform: none !important;
+//           transform: none !important;
+//           margin-bottom: -2px;
+//           content: '\E5D8' !important;
+//           font-family: 'Material Icons';
+//           border:none !important;
+//         }
+//       }
+//     }
+//     &:hover{
+//       background: transparent
+//     }
+//   }
+//   .ng2-smart-pagination-nav{
+//     text-align:center;
+//     .ng2-smart-page-link{
+//       color: $bluJW;
+//       &:hover{
+//         cursor: pointer;
+//         color: $bluJW;
+//       }
+//     }
+//     .active{
+//       .ng2-smart-page-link{
+//         color:white;
+//         background-color: $bluJW;
+//         border-color: $bluJW;
+//         &:hover{
+//           cursor: pointer;
+//           color: white;
+//         }
+//       }
+//     }
+//   }
+// }
 
 .table-wrapper{
   width:auto;
@@ -218,23 +226,23 @@ ng2-smart-table{
   }
 }
 
-.ng2-smart-pagination-nav{
-  height: 72px;
-  padding-left: 89px;
-  .ng2-smart-pagination{
-    @media screen and (max-width:640px){
-      display:block !important;
-      margin-bottom:20px;
-    }
-  }
-}
+// .ng2-smart-pagination-nav{
+//   height: 72px;
+//   padding-left: 89px;
+//   .ng2-smart-pagination{
+//     @media screen and (max-width:640px){
+//       display:block !important;
+//       margin-bottom:20px;
+//     }
+//   }
+// }
 
 
 .add-button{
   position: fixed;
   cursor:pointer;
   background: $bluJW;
-  top: 110px;
+  top: 150px;
   border-radius: 50%;
   width: 56px;
   right: 40px;
@@ -283,7 +291,7 @@ ng2-smart-table{
   }
 }
 
-md-option{
+mat-option{
   &.busy{
     color:red !important;
   }

@@ -12,49 +12,50 @@ import {GeneralListComponent} from "../../../shared/components/list.component";
 
 @Component({
   selector: 'servant-list',
-  templateUrl: '../../../shared/components/list.component.html'
+  templateUrl: 'list-servant.component.html'
 })
-export class ServantListComponent extends GeneralListComponent{
-  columns= {
-    surname: {
-      title: 'Cognome'
-    },
-    name: {
-      title: 'Nome'
-    },
-    talkEnabled: {
-      title: 'Discorso Tesori',
-      valuePrepareFunction: function(cell, row){
-        return row.servant.talkEnabled;
-      },
-      type: 'custom',
-      renderComponent: BooleanRenderComponent
-    },
-    talkDate: {
-      title: 'Data discorso',
-      valuePrepareFunction: function(cell, row){
-        return row.servant.talkDate;
-      },
-      type: 'custom',
-      renderComponent: DateRenderComponent
-    },
-    gemsEnabled: {
-      title: 'Gemme spirituali',
-      valuePrepareFunction: function(cell, row){
-        return row.servant.gemsEnabled;
-      },
-      type: 'custom',
-      renderComponent: BooleanRenderComponent
-    },
-    gemsDate: {
-      title: 'Data gemme',
-      valuePrepareFunction: function(cell, row){
-        return row.servant.gemsDate;
-      },
-      type: 'custom',
-      renderComponent: DateRenderComponent
-    },
-  };
+export class ServantListComponent extends GeneralListComponent<Servant>{
+  columns = ['name', 'teasure', 'teasureDate', 'gems', 'gemsDate', 'actions']
+  // columns= {
+  //   surname: {
+  //     title: 'Cognome'
+  //   },
+  //   name: {
+  //     title: 'Nome'
+  //   },
+  //   talkEnabled: {
+  //     title: 'Discorso Tesori',
+  //     valuePrepareFunction: function(cell, row){
+  //       return row.servant.talkEnabled;
+  //     },
+  //     type: 'custom',
+  //     renderComponent: BooleanRenderComponent
+  //   },
+  //   talkDate: {
+  //     title: 'Data discorso',
+  //     valuePrepareFunction: function(cell, row){
+  //       return row.servant.talkDate;
+  //     },
+  //     type: 'custom',
+  //     renderComponent: DateRenderComponent
+  //   },
+  //   gemsEnabled: {
+  //     title: 'Gemme spirituali',
+  //     valuePrepareFunction: function(cell, row){
+  //       return row.servant.gemsEnabled;
+  //     },
+  //     type: 'custom',
+  //     renderComponent: BooleanRenderComponent
+  //   },
+  //   gemsDate: {
+  //     title: 'Data gemme',
+  //     valuePrepareFunction: function(cell, row){
+  //       return row.servant.gemsDate;
+  //     },
+  //     type: 'custom',
+  //     renderComponent: DateRenderComponent
+  //   },
+  // };
 
   public constructor(      public servantService: ServantService,
                            public dialogService: DialogService,
@@ -64,13 +65,14 @@ export class ServantListComponent extends GeneralListComponent{
     super(dialogService, router, snackBar);
 
     this.service = servantService;
-    this.model.columns = this.columns;
-    this.model.noDataMessage = "Nessun servitore di ministero aggiunto";
-    this.emitterService.get("change_header_subtitle")
-      .emit('Servitori di ministero');
+    this.displayedColumns = this.columns
+    // this.model.columns = this.columns;
+    // this.model.noDataMessage = "Nessun servitore di ministero aggiunto";
+    // this.emitterService.get("change_header_subtitle")
+    //   .emit('Servitori di ministero');
     this.type = "Servitore di ministero";
     this.dialogMethod = dialogService.openServant.bind(this.dialogService);
-    this.baseModel = Servant;
+    // this.baseModel = Servant;
     this.load();
 
   }

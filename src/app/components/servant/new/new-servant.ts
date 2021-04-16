@@ -12,14 +12,15 @@ import {BrotherService} from "../../../services/brother.service";
     <form #form="ngForm" fxLayout="column" fxLayoutAlign="center center" >
       <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center">
          <div *ngIf="!loading && brotherList && brotherList.length>0 && !edit">
-            <mat-input-container fxFlex class="brother-autocomplete">
-              <input type="text" matInput [mdAutocomplete]="auto" [(ngModel)]="brother" (ngModelChange)="filterBrother($event)" [value]="(brother && brother.name && brother.surname ? brother.name + ' '+brother.surname: '')" name="brother" placeholder="Seleziona fratello">
-            </mat-input-container>
-            <mat-autocomplete #auto="mdAutocomplete"  name="brotherAutocomplete" placeholder="Seleziona fratello">
-               <mat-option (onSelectionChange)="newServant(b)" *ngFor="let b of brotherListFiltered" [value]="b">
-                  {{b.surname}} {{b.name}}
-               </mat-option>
-            </mat-autocomplete>
+            <mat-form-field fxFlex class="brother-autocomplete">
+              <input type="text" matInput [matAutocomplete]="auto" [(ngModel)]="brother" (ngModelChange)="filterBrother($event)" [value]="(brother && brother.name && brother.surname ? brother.name + ' '+brother.surname: '')" name="brother" placeholder="Seleziona fratello">
+              <mat-autocomplete #auto="matAutocomplete"  name="brotherAutocomplete" placeholder="Seleziona fratello">
+                <mat-option (onSelectionChange)="newServant(b)" *ngFor="let b of brotherListFiltered" [value]="b">
+                    {{b.surname}} {{b.name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            
           </div>
           <div *ngIf="!loading && brotherList && brotherList.length == 0 && !edit">
             Nessun fratello da aggiungere
@@ -27,54 +28,58 @@ import {BrotherService} from "../../../services/brother.service";
           <div *ngIf="brother && edit" fxFlex>
             <h3>{{brother.name}} {{brother.surname}}</h3>
           </div>
-          <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center" *ngIf="brother && brother.servant">
+          <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center" *ngIf="brother && brother.servant" fxLayoutGap="20px">
 
             <div fxLayout="row" fxLayoutAlign="start center">
-              <mat-checkbox fxFlex [(ngModel)]="brother.servant.christianLivingPartEnabled" name="christianLivingPartEnabled" >
+              <mat-checkbox color="primary" fxFlex [(ngModel)]="brother.servant.christianLivingPartEnabled" name="christianLivingPartEnabled" >
                       Parti Vita Cristiana
                   </mat-checkbox>
               <div *ngIf="brother.servant.christianLivingPartEnabled">
-                <mat-input-container fxFlex >
-                  <input matInput [mdDatepicker]="dateChristianLivingPart" [(ngModel)]="brother.servant.christianLivingPartDate" name="christianLivingPartDate"  placeholder="Data ultimo parte Vita cristiana">
-                  <button mdSuffix [mdDatepickerToggle]="dateChristianLivingPart"></button>
-                </mat-input-container>
-                <mat-datepicker #dateChristianLivingPart></mat-datepicker>
+                <mat-form-field fxFlex >
+                  <input matInput [matDatepicker]="dateChristianLivingPart" [(ngModel)]="brother.servant.christianLivingPartDate" name="christianLivingPartDate"  placeholder="Ultima data">
+                  <mat-datepicker-toggle matSuffix [for]="dateChristianLivingPart"></mat-datepicker-toggle>
+                  <mat-datepicker #dateChristianLivingPart></mat-datepicker>
+                </mat-form-field>
               </div>
             </div>
+            <div class="separator"></div>
 
 
             <div fxLayout="row" fxLayoutAlign="start center">
-              <mat-checkbox fxFlex [(ngModel)]="brother.servant.talkEnabled" name="talkEnabled" >
+              <mat-checkbox color="primary" fxFlex [(ngModel)]="brother.servant.talkEnabled" name="talkEnabled" >
                       Discorso Tesori
                   </mat-checkbox>
                   <div *ngIf="brother.servant.talkEnabled">
-                    <mat-input-container fxFlex >
-                      <input matInput [mdDatepicker]="dateTalk" [(ngModel)]="brother.servant.talkDate" name="gems"  placeholder="Data ultimo discorso">
-                      <button mdSuffix [mdDatepickerToggle]="dateTalk"></button>
-                    </mat-input-container>
-                    <mat-datepicker #dateTalk></mat-datepicker>
+
+
+                    <mat-form-field fxFlex >
+                      <input matInput [matDatepicker]="dateTalk" [(ngModel)]="brother.servant.talkDate" name="gems"  placeholder="Ultima data">
+                      <mat-datepicker-toggle matSuffix [for]="dateTalk"></mat-datepicker-toggle>
+                      <mat-datepicker #dateTalk></mat-datepicker>
+                    </mat-form-field>
                   </div>
             </div>
+            <div class="separator"></div>
 
             <div fxLayout="row" fxLayoutAlign="start center">
-              <mat-checkbox fxFlex [(ngModel)]="brother.servant.gemsEnabled" name="gemsEnabled" >
+              <mat-checkbox color="primary" fxFlex [(ngModel)]="brother.servant.gemsEnabled" name="gemsEnabled" >
                       Gemme spirituali
                   </mat-checkbox>
 
               <div *ngIf="brother.servant.gemsEnabled">
-                <mat-input-container fxFlex >
-                  <input matInput [mdDatepicker]="dateGems" [(ngModel)]="brother.servant.gemsDate" name="talk" placeholder="Data ultime gemme spirituali">
-                  <button mdSuffix [mdDatepickerToggle]="dateGems"></button>
-                </mat-input-container>
-                <mat-datepicker #dateGems></mat-datepicker>
+                <mat-form-field>
+                  <input matInput [matDatepicker]="dateGems" [(ngModel)]="brother.servant.gemsDate" name="talk"  placeholder="Ultima data">
+                  <mat-datepicker-toggle matSuffix [for]="dateGems"></mat-datepicker-toggle>
+                  <mat-datepicker #dateGems></mat-datepicker>
+                </mat-form-field>
               </div>
             </div>
 
            </div>
 
-            <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-              <button fxLayoutAlign="center center" color="accent" fxLayout="column" md-button
-                    (click)="dialogRef.close()">Annula</button>
+            <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start" fxLayoutGap="20px">
+              <button fxLayoutAlign="center center" color="accent" fxLayout="column" mat-raised-button
+                    (click)="dialogRef.close()">Annulla</button>
                 <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!form.form.valid"
                   (click)="dialogRef.close(brother)">Salva</button>
 

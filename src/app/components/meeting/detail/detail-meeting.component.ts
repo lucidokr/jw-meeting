@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
 import {Router, ActivatedRoute} from "@angular/router";
-import {StudentService} from "../../../services/student.service";
-import {Student} from "../../../shared/models/student.model";
-import {Brother} from "../../../shared/models/brother.model";
 import {MeetingService} from "../../../services/meeting.service";
 import {WeekMeeting} from "../../../shared/models/weekMeeting.model";
 import {EmitterService} from "../../../services/emitter.service";
 import {AuthService} from "../../../services/auth.service";
 import {USER_ROLE} from "../../../constant";
 import {User} from "../../../shared/models/user.model";
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'meeting-detail',
@@ -25,19 +23,15 @@ export class MeetingDetailComponent {
 
   constructor(private meetingService:MeetingService,
               private route: ActivatedRoute,
+              private location: Location,
               private emitterService:EmitterService,
               private authService:AuthService) {
-    this.emitterService.get("change_header_subtitle")
-      .emit('Adunanze');
     this.user = authService.getUser();
 
     this.route.params.subscribe(params => {
       if(params["meetingId"]){
         meetingService.getMeeting(params["meetingId"]).subscribe(week => {
-          console.log(week)
           this.week = week;
-          this.emitterService.get("change_header_subtitle")
-            .emit('Adunanza '+week.date.format('D-MM-YY'));
           this.loading = false;
         },err => {
           this.loading = false;
@@ -45,6 +39,10 @@ export class MeetingDetailComponent {
       }
     });
 
+  }
+
+  back = () => {
+    this.location.back()
   }
 
 

@@ -8,18 +8,20 @@
       <h2>IMPOSTAZIONI DELLA CONGREGAZIONE</h2>
 
       <div fxLayout="row" >
-        <mat-select fxFlex="100%" [(ngModel)]="congregation.meetingDay"  placeholder="Seleziona giorno dell'adunanza">
-            <mat-option *ngFor="let day of days;let i=index" [value]="i">{{day}}</mat-option>
-        </mat-select>
+        <mat-form-field>
+          <mat-select fxFlex="100%" [(ngModel)]="congregation.meetingDay"  placeholder="Seleziona giorno dell'adunanza">
+              <mat-option *ngFor="let day of days;let i=index" [value]="i">{{day}}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
       <div fxLayout="row" fxFlex="50%" fxFlexFill>
-        <mat-input-container fxFlex="50%" >
+        <mat-form-field fxFlex="50%" >
             <input matInput type="text" placeholder="Nome della congregazione" [(ngModel)]="congregation.name" />
-          </mat-input-container>
+          </mat-form-field>
       </div>
       <div fxLayout="row" fxFlex="50%" fxFlexFill>
-        <button fxLayoutAlign="center center" fxLayout="column" mat-raised-button
+        <button fxLayoutAlign="center center" fxLayout="column" mat-raised-button color="primary"
                     (click)="save()">Salva</button>
       </div>
     </div>

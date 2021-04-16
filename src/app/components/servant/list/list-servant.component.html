@@ -1,0 +1,56 @@
+<mat-card class="card-table">
+    <h2>Lista Servitori di Ministero</h2>
+    <mat-card-content *ngIf="!loading" fxLayout="column">
+        <mat-form-field fxFlex class="search-container">
+            <input matInput #search class="search" type="text" placeholder="Cerca..." [ngModel]="searchValue" (ngModelChange)="onSearch($event)"/>
+        </mat-form-field>
+        <div class="table-wrapper">
+            <div class="table-container">
+
+                <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">  
+                    <ng-container matColumnDef="name">
+                      <th mat-header-cell *matHeaderCellDef> Nome </th>
+                      <td mat-cell *matCellDef="let row"> {{row.surname}} {{row.name}}  </td>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="teasure">
+                      <th mat-header-cell *matHeaderCellDef> Tesori </th>
+                      <td mat-cell *matCellDef="let row"> <boolean-render [checked] = "row.servant.talkEnabled"></boolean-render></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="teasureDate">
+                      <th mat-header-cell *matHeaderCellDef> Data Tesori </th>
+                      <td mat-cell *matCellDef="let row"> <date-render [date] = "row.servant.talkDate"></date-render></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="gems">
+                      <th mat-header-cell *matHeaderCellDef> Gemme </th>
+                      <td mat-cell *matCellDef="let row"> <boolean-render [checked] = "row.servant.gemsEnabled"></boolean-render></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="gemsDate">
+                      <th mat-header-cell *matHeaderCellDef> Data Gemme </th>
+                      <td mat-cell *matCellDef="let row"> <date-render [date] = "row.servant.gemsDate"></date-render></td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="actions">
+                      <th mat-header-cell *matHeaderCellDef> Azioni </th>
+                      <td mat-cell *matCellDef="let element"> 
+                        <i class="material-icons" (click)="edit(element)">mode_edit</i>
+                        <i class="material-icons" (click)="delete(element)">delete</i>
+                      </td>
+                    </ng-container>
+                  
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+
+                <mat-paginator #paginator [pageSizeOptions]="[20, 30, 50]" showFirstLastButtons></mat-paginator>
+            </div>
+        </div>
+    </mat-card-content>
+    <div class="add-button" (click)="add($event)"><i class="material-icons">add</i></div>
+    <mat-card-content *ngIf="loading">
+        <loader></loader>
+    </mat-card-content>
+</mat-card>

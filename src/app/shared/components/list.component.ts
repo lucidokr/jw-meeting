@@ -1,49 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 import {DialogService} from "../../services/dialog.service";
-import {LocalDataSource} from "ng2-smart-table";
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'list',
   template: ``
 })
-export class GeneralListComponent {
-  model = {
-    noDataMessage: '',
-    columns: null,
-    mode: 'external',
-    editable:false,
-    hideSubHeader:true,
-    pager:{
-      display:true,
-      perPage:25
-    },
-    actions:{
-      columnTitle: "Azioni",
-      add:true,
-      position: 'right',
-      custom: []
-    },
-    edit:{
-      editButtonContent: '<i class="material-icons">mode_edit</i>'
-    },
-    delete:{
-      deleteButtonContent: '<i class="material-icons">delete</i>'
-    },
-    show:{
-      enabled:false
-    }
-  };
+export class GeneralListComponent<T> implements OnInit{
+  
   type = '';
-  baseModel = null;
   dialogMethod = null;
   service = null;
   data = [];
-  source: any = new LocalDataSource(this.data);
   loading: boolean;
-
   snackBarConfig : MatSnackBarConfig = new MatSnackBarConfig();
+
+
+
+  /** NEW */
+  displayedColumns: string[] = [];
+  dataSource: MatTableDataSource<T>;
+  private paginator: MatPaginator;
+  private sort: MatSort;
+  @ViewChild(MatSort, {
+    static: false
+  }) set matSort(ms: MatSort) {
+    this.sort = ms;
+    this.setPaginationAndSort();
+  }
+  @ViewChild(MatPaginator, {
+    static: false
+  }) set matPaginator(
+    mp: MatPaginator
+  ) {
+    this.paginator = mp;
+    this.setPaginationAndSort();
+  }
 
   public constructor(
                             public dialogService: DialogService,
@@ -54,24 +50,26 @@ export class GeneralListComponent {
 
   }
 
-  public load():void{
+  ngOnInit() {
+    this.dataSource = new MatTableDataSource<T>();
+  }
+
+  setPaginationAndSort() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  public load() : void{
     this.loading = true;
     this.service.get().subscribe(res => {
       this.loading = false;
-      this.data = res;
-      this.source = new LocalDataSource(this.data);
+      this.dataSource.data = res;
     }, err=> {
       this.loading = false;
     })
   }
 
-  public edit(ev):void{
-    let data = {...ev.data};
-    // for(let key in data){
-    //   if(key.indexOf("date")!=-1 || key.indexOf("Date")!=-1){
-    //     data[key] = ev.data[key]._d;
-    //   }
-    // }
+  public edit(data) : void{
     this.dialogMethod(data, true)
       .subscribe(obj =>{
         if(obj != null){
@@ -83,7 +81,7 @@ export class GeneralListComponent {
       });
   }
 
-  public add():void{
+  public add() : void{
     this.dialogMethod(null, false)
       .subscribe(obj =>{
         if(obj != null){
@@ -95,37 +93,23 @@ export class GeneralListComponent {
       });
   }
 
-  public delete(ev, confirm:boolean = false):void{
+  public delete(data, confirm:boolean = false) : void{
     if(!confirm)
-      this.dialogService.confirm("Confermi?").subscribe(confirm => {if(confirm) this.delete(ev, true)});
+      this.dialogService.confirm("Confermi?").subscribe(confirm => {if(confirm) this.delete(data, true)});
     else{
-      this.service.delete(ev.data._id).subscribe(id =>{
+      this.service.delete(data._id).subscribe(id =>{
         this.snackBar.open(this.type+" eliminato", null, this.snackBarConfig);
         this.load();
       });
     }
   }
 
-  public show(ev):void{
-    this.router.navigateByUrl(location.pathname + "/" + ev.data._id)
+  public show(data) : void{
+    this.router.navigateByUrl(location.pathname + "/" + data._id)
   }
 
   public onSearch(query: any = '') {
-    if(query && query.length>0){
-      console.log(query);
-      this.source.setFilter([
-        {
-          field: 'name',
-          search: query
-        },
-        {
-          field: 'surname',
-          search: query
-        }
-      ], false);
-    }else{
-      this.source.reset();
-    }
+    this.dataSource.filter = query;
   }
 }
 

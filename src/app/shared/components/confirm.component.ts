@@ -10,8 +10,8 @@ import { Component } from '@angular/core';
       <div class="flex-container"  fxLayout="column" fxLayoutAlign="center center">
           {{message}}
             <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
-              <button fxLayoutAlign="center center" color="accent" fxLayout="column" md-button 
-                    (click)="dialogRef.close(false)">Annula</button>
+              <button fxLayoutAlign="center center" color="accent" fxLayout="column" mat-raised-button 
+                    (click)="dialogRef.close(false)">Annulla</button>
                 <button fxLayoutAlign="center center" fxLayout="column" mat-raised-button
                   (click)="dialogRef.close(true);">Conferma</button>
                   
