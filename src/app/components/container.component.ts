@@ -66,10 +66,10 @@ export class ContainerComponent implements AfterContentInit {
     }else{
       this.login = true;
     }
-    this.headerTitleEmitter = this.emitterService.get("change_header_subtitle");
-    this.headerTitleEmitter.subscribe(subtitle => {
-      this.subtitle = subtitle;
-    })
+    // this.headerTitleEmitter = this.emitterService.get("change_header_subtitle");
+    // this.headerTitleEmitter.subscribe(subtitle => {
+    //   this.subtitle = subtitle;
+    // })
   }
 
 }

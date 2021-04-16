@@ -187,10 +187,10 @@
       </mat-tab-group>
     </div>
 
-    <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start">
+    <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start" fxLayoutGap="20px">
       <button fxLayoutAlign="center center" color="accent" fxLayout="column" mat-raised-button
               (click)="dialogRef.close()">Annulla</button>
-      <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!form.form.valid"
+      <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!form.form.valid" color="primary"
               (click)="dialogRef.close(brother)">Salva</button>
 
     </div>
