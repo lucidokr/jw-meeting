@@ -11,7 +11,7 @@ import {CONST, CONST_ARR} from "../../constant";
 @Component({
   selector: 'week-update',
   templateUrl: './weekUpdate.component.html',
-  styles:['md-select { width:100% }','.updated,.notUpdated{width:100%}','.updated strong{padding-left:30px;}','.containerSchoolPart{width:100%}','.updated .material-icons{ margin-top:-2px;margin-left:-30px; position: absolute;color: green;}']
+  styles:['md-select { width:100% }','.updated,.notUpdated{width:100%}','.updated strong{padding-left:30px;}','.containerSchoolPart{width:100%; margin-bottom: 20px;}','.updated .material-icons{ margin-top:-2px;margin-left:-30px; position: absolute;color: green;}']
 
 })
 export class WeekUpdateComponent implements OnInit{

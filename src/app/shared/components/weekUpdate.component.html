@@ -5,9 +5,9 @@
     </div>
   </mat-card-header>
   <mat-card-content fxLayout="column" fxFlex="100%" fxLayoutAlign="start center" >
-    <div class="containerSchoolPart" fxLayout="column"  fxLayoutGap="10px">
-        <div class="containerSchoolPart" fxLayout="column"  fxLayout.xs="column" fxLayoutAlign="start center">
-            <div fxLayout="row" ><h4 [innerHTML]="week.bibleReading.label.split('(')[0] | safeHtml"></h4></div>
+    <div  fxLayout="column"  fxLayoutGap="20px">
+        <div  fxLayout="column"  fxLayout.xs="column" fxLayoutAlign="start center">
+            <div fxLayout="row" ><h3 [innerHTML]="week.bibleReading.label.split('(')[0] | safeHtml"></h3></div>
 
               <div class="containerSchoolPart" *ngFor="let school of SCHOOLS" fxLayout="column" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="start center" >
                       <div *ngIf="!week.bibleReading[school].updated && week.bibleReading[school].student.student" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
@@ -27,51 +27,50 @@
                           <span *ngIf="week.bibleReading[school].made==2">Non svolto </span>
                       </div>
               </div>
-
+              <mat-divider></mat-divider>
         </div>
-      <div class="containerSchoolPart" *ngFor="let part of week.ministryPart; let i = index;" fxLayout="column"  fxLayout.xs="column" fxLayoutAlign="start center">
-          <div fxLayout="row" ><h4 [innerHTML]="part.html.split('(')[0] | safeHtml"></h4></div>
-          <div fxLayout="row"  *ngIf="!part.forStudent">
-              Parte non svolta dagli studenti
-          </div>
-          <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" class="containerSchoolPart" *ngIf="part.forStudent">
-
-            <div class="containerSchoolPart" *ngFor="let school of SCHOOLS" fxLayout="column" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="start center" >
-                  <div *ngIf="!part[school].student.student" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
-                    <strong fxFlex>
-                      <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
-                      <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
-                      scuola: {{part[school].student.name}} {{part[school].student.surname}}
-                    </strong>
-                    <div fxFlex >
-                      La parte è stata assegnata ad un anziano. Non necessita quindi di aggiornamento.
-                    </div>
+      <div  *ngFor="let part of week.ministryPart; let i = index;" fxLayout="column"  fxLayout.xs="column" fxLayoutAlign="start center">
+        <div  *ngIf="part.forStudent" fxLayout="column" fxLayoutAlign="start center" >
+            <div fxLayout="row" ><h3 [innerHTML]="part.html.split('(')[0] | safeHtml"></h3></div>
+            <div  *ngFor="let school of SCHOOLS" fxLayout="column" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="start center" >
+                <div *ngIf="!part[school].student.student" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
+                  <strong fxFlex>
+                    <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
+                    <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
+                    scuola: {{part[school].student.name}} {{part[school].student.surname}}
+                  </strong>
+                  <div fxFlex >
+                    La parte è stata assegnata ad un anziano. Non necessita quindi di aggiornamento.
                   </div>
+                </div>
 
-                    <div *ngIf="!part[school].updated && part[school].student.student" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
-                      <strong fxFlex>
-                        <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
-                        <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
-                        scuola: {{part[school].student.name}} {{part[school].student.surname}}</strong>
-                      <mat-radio-group color="primary" name="{{week.date.toString()}}{{i}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="part[school].made">
-                        <mat-radio-button [value]="0">Non aggiornare</mat-radio-button>
-                        <mat-radio-button [value]="1">Svolto</mat-radio-button>
-                        <mat-radio-button [value]="2">Non svolto</mat-radio-button>
-                      </mat-radio-group>
-                    </div>
-                    <div *ngIf="part[school].updated" fxLayout="column" fxLayoutGap="10px" class="updated">
-                        <strong><i class="material-icons">check_circle</i>Prima scuola: {{part[school].student.name}} {{part[school].student.surname}}</strong>
-                        <span *ngIf="part[school].made==1">Svolto </span>
-                        <span *ngIf="part[school].made==2">Non svolto </span>
-                    </div>
+                <div *ngIf="!part[school].updated && part[school].student.student" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
+                  <strong fxFlex>
+                    <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
+                    <span *ngIf="school==CONST.SECONDARY_SCHOOL">Seconda</span>
+                    scuola: {{part[school].student.name}} {{part[school].student.surname}}</strong>
+                  <mat-radio-group color="primary" name="{{week.date.toString()}}{{i}}{{school}}Result" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="5px" [(ngModel)]="part[school].made">
+                    <mat-radio-button [value]="0">Non aggiornare</mat-radio-button>
+                    <mat-radio-button [value]="1">Svolto</mat-radio-button>
+                    <mat-radio-button [value]="2">Non svolto</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+                <div *ngIf="part[school].updated" fxLayout="column" fxLayoutGap="10px" class="updated">
+                    <strong><i class="material-icons">check_circle</i>Prima scuola: {{part[school].student.name}} {{part[school].student.surname}}</strong>
+                    <span *ngIf="part[school].made==1">Svolto </span>
+                    <span *ngIf="part[school].made==2">Non svolto </span>
+                </div>
 
 
-            </div>
+          </div>
+          <mat-divider></mat-divider>
         </div>
 
       </div>
     </div>
-    <button *ngIf="!loading" mat-raised-button (click)="confirm()" color="primary">Conferma</button>
+    <div class="actions">
+      <button *ngIf="!loading" mat-raised-button (click)="confirm()" color="primary">Conferma</button>
+    </div>
     <loader *ngIf="loading"></loader>
   </mat-card-content>
 </mat-card>

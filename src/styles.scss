@@ -66,6 +66,13 @@ label{
 .mat-icon-button.file{
   width:70px;
 }
+.mat-divider {
+  width:100%;
+}
+.mat-card .mat-divider-horizontal{
+  margin-top: 5px;
+  position:relative !important;
+}
 
 new-student-dialog{
   mat-form-field { margin:0 10px; }

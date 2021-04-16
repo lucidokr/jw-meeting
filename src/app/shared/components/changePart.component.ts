@@ -9,7 +9,7 @@ import {Brother} from "../models/brother.model";
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
       <h4 fxFlex >Modifica parte</h4>
       <div [innerHTML]="part.label | safeHtml"></div>
-      <div class="separator"></div>
+      <mat-divider></mat-divider>
       <div fxLayout="row" fxFlexFill fxLayoutAlign="center center">
         <span fxFlex="30">Attuale:</span>
         <div fxFlex="70" *ngIf="!part.president">  {{part.brother.name}} {{part.brother.surname}}</div>

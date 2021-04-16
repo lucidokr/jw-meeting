@@ -37,12 +37,12 @@ import {BrotherService} from "../../../services/brother.service";
             <mat-datepicker #date></mat-datepicker>
             
           </div>
-          <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start" fxLayoutGap="20px">
+          <mat-dialog-actions>
                 <button fxLayoutAlign="center center" fxLayout="column" mat-raised-button 
                 (click)="dialogRef.close()">Annulla</button>
                 <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!newPrayerForm.form.valid" color="primary"
                 (click)="dialogRef.close(brother)">Salva</button>
-          </div>
+          </mat-dialog-actions>
       </div>
     </form>
     `,

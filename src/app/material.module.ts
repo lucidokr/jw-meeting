@@ -20,6 +20,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatDividerModule } from '@angular/material/divider';
 
 /**
  * MATERIAL MODULE
@@ -60,7 +61,9 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
             MatTableModule,
             MatPaginatorModule,
             MatSortModule,
-            MatSnackBarModule],
+            MatSnackBarModule,
+            MatDividerModule,
+          ],
             providers: [
               {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
             ],
@@ -85,7 +88,9 @@ import { MAT_DATE_FORMATS } from '@angular/material/core';
             MatTableModule,
             MatPaginatorModule,
             MatSortModule,
-            MatSnackBarModule],
+            MatSnackBarModule,
+            MatDividerModule
+          ],
 })
 export class MaterialModule { }
 

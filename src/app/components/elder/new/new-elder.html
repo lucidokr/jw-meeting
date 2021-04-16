@@ -28,7 +28,7 @@
           </mat-checkbox>
         </div>
 
-        <div class="separator"></div>
+        <mat-divider></mat-divider>
         
         
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
@@ -43,7 +43,7 @@
               <mat-datepicker #datePresident></mat-datepicker>
             </div>
           </div>
-        <div class="separator"></div>
+        <mat-divider></mat-divider>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <mat-checkbox color="primary" fxFlex [(ngModel)]="brother.elder.bibleStudyEnabled" name="bibleStudyEnabled" >
@@ -57,7 +57,7 @@
               <mat-datepicker #dateBibleStudy></mat-datepicker>
             </div>
         </div>
-        <div class="separator"></div>
+        <mat-divider></mat-divider>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <mat-checkbox color="primary" fxFlex [(ngModel)]="brother.elder.christianLivingPartEnabled" name="christianLivingPartEnabled" >
@@ -71,7 +71,7 @@
             <mat-datepicker #dateChristianLivingPart></mat-datepicker>
           </div>
         </div>
-        <div class="separator"></div>
+        <mat-divider></mat-divider>
 
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
@@ -86,7 +86,7 @@
             <mat-datepicker #dateTalk></mat-datepicker>
           </div>
         </div>
-        <div class="separator"></div>
+        <mat-divider></mat-divider>
 
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px">
           <mat-checkbox color="primary" fxFlex [(ngModel)]="brother.elder.gemsEnabled" name="gemsEnabled" >
@@ -100,16 +100,16 @@
             </mat-form-field>
           </div>
         </div>
-        <div class="separator"></div>
+        <mat-divider></mat-divider>
 
       </div>
 
-        <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start" fxLayoutGap="20px">
+      <mat-dialog-actions>
           <button fxLayoutAlign="center center" color="accent" fxLayout="column" mat-raised-button
                 (click)="dialogRef.close()">Annulla</button>
             <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!form.form.valid" color="primary"
               (click)="dialogRef.close(brother)">Salva</button>
 
-        </div>
+      </mat-dialog-actions>
   </div>
 </form>

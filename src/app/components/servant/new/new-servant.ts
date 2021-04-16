@@ -42,7 +42,7 @@ import {BrotherService} from "../../../services/brother.service";
                 </mat-form-field>
               </div>
             </div>
-            <div class="separator"></div>
+            <mat-divider></mat-divider>
 
 
             <div fxLayout="row" fxLayoutAlign="start center">
@@ -59,7 +59,7 @@ import {BrotherService} from "../../../services/brother.service";
                     </mat-form-field>
                   </div>
             </div>
-            <div class="separator"></div>
+            <mat-divider></mat-divider>
 
             <div fxLayout="row" fxLayoutAlign="start center">
               <mat-checkbox color="primary" fxFlex [(ngModel)]="brother.servant.gemsEnabled" name="gemsEnabled" >
@@ -76,14 +76,14 @@ import {BrotherService} from "../../../services/brother.service";
             </div>
 
            </div>
-
-            <div class="flex-container"  fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.xs="start" fxLayoutGap="20px">
+           <mat-divider></mat-divider>
+          <mat-dialog-actions>
               <button fxLayoutAlign="center center" color="accent" fxLayout="column" mat-raised-button
                     (click)="dialogRef.close()">Annulla</button>
-                <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!form.form.valid"
-                  (click)="dialogRef.close(brother)">Salva</button>
+                <button fxLayoutAlign="center center" *ngIf="edit || (!edit && brotherList && brotherList.length > 0)" fxLayout="column" mat-raised-button [disabled]="!form.form.valid" color="primary"
+                  (click)="dialogRef.close(brother)">Salva</button> 
 
-            </div>
+          </mat-dialog-actions>
       </div>
     </form>
     `,
