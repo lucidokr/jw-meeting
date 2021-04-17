@@ -16,7 +16,6 @@ import * as moment from 'moment';
 import {Observable} from "rxjs";
 import {WeekMeeting} from "../../../shared/models/weekMeeting.model";
 import {AuthService} from "../../../services/auth.service";
-import {LocalDataSource} from "ng2-smart-table";
 import {User} from "../../../shared/models/user.model";
 import {USER_ROLE} from "../../../constant";
 

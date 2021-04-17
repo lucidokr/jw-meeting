@@ -5,7 +5,7 @@
     </div>
   </mat-card-header>
   <mat-card-content fxLayout="column" fxFlex="100%" fxLayoutAlign="start center" >
-    <div  fxLayout="column"  fxLayoutGap="20px">
+    <div  fxLayout="column">
         <div  fxLayout="column"  fxLayout.xs="column" fxLayoutAlign="start center">
             <div fxLayout="row" ><h3 [innerHTML]="week.bibleReading.label.split('(')[0] | safeHtml"></h3></div>
 
@@ -29,10 +29,11 @@
               </div>
               <mat-divider></mat-divider>
         </div>
-      <div  *ngFor="let part of week.ministryPart; let i = index;" fxLayout="column"  fxLayout.xs="column" fxLayoutAlign="start center">
+      <div  *ngFor="let part of week.ministryPart; let i = index;" fxLayout="column" fxLayoutGap="20px" fxLayout.xs="column" fxLayoutAlign="start center">
         <div  *ngIf="part.forStudent" fxLayout="column" fxLayoutAlign="start center" >
             <div fxLayout="row" ><h3 [innerHTML]="part.html.split('(')[0] | safeHtml"></h3></div>
-            <div  *ngFor="let school of SCHOOLS" fxLayout="column" fxLayoutGap="10px" fxLayout.xs="column" fxLayoutAlign="start center" >
+            <div fxLayout="column" fxLayoutAlign="start center" fxLayoutGap="20px" >
+              <div  *ngFor="let school of SCHOOLS" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start center" >
                 <div *ngIf="!part[school].student.student" fxLayout="column" fxLayoutGap="5px" class="notUpdated">
                   <strong fxFlex>
                     <span *ngIf="school==CONST.PRIMARY_SCHOOL">Prima</span>
@@ -60,9 +61,9 @@
                     <span *ngIf="part[school].made==1">Svolto </span>
                     <span *ngIf="part[school].made==2">Non svolto </span>
                 </div>
-
-
           </div>
+            </div>
+            
           <mat-divider></mat-divider>
         </div>
 
@@ -74,6 +75,8 @@
     <loader *ngIf="loading"></loader>
   </mat-card-content>
 </mat-card>
+
+
 <mat-card *ngIf="week.completed" class="updatePointCard">
   <mat-card-content fxLayout="column" fxFlex="100%" fxLayoutAlign="center center">
     Adunanza della settimana corrente completata

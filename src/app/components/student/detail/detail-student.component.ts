@@ -2,14 +2,10 @@ import { Component } from '@angular/core';
 import {Router, ActivatedRoute} from "@angular/router";
 import {DialogService} from "../../../services/dialog.service";
 import {EmitterService} from "../../../services/emitter.service";
-import {DateRenderComponent} from "../../../shared/components/dateRender.component";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {GeneralListComponent} from "../../../shared/components/list.component";
-import {StudentService} from "../../../services/student.service";
 import {Student} from "../../../shared/models/student.model";
 import {HistoryService} from "../../../services/history.service";
-import {LocalDataSource} from "ng2-smart-table";
-import {BooleanRenderComponent} from "../../../shared/components/booleanRender.component";
 
 @Component({
   selector: 'student-list',

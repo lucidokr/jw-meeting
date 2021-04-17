@@ -1,15 +1,11 @@
 import {Component, Input, OnInit, EventEmitter, Output} from '@angular/core';
 
-import { ViewCell } from 'ng2-smart-table';
-
-import * as moment from 'moment';
-
 @Component({
   template: `
     <i (click)="onClick()" class="material-icons">remove_red_eye</i>
   `,
 })
-export class ViewRenderComponent implements ViewCell, OnInit {
+export class ViewRenderComponent {
 
   checked: any;
 

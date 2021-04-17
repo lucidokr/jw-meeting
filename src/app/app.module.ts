@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
 import * as moment from 'moment';
 import 'moment/locale/it';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AmChartsModule } from "@amcharts/amcharts3-angular";
 
 import {DialogModule} from "./dialog.module";
@@ -82,7 +81,6 @@ import { MaterialModule } from './material.module';
     HttpClientModule,
     DialogModule,
     FlexLayoutModule,
-    Ng2SmartTableModule,
     AmChartsModule,
     PipeModule
   ],

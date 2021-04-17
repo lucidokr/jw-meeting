@@ -1,15 +1,12 @@
-import {Component, Input, OnInit, EventEmitter, Output} from '@angular/core';
+import {Component, Input, EventEmitter, Output} from '@angular/core';
 
-import { ViewCell } from 'ng2-smart-table';
-
-import * as moment from 'moment';
 
 @Component({
   template: `
     <i (click)="onClick()" class="material-icons">file_download</i>
   `,
 })
-export class DownloadRenderComponent implements ViewCell, OnInit {
+export class DownloadRenderComponent {
 
   checked: any;
 

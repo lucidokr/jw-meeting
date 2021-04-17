@@ -1,11 +1,6 @@
 import {Component, Input, Output, EventEmitter, OnChanges, SimpleChange} from '@angular/core';
-import {Router} from "@angular/router";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {DialogService} from "../../services/dialog.service";
-import {LocalDataSource} from "ng2-smart-table";
 import {WeekMeeting} from "../models/weekMeeting.model";
-import {Brother} from "../models/brother.model";
-import {CONST} from "../../constant";
 
 @Component({
   selector: 'week',

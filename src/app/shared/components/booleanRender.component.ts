@@ -1,8 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-
-import { ViewCell } from 'ng2-smart-table';
-
-import * as moment from 'moment';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'boolean-render',
