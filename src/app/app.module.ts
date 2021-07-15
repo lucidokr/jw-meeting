@@ -16,7 +16,6 @@ import {DialogModule} from "./dialog.module";
 import {ContainerComponent} from './components/container.component';
 import {HeaderComponent} from './components/header.component';
 import {HomeComponent} from './components/home/home.component';
-import {MaterialTableComponent} from "./components/material-table/material-table.component";
 import {HistoryListComponent} from "./components/student/history/list-history.component";
 import {StudentListComponent} from "./components/student/list/list-student.component";
 import {StudentDetailComponent} from "./components/student/detail/detail-student.component";
@@ -102,7 +101,6 @@ import { MaterialModule } from './material.module';
     MeetingListComponent,
     MeetingDetailComponent,
     PrayerListComponent,
-    MaterialTableComponent,
     LoaderComponent,
     ServantListComponent,
     ElderListComponent,
