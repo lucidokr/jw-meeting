@@ -160,6 +160,8 @@ export class NewPgmPreviewComponent implements OnInit{
           break;
         }
       }
+    } else {
+      this.dialogService.showError("Manca il presidente della scuola. Configuralo nella lista degli anziani.")
     }
     for(let week of this.weeks){
 
