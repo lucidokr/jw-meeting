@@ -1,4 +1,10 @@
 version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - '# Execute Amplify CLI with the helper script'
+        - amplifyPush --simple
 frontend:
   phases:
     preBuild:
@@ -8,6 +14,7 @@ frontend:
     build:
       commands:
         - nvm use $VERSION_NODE_10
+        - node -v
         - npm run fe:build
   artifacts:
     baseDirectory: modules/
